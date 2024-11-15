@@ -1,0 +1,33 @@
+@use "base";
+
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    color: base.$font-color;
+    font-family: base.$font-primary;
+    background-color: base.$background-color;
+}
+
+.app-root{
+    display: grid;
+    grid-template-areas: 
+    "header header header"
+    "content content content"
+    "footer footer footer";
+    grid-template-rows: 70px auto 50px;
+    grid-template-columns: 1fr;
+    height: 100vh;
+}
+
+header{
+    grid-area: header;
+}
+footer{
+    grid-area: footer;
+}
+.logo{
+    width: 80px;
+    height: auto;
+}
