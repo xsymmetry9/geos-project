@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from "react";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 import English from "./pages/English/Index.jsx";
 import Japanese from "./pages/Japanese/Index.jsx";
 import Korean from "./pages/Korean/Index.jsx";
 import Chinese from "./pages/Chinese/Index.jsx";
 
-const DEFAULT_LANGUAGE = "English"
-const App = () =>{
+const App = ({DEFAULT_LANGUAGE}) =>{
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [number, setNumber] = useState(0);
 
@@ -18,6 +19,7 @@ const App = () =>{
     })
     return(
         <>
+            <Header language={language} />
             {language === "English" ? <English /> : 
                 language === "Chinese" ? <Chinese /> :
                 language === "Korean" ? <Korean /> :
@@ -25,12 +27,7 @@ const App = () =>{
 
         
             <p>You clicked {number} times</p>
-
-            <button onClick={() => setNumber(number + 1)}>Click</button>
-            <button onClick={languageHandler} value={"English"}>English</button>
-            <button onClick={languageHandler} value={"Chinese"}>Chinese</button>
-            <button onClick={languageHandler} value={"Korean"}>Korean</button>
-            <button onClick={languageHandler} value={"Japanese"}>Japanese</button>
+            <Footer language= {language} />
 
         </>
     )
