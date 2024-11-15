@@ -1,0 +1,47 @@
+//_base.scss
+
+$font-primary: "Merriweather", serif;
+$font-secondary: "Poppins", sans-serif;
+$primary-color: whitesmoke;
+$primary-color-dark: black;
+$body-color: red;
+$font-color: black;
+$font-color-dark: black;
+$background-color: whitesmoke;
+$font-center: center;
+
+$font-size-1: .9rem;
+$font-size-2: 1.2rem;
+$font-size-3: 1.4rem;
+$font-size-4: 1.6rem;
+$font-size-5: 1.8rem;
+$font-size-6: 2rem;
+$font-size-7: 2.4rem;
+$font-size-8: 2.8rem;
+$font-size-9: 3rem;
+
+$print-font-size-1: 12px;
+$print-font-size-2: 16px;
+$print-font-size-3: 18px;
+$print-font-size-4: 20px;
+$print-font-size-5: 24px;
+$print-font-size-6: 26px;
+
+$button-bg-color: rgb(9, 197, 235);
+
+$spacing-sm: 8px;
+$spacing-m: 12px;
+$spacing-lg: 16px;
+
+.spacing-b-1{
+    padding-bottom: 1rem; 
+}
+.spacing-b-2{
+    padding-bottom: 1.1rem; 
+}
+.spacing-b-3{
+    padding-bottom: 1.2rem; 
+}
+.spacing-b-4{
+    padding-bottom: 1.3rem; 
+}
