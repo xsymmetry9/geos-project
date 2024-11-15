@@ -18,18 +18,19 @@ const App = ({DEFAULT_LANGUAGE}) =>{
         document.title = `SPR - ${language}`;
     })
     return(
-        <>
+        <div className="app-root">
             <Header language={language} />
-            {language === "English" ? <English /> : 
-                language === "Chinese" ? <Chinese /> :
-                language === "Korean" ? <Korean /> :
-                language ==="Japanese"? <Japanese /> : (<><h1>Error</h1></>)}
-
-        
-            <p>You clicked {number} times</p>
+            <div className="content">
+                {
+                    language === "English" ? <English /> : 
+                    language === "Chinese" ? <Chinese /> :
+                    language === "Korean" ? <Korean /> :
+                    language ==="Japanese"? <Japanese /> : (<><h1>Error</h1></>)
+                }
+            </div>       
             <Footer language= {language} />
 
-        </>
+        </div>
     )
 }
 
