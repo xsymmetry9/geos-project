@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     }
 ],
    );
-const container = document.getElementById("root");
+const container = document.getElementById("app");
 createRoot(container).render(
     <StrictMode>
         <RouterProvider router = {router} />
