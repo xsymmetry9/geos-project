@@ -1,0 +1,18 @@
+@use "../base.scss";
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: base.$print-font-size-1;
+    font-weight: 400;
+    font-family: base.$font-primary;
+}
+
+.footer-container{
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
