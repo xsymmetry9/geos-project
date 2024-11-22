@@ -2,13 +2,15 @@
 
 $font-primary: "Merriweather", serif;
 $font-secondary: "Poppins", sans-serif;
-$primary-color: whitesmoke;
+$primary-color: #f3f3f3;
 $primary-color-dark: black;
+$color-active: orange;
 $body-color: red;
 $font-color: black;
 $font-color-dark: black;
-$background-color: whitesmoke;
+$background-color: #f3f3f3;
 $font-center: center;
+$line-seperator: gray;
 
 $font-size-1: .9rem;
 $font-size-2: 1.2rem;
@@ -45,3 +47,5 @@ $spacing-lg: 16px;
 .spacing-b-4{
     padding-bottom: 1.3rem; 
 }
+
+$bg-white-600: white;
