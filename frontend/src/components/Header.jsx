@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import geosImg from "../assets/images/logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Dropdown from "./Dropdown";
 import { faPencil, faSearch, faPrint } from "@fortawesome/free-solid-svg-icons";
-import "../styles/header.scss";
-
+import "../styles/components/header.scss";
 
 const Header = ({language}) =>{
     const getLanguage = language;
@@ -12,7 +12,7 @@ const Header = ({language}) =>{
         "english": ["English", "Chinese", "Korean", "Japanese"],
         "chinese": ["英語", "中文", "韓語", "日語"],
         "korean": ["영어", "중국어", "한국어", "일본어"],
-        "japanese": ["えいご", "ちゅうごくご", "かんこくご", "にほんご"]
+        "japanese": ["英語", "中文", "韓語", "日語"]
     }
     const languageTitle = {
         "english": "language",
@@ -45,24 +45,21 @@ const Header = ({language}) =>{
                             <img className = "logo" src = {geosImg} alt="Geos logo" />
                         </a>
                     </div>
-                <nav>
+                <nav className="navigation-root">
                     <ul className='navigation-container'>
-                        <li className='navigation-lists' id="input">
+                        <li className='btn btn-navigation' id="input">
                             <a href= {`${langCode()}input`} className="nav-icon-container"><FontAwesomeIcon icon={faPencil}></FontAwesomeIcon><span className="hidden">input</span></a>
                         </li>
-                        <li className='navigation-lists' id="preview">
+                        <li className='btn btn-navigation' id="preview">
                             <a href={`${langCode()}preview`} className="nav-icon-container">
                             <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon><span className="hidden">preview</span></a></li>
-                        <li className="navigation-lists" id="print">
+                        <li className="btn btn-navigation" id="print">
                             <a href={`${langCode()}print`} className="nav-icon-container"><FontAwesomeIcon icon={faPrint}></FontAwesomeIcon><span className="hidden">print</span></a></li>
-                        <li><button>{languageTitle[language.toLowerCase()]}</button></li>
+                        <li className="btn btn-navigation" id="nav-languages">
+                            <Dropdown buttonTitle = {languageTitle[language.toLowerCase()]} title ={title} language = {language}/>
+                        </li>
                     </ul>
-                    <ul>
-                        <li><a href="/">{title[language.toLowerCase()][0]}</a></li>
-                        <li><a href="/ch">{title[language.toLowerCase()][1]}</a></li>
-                        <li><a href="/kor">{title[language.toLowerCase()][2]}</a></li>
-                        <li><a href="/jp">{title[language.toLowerCase()][3]}</a></li>
-                    </ul>
+           
                 </nav>
             </div>
 
