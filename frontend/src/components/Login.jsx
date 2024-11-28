@@ -1,9 +1,9 @@
 const Login = ({language}) =>{
     const title = {
-        "English": "This is a title",
-        "Chinese": "This is a tilte in Chinese",
-        "Korean": "this is a title in Korean",
-        "Japanese": "this is a title in Japanese"
+        "English": "Student Progress Report",
+        "Chinese": "学生进度报告",
+        "Korean": "학생 진행 보고서 ",
+        "Japanese": "学生進捗報告"
     }
     return (
         <>

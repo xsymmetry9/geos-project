@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
-import English from "./pages/English/Index.jsx";
-import Japanese from "./pages/Japanese/Index.jsx";
-import Korean from "./pages/Korean/Index.jsx";
-import Chinese from "./pages/Chinese/Index.jsx";
+import Index from "./pages/Index.jsx";
 
 const App = ({DEFAULT_LANGUAGE}) =>{
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
@@ -21,12 +18,9 @@ const App = ({DEFAULT_LANGUAGE}) =>{
         <div className="app-root">
             <Header language={language} />
             <div className="content">
-                {
-                    language === "English" ? <English /> : 
-                    language === "Chinese" ? <Chinese /> :
-                    language === "Korean" ? <Korean /> :
-                    language ==="Japanese"? <Japanese /> : (<><h1>Error</h1></>)
-                }
+            
+                    <Index language = {language}/>
+                
             </div>       
             <Footer language= {language} />
 
