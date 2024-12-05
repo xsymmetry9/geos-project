@@ -24,8 +24,8 @@ const router = createBrowserRouter([
         path: "/kor",
         element: <App DEFAULT_LANGUAGE = "Korean" />
     }
-],
-   );
+]
+);
 const container = document.getElementById("app");
 createRoot(container).render(
     <StrictMode>
