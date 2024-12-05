@@ -12,7 +12,8 @@ const PersonalInformation = ({language}) =>{
             attendance: "",
             totalLessons: ""
         }
-    )
+    );
+    const [complete, setComplete] = useState(false);
 
     const handler = (e) =>{
         const {name, value} = e.currentTarget;
@@ -27,20 +28,19 @@ const PersonalInformation = ({language}) =>{
         input_textbook,
         input_attendance,
         input_totallessons} = form_languages[language.toLowerCase()];
-    console.log(title);
 
     return(
         <>
             <div className="personal-information-input">
                 <label htmlFor="name">
                     <div className="input-wrapper">
-                        <p className="input-title">{input_name}</p>
+                        <p className="uppercase">{input_name}</p>
                         <input type="text" name="name" value={personalInformation.name} onChange={handler} />
                     </div>
                 </label>
                 <label htmlFor="course">
                     <div className="input-wrapper">
-                        <p className="input-title">{input_course}</p>
+                        <p className="uppercase">{input_course}</p>
                         <select className="spacing-sm" id="course" name="course" value={personalInformation.course} onChange={handler}>
                             <option value="">Select course</option>
                             <option value="ONLINE">ONLINE</option>
@@ -54,7 +54,7 @@ const PersonalInformation = ({language}) =>{
                 </label>
                 <label htmlFor= "textbook">
                     <div className="input-wrapper">
-                        <p className="input-title">{input_textbook}</p>
+                        <p className="uppercase">{input_textbook}</p>
                         <select className="spacing-sm" name="textbook" id="textbook" value={personalInformation.textbook} onChange={handler}>
                             <option value="DEFAULT">Textbook name</option>
                             {textbooks.English.map((item, index) => <option key={index} value={item}>{item}</option>)}
@@ -63,13 +63,13 @@ const PersonalInformation = ({language}) =>{
                 </label>
                 <label htmlFor= "attendance">
                     <div className="input-wrapper">
-                        <p className="input-title">{input_attendance}</p>
+                        <p className="uppercase">{input_attendance}</p>
                         <input className="spacing-sm" type="number" name="attendance" id="attendance" value={personalInformation.attendance} onChange={handler}/>
                     </div>
                 </label>                             
                 <label htmlFor="totalLessons">
                     <div className='input-wrapper'>
-                        <p className="input-title">{input_totallessons}</p>
+                        <p className="uppercase">{input_totallessons}</p>
                         <input className="spacing-sm" type="number" name="totalLessons" id="total-lesson" value={personalInformation.totalLessons} onChange={handler}/>
                     </div>  
                 </label>

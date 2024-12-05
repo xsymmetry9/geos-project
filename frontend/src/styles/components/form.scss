@@ -110,10 +110,15 @@ input[type='range'] {
 }
 
 .form-root{
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     max-width: 500px;
-    border: 1px solid blue;
-    margin-inline: auto;
+    box-shadow: 1px 1px 2px 3px rgba(112, 191, 171, 0.3);
+    border-radius: 25px;
+    margin: 3rem auto;
+    @media (max-width: 55em) {
+        border: none;
+        box-shadow: none;
+    }
 }
 .pagination-container{
     display: grid;
@@ -178,14 +183,13 @@ input[type='range'] {
     max-width: 500px;
     width: 100%;
     margin-inline: auto;
-    display: grid;
-    gap: 10px;
-
-    outline: 1px solid red;
-
 }
 .input-wrapper{
-    padding: 0 12px;  
+    padding: 5px 10px;
+    p{
+        padding: 0 0 9px 0;
+    } 
+    height: 80px;
 }
 
 .wrapper-level-input{
@@ -213,7 +217,6 @@ input[type='range'] {
 .level-information-title{
     font-size: base.$font-size-2;
     padding: 1rem;
-    text-align: center;
     line-height: 1.5;
 }
 
@@ -224,18 +227,6 @@ input[type='range'] {
     min-height: 150px;
     background-color: #fff;
 
-}
-
-.title-input{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  input{
-    background-color: transparent;
-    border: none;
-    width: 50px;
-  }
 }
 
 .input-student-level-information{
@@ -252,7 +243,7 @@ input[type='range'] {
       grid-template-columns: max-content 1fr;
       gap: 12px;
       justify-content: center;
-      align-items: center;
+    //   align-items: center;
       border-bottom: 1px solid rgb(179, 170, 170);
       padding: 16px;
   }

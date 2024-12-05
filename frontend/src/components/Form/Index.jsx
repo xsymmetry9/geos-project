@@ -7,24 +7,21 @@ const DEFAULT_name = "Gary";
 
 const Form = ({language}) => {
     const {name, setName} = useState(DEFAULT_name);
+    const {pages, setPages} = useState({
+        info: {on: true, complete: false},
+        level: {on: false, complete: false},
+        feedback: {on: false, complete: false}
+    });
 
     const handler = (e) =>{
         setName(e.currentTarget.value);
     }
-    const title = {
-        "English": "Student Progress Report",
-        "Chinese": "学生进度报告",
-        "Korean": "학생 진행 보고서 ",
-        "Japanese": "学生進捗報告"
-    }
-    
     return(
         <div className="form-root">
+            <Pagination language={language} pages={pages} />
+
             <form action="/post" method="POST">
-                <div className="form-root">
-                    <Pagination language={language} />
                     <PersonalInformation language={language} />
-                </div>
             </form>
         </div>
     )

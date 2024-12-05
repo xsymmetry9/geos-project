@@ -54,5 +54,8 @@ footer{
     max-width: 1100px;
     width: 100%;
     margin-inline: auto;
-    text-align: center;
+}
+
+.uppercase{
+    text-transform: capitalize;
 }
