@@ -1,23 +1,13 @@
-const Pagination = () =>{
+const Pagination = ({page}) =>{
+    const arr = ["Info", "Level", "Feedback", "Done"];
     return(
         <div className="root-pagination">
             <div className="pagination-container">
-                <div className="pagination-wrapper">
-                    <div className="circle">1</div>
-                    <p>Info</p>
-                </div>
-                <div className="pagination-wrapper">
-                    <div className="circle">2</div>
-                    <p>Level</p>
-                </div>
-                <div className="pagination-wrapper">
-                    <div className="circle">3</div>
-                    <p>Feedback</p>
-                </div>
-                <div className="pagination-wrapper">
-                    <div className="circle">4</div>
-                    <p>Done</p>
-                </div>
+                {arr.map((item, index) => (
+                    <div key= {index} className={`square ${(page === index) && "active"}`}>
+                        <div className={`circle`}>{index}</div>
+                        <p>{item}</p>
+                    </div>))}
          
             </div>
         </div>
