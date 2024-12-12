@@ -2,26 +2,34 @@ import {useState} from "react";
 import "../../styles/components/form.scss";
 import PersonalInformation from "./components/PersonalInformation";
 import Pagination from "./components/Pagination";
+import Button from "./components/Button";
+import LevelInformation from "./components/LevelInformation";
+import Feedback from "./components/Feedback";
 
 const DEFAULT_name = "Gary";
 
-const Form = ({language}) => {
-    const {name, setName} = useState(DEFAULT_name);
-    const {pages, setPages} = useState({
-        info: {on: true, complete: false},
-        level: {on: false, complete: false},
-        feedback: {on: false, complete: false}
-    });
+const Form = ({data, handleData, language}) => {
+    const [page, setPage] = useState(0);
+    const arrOfPages = [<PersonalInformation data = {data} handleData={handleData} language={language}/>, <LevelInformation/>, <Feedback/>];
+
+    const changePage = () =>{
+        if(page > arrOfPages.length - 1)
+        {
+            setPage(0);
+        } else {
+            setPage(prev => prev+ 1);
+        }
+    }
 
     const handler = (e) =>{
         setName(e.currentTarget.value);
     }
     return(
         <div className="form-root">
-            <Pagination language={language} pages={pages} />
-
+            <Pagination page = {page}/>
             <form action="/post" method="POST">
-                    <PersonalInformation language={language} />
+                {arrOfPages[page]}
+                <Button page={page} handler={changePage} />
             </form>
         </div>
     )
