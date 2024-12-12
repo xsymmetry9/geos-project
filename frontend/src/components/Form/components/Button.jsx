@@ -1,8 +1,22 @@
-const Button = () =>{
+const Button = ({page, handler}) =>{
     return(
-        <>
-            <button onClick={() =>{console.log("hello")}}>Submit</button>
-        </>
+        <div className="container" id="buttons">
+            {page === 0 ? (
+                <>
+                    <input type="button" onClick={handler} name="next" value="next"/>
+                </>) : page != 3 ? (
+                    <>
+                        <input type="button" onClick = {handler} name="back" value="back" />                 
+                        <input type="button" onClick = {handler} name="next" value ="next"/>
+                    </> 
+                ) : (
+                    <>
+                        <input type="button" onClick={handler} name ="back" value="back" />
+                        <input type="button" onClick={handler} name ="print" value="print" />
+                    </>
+                )
+            }
+        </div>
     )
 }
 
