@@ -3,8 +3,8 @@
 $font-primary: "Merriweather", serif;
 $font-secondary: "Poppins", sans-serif;
 $primary-color: #f3f3f3;
-$primary-color-dark: black;
-$color-active: orange;
+$primary-color-dark: #1B1833;
+$color-active: #F29F58;
 $body-color: red;
 $font-color: black;
 $font-color-dark: black;
@@ -30,6 +30,7 @@ $print-font-size-5: 24px;
 $print-font-size-6: 26px;
 
 $button-bg-color: rgb(9, 197, 235);
+$button-font-color: $primary-color-dark;
 
 $spacing-sm: 8px;
 $spacing-m: 12px;
@@ -49,3 +50,10 @@ $spacing-lg: 16px;
 }
 
 $bg-white-600: white;
+
+$button-primary-color: #AB4459;
+$button-primary-bg-color: $button-primary-color;
+$button-border-primary-color: $button-primary-color;
+
+
+$input-border-primary-color: $line-seperator;
