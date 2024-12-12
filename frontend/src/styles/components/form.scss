@@ -5,21 +5,26 @@ input, textarea, select, option{
     -webkit-appearance: none; /* Removes default styles for WebKit browsers */
     -moz-appearance: none; /* Removes default styles for Firefox */
     outline: none;
-    color: #333;
-    background-color: #fff;
+    color: base.$primary-color-dark;
+    background-color: base.$background-color;
     font-size: base.$font-size-1;
     width: 100%;
     border: none;
     border-radius: 5px;
     box-sizing: border-box;
+    border: 2px solid base.$input-border-primary-color;
     box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
     font-family: base.$font-secondary;
     font-size: .9rem;
     padding: 12px;
     &:focus, &:hover{
-        border: 2px solid orange;
+        border: 2px solid base.$color-active;
         box-shadow: 1px 1px .5px .5px rgba(255, 166, 0, 0.3)
     }
+}
+textarea{
+  height: 100%;
+  resize: vertical;
 }
 
 input[type="text"]:focus, input[type="number"]:focus{
@@ -32,7 +37,7 @@ input[type='range'] {
     -webkit-appearance: none;
     width: 100%;
     height: 6px; /* Track height */
-    background: #e0e0e0;
+    background: base.$background-color;
     border-radius: 5px;
     outline: none;
   }
@@ -110,32 +115,67 @@ input[type='range'] {
 }
 
 .form-root{
-    padding: 2rem 1.5rem;
-    max-width: 500px;
-    box-shadow: 1px 1px 2px 3px rgba(112, 191, 171, 0.3);
-    border-radius: 25px;
-    margin: 3rem auto;
-    @media (max-width: 55em) {
-        border: none;
-        box-shadow: none;
-    }
+  display: block;
+  position: relative;
+  padding: 2rem 1.5rem;
+  max-width: 500px;
+  height: auto;
+  border: 2px solid gray;
+  border-radius: 25px;
+  margin: 3rem auto;
+  @media (max-width: 55em) {
+    border: none;
+    box-shadow: none;
+  }
 }
 .pagination-container{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-inline: auto;
-    border: 1px solid black;
-    max-width: 400px;
+  $height: 80px;
+  $width: 90%;
+  $square_width: calc($width/4);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-inline: auto;
+  width: $width;
+  height: $height;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: .8rem;
+  text-shadow: .5px 1px rgba(0, 0, 0, 0.7);
+  position: relative;
+    .square{
+      height: $height;
+      width: calc(25%);
+      p { text-align: center;}
+    }
+    .circle::after, .circle::before{
+      content: "";
+      height: 2px;
+      position: absolute;
+      background-color: base.$button-bg-color;
+      box-shadow: 1px 1px .5px .5px rgba(173, 216, 230, 0.7);
+      ;
+    }
+    .circle::after{
+      width: calc(50% - 10px);
+      right: 0;
+    }
+    .circle::before{
+      width: calc(50% - 10px);
+      left: 0;
+    }
+    .active{
+      background-color: rgba(65, 56, 56, 0.1);
+    }
 }
-.pagination-wrapper{
+.square{
+    position: inherit;
     display: flex; 
-    gap: 10px;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-size: .7rem;
+    justify-content: center;
+    gap: 10px;
+
 }
 .circle{
     text-align: center;
@@ -144,33 +184,17 @@ input[type='range'] {
     align-items: center;
     font-size: .7rem;
     border: none;
-    box-shadow: 1px 1px .5px .5px rgba(173, 216, 230, 0.3);
-    background-color: lightblue;
+    box-shadow: 1px 1px 2px 2px rgba(173, 216, 230, 0.7);
+    border: 2px solid base.$button-bg-color;
     border-radius: 100%;
     width: 20px;
     height: 20px;
     font-weight: 600;
-}
-.input-title{
-    font-size: base.$font-size-1;
-    line-height: 1;
-    padding-bottom: 5px;
-}
-.form-title{
-    font-size: base.$font-size-3;
-    text-align: center;
-}
-.form-container{
-    max-width: 1100px;
-    width: 100%;
-    height: 100%;
     margin-inline: auto;
-
-    display: grid;
-    grid-template-areas: 
-    "form form form"
-    "buttons buttons buttons";
-    grid-template-rows: auto 60px;
+}
+.circle.completed{
+  background-color: rgba(173, 216, 230, 0.3);
+  color: black;
 }
 #form-block{
     grid-area: form;
@@ -178,7 +202,7 @@ input[type='range'] {
 #form-navigation{
    grid-area: buttons;
 }
-.personal-information-input{
+.input-container{
     margin-top: 1.2rem;
     max-width: 500px;
     width: 100%;
@@ -243,8 +267,41 @@ input[type='range'] {
       grid-template-columns: max-content 1fr;
       gap: 12px;
       justify-content: center;
-    //   align-items: center;
       border-bottom: 1px solid rgb(179, 170, 170);
       padding: 16px;
   }
+}
+
+input[type="button"]{
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: blue;
+  color: white;
+  border: none;
+  width: 200px;
+}
+
+#personal-information{
+
+}
+#feedback{
+  height: 300px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+#buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.container{
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: space-around;
 }
