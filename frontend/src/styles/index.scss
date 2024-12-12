@@ -59,3 +59,28 @@ footer{
 .uppercase{
     text-transform: capitalize;
 }
+
+.btn{
+    cursor: pointer;
+}
+
+.btn-primary{
+    $length: 150px;
+    $height: calc($length/3)px;
+    font-size: base.$font-size-2;
+    max-width: $length;
+    width: 100%;
+    background-color: base.$button-bg-color;
+    color: base.$button-primary-color;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-secondary{
+    $length: 150px;
+    $height: calc($length/3)px;
+    font-size: base.$font-size-2;
+    max-width: $length;
+    width: 100%;
+    height: $height;
+}
