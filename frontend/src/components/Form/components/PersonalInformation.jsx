@@ -13,7 +13,6 @@ const PersonalInformation = ({data, handleData, language}) =>{
             totalLessons: data.totalLessons
         }
     );
-    const [complete, setComplete] = useState(false);
 
     const handler = (e) =>{
         const {name, value} = e.currentTarget;
@@ -22,7 +21,7 @@ const PersonalInformation = ({data, handleData, language}) =>{
         })
 
     }
-    const {title,
+    const {
         input_name,
         input_course,
         input_textbook,
@@ -35,13 +34,13 @@ const PersonalInformation = ({data, handleData, language}) =>{
                 <label htmlFor="name">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_name}</p>
-                        <input type="text" name="name" value={name} onChange={handleData} />
+                        <input className="form-input-primary" type="text" name="name" value={name} onChange={handleData} />
                     </div>
                 </label>
                 <label htmlFor="course">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_course}</p>
-                        <select className="spacing-sm" id="course" name="course" value={course} onChange={handleData}>
+                        <select className="form-input-primary" id="course" name="course" value={course} onChange={handleData}>
                             <option value="">Select course</option>
                             <option value="ONLINE">ONLINE</option>
                             <option value="PL">PL</option>
@@ -55,7 +54,7 @@ const PersonalInformation = ({data, handleData, language}) =>{
                 <label htmlFor= "textbook">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_textbook}</p>
-                        <select className="spacing-sm" name="textbook" id="textbook" value={textbook} onChange={handleData}>
+                        <select className="form-input-primary" name="textbook" id="textbook" value={textbook} onChange={handleData}>
                             <option value="DEFAULT">Textbook name</option>
                             {textbooks.English.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </select>
@@ -64,13 +63,13 @@ const PersonalInformation = ({data, handleData, language}) =>{
                 <label htmlFor= "attendance">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_attendance}</p>
-                        <input className="spacing-sm" type="number" name="attendance" id="attendance" value={attendance} onChange={handleData}/>
+                        <input className="form-input-primary" type="number" name="attendance" id="attendance" value={attendance} onChange={handleData}/>
                     </div>
                 </label>                             
                 <label htmlFor="totalLessons">
                     <div className='input-wrapper'>
                         <p className="uppercase">{input_totallessons}</p>
-                        <input className="spacing-sm" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleData}/>
+                        <input className="form-input-primary" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleData}/>
                     </div>  
                 </label>
             </div>

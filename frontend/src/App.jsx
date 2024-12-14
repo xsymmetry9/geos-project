@@ -9,17 +9,16 @@ const App = ({DEFAULT_LANGUAGE}) =>{
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [data, setData] = useState(
         new Student(
-            "DEFAULT_NAME",
-            "COURSE_NAME",
-            "BOOK_NAME",
-            5,
-            10,
-             [new Levels("vocabulary", 1, 2, 3),
-               new Levels("grammar", 1, 2, 3),
-                new Levels("pronunciation",1 ,2, 3),
-                new Levels("listening", 1, 2, 3),
-                new Levels("conversation", 1, 2, 3)],
-            "Your feedback."
+            "", //empty name
+            "", //empty course
+            "", //empty textbook
+            0, //empty attedance 
+            0, //total attendance
+             [new Levels("vocabulary", 0, 0, 0),
+               new Levels("grammar", 0, 0, 0),
+                new Levels("pronunciation", 0 , 0, 0),
+                new Levels("listening", 0, 0, 0),
+                new Levels("conversation", 0, 0, 0)],
         )
     );
 

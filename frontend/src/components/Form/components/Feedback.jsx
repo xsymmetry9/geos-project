@@ -1,14 +1,21 @@
 import { useState } from "react";
 
-const Feedback = () =>{
-    const [comment, setComment] = useState("");
-    const handler = (e) =>{
-        setComment(e.currentTarget.value);
+const Feedback = ({data, handleData, language}) =>{
+    const {comment} = data;
+    const placeholderContent = 
+    {
+        "english": {comment: "Comment goes here"},
+        "korean": "댓글이 여기에 작성됩니다",
+        "japanese": "コメントがここに入ります",
+        "chinese": "評論在此處輸入"
+          
     }
+    
+
     return(
         <>
             <div className='container'id="feedback">
-                <textarea name="comment" id="comment" value={comment} onChange={handler} placeHolder ="Comment goes here"></textarea> 
+                <textarea className="form-input-primary" name="comment" id="comment" value={comment} onChange={handleData} placeholder ={placeholderContent[language.toLowerCase()]}></textarea> 
             </div>
         </>
     )
