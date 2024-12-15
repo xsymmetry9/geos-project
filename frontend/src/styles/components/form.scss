@@ -237,38 +237,36 @@ textarea{
   display: flex;
   justify-content: center;
   gap: 10px;
-  .title-circle-container{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .circle.active{
-    background-color: yellow;
-    color: yellow;
-    box-shadow: rgba(255, 255, 0, 0.3);
-    border: none;
-  }
-  .circle{
-    color: gray;
-  }
-
-  .circle::after, .circle::before{
-    content: "";
-    height: 2px;
-    position: absolute;
-    background-color: base.$button-bg-color;
-    box-shadow: 1px 1px .5px .5px rgba(173, 216, 230, 0.7);
-    ;
-  }
-  .circle::after{
-    width: calc(50% - 10px);
-    right: 0;
-  }
-  .circle::before{
-    width: calc(50% - 10px);
-    left: 0;
-  }
+ 
   .active{
     background-color: rgba(65, 56, 56, 0.1);
   }
+}
+
+.form-levels-container{
+  background-color: green;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+
+}
+.nameTab-container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.tabTitle{
+  cursor: pointer;
+  margin-left: 6px;
+  text-transform: capitalize;
+  text-align: center;
+  padding: 12px 0;
+  border: none;
+}
+
+.bgColorActive{
+  background-color: green;
+}
+
+.bgColorInactive{
+  background-color: gray;
 }

@@ -1,12 +1,13 @@
-const LevelTabs = ({titles, handlerPage}) =>{
+const LevelTabs = ({currentPage, titles, handlerPage}) =>{
     return(
         <div className="levelTab-container">
             {titles.map((item, index) =>{
                 return(
                     <>
-                        <div className="title-circle-container">
-                            <div className="circle active">{index}</div>
-                            <p key={index}>{item}</p>
+                        <div key={index} className={`nameTab-container ${(currentPage == index )? "bgColorActive" : "bgColorInactive"}`}>
+                            <input
+                                className={`tabTitle ${currentPage == index ? "bgColorActive" : "bgColorInactive"}`} 
+                                type="button" onClick={handlerPage} name={index} value={item}/>                    
                         </div>
                     </>
                 )

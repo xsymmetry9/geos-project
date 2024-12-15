@@ -14,11 +14,11 @@ const App = ({DEFAULT_LANGUAGE}) =>{
             "", //empty textbook
             0, //empty attedance 
             0, //total attendance
-             [new Levels("vocabulary", 0, 0, 0),
-               new Levels("grammar", 0, 0, 0),
-                new Levels("pronunciation", 0 , 0, 0),
-                new Levels("listening", 0, 0, 0),
-                new Levels("conversation", 0, 0, 0)],
+             [new Levels("vocabulary", 1, 2, 3),
+               new Levels("grammar", 1, 2, 3),
+                new Levels("pronunciation", 1 , 2, 3),
+                new Levels("listening", 7, 5, 4),
+                new Levels("conversation", 8, 4, 2)],
         )
     );
 
@@ -28,7 +28,57 @@ const App = ({DEFAULT_LANGUAGE}) =>{
 
         if(name == "attendance" || name == "totalLessons")
             console.log(value);
+    }
 
+    const findIndexCategory = (category) =>{
+        switch(category) {
+            case "vocabulary":
+              return 0
+              break;
+            case "grammar":
+              return 1
+              break;
+              case "pronunciation":
+              return 2
+              break;
+              case "listening":
+              return 3
+              break;
+              case "conversation":
+              return 4
+              break;
+            default:
+              return "error"
+          }
+    }
+
+    const handleLevelData = (e) =>{
+        const {name, value} = e.currentTarget;
+        console.log(name);
+        console.log(value);
+
+        const parentCategory = name.split('-')[0];
+        const childCategory = name.split('-')[1];
+
+        setData(prevData => {
+            // Create a deep copy of the `levels` array
+            const updatedLevels = [...prevData.levels];
+    
+            // Get the index of the parent category
+            const parentIndex = findIndexCategory(parentCategory);
+    
+            // Create a new object for the specific level we are updating
+            updatedLevels[parentIndex] = {
+                ...updatedLevels[parentIndex],
+                [childCategory]: value
+            };
+    
+            // Return the updated data state
+            return {
+                ...prevData,
+                levels: updatedLevels
+            };
+        });
     }
 
     const languageHandler = (e) =>{
@@ -44,7 +94,7 @@ const App = ({DEFAULT_LANGUAGE}) =>{
             <Header language={language} />
             <div className="content">
             
-                    <Index data = {data} handleData = {handleData} language = {language}/>
+                    <Index data = {data} handleData = {handleData} handleLevelData= {handleLevelData} language = {language}/>
 
             </div>       
             <Footer language= {language} />

@@ -1,9 +1,9 @@
 import Form from "../components/Form/Index";
 
-const App = ({data, handleData, language}) =>{
+const App = ({data, handleData, handleLevelData, language}) =>{
     return(
         <>
-            <Form data = {data} handleData = {handleData} language = {language}/>
+            <Form data = {data} handleData = {handleData} handleLevelData = {handleLevelData} language = {language}/>
         </>
     )
 

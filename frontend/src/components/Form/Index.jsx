@@ -6,11 +6,11 @@ import Button from "./components/Button";
 import LevelInformation from "./components/LevelInformation";
 import Feedback from "./components/Feedback";
 
-const Form = ({data, handleData, language}) => {
+const Form = ({data, handleData, handleLevelData, language}) => {
     const [page, setPage] = useState(0);
     const arrOfPages = [
         <PersonalInformation data = {data} handleData={handleData} language={language}/>,
-        <LevelInformation data={data} handleData={handleData} language={language}/>, 
+        <LevelInformation data={data} handleLevelData={handleLevelData} language={language}/>, 
         <Feedback data={data} handleData={handleData} language={language}/>];
 
     const changePage = (e) =>{
