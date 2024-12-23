@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Button = ({page, handler, language}) =>{
     const title = {
         "english": {next_page: "Next", back_page: "Back", print_page: "Print"},
@@ -20,7 +21,7 @@ const Button = ({page, handler, language}) =>{
                 ) : (
                     <>
                         <input className="btn-primary" type="button" onClick={handler} name ="back" value={title[language.toLowerCase()].back_page} />
-                        <input className="btn-primary" type="button" onClick={handler} name ="print" value={title[language.toLowerCase()].print_page} />
+                        <Link to={`/spr/${language.toLowerCase()}/preview`}>Preview</Link>
                     </>
                 )
             }

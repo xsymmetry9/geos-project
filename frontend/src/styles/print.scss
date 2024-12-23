@@ -1,0 +1,258 @@
+@use "../styles/base";
+
+$background-color-dark: rgba(0, 161, 173, 1);
+$background-light: rgba(0, 161, 173, .2);
+
+@media print {
+    @page {
+      size: A4;
+      padding: 0;
+      margin: 0;
+    }
+    .table{
+        height: 89.6px;
+        width: 733.25px;
+    }
+  }
+
+h1, h2{
+    text-transform: capitalize;
+}
+h1{
+    font-size: base.$print-font-size-4;
+}
+h2{
+    font-size: base.$print-font-size-3;
+}
+h3{
+    font-size: base.$print-font-size-3;
+}
+p{
+    font-size: base.$print-font-size-1;
+}
+
+.papersize{
+        width: 210mm;
+        height: 297mm;
+        margin: auto;
+        background-color: white;
+        padding: 6mm 8mm 6mm 8mm;
+        box-sizing: border-box;
+        font-family: base.$font-secondary;
+    }
+
+.title-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+    .img-container{
+        display: flex;
+        flex-direction: column;
+        margin-inline: auto;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        img{
+            width: 180px;
+            height: 60px;
+        }
+    }
+}
+.print-name{
+    strong{
+        font-size: base.$print-font-size-2;
+        color: black;
+    }
+}
+.two-columns-container{
+    display: flex;
+    gap: 10px;
+
+}
+.justify-end{
+    // justify-self: end;
+    padding-right: 5px;
+}
+
+.even-columns{
+    padding: .8rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+.graph-levelInfo{
+    margin-top: 14px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+}
+.d-flex{
+    display: flex;
+    color: rgb(129, 129, 129);
+    gap: 10px;
+}
+
+.label-containers{
+    padding: 3px 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    p{
+        font-size: 10.5px;
+    }
+}
+.print-table{    font-family: base.$font-secondary;
+    width: 100%;
+    border: 1px solid black;
+    font-size: base.$print-font-size-1;
+    p{
+        font-size: base.$print-font-size-1;
+    }
+    th{
+        border: none;
+        background-color: $background-color-dark;
+        font-size: base.$print-font-size-1;
+        font-weight: 400;
+        padding: 1.5px;
+        text-align: center;
+        text-transform: capitalize;
+        border-right: 1px solid black;
+
+        &:last-child
+        {
+            border-right: none;
+        }
+
+    }
+
+    trow{
+        background-color: $background-light;
+        color: white;
+        display: grid;
+        width: 100%;
+        grid-template-columns: 70px repeat(7, 1fr);
+        &:nth-child(n+2)
+        {
+            background-color: $background-light;
+            color: black;
+        }
+        &:nth-child(odd)
+        {
+            background-color: #fff;
+        }
+    }
+
+    .print-col{
+        border: none;
+        text-align: center;
+        padding: 2px 0;
+        border-right: 1px solid black;
+        &:last-child{
+            border: none;
+        }
+    }
+
+}
+
+.cards-container{
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    p{
+        font-size: base.$print-font-size-1;
+    }
+}
+.level-card{
+    border: 1px solid black;
+    font-family: base.$font-secondary;
+    height: 32.7mm;
+    .level-card-title{
+        background-color: $background-color-dark;
+        color: white;
+        p{
+            margin-left: .3rem;
+        }
+    }
+    .level-card-description{
+        padding: .3rem;
+    }
+}
+.graph-container{
+    position: relative;
+    aspect-ratio: 1/1;
+}
+.card{
+    height: 240px;
+    .card-title{
+        background-color: $background-color-dark;
+        padding: 4px;
+        color: white;
+        p{
+            font-size: 13.5px;
+        }
+    }
+    .card-description{
+        padding: .3rem;
+        line-height: 1.1;
+        p{
+            line-height: 1.3;
+            font-size: 13.5px;
+        }
+    }
+    border: 1px solid black;
+}
+
+.signature-section{
+    margin-top: 10px;
+    .signature-line{
+        height: 16px;
+        width: 100%;
+        border-bottom: 2px solid gray;
+    }
+}
+
+.wrapper-two-columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.text-capitalized{
+    text-transform: capitalize;
+}
+
+.comment-signature-container{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.container-print-view{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    overflow: hidden;
+}
+.btns-container{
+    display:flex;
+    justify-content: center;
+    gap: 10px;
+    button{
+        color: white;
+    }
+    #print{
+        background-color: blue;
+    }
+    #print:hover, #print:focus{
+        background-color: rgb(100, 100, 252);
+    }
+    #save{
+        background-color: green;
+    }
+    #save:hover, #print:focus{
+        background-color: rgb(71, 125, 71);
+    }
+}
+
+
+

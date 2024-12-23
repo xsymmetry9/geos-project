@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from "react";
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
-import Index from "./pages/Index.jsx";
 import Student from "./type/student.js";
 import Levels from "./type/levels.js";
+import Form from "../src/components/Form/Index.jsx"
+import { useParams } from "react-router-dom";
+import {changeLanguageFormat} from "./utils/changeLanguageFormat.js"
 
-const App = ({DEFAULT_LANGUAGE}) =>{
-    const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+const App = () =>{
+    const [language, setLanguage] = useState(changeLanguageFormat(useParams().language));
+
     const [data, setData] = useState(
         new Student(
             "", //empty name
@@ -19,6 +20,7 @@ const App = ({DEFAULT_LANGUAGE}) =>{
                 new Levels("pronunciation", 1 , 2, 3),
                 new Levels("listening", 7, 5, 4),
                 new Levels("conversation", 8, 4, 2)],
+            ""
         )
     );
 
@@ -90,16 +92,9 @@ const App = ({DEFAULT_LANGUAGE}) =>{
         document.title = `SPR - ${language}`;
     })
     return(
-        <div className="app-root">
-            <Header language={language} />
-            <div className="content">
-            
-                    <Index data = {data} handleData = {handleData} handleLevelData= {handleLevelData} language = {language}/>
-
-            </div>       
-            <Footer language= {language} />
-
-        </div>
+        <div className="content">
+            <Form data = {data} handleData = {handleData} handleLevelData= {handleLevelData} language = {language}/>
+        </div>       
     )
 }
 

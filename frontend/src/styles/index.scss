@@ -54,6 +54,12 @@ footer{
     max-width: 1100px;
     width: 100%;
     margin-inline: auto;
+    outline: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .uppercase{
@@ -80,7 +86,7 @@ footer{
     color: white;
     border: none;
     width: 200px;
-    padding: 12px 0;
+    padding: 12px 8px;
     border-radius: 5px;
     &:hover{
       background-color: white;
@@ -116,4 +122,10 @@ option{
     font-family: base.$font-secondary;
     background-color: base.$background-color;
     color: base.$primary-color-dark;
+}
+
+.buttons-navigation-container{
+    display: flex;
+    gap: 12px;
+    text-align: center;
 }

@@ -6,12 +6,18 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
     const [page, setPage] = useState(0)
     const titles = {
         english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
-        chinese: [],
-        korean: [],
-        japanese: []
+        chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
+        korean: ["어휘", "문법", "발음", "듣기", "대화"],
+        japanese: ["語彙", "文法", "発音", "聴解", "会話"]
     }
 
     const levelValue = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7.5, 8, 8.5, 9, 9.5, 10, 10.5];
+    const titleLanguage = {
+        english: ["Initial", "Target", "Final"],
+        chinese: ["初始", "目標", "結束"],
+        korean: ["초기", "목표", "결과"],
+        japanese: ["初期", "目標", "終了"]
+    }
 
     const handlerPage = (e) =>{
         const {name} = e.currentTarget;
@@ -26,7 +32,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
 
                 <div className="form-levels-container">
                     <div className="level-container">
-                    <p className="capitalized">initial</p>
+                    <p className="capitalized">{titleLanguage[language.toLowerCase()][0]}</p>
                     <div className="option-container">
                         <select className="spacing-sm form-input-primary" id={`initial-${titles[language.toLowerCase()][page]}-initial`} name={`${titles[language.toLowerCase()][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
                             <option value="">Select score</option>
@@ -35,7 +41,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
                     </div>
                     </div>
                     <div className="level-container">
-                    <p className="capitalized">target</p>
+                    <p className="capitalized">{titleLanguage[language.toLowerCase()][1]}</p>
                     <div className="option-container">
                         <select className="spacing-sm form-input-primary" id={`${title[page]}-target`} name={`${title[page]}-target`} value={data.levels[page].target} onChange={handleLevelData}>
                             <option value="">Select score</option>
@@ -44,7 +50,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
                     </div>
                     </div>
                     <div className="level-container">
-                    <p className="capitalized">final</p>
+                    <p className="capitalized">{titleLanguage[language.toLowerCase()][2]}</p>
                     <div className="option-container">
                         <select className="spacing-sm form-input-primary" id={`${title[page]}-final`} name={`${title[page]}-final`} value={data.levels[page].final} onChange={handleLevelData}>
                             <option value="">Select score</option>

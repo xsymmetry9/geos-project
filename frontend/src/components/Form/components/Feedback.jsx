@@ -4,7 +4,7 @@ const Feedback = ({data, handleData, language}) =>{
     const {comment} = data;
     const placeholderContent = 
     {
-        "english": {comment: "Comment goes here"},
+        "english": "Comment goes here",
         "korean": "댓글이 여기에 작성됩니다",
         "japanese": "コメントがここに入ります",
         "chinese": "評論在此處輸入"

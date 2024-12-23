@@ -5,9 +5,9 @@ import Pagination from "./components/Pagination";
 import Button from "./components/Button";
 import LevelInformation from "./components/LevelInformation";
 import Feedback from "./components/Feedback";
-
 const Form = ({data, handleData, handleLevelData, language}) => {
     const [page, setPage] = useState(0);
+    const [isLastPage, ] = useState(false)
     const arrOfPages = [
         <PersonalInformation data = {data} handleData={handleData} language={language}/>,
         <LevelInformation data={data} handleLevelData={handleLevelData} language={language}/>, 
@@ -24,8 +24,8 @@ const Form = ({data, handleData, handleLevelData, language}) => {
                 }
         } else if (name === "back"){
             setPage(prev => prev - 1);
-        } else if(name ==="print"){
-            alert("Print data!");
+        } else if(name ==="preview"){
+            <h1>Hello</h1>
         }
         
     }
@@ -33,7 +33,7 @@ const Form = ({data, handleData, handleLevelData, language}) => {
     const handler = () =>{
     }
     return(
-        <div className="form-root">
+        <div className={`form-root`}>
             <Pagination page = {page} language={language}/>
             <form action="/post" method="POST">
                 {arrOfPages[page]}
