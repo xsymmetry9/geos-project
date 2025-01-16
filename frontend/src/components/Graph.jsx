@@ -19,7 +19,7 @@ ChartJS.register(
     Legend
 );
 
-const Graph = (data) =>{
+const Graph = ({data}) =>{
     const options = {
         plugins:{
             layout:{

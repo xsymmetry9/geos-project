@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import geosImg from "../assets/images/logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Dropdown from "./Dropdown";
 import { faPencil, faSearch, faPrint } from "@fortawesome/free-solid-svg-icons";
 import "../styles/components/header.scss";
+import { LanguageContext } from "../App";
 
-const Header = ({language}) =>{
-    const getLanguage = language;
+const Header = () =>{
+    const {language} = useContext(LanguageContext);
+
     const title = 
     {
         "english": ["English", "Chinese", "Korean", "Japanese"],
@@ -15,14 +17,14 @@ const Header = ({language}) =>{
         "japanese": ["英語", "中文", "韓語", "日語"]
     }
     const languageTitle = {
-        "english": "language",
+        "english": "eng",
         "chinese": "言語",
         "korean": "언어",
         "japanese": "語言"
     }
 
     const langCode = () =>{
-        switch(getLanguage.toLowerCase()){
+        switch(language){
             case "english":
                 return `/`;
             case "chinese":

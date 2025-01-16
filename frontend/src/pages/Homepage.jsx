@@ -22,13 +22,13 @@ const Homepage = () =>{
         "japanese": "先生方、ようこそ",
         "korean": "선생님들, 환영합니다",
     }
+
     return(
         <div className="content">
             <h1>{title[getLanguage()]}</h1>
             <div className="buttons-navigation-container">
-                <Link className="btn-primary" to={`/spr/${getLanguage}`}>SPR</Link>
-                <Link className="btn-primary" to={`/levelcheck/${getLanguage}`}>Level Check</Link>
-
+                <Link className="btn-primary" to={`/spr/${getLanguage()}`}>SPR</Link>
+                <Link className="btn-primary" to={`/levelcheck/${getLanguage()}`}>Level Check</Link>
             </div>
            
         </div>

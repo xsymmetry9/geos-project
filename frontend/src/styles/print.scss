@@ -31,6 +31,15 @@ p{
     font-size: base.$print-font-size-1;
 }
 
+.papersize-A4{
+    width: 210mm;
+    height: 297mm;
+    margin: auto;
+    background-color: white;
+    padding: 6mm 8mm 6mm 8mm;
+    box-sizing: border-box;
+    font-family: base.$font-secondary;
+}
 .papersize{
         width: 210mm;
         height: 297mm;
@@ -71,7 +80,6 @@ p{
 
 }
 .justify-end{
-    // justify-self: end;
     padding-right: 5px;
 }
 
@@ -92,63 +100,78 @@ p{
     gap: 10px;
 }
 
-.label-containers{
-    padding: 3px 0;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    p{
-        font-size: 10.5px;
-    }
+
+
+// --------------------------- Styling for levels -----------------------------------------
+table, th, td, tr{
+    border-collapse: collapse;
 }
-.print-table{    font-family: base.$font-secondary;
-    width: 100%;
-    border: 1px solid black;
+.table-levels{
+    $border-color: black;
+    $spacing: 1.5px;
+
+    font-family: base.$font-secondary;
     font-size: base.$print-font-size-1;
-    p{
-        font-size: base.$print-font-size-1;
-    }
-    th{
-        border: none;
-        background-color: $background-color-dark;
-        font-size: base.$print-font-size-1;
-        font-weight: 400;
-        padding: 1.5px;
-        text-align: center;
-        text-transform: capitalize;
-        border-right: 1px solid black;
+    width: 100%;
 
-        &:last-child
-        {
-            border-right: none;
+    caption{
+        caption-side: top;
+        .caption-content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            span{
+                font-size: 10.5px;
+            }
         }
-
+  
+      
     }
-
-    trow{
-        background-color: $background-light;
-        color: white;
+    tr{
         display: grid;
         width: 100%;
         grid-template-columns: 70px repeat(7, 1fr);
-        &:nth-child(n+2)
-        {
-            background-color: $background-light;
-            color: black;
-        }
-        &:nth-child(odd)
-        {
-            background-color: #fff;
+        text-align: center;
+    }
+    thead{
+        tr{
+            background-color: $background-color-dark;
+            border-top: 1px solid $border-color;
+            border-bottom: 1px solid $border-color;
+
+
+            th{
+                font-weight: 400;
+                color: #fff;
+                text-transform: capitalize;
+                border-right: 1px solid $border-color;
+                padding: $spacing 0;
+                &:first-child{
+                    border-left: 1px solid $border-color;
+                }
+            }
         }
     }
-
-    .print-col{
-        border: none;
-        text-align: center;
-        padding: 2px 0;
-        border-right: 1px solid black;
-        &:last-child{
-            border: none;
+    tbody{
+        tr{
+            border-bottom: 1px solid $border-color;
+            &:nth-child(odd)
+            {
+                background-color: $background-light;
+                color: black;
+            }
+            &:nth-child(even)
+            {
+                background-color: #fff;
+            }
+            td{
+                border-right: 1px solid $border-color;
+                padding: $spacing 0;
+                &:first-child{
+                    border-left: 1px solid $border-color;
+                }
+            }
         }
     }
 

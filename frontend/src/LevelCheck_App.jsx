@@ -1,7 +1,7 @@
 const levelcheck_app = () =>{
     return (
         <>
-            <h1>Level Check Form</h1>
+            <h1 className="text-center">Coming soon</h1>
         </>
     )
 }
