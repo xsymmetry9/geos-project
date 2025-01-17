@@ -1,0 +1,166 @@
+{
+    "english": {
+        "form": {
+            "title": "Personal Information",
+            "input_name": "name",
+            "input_course": "course",
+            "input_textbook": "textbook",
+            "input_attendance": "attendance",
+            "input_totallessons": "total lessons",
+            "comment": "comment"
+        },
+        "SPR": {
+            "title": "Student Progress Report",
+            "student_name": "student's name",
+            "course": "course",
+            "textbook": "textbook",
+            "date": "date",
+            "attendance": "attendance",
+            "total_lessons": "total lessons",
+            "times": "times",
+            "%_of_attendance": "% of attendance",
+            "caption": {
+                "low_beginner": "low beginner",
+                "low_intermediate": "low intermediate",
+                "intermediate": "intermediate",
+                "upper_intermediate": "upper intermediate",
+                "advanced": "advanced"
+            },
+            "initial": "initial",
+            "target": "target",
+            "final": "final",
+            "vocabulary": "vocabulary",
+            "grammar": "grammar",
+            "pronunciation": "pronunciation",
+            "listening": "listening",
+            "conversation": "conversation",
+            "total": "total",
+            "average": "average",
+            "comment": "comment",
+            "signature": "signature"
+        }
+    },
+    "chinese": {
+        "form": {
+            "title": "個人信息",
+            "input_name": "姓名",
+            "input_course": "課程",
+            "input_textbook": "教材",
+            "input_attendance": "出勤",
+            "input_totallessons": "總課時",
+            "comment": "評論"
+        },
+        "SPR": {
+            "title": "學生進度報告",
+            "student_name": "學生姓名",
+            "course": "課程",
+            "textbook": "教材",
+            "date": "日期",
+            "attendance": "出勤",
+            "total_lessons": "總課時",
+            "times": "次數",
+            "%_of_attendance": "出勤率",
+            "caption": {
+                "low_beginner": "初級",
+                "low_intermediate": "中低級",
+                "intermediate": "中級",
+                "upper_intermediate": "中高級",
+                "advanced": "高級"
+            },
+            "initial": "起始水平",
+            "target": "目標水平",
+            "final": "最終水平",
+            "vocabulary": "詞彙",
+            "grammar": "語法",
+            "pronunciation": "發音",
+            "listening": "聽力",
+            "conversation": "會話",
+            "total": "總分",
+            "average": "平均分",
+            "comment": "評論",
+            "signature": "簽名"
+        }
+    },
+    "korean": {
+        "form": {
+            "title": "개인 정보",
+            "input_name": "이름",
+            "input_course": "과정",
+            "input_textbook": "교재",
+            "input_attendance": "출석",
+            "input_totallessons": "총 수업",
+            "comment": "댓글"
+        },
+        "SPR": {
+            "title": "학생 진도 보고서",
+            "student_name": "학생 이름",
+            "course": "과정",
+            "textbook": "교재",
+            "date": "날짜",
+            "attendance": "출석",
+            "total_lessons": "총 수업",
+            "times": "횟수",
+            "%_of_attendance": "출석률",
+            "caption": {
+                "low_beginner": "초급",
+                "low_intermediate": "중하급",
+                "intermediate": "중급",
+                "upper_intermediate": "중상급",
+                "advanced": "고급"
+            },
+            "initial": "시작 수준",
+            "target": "목표 수준",
+            "final": "최종 수준",
+            "vocabulary": "어휘",
+            "grammar": "문법",
+            "pronunciation": "발음",
+            "listening": "듣기",
+            "conversation": "회화",
+            "total": "총점",
+            "average": "평균",
+            "comment": "댓글",
+            "signature": "서명"
+        }
+    },
+    "japanese": {
+        "form": {
+            "title": "個人情報",
+            "input_name": "名前",
+            "input_course": "コース",
+            "input_textbook": "教科書",
+            "input_attendance": "出席",
+            "input_totallessons": "合計授業数",
+            "comment": "コメント"
+        },
+        "SPR": {
+            "title": "学生進捗レポート",
+            "student_name": "学生名",
+            "course": "コース",
+            "textbook": "教科書",
+            "date": "日付",
+            "attendance": "出席",
+            "total_lessons": "合計授業数",
+            "times": "回数",
+            "%_of_attendance": "出席率",
+            "caption": {
+                "low_beginner": "初級",
+                "low_intermediate": "初中級",
+                "intermediate": "中級",
+                "upper_intermediate": "中上級",
+                "advanced": "上級"
+            },
+            "initial": "開始レベル",
+            "target": "目標レベル",
+            "final": "最終レベル",
+            "vocabulary": "語彙",
+            "grammar": "文法",
+            "pronunciation": "発音",
+            "listening": "リスニング",
+            "conversation": "会話",
+            "total": "合計",
+            "average": "平均",
+            "comment": "コメント",
+            "signature": "署名"
+        }
+    }
+}

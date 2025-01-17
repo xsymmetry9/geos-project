@@ -19,7 +19,11 @@ ChartJS.register(
     Legend
 );
 
-const Graph = ({data}) =>{
+import labelText from "../assets/other/labelText.json";
+
+const text = (phrase, language) => labelText[language]['SPR'][phrase];
+
+const Graph = ({data, language}) =>{
     const options = {
         plugins:{
             layout:{
@@ -34,7 +38,7 @@ const Graph = ({data}) =>{
                     position: "center",
                 },
                 labels:{
-                    font: {size: 12},
+                    font: {size: 13},
                     color: "black"
                 },
             },
@@ -58,7 +62,7 @@ const Graph = ({data}) =>{
                 pointLabels:{
                     color: "gray",
                     font: {
-                        size: 11,
+                        size: 12,
                     },
                 }
              
@@ -67,24 +71,24 @@ const Graph = ({data}) =>{
         
     };
     const graphData = {
-        labels: ["Vocabulary", "Grammar", "Pronunciation", "Listening", "Conversation"],
+        labels: [text("vocabulary", language), text("grammar", language), text("pronunciation", language), text("listening", language), text("conversation", language)],
         datasets:[
             {
-                label: "Initial",
+                label: text("initial", language),
                 data: [data.levels[0].initial, data.levels[1].initial, data.levels[2].initial, data.levels[3].initial, data.levels[4].initial],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(0, 0, 250)',
                 borderWidth: 1.5,
             },
             {
-                label: "Final",
+                label: text("final", language),
                 data: [data.levels[0].final, data.levels[1].final, data.levels[2].final, data.levels[3].final, data.levels[4].final],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(0, 250, 0)',
                 borderWidth: 1.5,
             },
             {
-                label: "Target",
+                label: text("target", language),
                 data: [data.levels[0].target, data.levels[1].target, data.levels[2].target, data.levels[3].target, data.levels[4].target],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(250, 0, 0)',

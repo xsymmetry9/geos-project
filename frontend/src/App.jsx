@@ -2,7 +2,6 @@ import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import { createContext, useState} from "react";
 import { Outlet } from "react-router-dom";
-import {StudentProvider} from "./utils/Student";
 
 export const LanguageContext = createContext();
 
@@ -15,13 +14,11 @@ const Layout = () =>{
     }
     return(
         <LanguageContext.Provider value={{language, setLanguage}}>
-            <StudentProvider>
             <div className="app-root">
                 <Header/>
                     <Outlet />
                 <Footer language={language} handler={handler}/> 
             </div>
-            </StudentProvider>
         </LanguageContext.Provider>
 
     )

@@ -21,7 +21,7 @@ const Button = ({page, handler, language}) =>{
                 ) : (
                     <>
                         <input className="btn-primary" type="button" onClick={handler} name ="back" value={title[language.toLowerCase()].back_page} />
-                        <Link to={`/spr/${language.toLowerCase()}/preview`}>Preview</Link>
+                        <Link className="btn-primary" to={`/spr/${language.toLowerCase()}/preview`}>Preview</Link>
                     </>
                 )
             }

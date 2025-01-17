@@ -73,12 +73,13 @@ footer{
 .btn-primary{
     $length: 150px;
     $height: calc($length/3)px;
-    $bgColor: blue;
+    $bgColor: base.$button-bg-color;
 
     cursor: pointer;
     font-size: base.$font-size-1;
     font-weight: 600;
     text-transform: capitalize;
+    text-align: center;
     max-width: $length;
     background-color: $bgColor;
     color: base.$button-primary-color;

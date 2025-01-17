@@ -61,8 +61,6 @@ const Create = () =>{
 
     const handleFormLevelData = (e) =>{
         const {name, value} = e.currentTarget;
-        console.log(name);
-        console.log(value);
 
         const parentCategory = name.split('-')[0];
         const childCategory = name.split('-')[1];
@@ -88,10 +86,10 @@ const Create = () =>{
         });
     }
 
-    const handleSubmit = () =>{
-        console.log('Form submitted:', formData);
-        localStorage.removeItem('SPR_Form'); //Clear Localstorage upon submission.
-    }
+    // const handleSubmit = () =>{
+    //     console.log('Form submitted:', formData);
+    //     localStorage.removeItem('SPR_Form'); //Clear Localstorage upon submission.
+    // }
 
 
     return(

@@ -205,6 +205,8 @@ table, th, td, tr{
     aspect-ratio: 1/1;
 }
 .card{
+    $spacing-1: .3rem;
+    padding: 0;
     height: 240px;
     .card-title{
         background-color: $background-color-dark;
@@ -212,10 +214,11 @@ table, th, td, tr{
         color: white;
         p{
             font-size: 13.5px;
+            margin-left: $spacing-1;
         }
     }
     .card-description{
-        padding: .3rem;
+        padding: $spacing-1;
         line-height: 1.1;
         p{
             line-height: 1.3;

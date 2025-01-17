@@ -9,8 +9,8 @@ const App = () =>{
     })
     return(
         <div className="content">
-            <Link to={`/spr/${language}/create`}>Create</Link>
-            <Link to={`/spr/dashboard`}>View Students</Link>
+            <Link className="btn btn-primary" to={`/spr/${language}/create`}>Create</Link>
+            <Link className="btn btn-primary" to={`/spr/dashboard`}>View Students</Link>
         </div>       
     )
 }

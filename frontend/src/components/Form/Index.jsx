@@ -25,13 +25,11 @@ const Form = ({data, handleData, handleLevelData, language}) => {
         } else if (name === "back"){
             setPage(prev => prev - 1);
         } else if(name ==="preview"){
-            <h1>Hello</h1>
+           console.log("preview");
         }
         
     }
 
-    const handler = () =>{
-    }
     return(
         <div className={`form-root`}>
             <Pagination page = {page} language={language}/>
