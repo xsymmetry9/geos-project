@@ -12,7 +12,7 @@
   border: 2px solid base.$input-border-primary-color;
   box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
   font-family: base.$font-secondary;
-  font-size: .9rem;
+  font-size: 1.1rem;
   padding: 12px;
   &:focus, &:hover{
       border: 2px solid base.$color-active;
@@ -130,6 +130,8 @@ textarea{
 .input-wrapper{
     padding: 5px 10px;
     p{
+      font-size: 1.1rem;
+      line-height: 1.1;
         padding: 0 0 9px 0;
     } 
     height: 80px;
@@ -270,4 +272,11 @@ textarea{
 
 .bgColorInactive{
   background-color: gray;
+}
+.level-container{
+  
+  p{
+    font-size: .9rem;
+    font-weight: 600;
+  }
 }

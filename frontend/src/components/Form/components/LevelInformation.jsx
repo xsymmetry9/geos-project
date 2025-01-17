@@ -29,13 +29,13 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
             <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/>
                 <div className="form-levels-container">
                     <div className="level-container">
-                    <p className="capitalized">{titleLanguage[language.toLowerCase()][0]}</p>
-                    <div className="option-container">
-                        <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
-                            <option value="">Select score</option>
-                            {levelValue.map((item_Value)=> <option value={item_Value}>{item_Value}</option>)}
-                        </select>
-                    </div>
+                        <p className="capitalized">{titleLanguage[language.toLowerCase()][0]}</p>
+                        <div className="option-container">
+                            <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
+                                <option value="">Select score</option>
+                                {levelValue.map((item_Value)=> <option value={item_Value}>{item_Value}</option>)}
+                            </select>
+                        </div>
                     </div>
                     <div className="level-container">
                     <p className="capitalized">{titleLanguage[language.toLowerCase()][1]}</p>
