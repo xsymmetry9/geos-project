@@ -8,7 +8,7 @@ import Signature from "../components/PrintSPR/Signature";
 import Comment from "../components/PrintSPR/Comment";
 import PlotCards from "../components/PrintSPR/PlotCards"
 
-const Preview = ({parsedData}) =>{
+const SPRContent = ({parsedData}) =>{
     const {language} = useParams();
    
     const {name, course, textbook, attendance, totalLessons, levels, comment} = parsedData;
@@ -37,4 +37,4 @@ const Preview = ({parsedData}) =>{
     )
 }
 
-export default Preview;
+export default SPRContent;

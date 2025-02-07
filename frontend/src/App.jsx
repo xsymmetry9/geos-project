@@ -8,15 +8,16 @@ export const LanguageContext = createContext();
 const Layout = () =>{
     const [language, setLanguage] = useState("english"); //Change user's language
 
-
     const handler = (e) =>{
         setLanguage(e.currentTarget.value);
     }
     return(
         <LanguageContext.Provider value={{language, setLanguage}}>
-            <div className="app-root">
+            <div className="app-root relative">
                 <Header/>
-                    <Outlet />
+                    <div className="content">
+                        <Outlet />
+                    </div>
                 <Footer language={language} handler={handler}/> 
             </div>
         </LanguageContext.Provider>

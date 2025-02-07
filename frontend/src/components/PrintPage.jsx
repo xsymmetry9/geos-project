@@ -19,7 +19,7 @@ const Print = (props) => {
             <ComponentToPrint ref={contentRef} {...props} />
             <div className="btns-container"> 
                 <ReactToPrint
-                    trigger={() => <button id="print">Click here to print</button>}
+                    trigger={() => <button id="print" className="btn btn-primary">Click here to print</button>}
                     content={() => contentRef.current}
                     documentTitle="Student Progress Report"
                     onBeforePrint={() => console.log("Printing...")}

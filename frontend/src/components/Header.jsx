@@ -49,14 +49,14 @@ const Header = () =>{
                     </div>
                 <nav className="navigation-root">
                     <ul className='navigation-container'>
-                        <li className='btn btn-navigation' id="input">
+                        {/* <li className='btn btn-navigation' id="input">
                             <a href= {`${langCode()}input`} className="nav-icon-container"><FontAwesomeIcon icon={faPencil}></FontAwesomeIcon><span className="hidden">input</span></a>
                         </li>
                         <li className='btn btn-navigation' id="preview">
                             <a href={`${langCode()}preview`} className="nav-icon-container">
                             <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon><span className="hidden">preview</span></a></li>
                         <li className="btn btn-navigation" id="print">
-                            <a href={`${langCode()}print`} className="nav-icon-container"><FontAwesomeIcon icon={faPrint}></FontAwesomeIcon><span className="hidden">print</span></a></li>
+                            <a href={`${langCode()}print`} className="nav-icon-container"><FontAwesomeIcon icon={faPrint}></FontAwesomeIcon><span className="hidden">print</span></a></li> */}
                         <li className="btn btn-navigation" id="nav-languages">
                             <Dropdown buttonTitle = {languageTitle[language.toLowerCase()]} title ={title} language = {language}/>
                         </li>

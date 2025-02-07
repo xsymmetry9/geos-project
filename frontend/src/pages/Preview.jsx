@@ -1,6 +1,6 @@
 import SPRContent from "../components/SPRContent";
 import { useState, useEffect } from "react";
-import ButtonPrint from "../components/ButtonPrint";
+import PrintSPR from "../components/PrintSPR";
 
 const Preview = () => {
     const [parsedData, setParsedData] = useState(null);
@@ -18,8 +18,9 @@ const Preview = () => {
 
     return (
         <>
-            <SPRContent parsedData={parsedData} />
-            <ButtonPrint parsedData={parsedData} />
+            <div className="printPreview"> 
+                <PrintSPR parsedData={parsedData} />
+            </div>
         </>
     );
 };
