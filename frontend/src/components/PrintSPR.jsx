@@ -1,34 +1,25 @@
-import * as React from "react";
+import React, {useRef} from "react";
 import { useReactToPrint } from "react-to-print";
+import ComponentToPrint from "./ComponentToPrint";
 
 const ButtonPrint = ({ parsedData }) => {
-    const componentRef = React.useRef();
-    const [ComponentToPrint, setComponentToPrint] = React.useState(null);
-
-    React.useEffect(() => {
-        import("./ComponentToPrint").then((module) => {
-            setComponentToPrint(() => module.default);
-        });
-    }, []);
-
+    const componentRef = useRef();
+   
+    const reactToPrintContent = () =>{
+        return componentRef.current;
+    }
     const handlePrint = useReactToPrint({
         documentTitle: "SPR",
-        content: () => componentRef.current,
-    });
+        content: () => componentRef.current
+    })
 
     return (
         <>
             <div className="print-component">
-                {ComponentToPrint ? (
-                    <ComponentToPrint ref={componentRef} parsedData={parsedData} />
-                ) : (
-                    <p>Loading...</p>
-                )}
+                <ComponentToPrint ref={componentRef} parsedData={parsedData} />
             </div>
             <div className="center">
-                <button className="btn btn-primary print" onClick={handlePrint} disabled={!ComponentToPrint}>
-                    Print
-                </button>
+                <button className="btn btn-primary print" onClick={() => handlePrint(reactToPrintContent)}>Print</button>
             </div>
         </>
     );
