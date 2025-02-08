@@ -49,10 +49,10 @@ const Header = () =>{
                     </div>
                 <nav className="navigation-root">
                     <ul className='navigation-container'>
-                        {/* <li className='btn btn-navigation' id="input">
-                            <a href= {`${langCode()}input`} className="nav-icon-container"><FontAwesomeIcon icon={faPencil}></FontAwesomeIcon><span className="hidden">input</span></a>
+                        <li className='btn btn-navigation' id="home">
+                            <a href= {`/`} className="nav-icon-container"><FontAwesomeIcon icon={faPencil}></FontAwesomeIcon><span className="hidden">input</span></a>
                         </li>
-                        <li className='btn btn-navigation' id="preview">
+                        {/* <li className='btn btn-navigation' id="preview">
                             <a href={`${langCode()}preview`} className="nav-icon-container">
                             <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon><span className="hidden">preview</span></a></li>
                         <li className="btn btn-navigation" id="print">
