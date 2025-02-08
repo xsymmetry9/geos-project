@@ -2,6 +2,7 @@ import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import { createContext, useState} from "react";
 import { Outlet } from "react-router-dom";
+import "./styles/index.scss";
 
 export const LanguageContext = createContext();
 

@@ -24,14 +24,13 @@ const Homepage = () =>{
     }
 
     return(
-        <div className="content">
-            <h1>{title[getLanguage()]}</h1>
+        <>
+            <h1 className="center">{title[getLanguage()]}</h1>
             <div className="buttons-navigation-container">
                 <Link className="btn-primary" to={`/spr/${getLanguage()}`}>SPR</Link>
                 <Link className="btn-primary" to={`/levelcheck/${getLanguage()}`}>Level Check</Link>
-            </div>
-           
-        </div>
+            </div> 
+        </>
     )
 }
 

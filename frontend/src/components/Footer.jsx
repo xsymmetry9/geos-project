@@ -5,8 +5,8 @@ const Footer = () =>{
     return(
         <footer>
             <div className='footer-container'>
-                <p>&copy; 2024 GEOS property</p>
-                <p>Created by Gary</p>
+                <p>&copy; GEOS Online Language Academy All Rights Reserved.</p>
+                <p>Created by Gary - {date}</p>
             </div>
         </footer>
     )

@@ -1,5 +1,9 @@
 @use "../base.scss";
 
+p{
+  font-size: 2rem;
+}
+
 .form-input-primary{
   outline: none;
   color: base.$primary-color-dark;
@@ -12,7 +16,7 @@
   border: 2px solid base.$input-border-primary-color;
   box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
   font-family: base.$font-secondary;
-  font-size: 1.1rem;
+  font-size: base.$font-size-1;
   padding: 12px;
   &:focus, &:hover{
       border: 2px solid base.$color-active;
@@ -26,7 +30,6 @@ textarea{
 
 .card{
     padding: 2rem;
-    border: 1px solid red;
 }
 
 .form-root{
@@ -35,16 +38,17 @@ textarea{
   display: block;
   position: relative;
   padding: 2rem 1.5rem;
-  max-width: 500px;
-  width: 100%;
-  // min-height: 400px;
+  width: 55rem;
+  box-shadow: .5px .5px 3px 3px rgba(25, 23, 23, 0.3);
   height: auto;
-  border: 2px solid gray;
   border-radius: 25px;
   margin: 3rem auto;
   @media (max-width: 55em) {
     border: none;
     box-shadow: none;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
   }
 }
 .pagination-container{
@@ -123,18 +127,15 @@ textarea{
 }
 .input-container{
     margin-top: 1.2rem;
-    max-width: 500px;
     width: 100%;
     margin-inline: auto;
 }
 .input-wrapper{
     padding: 5px 10px;
     p{
-      font-size: 1.1rem;
-      line-height: 1.1;
+        font-size: base.$font-size-1;
         padding: 0 0 9px 0;
     } 
-    height: 80px;
 }
 
 .wrapper-level-input{
@@ -182,7 +183,6 @@ textarea{
   p{
     font-size: 1.1rem;
   }
-
   .input-student-level-container{
       display: grid;
       grid-template-columns: max-content 1fr;
@@ -193,9 +193,6 @@ textarea{
   }
 }
 
-#personal-information{
-
-}
 #feedback{
   height: 300px;
   overflow: auto;

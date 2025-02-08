@@ -30,7 +30,7 @@ const PersonalInformation = ({data, handleData, language}) =>{
 
     return(
         <>
-            <div className="container" id="personal-information">
+            <div id="personal-information">
                 <label htmlFor="name">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_name}</p>
@@ -54,10 +54,11 @@ const PersonalInformation = ({data, handleData, language}) =>{
                 <label htmlFor= "textbook">
                     <div className="input-wrapper">
                         <p className="uppercase">{input_textbook}</p>
-                        <select className="form-input-primary" name="textbook" id="textbook" value={textbook} onChange={handleData}>
+                        <input className="form-input-primary" type="text" name="textbook" value={textbook} onChange={handleData} />
+                        {/* <select className="form-input-primary" name="textbook" id="textbook" value={textbook} onChange={handleData}>
                             <option value="DEFAULT">Textbook name</option>
                             {textbooks.English.map((item, index) => <option key={index} value={item}>{item}</option>)}
-                        </select>
+                        </select> */}
                     </div>
                 </label>
                 <label htmlFor= "attendance">

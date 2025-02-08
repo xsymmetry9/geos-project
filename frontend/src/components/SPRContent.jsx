@@ -6,7 +6,7 @@ import {TitleSPR, StudentInfo, AttendanceInfo} from "../components/PrintSPR/Stud
 import Table from "../components/PrintSPR/Table";
 import Signature from "../components/PrintSPR/Signature";
 import Comment from "../components/PrintSPR/Comment";
-import PlotCards from "../components/PrintSPR/PlotCards"
+import PlotCards from "../components/PrintSPR/PlotCards";
 
 const SPRContent = ({parsedData}) =>{
     const {language} = useParams();

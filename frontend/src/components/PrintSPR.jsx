@@ -15,8 +15,12 @@ const ButtonPrint = ({ parsedData }) => {
 
     return (
         <>
-            <ComponentToPrint ref={componentRef} parsedData={parsedData} />
-            <button className="btn btn-primary print" onClick={() => handlePrint(reactToPrintContent)}>Print</button>
+            <div className="print-component">
+                <ComponentToPrint ref={componentRef} parsedData={parsedData} />
+            </div>
+            <div className="center">
+                <button className="btn btn-primary print" onClick={() => handlePrint(reactToPrintContent)}>Print</button>
+            </div>
         </>
     );
 };
