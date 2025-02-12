@@ -244,8 +244,6 @@ textarea{
 }
 
 .form-levels-container{
-  background-color: base.$color-light-gray;
-  padding: 12px;
   display: grid;
   gap: 12px;
 
@@ -264,12 +262,10 @@ textarea{
 }
 
 .bgColorActive{
-  background-color: base.$color-light-gray;
+  border-bottom: 3px solid base.$color-active;
 }
 
-.bgColorInactive{
-  background-color: gray;
-}
+
 .level-container{
   
   p{

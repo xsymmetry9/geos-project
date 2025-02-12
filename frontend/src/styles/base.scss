@@ -34,8 +34,14 @@ $button-bg-color: rgb(9, 197, 235);
 $button-font-color: $primary-color-dark;
 
 $spacing-sm: 8px;
-$spacing-m: 12px;
-$spacing-lg: 16px;
+$spacing-m: $spacing-sm + 4px;
+$spacing-lg: $spacing-sm + 8px;
+$spacing-xl: $spacing-sm + 8px;
+$spacing-2xl: $spacing-sm + 12px;
+$spacing-4xl: $spacing-sm + 14px;
+$spacing-6xl: $spacing-sm + 16px;
+$spacing-8xl: $spacing-sm + 18px;
+
 
 .spacing-b-1{
     padding-bottom: 1rem; 

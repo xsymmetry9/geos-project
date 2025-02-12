@@ -32,9 +32,6 @@ const Form = ({data, handleData, handleLevelData, language}) => {
         }
         
     }
-
-    const handler = () =>{
-    }
     return(
         <div className={`form-root`}>
             <Pagination page = {page} language={language}/>

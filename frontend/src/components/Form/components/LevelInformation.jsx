@@ -2,8 +2,7 @@ import  {useState} from 'react';
 import LevelTabs from "./LevelTabs";
 const LevelInformation = ({data, handleLevelData, language}) =>{
 
-    // const {levels} = data;
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(0);
     const titles = {
         english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
         chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
@@ -21,7 +20,6 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
 
     const handlerPage = (e) =>{
         const {name} = e.currentTarget;
-        console.log(name);
         setPage(name);
     }
     return(
@@ -33,7 +31,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
                         <div className="option-container">
                             <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
                                 <option value="">Select score</option>
-                                {levelValue.map((item_Value)=> <option value={item_Value}>{item_Value}</option>)}
+                                {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                             </select>
                         </div>
                     </div>
@@ -42,7 +40,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
                     <div className="option-container">
                         <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-target`} name={`${titles['english'][page]}-target`} value={data.levels[page].target} onChange={handleLevelData}>
                             <option value="">Select score</option>
-                            {levelValue.map((item_Value)=> <option value={item_Value}>{item_Value}</option>)}
+                            {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                         </select>
                     </div>
                     </div>
@@ -51,7 +49,7 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
                     <div className="option-container">
                         <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-final`} name={`${titles['english'][page]}-final`} value={data.levels[page].final} onChange={handleLevelData}>
                             <option value="">Select score</option>
-                            {levelValue.map((item_Value)=> <option value={item_Value}>{item_Value}</option>)}
+                            {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                         </select>
                     </div>
                     </div>

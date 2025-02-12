@@ -4,9 +4,9 @@ const LevelTabs = ({currentPage, titles, handlerPage}) =>{
             {titles.map((item, index) =>{
                 return(
                     <>
-                        <div key={index} className={`nameTab-container ${(currentPage == index )? "bgColorActive" : "bgColorInactive"}`}>
+                        <div key={`${item}-${index}`} className={`nameTab-container ${currentPage == index && "bgColorActive"}`}>
                             <input
-                                className={`tabTitle ${currentPage == index ? "bgColorActive" : "bgColorInactive"}`} 
+                                className={`tabTitle ${currentPage == index && "bgColorActive"}`} 
                                 type="button" onClick={handlerPage} name={index} value={item}/>                    
                         </div>
                     </>

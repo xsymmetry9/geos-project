@@ -27,6 +27,7 @@ const Create = () =>{
     // Save form data whenever it changes
     useEffect(() =>{
         localStorage.setItem('SPR_Form', JSON.stringify(formData));
+
     }, [formData]);
 
     const handleFormData = (e) =>{
@@ -85,12 +86,6 @@ const Create = () =>{
             };
         });
     }
-
-    // const handleSubmit = () =>{
-    //     console.log('Form submitted:', formData);
-    //     localStorage.removeItem('SPR_Form'); //Clear Localstorage upon submission.
-    // }
-
 
     return(
         <>

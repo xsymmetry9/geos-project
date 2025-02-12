@@ -10,7 +10,6 @@ const App = () =>{
     return(
         <div className="content">
             <Link className="btn btn-primary" to={`/spr/${language}/create`}>Create</Link>
-            {/* <Link className="btn btn-primary" to={`/spr/dashboard`}>View Students</Link> */} 
         </div>       
     )
 }

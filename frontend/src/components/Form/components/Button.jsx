@@ -6,8 +6,6 @@ const Button = ({page, handler, language}) =>{
         "korean": {next_page: "다음", back_page: "이전", print_page: "인쇄"},
         "japanese": {next_page: "次へ", back_page: "前へ", print_page: "印刷"},
     }
-
-    console.log(title[language.toLowerCase()].next_page);
     return(
         <div className="container" id="buttons">
             {page === 0 ? (
