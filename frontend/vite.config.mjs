@@ -16,5 +16,8 @@ export default defineConfig({
         api: 'modern-compiler',
       }
     }
+  },
+  server: {
+    port: 3000
   }
 })
