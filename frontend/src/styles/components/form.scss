@@ -1,14 +1,9 @@
 @use "../base.scss";
 
-p{
-  font-size: 2rem;
-}
-
 .form-input-primary{
   outline: none;
   color: base.$primary-color-dark;
   background-color: base.$bg-white-600;
-  font-size: base.$font-size-1;
   width: 100%;
   border: none;
   border-radius: 5px;
@@ -16,7 +11,6 @@ p{
   border: 2px solid base.$input-border-primary-color;
   box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
   font-family: base.$font-secondary;
-  font-size: base.$font-size-1;
   padding: 12px;
   &:focus, &:hover{
       border: 2px solid base.$color-active;
@@ -35,7 +29,6 @@ textarea{
 .form-root{
   box-sizing: border-box;
   background-color: base.$bg-white-600;
-  display: block;
   position: relative;
   padding: 2rem 1.5rem;
   width: 55rem;
@@ -55,6 +48,7 @@ textarea{
   $height: 80px;
   $width: 90%;
   $square_width: calc($width/4);
+  padding-bottom: 12px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -131,11 +125,9 @@ textarea{
     margin-inline: auto;
 }
 .input-wrapper{
-    padding: 5px 10px;
-    p{
-        font-size: base.$font-size-1;
-        padding: 0 0 9px 0;
-    } 
+  p{
+    font-size: 12px;
+  }
 }
 
 .wrapper-level-input{
@@ -154,14 +146,8 @@ textarea{
     {
         border-radius: 0px;
     }
-    p{
-        line-height: 1.5;
-        font-size: .9rem;
-    }
 }
-
 .level-information-title{
-    font-size: base.$font-size-2;
     padding: 1rem;
     line-height: 1.5;
 }
@@ -172,7 +158,6 @@ textarea{
     margin-top: 1rem;
     min-height: 150px;
     background-color: #fff;
-
 }
 
 .input-student-level-information{
@@ -180,9 +165,7 @@ textarea{
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   padding: 12px;
-  p{
-    font-size: 1.1rem;
-  }
+ 
   .input-student-level-container{
       display: grid;
       grid-template-columns: max-content 1fr;
@@ -192,7 +175,6 @@ textarea{
       padding: 16px;
   }
 }
-
 #feedback{
   height: 300px;
   overflow: auto;
@@ -203,7 +185,6 @@ textarea{
   display: flex;
   justify-content: space-around;
 }
-
 .container{
   margin-top: 2rem;
   width: 100%;
@@ -229,15 +210,14 @@ textarea{
 }
 
 .levelTab-container{
-
   text-transform: capitalize;
   font-weight: 600;
   text-shadow: 1px 1px 1.5px 1.5px rgba(0, 0, 0, .2);
   font-size: .7rem;
   display: flex;
   justify-content: center;
-  gap: 10px;
- 
+  gap: 8px;
+  padding-bottom: 12px;
 }
 
 .form-levels-container{
@@ -252,7 +232,7 @@ textarea{
   border: 1px solid black;
   background-color: #fff;
   border: none;
-  outline: 3px solid base.$button-bg-color;
+  outline: 1px solid base.$button-bg-color;
   color: base.$font-color-dark;
   &:hover{
     background-color: base.$button-bg-color;
@@ -277,13 +257,4 @@ textarea{
   background-color: base.$button-bg-color;
   outline: none;
   color: #fff;
-}
-
-
-.level-container{
-  
-  p{
-    font-size: .9rem;
-    font-weight: 600;
-  }
 }

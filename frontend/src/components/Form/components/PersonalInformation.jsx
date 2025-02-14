@@ -32,40 +32,40 @@ const PersonalInformation = ({data, handleData, language}) =>{
             <div id="personal-information">
                 <label htmlFor="name">
                     <div className="input-wrapper">
-                        <p className="uppercase">{input_name}</p>
-                        <input className="form-input-primary" type="text" name="name" value={name} onChange={handleData} />
+                        <p>{input_name}</p>
+                        <input type="text" name="name" value={name} onChange={handleData} />
                     </div>
                 </label>
                 <label htmlFor="course">
                     <div className="input-wrapper">
-                        <p className="uppercase">{input_course}</p>
-                        <select className="form-input-primary" id="course" name="course" value={course} onChange={handleData}>
-                            <option value="">Select course</option>
-                            <option value="ONLINE">ONLINE</option>
-                            <option value="PL">PL</option>
-                            <option value="GL">GL</option>
-                            <option value="SGL">SGL</option>
-                            <option value="FLEX">FLEX</option>
+                        <p className="text-2 uppercase">{input_course}</p>
+                        <select className="text-2 form-input-primary" id="course" name="course" value={course} onChange={handleData}>
+                            <option className="text-2" value="">Select course</option>
+                            <option className="text-2" value="ONLINE">ONLINE</option>
+                            <option className="text-2" value="PL">PL</option>
+                            <option className="text-2" value="GL">GL</option>
+                            <option className="text-2" value="SGL">SGL</option>
+                            <option className="text-2" value="FLEX">FLEX</option>
                         </select>
                     </div>
                     
                 </label>
                 <label htmlFor= "textbook">
                     <div className="input-wrapper">
-                        <p className="uppercase">{input_textbook}</p>
-                        <input className="form-input-primary" type="text" name="textbook" value={textbook} onChange={handleData} />
+                        <p className="text-2 uppercase">{input_textbook}</p>
+                        <input className="text-2 form-input-primary" type="text" name="textbook" value={textbook} onChange={handleData} />
                     </div>
                 </label>
                 <label htmlFor= "attendance">
                     <div className="input-wrapper">
-                        <p className="uppercase">{input_attendance}</p>
-                        <input className="form-input-primary" type="number" name="attendance" id="attendance" value={attendance} onChange={handleData}/>
+                        <p className="text-2 uppercase">{input_attendance}</p>
+                        <input className="text-2 form-input-primary" type="number" name="attendance" id="attendance" value={attendance} onChange={handleData}/>
                     </div>
                 </label>                             
                 <label htmlFor="totalLessons">
                     <div className='input-wrapper'>
-                        <p className="uppercase">{input_totallessons}</p>
-                        <input className="form-input-primary" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleData}/>
+                        <p className="text-2 uppercase">{input_totallessons}</p>
+                        <input className="text-2 form-input-primary" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleData}/>
                     </div>  
                 </label>
             </div>
