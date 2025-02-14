@@ -1,6 +1,5 @@
 import {useState} from "react";
 import form_languages from "../form_languages.js";
-import textbooks from "../../../assets/other/textbooks.json";
 
 const PersonalInformation = ({data, handleData, language}) =>{
     const {name, course, textbook, attendance, totalLessons} = data;
@@ -55,10 +54,6 @@ const PersonalInformation = ({data, handleData, language}) =>{
                     <div className="input-wrapper">
                         <p className="uppercase">{input_textbook}</p>
                         <input className="form-input-primary" type="text" name="textbook" value={textbook} onChange={handleData} />
-                        {/* <select className="form-input-primary" name="textbook" id="textbook" value={textbook} onChange={handleData}>
-                            <option value="DEFAULT">Textbook name</option>
-                            {textbooks.English.map((item, index) => <option key={index} value={item}>{item}</option>)}
-                        </select> */}
                     </div>
                 </label>
                 <label htmlFor= "attendance">
