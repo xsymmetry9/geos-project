@@ -12,14 +12,12 @@ input, textarea, option, select{
   border: 2px solid base.$input-border-primary-color;
   box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
   padding: base.$spacing-1;
-  &:focus, &:hover{
-      border: 2px solid base.$color-active;
-      box-shadow: 1px 1px .5px .5px rgba(255, 166, 0, 0.3)
-  }
+
 }
 textarea{
-  height: 100%;
   resize: vertical;
+  height: 300px;
+  overflow: auto;
 }
 .form-root{
   font-family: base.$font-secondary;
@@ -29,7 +27,7 @@ textarea{
   position: relative;
   padding: 2rem 1.5rem;
   width: 55rem;
-  box-shadow: .5px .5px 3px 3px rgba(25, 23, 23, 0.3);
+  box-shadow: .5px .5px 1.4px 3px rgba(0, 0, 0, 0.1);
   height: auto;
   border-radius: 25px;
   display: flex;
@@ -48,217 +46,25 @@ textarea{
   max-width: 500px;
   width: 100%;
   margin-inline: auto;
-}
+  padding-bottom: 3rem;
 
+  input, textarea, select{
+    &:hover{
+      border: 2px solid base.$color-active;
+      box-shadow: 1px 1px .5px .5px rgba(255, 166, 0, 0.3)
+    }
+  }
+}
 .input-wrapper{
   padding-bottom: base.$spacing-1;
 }
 
-.pagination-container{
-  $height: 80px;
-  $width: 90%;
-  $square_width: calc($width/4);
-  padding-bottom: 12px;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin-inline: auto;
-  width: $width;
-  height: $height;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: .8rem;
-  text-shadow: .5px 1px rgba(0, 0, 0, 0.7);
-  position: relative;
-    .square{
-      height: $height;
-      width: calc(25%);
-      p { text-align: center;}
-    }
-    .circle::after, .circle::before{
-      content: "";
-      height: 2px;
-      position: absolute;
-      background-color: base.$button-bg-color;
-      box-shadow: 1px 1px .5px .5px rgba(173, 216, 230, 0.7);
-      ;
-    }
-    .circle::after{
-      width: calc(50% - 10px);
-      right: 0;
-    }
-    .circle::before{
-      width: calc(50% - 10px);
-      left: 0;
-    }
-    .active{
-      background-color: rgba(65, 56, 56, 0.1);
-    }
-}
-.square{
-    position: inherit;
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
 
-}
-.circle{
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: .7rem;
-    border: none;
-    box-shadow: 1px 1px 2px 2px rgba(173, 216, 230, 0.7);
-    border: 2px solid base.$button-bg-color;
-    border-radius: 100%;
-    width: 20px;
-    height: 20px;
-    font-weight: 600;
-    margin-inline: auto;
-}
-.circle.completed{
-  background-color: rgba(173, 216, 230, 0.3);
-  color: black;
-}
-#form-block{
-    grid-area: form;
-}
-#form-navigation{
-   grid-area: buttons;
-}
-.input-container{
-    margin-top: 1.2rem;
-    width: 100%;
-    margin-inline: auto;
-}
-.wrapper-level-input{
-    display: flex;
-    flex-direction: column;
-}
-
-.form-card{
-    background-color:white;
-    border: 1px solid gray;
-    padding: 8px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    @media (max-width: 55em)
-    {
-        border-radius: 0px;
-    }
-}
-.level-information-title{
-    padding: 1rem;
-    line-height: 1.5;
-}
-
-.level-information-display-box{
-    line-height: 1.5;
-    padding: 1.5rem 10px;
-    margin-top: 1rem;
-    min-height: 150px;
-    background-color: #fff;
-}
-
-.input-student-level-information{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 12px;
- 
-  .input-student-level-container{
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 12px;
-      justify-content: center;
-      border-bottom: 1px solid rgb(179, 170, 170);
-      padding: 16px;
-  }
-}
-#feedback{
-  height: 300px;
-  overflow: auto;
-  display: flex;
-  justify-content: center;
-}
 #buttons{
   display: flex;
   justify-content: space-around;
 }
-.container{
-  margin-top: 2rem;
-  width: 100%;
-}
-
 .btn-container{
   display: flex;
   justify-content: space-around;
-}
-
-.radio-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-}
-.option-container{
-  display: flex
-  option{
-    color: green;
-  }
-}
-
-.levelTab-container{
-  text-transform: capitalize;
-  font-weight: 600;
-  text-shadow: 1px 1px 1.5px 1.5px rgba(0, 0, 0, .2);
-  font-size: .7rem;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding-bottom: 12px;
-}
-
-.form-levels-container{
-  display: grid;
-  gap: 12px;
-
-}
-.nameTab-container{
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  border: 1px solid black;
-  background-color: #fff;
-  border: none;
-  outline: 1px solid base.$button-bg-color;
-  color: base.$font-color-dark;
-  &:hover{
-    background-color: base.$button-bg-color;
-    outline: none;
-    color: #fff;
-  }
-}
-.tabTitle{
-  cursor: pointer;
-  color: inherit;
-  margin-left: 6px;
-  text-transform: capitalize;
-  text-align: center;
-  padding: 10px 0;
-  border: none;
-  background-color: transparent;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.bgColorActive{
-  background-color: base.$button-bg-color;
-  outline: none;
-  color: #fff;
 }

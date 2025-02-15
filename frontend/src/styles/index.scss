@@ -79,14 +79,13 @@ footer{
     font-weight: 600;
     text-transform: capitalize;
     text-align: center;
-    max-width: $length;
+    width: $length;
     background-color: $bgColor;
     color: base.$button-primary-color;
    
     color: white;
     border: none;
-    width: 200px;
-    padding: 12px 8px;
+    padding: base.$spacing-1;
     border-radius: 5px;
     &:hover{
       background-color: white;
@@ -114,9 +113,7 @@ input[type="text"],input[type="number"], input[type="button"], textarea, select,
     -moz-appearance: none; /* Removes default styles for Firefox */
     box-sizing: border-box;
 }
-select{
-    background-color: green;
-}
+
 option{
     font-family: base.$font-secondary;
     background-color: base.$background-color;
@@ -167,3 +164,25 @@ option{
 .p-5{ padding: base.$spacing + 16px}
 .p-6{ padding: base.$spacing + 20px}
 .p-7{ padding: base.$spacing + 24px}
+
+// flex
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.justify-center{
+    justify-content: center;
+}
+.items-center{
+    align-items: center;
+}
+.space-around{
+    justify-content: space-around;
+}
