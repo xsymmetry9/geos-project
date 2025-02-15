@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Feedback = ({data, handleData, language}) =>{
     const {comment} = data;
     const placeholderContent = 
@@ -8,16 +6,15 @@ const Feedback = ({data, handleData, language}) =>{
         "korean": "댓글이 여기에 작성됩니다",
         "japanese": "コメントがここに入ります",
         "chinese": "評論在此處輸入"
-          
     }
     
-
     return(
-        <>
-            <div className='container'id="feedback">
-                <textarea className="form-input-primary" name="comment" id="comment" value={comment} onChange={handleData} placeholder ={placeholderContent[language.toLowerCase()]}></textarea> 
+        <div className="form-primary">
+            <p className="text-2" ><label htmlFor="">{placeholderContent[language]}</label></p>
+            <div className= "input-wrapper" id="feedback">
+                <textarea name="comment" id="comment" value={comment} onChange={handleData} placeholder ={placeholderContent[language.toLowerCase()]}></textarea> 
             </div>
-        </>
+        </div>
     )
 }
 

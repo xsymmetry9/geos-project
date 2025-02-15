@@ -25,36 +25,30 @@ const LevelInformation = ({data, handleLevelData, language}) =>{
     return(
         <>
             <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/>
-                <div className="form-levels-container">
-                    <div className="level-container">
-                        <p className="capitalized">{titleLanguage[language.toLowerCase()][0]}</p>
-                        <div className="option-container">
-                            <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
-                                <option value="">Select score</option>
-                                {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
+            <div className="form-primary">
+                <div className="input-wrapper">
+                            <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][0]}</label>
+                            <select className="spacing-sm text-2" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
+                                <option className="text-2" value="">Select score</option>
+                                {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                             </select>
-                        </div>
-                    </div>
-                    <div className="level-container">
-                    <p className="capitalized">{titleLanguage[language.toLowerCase()][1]}</p>
-                    <div className="option-container">
-                        <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-target`} name={`${titles['english'][page]}-target`} value={data.levels[page].target} onChange={handleLevelData}>
-                            <option value="">Select score</option>
-                            {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                        </select>
-                    </div>
-                    </div>
-                    <div className="level-container">
-                    <p className="capitalized">{titleLanguage[language.toLowerCase()][2]}</p>
-                    <div className="option-container">
-                        <select className="spacing-sm form-input-primary" id={`${titles['english'][page]}-final`} name={`${titles['english'][page]}-final`} value={data.levels[page].final} onChange={handleLevelData}>
-                            <option value="">Select score</option>
-                            {levelValue.map((item_Value, index)=> <option key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                        </select>
-                    </div>
-                    </div>
-
                 </div>
+                <div className="input-wrapper">
+                        <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
+                        <select className="spacing-sm text-2" id={`${titles['english'][page]}-target`} name={`${titles['english'][page]}-target`} value={data.levels[page].target} onChange={handleLevelData}>
+                            <option className="text-2" value="">Select score</option>
+                            {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
+                        </select>
+                </div>
+                <div className="input-wrapper">
+                    <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][2]}</label>
+
+                    <select className="spacing-sm text-2" id={`${titles['english'][page]}-final`} name={`${titles['english'][page]}-final`} value={data.levels[page].final} onChange={handleLevelData}>
+                        <option className="text-2" value="">Select score</option>
+                        {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
+                    </select>
+                </div>
+            </div>
       
         </>
     );
