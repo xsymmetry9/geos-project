@@ -1,35 +1,14 @@
-import React, {useEffect, useState} from "react";
-import Student from "../type/student";
-import Levels from "../type/levels";
-import SPR_Form from "../components/Form/SPR_FORM"
+import React, {useState} from "react";
+import Form from "../components/Form/Form"
 import { useParams } from "react-router-dom";
+import Student from "../type/student";
 
-const Create = () =>{
+const SPRForm = () =>{
     const {language} = useParams();
-    const [formData, setFormData] = useState(() =>{
-        // Load the form data from Local Storage if it exists
-        const savedData = localStorage.getItem('SPR_Form');
-        return savedData ? JSON.parse(savedData) : new Student (
-            "", //empty name
-            "", //empty course
-            "", //empty textbook
-            0, //empty attedance 
-            0, //total attendance
-             [new Levels("vocabulary", 1, 2, 3),
-               new Levels("grammar", 1, 2, 3),
-                new Levels("pronunciation", 1 , 2, 3),
-                new Levels("listening", 7, 5, 4),
-                new Levels("conversation", 8, 4, 2)],
-            ""
-        )
-    });
+    
+    const [inputData, setInputData] = useState( new Student());
 
     // Save form data whenever it changes
-    useEffect(() =>{
-        localStorage.setItem('SPR_Form', JSON.stringify(formData));
-
-    }, [formData]);
-
     const handleFormData = (e) =>{
         const {name, value} = e.target;
         setFormData((prev) => ({ ...prev, [name]: value}));
@@ -86,16 +65,14 @@ const Create = () =>{
             };
         });
     }
-
     return(
         <>
-            <SPR_Form 
-                data = {formData}
-                handleData = {handleFormData}
-                handleLevelData = {handleFormLevelData}
-                language = {language}/>
+            <Form 
+                inputData ={inputData} 
+                setInputData={setInputData} 
+                language={language} />
         </>
     )
 }
 
-export default Create;
+export default SPRForm;

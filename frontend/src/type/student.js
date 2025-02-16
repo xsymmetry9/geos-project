@@ -1,45 +1,25 @@
 import {format} from "date-fns"
+import Levels from "../type/levels";
 
 class Student{
-    constructor(
-        name,
-        course,
-        textbook, 
-        attendance, 
-        totalLessons,
-        levels, //It's an object
-        comment)
+    constructor()
     {
-        this.name = name;
-        this.course = course;
-        this.textbook = textbook;
-        this.attendance = attendance;
-        this.totalLessons = totalLessons;
-        this.levels = levels;
-        this.comment= comment;
-        this.average = this.getAverage();
+        this.id = 123
+        this.dateCreated ="";
+        this.name = "";
+        this.course = "";
+        this.textbook = ""
+        this.attendance = 0;
+        this.totalLessons = 0;
+        this.feedback= "";
+        this.levels = {
+            "vocabulary": new Levels(),
+            "pronunciation": new Levels(),
+            "grammar": new Levels(),
+            "listening": new Levels(),
+            "conversation": new Levels()
+        }
     }
-
-    getPercentage = () =>{
-        this.average = Math.round((this.attendance / this.totalLessons) * 100);
-        return this.average;
-    }
-
-    getDate = () =>{
-        return format(new Date(), "MM/dd/yyyy");
-    }
-
-    getTotal = (category) =>{
-        let sum = 0;
-        this.levels.forEach((item) =>{
-            sum += item[category]
-        })
-        return sum;
-    }
-    getAverage =(category) =>{
-        return this.getTotal(category) / this.levels.length;
-    }
-
 
 }
 

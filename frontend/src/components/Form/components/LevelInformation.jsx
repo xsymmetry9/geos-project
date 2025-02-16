@@ -1,6 +1,6 @@
 import  {useState} from 'react';
 import LevelTabs from "./LevelTabs";
-const LevelInformation = ({data, handleLevelData, language}) =>{
+const LevelInformation = ({inputData, setInputData, language}) =>{
 
     const [page, setPage] = useState(0);
     const titles = {

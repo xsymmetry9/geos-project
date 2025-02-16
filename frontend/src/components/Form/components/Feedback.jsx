@@ -1,5 +1,13 @@
-const Feedback = ({data, handleData, language}) =>{
-    const {comment} = data;
+import { useState } from "react";
+
+const Feedback = ({inputData, handleData, language}) =>{
+    const {feedback} = inputData;
+    const [inputFeedback, setInputFeedback] = useState(feedback);
+
+    const handler = (e) =>{
+        const {value} = e.currentTarget;
+        setInputFeedback(value);
+    }
     const placeholderContent = 
     {
         "english": "Comment goes here",
@@ -12,7 +20,7 @@ const Feedback = ({data, handleData, language}) =>{
         <div className="form-primary">
             <p className="text-2" ><label htmlFor="">{placeholderContent[language]}</label></p>
             <div className= "input-wrapper" id="feedback">
-                <textarea name="comment" id="comment" value={comment} onChange={handleData} placeholder ={placeholderContent[language.toLowerCase()]}></textarea> 
+                <textarea name="feedback" id="feedback" value={inputFeedback} onChange= {handler} placeholder = {placeholderContent[language.toLowerCase()]}></textarea> 
             </div>
         </div>
     )
