@@ -5,7 +5,7 @@ class Student{
     constructor()
     {
         this.id = 123
-        this.dateCreated ="";
+        this.dateCreated = new Date();
         this.name = "";
         this.course = "";
         this.textbook = ""

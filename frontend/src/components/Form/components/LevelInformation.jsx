@@ -1,8 +1,29 @@
-import  {useState} from 'react';
+import  {useState, useId} from 'react';
 import LevelTabs from "./LevelTabs";
+import LanguageAspect from './LanguageAspect';
 const LevelInformation = ({inputData, setInputData, language}) =>{
+    const {levels} = inputData;
 
     const [page, setPage] = useState(0);
+
+    const handler = (e) =>{
+        const {name, value} = e.target;
+        console.log(e);
+
+        const parentCategory = name.split('-')[0];
+        const childCategory = name.split('-')[1];
+
+        console.log(parentCategory, childCategory);
+
+        setInputData( {...inputData,
+            levels: {...levels,
+                [parentCategory]: {
+                    ...levels[parentCategory],
+                    [childCategory] : value
+                }
+            }})
+    }
+
     const titles = {
         english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
         chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
@@ -10,44 +31,22 @@ const LevelInformation = ({inputData, setInputData, language}) =>{
         japanese: ["語彙", "文法", "発音", "聴解", "会話"]
     }
 
-    const levelValue = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7.5, 8, 8.5, 9, 9.5, 10, 10.5];
-    const titleLanguage = {
-        english: ["Initial", "Target", "Final"],
-        chinese: ["初始", "目標", "結束"],
-        korean: ["초기", "목표", "결과"],
-        japanese: ["初期", "目標", "終了"]
-    }
-
     const handlerPage = (e) =>{
         const {name} = e.currentTarget;
         setPage(name);
     }
+
     return(
         <>
-            <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/>
+            {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
             <div className="form-primary">
-                <div className="input-wrapper">
-                            <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][0]}</label>
-                            <select className="spacing-sm text-2" id={`${titles['english'][page]}-initial`} name={`${titles['english'][page]}-initial`} value={data.levels[page].initial} onChange={handleLevelData}>
-                                <option className="text-2" value="">Select score</option>
-                                {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                            </select>
-                </div>
-                <div className="input-wrapper">
-                        <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
-                        <select className="spacing-sm text-2" id={`${titles['english'][page]}-target`} name={`${titles['english'][page]}-target`} value={data.levels[page].target} onChange={handleLevelData}>
-                            <option className="text-2" value="">Select score</option>
-                            {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                        </select>
-                </div>
-                <div className="input-wrapper">
-                    <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][2]}</label>
+                <h2>Student's Level</h2>
+                <LanguageAspect aspectName ={titles.english[0]} inputData ={inputData} language={language}/>
+                <LanguageAspect aspectName ={titles.english[1]} inputData ={inputData} language={language}/>
+                <LanguageAspect aspectName ={titles.english[2]} inputData ={inputData} language={language}/>
+                <LanguageAspect aspectName ={titles.english[3]} inputData ={inputData} language={language}/>
+                <LanguageAspect aspectName ={titles.english[4]} inputData ={inputData} language={language}/>
 
-                    <select className="spacing-sm text-2" id={`${titles['english'][page]}-final`} name={`${titles['english'][page]}-final`} value={data.levels[page].final} onChange={handleLevelData}>
-                        <option className="text-2" value="">Select score</option>
-                        {levelValue.map((item_Value, index)=> <option className="text-2" key={`${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                    </select>
-                </div>
             </div>
       
         </>

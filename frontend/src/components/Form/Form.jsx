@@ -9,20 +9,16 @@ import "../../styles/components/form.scss";
 
 const Form = ({inputData, setInputData, language}) => {
 
-    const handleData = (e) =>{
+    const handleInputData = (e) =>{
         const {name, value} = e.target;
-        setInputData((prev) => ({ ...prev, [name]: value}));
-
-        if(name == "attendance" || name == "totalLessons")
-            console.log(value);
-    
+        setInputData((prev) => ({ ...prev, [name]: value}));   
     }
     const [page, setPage] = useState(0);
-    // const arrOfPages = [
-    //     <PersonalInformation data = {data} handleData={handleData} language={language}/>,
-    //     <LevelInformation data={data} handleLevelData={handleLevelData} language={language}/>, 
-    //     <Feedback data={data} handleData={handleData} language={language}/>,
-    //     <Preview data={data} language={language}/>];
+    const arrOfPages = [
+        <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language ={language}/>,
+        <LevelInformation inputData={inputData} setInputData = {handleInputData} language={language}/>,
+        <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />,
+        <Preview inputData={inputData} language={language}/>];
 
     const changePage = (e) =>{
         const {name} = e.currentTarget;
@@ -39,17 +35,22 @@ const Form = ({inputData, setInputData, language}) => {
             console.log("go to preview page");
         }
     }
-    console.log({inputData})
+
+    const saveHandle = () => {
+        console.log(inputData);
+
+    }
     return(
         <div className={`form-root`}>
             <Pagination page = {page} language={language}/>
             <div>
                 {/* {arrOfPages[page]} */}
                 {/* <Button page={page} handler={changePage} language={language} /> */}
-                <PersonalInformation inputData = {inputData} setInputData = {handleData} language ={language}/>
-                <LevelInformation inputData={inputData} setInputData = {handleData} language={language}/>
-                <Feedback inputData = {inputData} setInputData = {handleData} language = {language}  />
-                <p>Hello</p><p>{inputData.name}</p>
+                <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language ={language}/>
+                <LevelInformation inputData={inputData} setInputData = {handleInputData} language={language}/>
+                <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />
+                <button onClick={saveHandle}>Save</button>
+
             </div>
         </div>
     )

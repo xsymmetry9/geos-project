@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Feedback = ({inputData, handleData, language}) =>{
+const Feedback = ({inputData, handleInputData, language}) =>{
     const {feedback} = inputData;
     const [inputFeedback, setInputFeedback] = useState(feedback);
 
@@ -10,7 +10,7 @@ const Feedback = ({inputData, handleData, language}) =>{
     }
     const placeholderContent = 
     {
-        "english": "Comment goes here",
+        "english": "Your comment",
         "korean": "댓글이 여기에 작성됩니다",
         "japanese": "コメントがここに入ります",
         "chinese": "評論在此處輸入"
@@ -18,9 +18,10 @@ const Feedback = ({inputData, handleData, language}) =>{
     
     return(
         <div className="form-primary">
+            <h1>Feedback</h1>
             <p className="text-2" ><label htmlFor="">{placeholderContent[language]}</label></p>
             <div className= "input-wrapper" id="feedback">
-                <textarea name="feedback" id="feedback" value={inputFeedback} onChange= {handler} placeholder = {placeholderContent[language.toLowerCase()]}></textarea> 
+                <textarea name="feedback" id="feedback" value={feedback} onChange= {handleInputData} placeholder = {placeholderContent[language.toLowerCase()]}></textarea> 
             </div>
         </div>
     )
