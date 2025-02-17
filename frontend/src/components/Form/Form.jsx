@@ -49,8 +49,9 @@ const Form = ({inputData, setInputData, language}) => {
                 <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language ={language}/>
                 <LevelInformation inputData={inputData} setInputData = {handleInputData} language={language}/>
                 <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />
-                <button onClick={saveHandle}>Save</button>
-
+                <div className="flex justify-center">
+                    <button className="btn-primary" onClick={saveHandle}>Save</button>
+                </div>
             </div>
         </div>
     )

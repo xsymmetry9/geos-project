@@ -166,6 +166,9 @@ option{
 .p-7{ padding: base.$spacing + 24px}
 
 // flex
+.flex{
+    display: flex;
+}
 .flex-col {
     display: flex;
     flex-direction: column;
