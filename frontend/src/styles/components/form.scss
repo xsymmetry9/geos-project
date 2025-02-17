@@ -1,6 +1,8 @@
 @use "../base.scss";
 
 input, textarea, option, select{
+  -webkit-autofill: none;
+
   box-sizing: border-box;
   display: block;
   width: 100%;
@@ -12,7 +14,6 @@ input, textarea, option, select{
   border: 2px solid base.$input-border-primary-color;
   box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
   padding: base.$spacing-1;
-
 }
 textarea{
   resize: vertical;
@@ -43,7 +44,7 @@ textarea{
 }
 
 .form-primary{
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   margin-inline: auto;
   padding-bottom: 3rem;
@@ -58,8 +59,6 @@ textarea{
 .input-wrapper{
   padding-bottom: base.$spacing-1;
 }
-
-
 #buttons{
   display: flex;
   justify-content: space-around;
@@ -67,4 +66,9 @@ textarea{
 .btn-container{
   display: flex;
   justify-content: space-around;
+}
+
+.title{
+  background-color: base.$color-dark-green;
+  color: #ddd;
 }

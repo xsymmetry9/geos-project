@@ -25,7 +25,7 @@ const Homepage = () =>{
             <h1 className="center">{title[language]}</h1>
             <div className="buttons-navigation-container">
                 <Link className="btn-primary" to={`/home/english`}>English</Link>
-                <Link className="btn-primary" to={`/home/korean`}>Japanese</Link>
+                <Link className="btn-primary" to={`/home/chinese`}>Chinese</Link>
                 <Link className="btn-primary" to={`/home/korean`}>Korean</Link>
                 <Link className="btn-primary" to={`/home/japanese`}>Japanese</Link>
             </div> 

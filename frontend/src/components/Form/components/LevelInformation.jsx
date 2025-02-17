@@ -40,7 +40,7 @@ const LevelInformation = ({inputData, setInputData, language}) =>{
         <>
             {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
             <div className="form-primary">
-                <h2>Student's Level</h2>
+                <h2 className="title text-2 p-2">Student's Level</h2>
                 <LanguageAspect aspectName ={titles.english[0]} inputData ={inputData} language={language}/>
                 <LanguageAspect aspectName ={titles.english[1]} inputData ={inputData} language={language}/>
                 <LanguageAspect aspectName ={titles.english[2]} inputData ={inputData} language={language}/>

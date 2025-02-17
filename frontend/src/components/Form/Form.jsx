@@ -46,12 +46,15 @@ const Form = ({inputData, setInputData, language}) => {
             <div>
                 {/* {arrOfPages[page]} */}
                 {/* <Button page={page} handler={changePage} language={language} /> */}
-                <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language ={language}/>
-                <LevelInformation inputData={inputData} setInputData = {handleInputData} language={language}/>
-                <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />
-                <div className="flex justify-center">
-                    <button className="btn-primary" onClick={saveHandle}>Save</button>
-                </div>
+                <form action="POST" autoComplete="off">
+                    <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language ={language}/>
+                    <LevelInformation inputData={inputData} setInputData = {handleInputData} language={language}/>
+                    <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />
+                    <div className="flex justify-center">
+                        <button className="btn-primary" onClick={saveHandle}>Save</button>
+                    </div>
+                </form>
+         
             </div>
         </div>
     )
