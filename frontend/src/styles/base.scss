@@ -1,5 +1,7 @@
 //_base.scss
 
+$color-light-blue: rgb(9, 197, 235);
+$color-dark-green:  #00646c;
 $color-light-gray: #d1d5db;
 $font-primary: "Merriweather", serif;
 $font-secondary: "Poppins", sans-serif;
@@ -9,6 +11,7 @@ $color-active: #F29F58;
 $body-color: red;
 $font-color: black;
 $font-color-dark: black;
+$font-color-light: $primary-color;
 $background-color: #f3f3f3;
 $font-center: center;
 $line-seperator: gray;
@@ -27,7 +30,7 @@ $print-font-size-4: 20px;
 $print-font-size-5: 24px;
 $print-font-size-6: 26px;
 
-$button-bg-color: rgb(9, 197, 235);
+$button-bg-color: $color-dark-green;
 $button-font-color: $primary-color-dark;
 $spacing: 8px;
 $spacing-sm: $spacing;
