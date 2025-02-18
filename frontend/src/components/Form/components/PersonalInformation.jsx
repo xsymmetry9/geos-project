@@ -14,7 +14,7 @@ const PersonalInformation = ({inputData, handleInputData, language}) =>{
     return(
         <div className="form-primary" id="personal-information">
             <h2 className="title text-2 p-2">Student's Information</h2>    
-            <div className="input-wrapper">
+            <div className="input-wrapper p-t-3">
                 <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
                 <input type="text" className="text-2" name="name" value={name} onChange={handleInputData} />
             </div>

@@ -19,7 +19,7 @@ const Feedback = ({inputData, handleInputData, language}) =>{
     return(
         <div className="form-primary">
             <h2 className="title text-2 p-2">Feedback</h2>
-            <p className="text-2" ><label htmlFor="">{placeholderContent[language]}</label></p>
+            <p className="text-2 p-t-3" ><label htmlFor="">{placeholderContent[language]}</label></p>
             <div className= "input-wrapper" id="feedback">
                 <textarea name="feedback" id="feedback" value={feedback} onChange= {handleInputData} placeholder = {placeholderContent[language.toLowerCase()]}></textarea> 
             </div>
