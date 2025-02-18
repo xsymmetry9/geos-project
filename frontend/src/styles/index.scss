@@ -189,3 +189,11 @@ option{
 .space-around{
     justify-content: space-around;
 }
+
+// gap
+.gap-1 {gap: base.$spacing}
+.gap-2 {gap: base.$spacing + 4px}
+.gap-3 {gap: base.$spacing + 8px}
+.gap-4 {gap: base.$spacing + 12px}
+.gap-5 {gap: base.$spacing + 16px}
+.gap-6 {gap: base.$spacing + 20px}

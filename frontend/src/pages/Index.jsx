@@ -23,7 +23,7 @@ const Homepage = () =>{
     return(
         <>
             <h1 className="center">{title[language]}</h1>
-            <div className="buttons-navigation-container">
+            <div className="flex flex-col gap-1">
                 <Link className="btn-primary" to={`/home/english`}>English</Link>
                 <Link className="btn-primary" to={`/home/chinese`}>Chinese</Link>
                 <Link className="btn-primary" to={`/home/korean`}>Korean</Link>

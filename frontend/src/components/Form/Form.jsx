@@ -36,8 +36,12 @@ const Form = ({inputData, setInputData, language}) => {
         }
     }
 
-    const saveHandle = () => {
+    const saveHandle = (e) => {
+        e.preventDefault();
         console.log(inputData);
+
+        const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
+        console.log(savedData);
 
     }
     return(
