@@ -6,9 +6,9 @@ const LevelInformation = ({inputData, setInputData, language}) =>{
 
     const [page, setPage] = useState(0);
 
-    const handler = (e) =>{
-        const {name, value} = e.target;
-        console.log(e);
+    const levelInputHandler = (e) =>{
+        const {name, value} = e.currentTarget;
+
 
         const parentCategory = name.split('-')[0];
         const childCategory = name.split('-')[1];
@@ -41,11 +41,11 @@ const LevelInformation = ({inputData, setInputData, language}) =>{
             {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
             <div className="form-primary">
                 <h2 className="title text-2 p-2">Student's Level</h2>
-                <LanguageAspect aspectName ={titles.english[0]} inputData ={inputData} setInputData = {setInputData} language={language}/>
-                <LanguageAspect aspectName ={titles.english[1]} inputData ={inputData} setInputData = {setInputData} language={language}/>
-                <LanguageAspect aspectName ={titles.english[2]} inputData ={inputData} setInputData = {setInputData} language={language}/>
-                <LanguageAspect aspectName ={titles.english[3]} inputData ={inputData} setInputData = {setInputData} language={language}/>
-                <LanguageAspect aspectName ={titles.english[4]} inputData ={inputData} setInputData = {setInputData} language={language}/>
+                <LanguageAspect aspectName ={titles.english[0]} inputData ={inputData} levelInputHandler = {levelInputHandler} language={language}/>
+                <LanguageAspect aspectName ={titles.english[1]} inputData ={inputData} levelInputHandler = {levelInputHandler} language={language}/>
+                <LanguageAspect aspectName ={titles.english[2]} inputData ={inputData} levelInputHandler = {levelInputHandler} language={language}/>
+                <LanguageAspect aspectName ={titles.english[3]} inputData ={inputData} levelInputHandler = {levelInputHandler} language={language}/>
+                <LanguageAspect aspectName ={titles.english[4]} inputData ={inputData} levelInputHandler = {levelInputHandler} language={language}/>
 
             </div>
       

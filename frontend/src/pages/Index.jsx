@@ -1,36 +1,48 @@
 import { Link } from "react-router-dom";
 import {useState, useEffect} from 'react';
-const Homepage = () =>{
-    const [language, setLanguage] = useState();
+import User from "../type/User";
+import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+
+const LinksLanguages = () =>{
+    return(
+        <div className="flex flex-col gap-1">
+            <Link className="btn-primary" to={`/home/english`}>English</Link>
+            <Link className="btn-primary" to={`/home/chinese`}>Chinese</Link>
+            <Link className="btn-primary" to={`/home/korean`}>Korean</Link>
+            <Link className="btn-primary" to={`/home/japanese`}>Japanese</Link>
+        </div> 
+    
+    )
+}
+const Index = () =>{
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() =>{
-        const data = localStorage.getItem("SPR_App");
-        if (data) {
-            const parsedData = JSON.parse(data);
-            setLanguage(parsedData.language);
-        } else {
-            setLanguage("english");
+        const fetchUser = () =>{
+            const data = getDataFromLocal();
+            if (data != null) {
+                setUser(JSON.parse(data));  
+            } else {
+                const newUser = new User();
+                editDataFromLocal(newUser);
+                setUser(newUser);
+            }
+            setLoading(false);
         }
-    })
 
-    const title ={
-        "english": "Welcome Teachers",
-        "chinese": "老師們，歡迎",
-        "japanese": "先生方、ようこそ",
-        "korean": "선생님들, 환영합니다",
+        fetchUser();
+    }, [])
+    
+    if(loading) {
+        return <div>Loading ...</div>
     }
-
     return(
         <>
-            <h1 className="center">{title[language]}</h1>
-            <div className="flex flex-col gap-1">
-                <Link className="btn-primary" to={`/home/english`}>English</Link>
-                <Link className="btn-primary" to={`/home/chinese`}>Chinese</Link>
-                <Link className="btn-primary" to={`/home/korean`}>Korean</Link>
-                <Link className="btn-primary" to={`/home/japanese`}>Japanese</Link>
-            </div> 
+            <h1>{user.name}</h1>
+            <LinksLanguages />
         </>
     )
 }
 
-export default Homepage;
+export default Index;

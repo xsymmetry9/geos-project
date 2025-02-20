@@ -1,7 +1,7 @@
 import { useState, useId } from "react";
 import LevelTabs from "./LevelTabs";
 
-function LanguageAspect({inputData, aspectName, setInputData, language}) {
+function LanguageAspect({inputData, aspectName, levelInputHandler, language}) {
 
     const initialID = useId();
     const targetID = useId();
@@ -19,8 +19,6 @@ function LanguageAspect({inputData, aspectName, setInputData, language}) {
         korean: ["초기", "목표", "결과"],
         japanese: ["初期", "目標", "終了"]
     }
-
-    console.log(inputData.levels[aspectName])
     return(
         <>
             <div className="input-wrapper p-t-3">
@@ -31,7 +29,7 @@ function LanguageAspect({inputData, aspectName, setInputData, language}) {
                     id={`${aspectName}-initial`}
                     name={`${aspectName}-initial`}
                     value ={initial}
-                    onChange={(e) => setInitial(e.target.value)}>
+                    onChange={levelInputHandler}>
                     <option className="text-2" value={inputData}>Select score</option>
                     {levelValue.map((item_Value, index)=> <option className="text-2" key={`${initialID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                 </select>
