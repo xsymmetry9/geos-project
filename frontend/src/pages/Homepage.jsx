@@ -1,8 +1,10 @@
 import { Link, useParams } from "react-router-dom"
-import { useState, useId, useEffect } from "react";
+import { useState, useEffect } from "react";
+import {format} from "date-fns";
 import "../styles/components/dashboard.scss";
 import User from "../type/User";
 import { getDataFromLocal, editDataFromLocal } from "../utils/functions";
+
 
 export default function Homepage (){
     const {language} = useParams();
@@ -41,12 +43,38 @@ export default function Homepage (){
             )
         }
 
-
     return(
         <>
 
             <div className="dashboard"> 
                 <h1 className="text-2 p-1">Welcome {userData.name}</h1>
+                <div>
+                    <h2>Students Progress Report</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Edit</th>
+                                <th>Download</th>
+                                <th>Print</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {userData.SPR.map((item) => {
+                            return(
+                                <tr key={item.id}>
+                                    <td>{item.name}</td>
+                                    <td>{format(new Date(), "MM/dd/yyyy")}</td>
+                                    <td>edit</td>
+                                    <td><button>Download</button></td>
+                                    <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
+                                </tr>)
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+
                 <div className="buttons-navigation-container">
                     <Link className="btn-primary" to={`/spr/${language}`}>+ SPR</Link>
                     <Link className="btn-primary" to={`/levelCheck/${language}`}>+ Level Check</Link>

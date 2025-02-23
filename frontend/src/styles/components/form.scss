@@ -72,3 +72,30 @@ textarea{
   background-color: base.$color-dark-green;
   color: #ddd;
 }
+
+.preview-section{
+  p{
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  h2{
+    font-size: 1.4rem;
+  }
+  table{
+    max-width: 500px;  
+    width: 100%;
+    margin: auto;
+  }
+  th, td{
+    text-align: center;
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.preview-container{
+  padding-bottom: base.$spacing-4;
+  h2{
+      padding-bottom: base.$spacing;
+  }
+}

@@ -1,13 +1,6 @@
-import { useState } from "react";
-
 const Feedback = ({inputData, handleInputData, language}) =>{
     const {feedback} = inputData;
-    const [inputFeedback, setInputFeedback] = useState(feedback);
 
-    const handler = (e) =>{
-        const {value} = e.currentTarget;
-        setInputFeedback(value);
-    }
     const placeholderContent = 
     {
         "english": "Your comment",

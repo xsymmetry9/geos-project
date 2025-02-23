@@ -1,13 +1,12 @@
-import React, {useState} from "react";
+import React, {createContext} from "react";
 import Form from "../components/Form/Form"
 import { useParams } from "react-router-dom";
-import Student from "../type/student";
+
+export const LanguageContext = createContext();
 
 const SPRForm = () =>{
     const {language} = useParams();
     
-    const [inputData, setInputData] = useState( new Student());
-
     // Save form data whenever it changes
     const handleFormData = (e) =>{
         const {name, value} = e.target;
@@ -66,12 +65,11 @@ const SPRForm = () =>{
         });
     }
     return(
-        <>
-            <Form 
-                inputData ={inputData} 
-                setInputData={setInputData} 
-                language={language} />
-        </>
+   
+        <LanguageContext.Provider value ={language}>
+            <Form />
+        </LanguageContext.Provider>
+
     )
 }
 

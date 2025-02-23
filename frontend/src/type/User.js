@@ -1,7 +1,7 @@
 class User{
-    constructor() {
+    constructor(language="english") {
         this.name = "Guest";
-        this.language = "english"
+        this.language = language;
         this.SPR = [];
         this.levelCheck = [];
     }

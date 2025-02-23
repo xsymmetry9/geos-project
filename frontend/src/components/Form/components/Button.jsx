@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-const Button = ({page, handler, language}) =>{
+
+const Button = ({page, handler, handleSubmit, language}) =>{
     const title = {
         "english": {next_page: "Next", back_page: "Back", print_page: "Print"},
         "chinese": {next_page: "下一個", back_page: "上一個", print_page: "列印"},
@@ -7,7 +8,7 @@ const Button = ({page, handler, language}) =>{
         "japanese": {next_page: "次へ", back_page: "前へ", print_page: "印刷"},
     }
     return(
-        <div className="container" id="buttons">
+        <>
             {page === 0 ? (
                 <>
                     <input className="btn-primary" type="button" onClick={handler} name="next" value={title[language.toLowerCase()].next_page}/>
@@ -19,11 +20,11 @@ const Button = ({page, handler, language}) =>{
                 ) : (
                     <>
                         <input className="btn-primary" type="button" onClick={handler} name ="back" value={title[language.toLowerCase()].back_page} />
-                        <Link className="btn-primary" to={`/spr/${language.toLowerCase()}/preview`}>Preview</Link>
+                        {/* <Link className="btn-primary" to={`/spr/${language.toLowerCase()}/preview`}>Save</Link> */}
                     </>
                 )
             }
-        </div>
+        </>
     )
 }
 
