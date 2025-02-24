@@ -6,30 +6,12 @@ import Table from "./PrintSPR/Table";
 import Signature from "./PrintSPR/Signature";
 import Comment from "./PrintSPR/Comment";
 import PlotCards from "./PrintSPR/PlotCards";
-import { useState, useEffect } from "react";
-import { getStudentById } from "../utils/functions";
 
 import "../styles/print.scss";
 
 
-const PrintContent = () =>{
+const PrintContent = ({parsedData, loading}) =>{
     const {id, language} = useParams();
-    const [parsedData, setParsedData] = useState();
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() =>{
-        const fetchUser = () =>{
-            const data = getStudentById(id);
-            if (data != null) {
-                setParsedData(data);
-            } else {
-                console.log("data not found");
-            }
-            setLoading(false);
-        }
-
-        fetchUser();
-    }, [id]);
 
     if (loading) {
         return(
@@ -41,8 +23,7 @@ const PrintContent = () =>{
 
     return(
         <>
-            <div className="papersize-A4">
-                <div className='title-container'>
+                    <div className='title-container'>
                     <div className='img-container'>
                         <RenderLogo style ="logoName" description="logo"/>
                         <TitleSPR language ={language} />
@@ -61,7 +42,6 @@ const PrintContent = () =>{
                     </div>
                     <PlotCards levels = {parsedData.levels} language={language}/>
                 </div>
-            </div>
         </>
 
     )

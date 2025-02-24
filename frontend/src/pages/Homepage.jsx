@@ -43,13 +43,11 @@ export default function Homepage (){
             )
         }
 
-    return(
-        <>
-            <div className="dashboard"> 
-                <h1 className="text-2 p-1">Welcome {userData.name}</h1>
-                <div className="dashboard-container">
-                    <h2>Students Progress Report</h2>
-                    <table className="dashboard-table">
+    const PlotTable = () =>{
+
+        return(
+            <>
+                <table className="dashboard-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -72,6 +70,19 @@ export default function Homepage (){
                             })}
                         </tbody>
                     </table>
+            </>
+        )
+    }
+
+    return(
+        <>
+            <div className="dashboard centered"> 
+                <h1 className="text-2 p-1">Welcome {userData.name}</h1>
+                <div className="dashboard-container">
+                    <h2>Students Progress Report</h2>
+                    {userData.SPR.length != 0 && <PlotTable />}
+                    {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
+                    
                 </div>
 
                 <div className="buttons-navigation-container">

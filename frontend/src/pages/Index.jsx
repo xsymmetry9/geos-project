@@ -38,10 +38,10 @@ const Index = () =>{
         return <div>Loading ...</div>
     }
     return(
-        <>
-            <h1>{user.name}</h1>
+        <div className="centered">
+            <h1 className="p-y-3">Welcome to GEOS App {user.name}!!!</h1>
             <LinksLanguages />
-        </>
+        </div>
     )
 }
 

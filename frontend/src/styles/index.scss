@@ -135,7 +135,6 @@ option{
     @media(max-width: 55rem)
     {
         width: 55rem;
-        overflow: scroll;
     }
 }
 .center{
@@ -223,3 +222,13 @@ option{
 .gap-4 {gap: base.$spacing + 12px}
 .gap-5 {gap: base.$spacing + 16px}
 .gap-6 {gap: base.$spacing + 20px}
+
+
+.centered{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
