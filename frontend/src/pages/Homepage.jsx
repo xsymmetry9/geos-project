@@ -45,12 +45,11 @@ export default function Homepage (){
 
     return(
         <>
-
             <div className="dashboard"> 
                 <h1 className="text-2 p-1">Welcome {userData.name}</h1>
-                <div>
+                <div className="dashboard-container">
                     <h2>Students Progress Report</h2>
-                    <table>
+                    <table className="dashboard-table">
                         <thead>
                             <tr>
                                 <th>Name</th>

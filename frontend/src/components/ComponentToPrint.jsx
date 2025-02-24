@@ -1,11 +1,11 @@
-import React, { forwardRef } from "react";
-import SPRContent from "./SPRContent";
+import React from "react";
+import PrintContent from "./PrintStudentProgressReport";
 import "../styles/print.scss"
 
-const ComponentToPrint = forwardRef(({ parsedData }, ref) => {
+const ComponentToPrint = ((ref) => {
     return (
         <div className="printContent" ref={ref}>
-            <SPRContent parsedData={parsedData} />
+            <PrintContent />
         </div>
     );
 });

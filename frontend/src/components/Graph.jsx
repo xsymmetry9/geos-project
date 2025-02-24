@@ -24,6 +24,8 @@ import labelText from "../assets/other/labelText.json";
 const text = (phrase, language) => labelText[language]['SPR'][phrase];
 
 const Graph = ({data, language}) =>{
+    const {levels} = data;
+
     const options = {
         plugins:{
             layout:{
@@ -75,21 +77,21 @@ const Graph = ({data, language}) =>{
         datasets:[
             {
                 label: text("initial", language),
-                data: [data.levels[0].initial, data.levels[1].initial, data.levels[2].initial, data.levels[3].initial, data.levels[4].initial],
+                data: [levels.vocabulary.initial, levels.grammar.initial, levels.pronunciation.initial, levels.listening.initial, levels.conversation.initial],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(0, 0, 250)',
                 borderWidth: 1.5,
             },
             {
                 label: text("final", language),
-                data: [data.levels[0].final, data.levels[1].final, data.levels[2].final, data.levels[3].final, data.levels[4].final],
+                data: [levels.vocabulary.final, levels.grammar.final, levels.pronunciation.final, levels.listening.final, levels.conversation.final],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(0, 250, 0)',
                 borderWidth: 1.5,
             },
             {
                 label: text("target", language),
-                data: [data.levels[0].target, data.levels[1].target, data.levels[2].target, data.levels[3].target, data.levels[4].target],
+                data: [levels.vocabulary.target, levels.vocabulary.target, levels.grammar.target, levels.pronunciation.target, levels.conversation.target],
                 backgroundColor: "transparent",
                 borderColor: 'rgb(250, 0, 0)',
                 borderWidth: 1.5,

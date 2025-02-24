@@ -1,4 +1,4 @@
-import SPRContent from "../components/SPRContent";
+import SPRContent from "../components/PrintStudentProgressReport";
 import { useState, useEffect } from "react";
 import PrintSPR from "../components/PrintSPR";
 

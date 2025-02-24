@@ -188,7 +188,7 @@ table, th, td, tr{
 .level-card{
     border: 1px solid black;
     font-family: base.$font-secondary;
-    height: 32.7mm;
+    min-height: 32.7mm;
     .level-card-title{
         background-color: $background-color-dark;
         color: white;

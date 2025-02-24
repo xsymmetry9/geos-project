@@ -1,8 +1,16 @@
 @use "../base.scss";
+
 .dashboard{
-    margin-top: 3rem;
+    padding-bottom: 3rem;
 }
 
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 3rem;
+}
 .buttons-navigation-container{
     display: flex;
     flex-direction: row;
@@ -20,24 +28,26 @@
     margin-bottom: 24px;
 }
 
-td,th{
-    border: 1px solid black;
-    padding: base.$spacing-1;
-}
-
-tr:nth-child(even){
-    background-color: #f2f2f2;
-}
-tr:hover, tr:focus{
-    background-color: #ddd;
-}
-th{
-    border-bottom: 1px solid black;
-    background-color: base.$color-dark-green;
-    color: base.$font-color-light;
-
-    padding: base.$spacing-2 0;
-}
-td{
-    padding: base.$spacing-1;
+.dashboard-table{
+    td,th{
+        border: 1px solid black;
+        padding: base.$spacing-1;
+    }
+    
+    tr:nth-child(even){
+        background-color: #f2f2f2;
+    }
+    tr:hover, tr:focus{
+        background-color: #ddd;
+    }
+    th{
+        border-bottom: 1px solid black;
+        background-color: base.$color-dark-green;
+        color: base.$font-color-light;
+    
+        padding: base.$spacing-2 0;
+    }
+    td{
+        padding: base.$spacing-1;
+    }
 }

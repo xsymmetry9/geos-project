@@ -5,8 +5,9 @@ import LevelCheck_App from "./LevelCheck_App";
 import SPRForm from "./pages/SPRForm";
 import Preview from "./pages/Preview";
 import Homepage from './pages/Homepage';
-import SPRContent from "./components/SPRContent";
+import SPRContent from "./components/PrintStudentProgressReport";
 import { elements } from 'chart.js';
+import PrintPage from './components/PrintSPR';
 
 const routes = [
     {
@@ -23,7 +24,7 @@ const routes = [
         children:[
             { index: true, element: <SPRForm />},
             { path: "preview", element: <Preview />},
-            { path: "print/:id", element: <SPRContent />}
+            { path: "print/:id", element: <PrintPage />}
         ]
     },
     {
@@ -35,7 +36,7 @@ const routes = [
     },
     {
         path:"spr/print/:id",
-        element: <SPRContent />
+        element: <PrintPage />
     }
 ];
 
