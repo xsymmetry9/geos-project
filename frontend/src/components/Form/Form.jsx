@@ -8,6 +8,7 @@ import Button from "./components/Button";
 import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
+import { getStudentById } from "../../utils/functions";
 
 const Form = ({inputData, setInputData}) => {
     const [page, setPage] = useState(0);
@@ -60,9 +61,23 @@ const Form = ({inputData, setInputData}) => {
         e.preventDefault();
         try{
             const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
-            savedData.SPR.push(inputData);
 
+            const existingStudentIndex = savedData.SPR.findIndex(student => student.id === inputData.id);
+
+            if (existingStudentIndex === -1) {
+                // If student does not exist, add new entry
+                savedData.SPR.push(inputData);
+            } else {
+                // If student exists, update their data
+                savedData.SPR[existingStudentIndex] = inputData;
+            }
+    
+            // Save updated data back to localStorage
             localStorage.setItem("GEOS_app", JSON.stringify(savedData));
+    
+            setDisplayPopupMessage(true);
+ 
+
             
         } catch (err) {
             console.log("Unable to load", err);

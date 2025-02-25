@@ -16,7 +16,7 @@ const PersonalInformation = ({inputData, handleInputData, language}) =>{
             <h2 className="title text-2 p-2">Student's Information</h2>    
             <div className="input-wrapper p-t-3">
                 <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
-                <input type="text" className="text-2" name="name" value={name} onChange={handleInputData} />
+                <input type="text" className="text-2" name="name" value={name} id="name" onChange={handleInputData} />
             </div>
             <div className="input-wrapper">
                 <label className="text-2 uppercase" htmlFor="course">{input_course}</label>
@@ -31,7 +31,7 @@ const PersonalInformation = ({inputData, handleInputData, language}) =>{
             </div>
             <div className="input-wrapper">
                 <label className="text-2 uppercase" htmlFor="textbook">{input_textbook}</label>
-                <input className="text-2" type="text" name="textbook" value={textbook} onChange={handleInputData} />
+                <input className="text-2" type="text" name="textbook" id="textbook" value={textbook} onChange={handleInputData} />
                 </div>
             <div className="input-wrapper">
                 <label className="text-2 uppercase" htmlFor="attendance">{input_attendance}</label>

@@ -15,7 +15,7 @@ const SPRForm = () =>{
    
         <LanguageContext.Provider value ={language}>
             <Link className="btn-primary" to={`/home/${language}`}>Dashboard</Link>
-            <Form inputData = {inputData} setInputData={setInputData} />
+            <Form inputData = {inputData} setInputData={setInputData}/>
         </LanguageContext.Provider>
 
     )

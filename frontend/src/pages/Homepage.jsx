@@ -24,6 +24,7 @@ export default function Homepage (){
                         const parsedData = JSON.parse(savedData);
                         parsedData.language = language;
                         setUserData(parsedData);
+                        editDataFromLocal(parsedData);
                         }
                     } catch (error) {
                         console.error("Error fetching or updating user data", error);
@@ -59,7 +60,7 @@ export default function Homepage (){
                             </tr>
                         </thead>
                         <tbody>
-                        {userData.SPR.map((item, index) => {
+                        {userData.SPR.map((item) => {
                             return(
                                 <tr key={item.id}>
                                     <td>{item.name}</td>

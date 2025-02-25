@@ -2,11 +2,11 @@ const appName = "GEOS_app";
 
 //Reads data from the local Storage
 export function getDataFromLocal() {
-    return  localStorage.getItem(appName);
+    return localStorage.getItem(appName);
 }
 
 export function getStudentById(id){
-        const data = localStorage.getItem(appName);
+        const data = getDataFromLocal();
         const parsedData = JSON.parse(data);
         const {SPR} = parsedData;
         return SPR.filter((student) => student.id === id)[0];
