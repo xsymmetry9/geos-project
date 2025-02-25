@@ -67,7 +67,7 @@ export default function Homepage (){
                                     <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
                                     <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
                                     <td><button>Download</button></td>
-                                    <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
+                                    <td><Link to={`/spr/${language}/print/${item.id}`}>View</Link></td>
                                 </tr>)
                             })}
                         </tbody>
