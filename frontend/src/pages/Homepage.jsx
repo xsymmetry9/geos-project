@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {format} from "date-fns";
 import "../styles/components/dashboard.scss";
 import User from "../type/User";
-import { getDataFromLocal, editDataFromLocal } from "../utils/functions";
+import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 
 
 export default function Homepage (){
@@ -42,6 +42,12 @@ export default function Homepage (){
                 <><h1>Loading ...</h1></>
             )
         }
+    const handleDelete = (e) =>{
+        const {id} = e.currentTarget;
+        setUserData((prev) => ({...prev, SPR: prev.SPR.filter((item) => item.id != id)}));
+        // editDataFromLocal(userData);
+
+    }
 
     const PlotTable = () =>{
 
@@ -53,6 +59,7 @@ export default function Homepage (){
                                 <th>Name</th>
                                 <th>Date</th>
                                 <th>Edit</th>
+                                <th>delete</th>
                                 <th>Download</th>
                                 <th>Print</th>
                             </tr>
@@ -63,7 +70,8 @@ export default function Homepage (){
                                 <tr key={item.id}>
                                     <td>{item.name}</td>
                                     <td>{format(new Date(), "MM/dd/yyyy")}</td>
-                                    <td>edit</td>
+                                    <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
+                                    <td><button id={item.id} onClick={handleDelete}>delete</button></td>
                                     <td><button>Download</button></td>
                                     <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
                                 </tr>)

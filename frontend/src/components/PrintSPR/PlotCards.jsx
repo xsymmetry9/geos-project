@@ -19,7 +19,7 @@ const PlotCards = ({levels, language}) =>{
             <div className='cards-container'>
                 <div className= "level-card">
                     <div className="level-card-title">
-                        <strong><p className="level-card-title uppercase">Vocabulary</p></strong>
+                        <strong><p className="level-card-title uppercase">{text("vocabulary", language)}</p></strong>
                     </div>
                     <div className="level-card-description">
                         <RenderLevel category={"vocabulary"} studentLevel={finalValue.vocabulary} language={language}/>
@@ -27,7 +27,7 @@ const PlotCards = ({levels, language}) =>{
                 </div>
                 <div className= "level-card">
                     <div className="level-card-title">
-                        <strong><p className="level-card-title uppercase">Grammar</p></strong>
+                        <strong><p className="level-card-title uppercase">{text("grammar", language)}</p></strong>
                     </div>
                     <div className="level-card-description">
                         <RenderLevel category={"grammar"} studentLevel={finalValue.grammar} language={language}/>
@@ -35,7 +35,7 @@ const PlotCards = ({levels, language}) =>{
                 </div>
                 <div className= "level-card">
                     <div className="level-card-title">
-                        <strong><p className="level-card-title uppercase">Pronunciation</p></strong>
+                        <strong><p className="level-card-title uppercase">{text("pronunciation", language)}</p></strong>
                     </div>
                     <div className="level-card-description">
                         <RenderLevel category={"pronunciation"} studentLevel={finalValue.pronunciation} language={language}/>
@@ -43,7 +43,7 @@ const PlotCards = ({levels, language}) =>{
                 </div>
                 <div className= "level-card">
                     <div className="level-card-title">
-                        <strong><p className="level-card-title uppercase">Listening</p></strong>
+                        <strong><p className="level-card-title uppercase">{text("listening", language)}</p></strong>
                     </div>
                     <div className="level-card-description">
                         <RenderLevel category={"listening"} studentLevel={finalValue.listening} language={language}/>
@@ -51,7 +51,7 @@ const PlotCards = ({levels, language}) =>{
                 </div>
                 <div className= "level-card">
                     <div className="level-card-title">
-                        <strong><p className="level-card-title uppercase">Conversation</p></strong>
+                        <strong><p className="level-card-title uppercase">{text("conversation", language)}</p></strong>
                     </div>
                     <div className="level-card-description">
                         <RenderLevel category={"conversation"} studentLevel={finalValue.conversation} language={language}/>

@@ -6,13 +6,11 @@ import Preview from "./components/Preview"
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
 import "../../styles/components/form.scss";
-import {Student} from "../../type/Student";
 import { LanguageContext } from "../../pages/SPRForm";
-import {v4 as uuidv4} from "uuid";
 import PopUpMessage from "../PopUpMessage";
 
-const Form = () => {
-    const [inputData, setInputData] = useState(new Student(uuidv4()));
+const Form = ({inputData, setInputData}) => {
+    const [page, setPage] = useState(0);
     const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
 
     const language = useContext(LanguageContext);
@@ -36,7 +34,6 @@ const Form = () => {
             }}
         ))
     }
-    const [page, setPage] = useState(0);
     const arrOfPages = [
         <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language={language}/>,
         <LevelInformation inputData={inputData} setInputData = {setInputData} handleLevelInputData = {handleLevelInputData} language={language}/>,
@@ -61,7 +58,6 @@ const Form = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(inputData);
         try{
             const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
             savedData.SPR.push(inputData);
@@ -73,10 +69,6 @@ const Form = () => {
         }
 
         setDisplayPopupMessage(true);
-
-        
-
-
     }
     return(
         <div className={`form-root`}>

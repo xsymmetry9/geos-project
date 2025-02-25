@@ -2,7 +2,6 @@ import labelText from "../../assets/other/labelText.json";
 
 const Comment = ({comment, language}) =>{
     const text = (phrase, language) => labelText[language]['SPR'][phrase];
-
     return(
         <div className="card">
             <div className="card-title">
@@ -13,7 +12,6 @@ const Comment = ({comment, language}) =>{
             </div>
         </div>
     )
-
 }
 
 export default Comment;

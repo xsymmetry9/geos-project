@@ -9,39 +9,31 @@ import PlotCards from "./PrintSPR/PlotCards";
 
 import "../styles/print.scss";
 
-
-const PrintContent = ({parsedData, loading}) =>{
-    const {id, language} = useParams();
-
-    if (loading) {
-        return(
-            <>
-                <h1>Loading ...</h1>
-            </>
-        )
-    }
+const PrintContent = ({parsedData}) =>{
+    const {language} = useParams();
+    const {name, textbook, course, attendance, totalLessons, feedback, levels} = parsedData;
 
     return(
         <>
-                    <div className='title-container'>
-                    <div className='img-container'>
-                        <RenderLogo style ="logoName" description="logo"/>
-                        <TitleSPR language ={language} />
-                    </div>
+            <div className='title-container'>
+                <div className='img-container'>
+                    <RenderLogo style ="logoName" description="logo"/>
+                    <TitleSPR language ={language} />
                 </div>
-                <div className="even-columns">
-                    <StudentInfo name = {parsedData.name} textbook ={parsedData.textbook} course={parsedData.course} language={language} />
-                    <AttendanceInfo attendance = {parsedData.attendance} totalLessons={parsedData.totalLessons} language ={language} />
+            </div>
+            <div className="even-columns">
+                <StudentInfo name = {name} textbook ={textbook} course={course} language={language} />
+                <AttendanceInfo attendance = {attendance} totalLessons={totalLessons} language ={language} />
+            </div>
+            <Table levels = {levels} language={language}/>
+            <div className="graph-levelInfo">
+                <div className="comment-signature-container">
+                    <Graph data={parsedData} language = {language}/>
+                    <Comment comment = {feedback} language={language}/>
+                    <Signature language ={language} />
                 </div>
-                <Table levels = {parsedData.levels} language={language}/>
-                <div className="graph-levelInfo">
-                    <div className="comment-signature-container">
-                        <Graph data={parsedData} language = {language}/>
-                        <Comment comment = {parsedData.feedback} language={language}/>
-                        <Signature language ={language} />
-                    </div>
-                    <PlotCards levels = {parsedData.levels} language={language}/>
-                </div>
+                <PlotCards levels = {levels} language={language}/>
+            </div>
         </>
 
     )

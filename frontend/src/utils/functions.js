@@ -21,3 +21,12 @@ export function editDataFromLocal(data) {
         console.log("Error loading the data", err);
     }
 }
+
+export function deleteStudentById(id){
+    const data = localStorage.getItem(appName);
+    const parsedData = JSON.parse(data);
+
+    const {SPR} = parsedData;
+    return SPR.filter((student) => student.id !== id);
+
+}

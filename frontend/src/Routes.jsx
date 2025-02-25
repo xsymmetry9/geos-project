@@ -3,10 +3,7 @@ import Index from "./pages/Index";
 import Layout from "./Layout";
 import LevelCheck_App from "./LevelCheck_App";
 import SPRForm from "./pages/SPRForm";
-import Preview from "./pages/Preview";
 import Homepage from './pages/Homepage';
-import SPRContent from "./components/PrintStudentProgressReport";
-import { elements } from 'chart.js';
 import PrintPage from './components/PrintSPR';
 
 const routes = [
@@ -23,8 +20,8 @@ const routes = [
         element: <Layout />,
         children:[
             { index: true, element: <SPRForm />},
-            { path: "preview", element: <Preview />},
-            { path: "print/:id", element: <PrintPage />}
+            { path: "print/:id", element: <PrintPage />},
+            { path: "edit/:id", element: <SPRForm />}
         ]
     },
     {
@@ -34,10 +31,6 @@ const routes = [
             {index: true, element: <LevelCheck_App />}
         ]
     },
-    {
-        path:"spr/print/:id",
-        element: <PrintPage />
-    }
 ];
 
 export default routes;
