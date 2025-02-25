@@ -8,7 +8,7 @@ import Button from "./components/Button";
 import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
-import { getStudentById } from "../../utils/functions";
+import { editDataFromLocal, getStudentById } from "../../utils/functions";
 
 const Form = ({inputData, setInputData}) => {
     const [page, setPage] = useState(0);
@@ -73,7 +73,7 @@ const Form = ({inputData, setInputData}) => {
             }
     
             // Save updated data back to localStorage
-            localStorage.setItem("GEOS_app", JSON.stringify(savedData));
+            editDataFromLocal(savedData);
     
             setDisplayPopupMessage(true);
  

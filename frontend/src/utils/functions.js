@@ -17,8 +17,9 @@ export function editDataFromLocal(data) {
 
     try {
         localStorage.setItem(appName, JSON.stringify(data));
+        return {status: true, message: "Success!"}
     } catch (err) {
-        console.log("Error loading the data", err);
+        return {status: false, error: err}
     }
 }
 
