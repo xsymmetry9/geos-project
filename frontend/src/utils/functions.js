@@ -26,7 +26,12 @@ export function deleteStudentById(id){
     const data = localStorage.getItem(appName);
     const parsedData = JSON.parse(data);
 
-    const {SPR} = parsedData;
-    return SPR.filter((student) => student.id !== id);
+    const newData = {
+        ...parsedData,
+        SPR: parsedData.SPR.filter((student) => student.id !== id)
+    }
+    localStorage.setItem(appName, JSON.stringify(newData));
+
+    return newData.SPR;
 
 }

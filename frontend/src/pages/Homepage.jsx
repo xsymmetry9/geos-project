@@ -5,7 +5,6 @@ import "../styles/components/dashboard.scss";
 import User from "../type/User";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 
-
 export default function Homepage (){
     const {language} = useParams();
     const [loading, setLoading] = useState(true);
@@ -44,8 +43,8 @@ export default function Homepage (){
         }
     const handleDelete = (e) =>{
         const {id} = e.currentTarget;
+        deleteStudentById(id); // Delete single item from localStorage
         setUserData((prev) => ({...prev, SPR: prev.SPR.filter((item) => item.id != id)}));
-        // editDataFromLocal(userData);
 
     }
 
@@ -56,22 +55,17 @@ export default function Homepage (){
                 <table className="dashboard-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Edit</th>
-                                <th>delete</th>
-                                <th>Download</th>
-                                <th>Print</th>
+                                {["Name", "Date", "Edit", "Delete", "Download", "Print"].map((item) => <th key={item}>{item}</th>)}
                             </tr>
                         </thead>
                         <tbody>
-                        {userData.SPR.map((item) => {
+                        {userData.SPR.map((item, index) => {
                             return(
                                 <tr key={item.id}>
                                     <td>{item.name}</td>
                                     <td>{format(new Date(), "MM/dd/yyyy")}</td>
                                     <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
-                                    <td><button id={item.id} onClick={handleDelete}>delete</button></td>
+                                    <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
                                     <td><button>Download</button></td>
                                     <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
                                 </tr>)
