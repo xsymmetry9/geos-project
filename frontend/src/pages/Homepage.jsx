@@ -55,7 +55,7 @@ export default function Homepage (){
                 <table className="dashboard-table">
                         <thead>
                             <tr>
-                                {["Name", "Date", "Edit", "Delete", "Download", "Print"].map((item) => <th key={item}>{item}</th>)}
+                                {["Name", "Date", "Edit", "Delete", "View"].map((item) => <th key={item}>{item}</th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -66,8 +66,7 @@ export default function Homepage (){
                                     <td>{format(new Date(), "MM/dd/yyyy")}</td>
                                     <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
                                     <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
-                                    <td><button>Download</button></td>
-                                    <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
+                                    <td><Link to={`/spr/${language}/print/${item.id}`}>View</Link></td>
                                 </tr>)
                             })}
                         </tbody>
