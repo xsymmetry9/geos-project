@@ -1,12 +1,14 @@
-const Preview = ({data, language}) =>{
+import "../../../styles/components/preview.scss";
+
+const Preview = ({inputData, language}) =>{
     const {name,
         textbook,
         course,
         attendance,
         totalLessons, 
         levels,
-        comment
-    } = data;
+        feedback
+    } = inputData;
 
     const titles = {
         english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
@@ -21,26 +23,45 @@ const Preview = ({data, language}) =>{
         japanese: ["初期", "目標", "終了"]
     }
     return(
-        <>
-            <h1>{name}</h1>
-            <p className="uppercase">textbook: {textbook}</p>
-            <p className="uppercase">course: {course}</p>
-            <p className="uppercase">attendance: {attendance}</p>
-            <p className="uppercase">total lessons: {totalLessons}</p>
-            <br />
-            {levels.map((item, index) => {
-                return(
-                    <div key={index}>
-                        <h3 className="uppercase">{titles[language][index]}</h3>
-                        <p className="uppercase">{titleLanguage[language][0]}: {item.initial}</p>
-                        <p className="uppercase" >{titleLanguage[language][1]} {item.target}</p>
-                        <p className="uppercase">{titleLanguage[language][2]} {item.final}</p>
-                    </div>
-                )
+        <div className="preview-section">
+            <div className="preview-container">
+                <h2>Class Information</h2>
+                <p><strong>Name:</strong> {name.length != 0 ? name : "No name"}</p>
+                <p className="uppercase"><strong>textbook:</strong> {textbook.length != 0 ? textbook : "No textbook"}</p>
+                <p className="uppercase"><strong>course:</strong> {course.length != 0 ? course : "No course name"}</p>
+                <p className="uppercase"><strong>attendance:</strong> {attendance != 0 ? attendance : "No attendance"}</p>
+                <p className="uppercase"><strong>total lessons:</strong> {totalLessons != 0 ? totalLessons : "No total lessons"}</p>
+            </div>
+            <div className="preview-container">
+                <h2>Student Evaluation</h2>
+                <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>{titleLanguage[language][0]}</th>
+                        <th>{titleLanguage[language][1]}</th>
+                        <th>{titleLanguage[language][2]}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.keys(levels).map((item) => {
+                    return(
+                        <tr key={item}>
+                            <td>{item.toUpperCase()}</td>
+                            <td>{levels[item].initial}</td>
+                            <td>{levels[item].target}</td>
+                            <td>{levels[item].final}</td>
+                        </tr>
+                    )
             })}
-            <br />
-            <p>{comment}</p>
-        </>
+                </tbody>
+                </table>
+            </div>
+            <div className="preview-container">
+                <h2>Feedback</h2>            
+                <p>{feedback.length != 0 ? feedback : "No comment"}</p>
+            </div>
+        </div>
     )
 }
 

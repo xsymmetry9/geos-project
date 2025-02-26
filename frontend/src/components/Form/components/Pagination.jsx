@@ -1,3 +1,5 @@
+import "../../../styles/components/pagination.scss";
+
 const Pagination = ({page, language}) =>{
     const arr = ["Info", "Level", "Feedback", "Done"];
     const title = {

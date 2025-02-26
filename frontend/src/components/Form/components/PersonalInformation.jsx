@@ -1,26 +1,9 @@
-import {useState} from "react";
 import form_languages from "../form_languages.js";
-import textbooks from "../../../assets/other/textbooks.json";
 
-const PersonalInformation = ({data, handleData, language}) =>{
-    const {name, course, textbook, attendance, totalLessons} = data;
-    const [personalInformation, setPersonalInformation] = useState(
-        {
-            name: data.name,
-            course: data.course,
-            textbook: data.textbook,
-            attendance: data.attendance,
-            totalLessons: data.totalLessons
-        }
-    );
+const PersonalInformation = ({inputData, handleInputData, language}) =>{
+    const {name, course, textbook, attendance, totalLessons} = inputData;
 
-    const handler = (e) =>{
-        const {name, value} = e.currentTarget;
-        setPersonalInformation({...personalInformation,
-            [name]: value
-        })
-
-    }
+    //translation
     const {
         input_name,
         input_course,
@@ -29,53 +12,36 @@ const PersonalInformation = ({data, handleData, language}) =>{
         input_totallessons} = form_languages[language.toLowerCase()];
 
     return(
-        <>
-            <div id="personal-information">
-                <label htmlFor="name">
-                    <div className="input-wrapper">
-                        <p className="uppercase">{input_name}</p>
-                        <input className="form-input-primary" type="text" name="name" value={name} onChange={handleData} />
-                    </div>
-                </label>
-                <label htmlFor="course">
-                    <div className="input-wrapper">
-                        <p className="uppercase">{input_course}</p>
-                        <select className="form-input-primary" id="course" name="course" value={course} onChange={handleData}>
-                            <option value="">Select course</option>
-                            <option value="ONLINE">ONLINE</option>
-                            <option value="PL">PL</option>
-                            <option value="GL">GL</option>
-                            <option value="SGL">SGL</option>
-                            <option value="FLEX">FLEX</option>
-                        </select>
-                    </div>
-                    
-                </label>
-                <label htmlFor= "textbook">
-                    <div className="input-wrapper">
-                        <p className="uppercase">{input_textbook}</p>
-                        <input className="form-input-primary" type="text" name="textbook" value={textbook} onChange={handleData} />
-                        {/* <select className="form-input-primary" name="textbook" id="textbook" value={textbook} onChange={handleData}>
-                            <option value="DEFAULT">Textbook name</option>
-                            {textbooks.English.map((item, index) => <option key={index} value={item}>{item}</option>)}
-                        </select> */}
-                    </div>
-                </label>
-                <label htmlFor= "attendance">
-                    <div className="input-wrapper">
-                        <p className="uppercase">{input_attendance}</p>
-                        <input className="form-input-primary" type="number" name="attendance" id="attendance" value={attendance} onChange={handleData}/>
-                    </div>
-                </label>                             
-                <label htmlFor="totalLessons">
-                    <div className='input-wrapper'>
-                        <p className="uppercase">{input_totallessons}</p>
-                        <input className="form-input-primary" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleData}/>
-                    </div>  
-                </label>
+        <div className="form-primary" id="personal-information">
+            <h2 className="title text-2 p-2">Student's Information</h2>    
+            <div className="input-wrapper p-t-3">
+                <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
+                <input type="text" className="text-2" name="name" value={name} onChange={handleInputData} />
             </div>
-        </>
-   
+            <div className="input-wrapper">
+                <label className="text-2 uppercase" htmlFor="course">{input_course}</label>
+                <select className="text-2 form-input-primary" id="course" name="course" value={course} onChange={handleInputData}>
+                    <option className="text-2" value="">Select course</option>
+                    <option className="text-2" value="ONLINE">ONLINE</option>
+                    <option className="text-2" value="PL">PL</option>
+                    <option className="text-2" value="GL">GL</option>
+                    <option className="text-2" value="SGL">SGL</option>
+                    <option className="text-2" value="FLEX">FLEX</option>
+                </select>
+            </div>
+            <div className="input-wrapper">
+                <label className="text-2 uppercase" htmlFor="textbook">{input_textbook}</label>
+                <input className="text-2" type="text" name="textbook" value={textbook} onChange={handleInputData} />
+                </div>
+            <div className="input-wrapper">
+                <label className="text-2 uppercase" htmlFor="attendance">{input_attendance}</label>
+                <input className="text-2" type="number" name="attendance" id="attendance" value={attendance} onChange={handleInputData}/>
+            </div>
+            <div className="input-wrapper">
+                <label className="text-2 uppercase" htmlFor="totalLessons">{input_totallessons}</label>
+                <input className="text-2" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleInputData}/>
+            </div>
+        </div>
     )
 }
 

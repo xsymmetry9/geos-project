@@ -39,6 +39,7 @@ p{
     padding: 6mm 8mm 6mm 8mm;
     box-sizing: border-box;
     font-family: base.$font-secondary;
+    
 }
 .papersize{
         width: 210mm;
@@ -188,7 +189,7 @@ table, th, td, tr{
 .level-card{
     border: 1px solid black;
     font-family: base.$font-secondary;
-    height: 32.7mm;
+    min-height: 32.7mm;
     .level-card-title{
         background-color: $background-color-dark;
         color: white;

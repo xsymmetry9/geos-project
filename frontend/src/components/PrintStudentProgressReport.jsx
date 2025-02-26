@@ -1,19 +1,20 @@
 import { useParams } from "react-router-dom"
-import Graph from "../components/Graph";
-import "../styles/print.scss";
-import RenderLogo from "../components/Image/RenderLogo"
-import {TitleSPR, StudentInfo, AttendanceInfo} from "../components/PrintSPR/StudentInfo";
-import Table from "../components/PrintSPR/Table";
-import Signature from "../components/PrintSPR/Signature";
-import Comment from "../components/PrintSPR/Comment";
-import PlotCards from "../components/PrintSPR/PlotCards";
+import Graph from "./Graph";
+import RenderLogo from "./Image/RenderLogo"
+import {TitleSPR, StudentInfo, AttendanceInfo} from "./PrintSPR/StudentInfo";
+import Table from "./PrintSPR/Table";
+import Signature from "./PrintSPR/Signature";
+import Comment from "./PrintSPR/Comment";
+import PlotCards from "./PrintSPR/PlotCards";
 
-const SPRContent = ({parsedData}) =>{
+import "../styles/print.scss";
+
+const PrintContent = ({parsedData}) =>{
     const {language} = useParams();
-   
-    const {name, course, textbook, attendance, totalLessons, levels, comment} = parsedData;
+    const {name, textbook, course, attendance, totalLessons, feedback, levels} = parsedData;
+
     return(
-        <div className="papersize-A4">
+        <>
             <div className='title-container'>
                 <div className='img-container'>
                     <RenderLogo style ="logoName" description="logo"/>
@@ -28,13 +29,14 @@ const SPRContent = ({parsedData}) =>{
             <div className="graph-levelInfo">
                 <div className="comment-signature-container">
                     <Graph data={parsedData} language = {language}/>
-                    <Comment comment = {comment} language={language}/>
+                    <Comment comment = {feedback} language={language}/>
                     <Signature language ={language} />
                 </div>
                 <PlotCards levels = {levels} language={language}/>
             </div>
-        </div>
+        </>
+
     )
 }
 
-export default SPRContent;
+export default PrintContent;

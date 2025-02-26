@@ -1,35 +1,36 @@
 import React from 'react';
-import SPR_APP from "./SPR_App";
-import Homepage from "./pages/Homepage";
-import App from "./App";
+import Index from "./pages/Index";
+import Layout from "./Layout";
 import LevelCheck_App from "./LevelCheck_App";
-import Create from "./pages/Create";
-import Preview from "./pages/Preview";
+import SPRForm from "./pages/SPRForm";
+import Homepage from './pages/Homepage';
+import PrintPage from './components/PrintSPR';
+
 const routes = [
     {
         path: "/",
-        element: <App />,
+        element: <Layout />,
         children:[
-            {index: true, element: <Homepage />},
+            {index: true, element: <Index />},
             {path: "home/:language", element: <Homepage />},
         ]
     },
     {
         path:"spr/:language",
-        element: <App />,
+        element: <Layout />,
         children:[
-            { index: true, element: <SPR_APP />},
-            { path: "create", element: <Create />},
-            { path: "preview", element: <Preview />},
+            { index: true, element: <SPRForm />},
+            { path: "print/:id", element: <PrintPage />},
+            { path: "edit/:id", element: <SPRForm />}
         ]
     },
     {
         path:"levelCheck/:language",
-        element: <App />,
+        element: <Layout />,
         children: [
             {index: true, element: <LevelCheck_App />}
         ]
-    }
+    },
 ];
 
 export default routes;

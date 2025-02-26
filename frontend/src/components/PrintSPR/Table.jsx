@@ -15,24 +15,27 @@ const Table = ({levels, language}) =>{
 
     const Row = ({levels, label}) =>{
         const sum = () =>{
-            return levels.reduce((total, accumulator) => total + parseFloat(accumulator[label]), 0);
+            return Object.keys(levels).reduce((total, accumulator) => total + parseFloat(levels[accumulator][label]), 0);
+
         }
+
         const avg = () =>{
             return parseFloat(sum() / 5, 2).toFixed(2);
         }
         return(
             <tr>
                 <td className='print-col title-table text-capitalized'>{text(label, language)}</td>
-                <td className='print-col' id={`${label}-${labels[1]}`}>{levels[0][label]}</td> 
-                <td className='print-col' id={`${label}-${labels[1]}`}>{levels[1][label]}</td>
-                <td className='print-col' id={`${label}-${labels[1]}`}>{levels[2][label]}</td>
-                <td className='print-col'id={`${label}-${labels[1]}`}>{levels[3][label]}</td>
-                <td className='print-col'id={`${label}-${labels[1]}`}>{levels[4][label]}</td>
-                <td className='print-col'id={`${label}-${labels[1]}`}>{sum()}</td>
-                <td className='print-col'id={`${label}-${labels[1]}`}>{avg()}</td>
+                <td className='print-col'>{levels.vocabulary[label]}</td> 
+                <td className='print-col'>{levels.grammar[label]}</td>
+                <td className='print-col'>{levels.pronunciation[label]}</td>
+                <td className='print-col'>{levels.listening[label]}</td>
+                <td className='print-col'>{levels.conversation[label]}</td>
+                <td className='print-col'>{sum()}</td>
+                <td className='print-col'>{avg()}</td>
             </tr>
         )
     }
+    console.log(levels);
     return (
         <>
             <table className="table-levels">

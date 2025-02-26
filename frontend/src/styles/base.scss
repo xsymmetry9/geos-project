@@ -1,5 +1,7 @@
 //_base.scss
 
+$color-light-blue: rgb(9, 197, 235);
+$color-dark-green:  #00646c;
 $color-light-gray: #d1d5db;
 $font-primary: "Merriweather", serif;
 $font-secondary: "Poppins", sans-serif;
@@ -9,19 +11,17 @@ $color-active: #F29F58;
 $body-color: red;
 $font-color: black;
 $font-color-dark: black;
+$font-color-light: $primary-color;
 $background-color: #f3f3f3;
 $font-center: center;
 $line-seperator: gray;
 
-$font-size-1: .9rem;
-$font-size-2: 1.2rem;
-$font-size-3: 1.4rem;
-$font-size-4: 1.6rem;
-$font-size-5: 1.8rem;
-$font-size-6: 2rem;
-$font-size-7: 2.4rem;
-$font-size-8: 2.8rem;
-$font-size-9: 3rem;
+$font-size-1: .877rem;
+$font-size-2: $font-size-1 + .2rem;
+$font-size-3: $font-size-1 + 4rem;
+$font-size-4: $font-size-1 + .6rem;
+$font-size-5: $font-size-1 + .8rem;
+$font-size-6: $font-size-1 + 1rem;
 
 $print-font-size-1: 12px;
 $print-font-size-2: 16px;
@@ -30,17 +30,26 @@ $print-font-size-4: 20px;
 $print-font-size-5: 24px;
 $print-font-size-6: 26px;
 
-$button-bg-color: rgb(9, 197, 235);
+$button-bg-color: $color-dark-green;
 $button-font-color: $primary-color-dark;
+$spacing: 8px;
+$spacing-sm: $spacing;
+$spacing-m: $spacing + 4px;
+$spacing-lg: $spacing + 8px;
+$spacing-xl: $spacing + 8px;
+$spacing-2xl: $spacing + 12px;
+$spacing-4xl: $spacing + 14px;
+$spacing-6xl: $spacing + 16px;
+$spacing-8xl: $spacing + 18px;
 
-$spacing-sm: 8px;
-$spacing-m: $spacing-sm + 4px;
-$spacing-lg: $spacing-sm + 8px;
-$spacing-xl: $spacing-sm + 8px;
-$spacing-2xl: $spacing-sm + 12px;
-$spacing-4xl: $spacing-sm + 14px;
-$spacing-6xl: $spacing-sm + 16px;
-$spacing-8xl: $spacing-sm + 18px;
+$spacing-1: $spacing;
+$spacing-2: $spacing + 4px;
+$spacing-3: $spacing + 8px;
+$spacing-4: $spacing + 8px;
+$spacing-5: $spacing + 12px;
+$spacing-6: $spacing + 14px;
+$spacing-7: $spacing + 16px;
+$spacing-8: $spacing + 18px;
 
 
 .spacing-b-1{
