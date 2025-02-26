@@ -56,7 +56,7 @@ export default function Homepage (){
                 <table className="dashboard-table">
                         <thead>
                             <tr>
-                                {["Name", "Date", "Edit", "Delete", "View"].map((item) => <th key={item}>{item}</th>)}
+                                {["Name", "Date", "Edit", "Delete", "Download", "Print"].map((item) => <th key={item}>{item}</th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -67,7 +67,8 @@ export default function Homepage (){
                                     <td>{format(new Date(), "MM/dd/yyyy")}</td>
                                     <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
                                     <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
-                                    <td><Link to={`/spr/${language}/print/${item.id}`}>View</Link></td>
+                                    <td><button>Download</button></td>
+                                    <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
                                 </tr>)
                             })}
                         </tbody>
@@ -78,10 +79,12 @@ export default function Homepage (){
 
     return(
         <>
-            <div className="dashboard centered"> 
-                <h1 className="text-2 p-1">Welcome {userData.name}</h1>
+            <div className="dashboard"> 
+            <h2 className="centered p-b-7">Students Progress Report</h2>
+            <div className="centered p-b-3">
+                <button className="btn-primary">to PDF</button>
+            </div>
                 <div className="dashboard-container">
-                    <h2>Students Progress Report</h2>
                     {userData.SPR.length != 0 && <PlotTable />}
                     {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
                     

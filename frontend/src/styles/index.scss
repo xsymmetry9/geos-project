@@ -190,9 +190,23 @@ option{
 .p-t-5{ padding-top: base.$spacing + 16px }
 .p-t-6{ padding-top: base.$spacing + 20px }
 .p-t-7{ padding-top: base.$spacing + 24px }
+
+.m-t-1 {margin-top: base.$spacing}
+.m-t-2 {margin-top: base.$spacing +4px}
+.m-t-3 {margin-top: base.$spacing + 8px}
+.m-t-4 {margin-top: base.$spacing + 12px}
+.m-t-5 {margin-top: base.$spacing + 16px}
+.m-t-6 {margin-top: base.$spacing + 20px}
+.m-t-7 {margin-top: base.$spacing + 24px}
+
+
+
 // flex
 .flex{
     display: flex;
+}
+.flex-end{
+    justify-content: end;
 }
 .flex-col {
     display: flex;
@@ -231,4 +245,43 @@ option{
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.level-text-box-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+//Custom buttons
+.btn-help, .btn-close{
+    cursor: pointer;
+    font-family: inherit;
+    font-size: base.$font-size-1;
+    font-weight: 600;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 5px;
+}
+.btn-help{
+    background-color: green;
+    &:hover{
+        background-color: white;
+        outline: 1px solid green;
+        color: green;
+    }
+}
+
+.btn-close{
+    background-color: red;
+    &:hover{
+        background-color: white;
+        outline: 1px solid red;
+        color: red;
+    }
 }
