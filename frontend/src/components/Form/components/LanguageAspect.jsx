@@ -1,7 +1,34 @@
 import { useState, useId } from "react";
 import LevelTabs from "./LevelTabs";
+import text from "../../../assets/other/levels.json";
 
 function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
+
+    const [displayInitialHelp, setDisplayInitial] = useState(false);
+    const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
+    const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
+
+    const handlerHelp = (e) =>{
+        const {id} = e.currentTarget;
+        if(id === "initial-open"){
+            setDisplayInitial(true);
+        } else if(id === "target-open"){
+            setDisplayTargetHelp(true);
+        } else {
+            setDisplayFinalHelp(true);
+        }
+    }
+
+    const handlerCloseHelp = (e) =>{
+        const {id} = e.currentTarget;
+        if(id === "initial-close"){
+            setDisplayInitial(false);
+        } else if(id === "target-close"){
+            setDisplayTargetHelp(false);
+        } else {
+            setDisplayFinalHelp(false);
+       }
+    }
 
     const initialID = useId();
     const targetID = useId();
@@ -28,9 +55,28 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                     value ={inputData.levels[aspectName].initial}
                     onChange={handleLevelInput}>
                     <option className="text-2" value={inputData}>Select score</option>
-                    {levelValue.map((item_Value, index)=> <option className="text-2" key={`${initialID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
+                    {levelValue.map((item_Value, index)=> 
+                    <>
+                        <option
+                            className="text-2" 
+                            key={`${initialID}-${item_Value}-${index}`} 
+                            value={item_Value}>
+                                {item_Value}
+                        </option>
+                    </>
+                        )}
                 </select>
+                <div>
+                    {displayInitialHelp && <div>
+                        <p>{text[language][aspectName][inputData.levels[aspectName].initial]}</p>
+                        <button className="btn-close" id="initial-close" onClick={handlerCloseHelp}>x</button>
+                    </div>}
+                    {!displayInitialHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="initial-open" onClick={handlerHelp}>?</button></div>}
                 </div>
+
+
+            </div>
             <div className="input-wrapper">
                 <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
                 <select 
@@ -42,6 +88,15 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                 <option className="text-2" value={inputData}>Select score</option>
                 {levelValue.map((item_Value, index)=> <option className="text-2" key={`${targetID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                 </select>
+                <div>
+                    {displayTargetHelp && <div>
+                        <p>{text[language][aspectName][inputData.levels[aspectName].target]}</p>
+                        <button className="btn-close" id="target-close" onClick={handlerCloseHelp}>x</button>
+                    </div>}
+                    {!displayTargetHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="target-open" onClick={handlerHelp}>?</button></div>}
+                </div>
+
             </div>
             <div className="input-wrapper">
                     <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][2]}</label>
@@ -54,6 +109,14 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                     <option className="text-2" value={inputData}>Select score</option>
                     {levelValue.map((item_Value, index)=> <option className="text-2" key={`${finalID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                 </select>
+                <div>
+                    {displayFinalHelp && <div>
+                        <p>{text[language][aspectName][inputData.levels[aspectName].final]}</p>
+                        <button className="btn-close" id="final-close" onClick={handlerCloseHelp}>x</button>
+                    </div>}
+                    {!displayFinalHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="final-open" onClick={handlerHelp}>?</button></div>}
+                </div>
             </div>
         </>
     )
