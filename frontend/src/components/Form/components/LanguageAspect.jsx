@@ -66,8 +66,8 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                     </>
                         )}
                 </select>
-                <div>
-                    {displayInitialHelp && <div>
+                <div className="m-t-1">
+                    {displayInitialHelp && <div className="level-text-box-container">
                         <p>{text[language][aspectName][inputData.levels[aspectName].initial]}</p>
                         <button className="btn-close" id="initial-close" onClick={handlerCloseHelp}>x</button>
                     </div>}
@@ -88,8 +88,8 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                 <option className="text-2" value={inputData}>Select score</option>
                 {levelValue.map((item_Value, index)=> <option className="text-2" key={`${targetID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                 </select>
-                <div>
-                    {displayTargetHelp && <div>
+                <div className="m-t-1">
+                    {displayTargetHelp && <div className="level-text-box-container">
                         <p>{text[language][aspectName][inputData.levels[aspectName].target]}</p>
                         <button className="btn-close" id="target-close" onClick={handlerCloseHelp}>x</button>
                     </div>}
@@ -109,11 +109,11 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                     <option className="text-2" value={inputData}>Select score</option>
                     {levelValue.map((item_Value, index)=> <option className="text-2" key={`${finalID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
                 </select>
-                <div>
-                    {displayFinalHelp && <div>
+                <div className="m-t-1">
+                    {displayFinalHelp && <div className="level-text-box-container">
                         <p>{text[language][aspectName][inputData.levels[aspectName].final]}</p>
                         <button className="btn-close" id="final-close" onClick={handlerCloseHelp}>x</button>
-                    </div>}
+                    </div >}
                     {!displayFinalHelp && <div className="flex flex-end">
                         <button className="btn-help" id="final-open" onClick={handlerHelp}>?</button></div>}
                 </div>
