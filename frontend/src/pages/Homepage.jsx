@@ -55,19 +55,18 @@ export default function Homepage (){
                 <table className="dashboard-table">
                         <thead>
                             <tr>
-                                {["Name", "Date", "Edit", "Delete", "Download", "Print"].map((item) => <th key={item}>{item}</th>)}
+                                {["Date", "Name", "", "", ""].map((item, index) => <th className="text-center" key={`${item}-${index}`}>{item}</th>)}
                             </tr>
                         </thead>
                         <tbody>
                         {userData.SPR.map((item, index) => {
                             return(
-                                <tr key={item.id}>
-                                    <td>{item.name}</td>
-                                    <td>{format(new Date(), "MM/dd/yyyy")}</td>
-                                    <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
-                                    <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
-                                    <td><button>Download</button></td>
-                                    <td><Link to={`/spr/${language}/print/${item.id}`}>Print</Link></td>
+                                <tr key={`${item.id}-${index}`}>
+                                    <td key={`${item.id}-date`} className="text-center">{format(new Date(), "MM/dd/yyyy")}</td>
+                                    <td key={`${item.id}-name`} className="text-center">{item.name}</td>
+                                    <td key={`${item.id}-edit`} className="text-center"><Link className="link-style" to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
+                                    <td key={`${item.id}-delete`} className="text-center"><button className="link-style" id={item.id} onClick={handleDelete}>Delete</button></td>
+                                    <td key={`${item.id}-view`} className="text-center"><Link className="link-style" to={`/spr/${language}/print/${item.id}`}>View</Link></td>
                                 </tr>)
                             })}
                         </tbody>
@@ -78,10 +77,12 @@ export default function Homepage (){
 
     return(
         <>
-            <div className="dashboard centered"> 
-                <h1 className="text-2 p-1">Welcome {userData.name}</h1>
+            <div className="dashboard"> 
+            <h2 className="centered p-b-7">Students Progress Report</h2>
+            <div className="centered p-b-3">
+                <button className="btn-primary">to PDF</button>
+            </div>
                 <div className="dashboard-container">
-                    <h2>Students Progress Report</h2>
                     {userData.SPR.length != 0 && <PlotTable />}
                     {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
                     

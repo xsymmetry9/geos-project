@@ -8,7 +8,7 @@ const Header = () =>{
             <header>
                 <div className="header-container">
                     <div className="header-image">
-                        <a href="https://online.geos.com.tw/zh-TW/home/home">
+                        <a href="/">
                             <img className = "logo" src = {geosImg} alt="Geos logo" />
                         </a>
                     </div>
