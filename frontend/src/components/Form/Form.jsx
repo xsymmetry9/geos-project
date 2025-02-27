@@ -9,7 +9,7 @@ import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 
-const Form = ({inputData, setInputData}) => {
+const Form = ({inputData, setInputData, isNew}) => {
     const [page, setPage] = useState(0);
     const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
 
@@ -60,10 +60,14 @@ const Form = ({inputData, setInputData}) => {
         e.preventDefault();
         try{
             const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
-            savedData.SPR.push(inputData);
-
-            localStorage.setItem("GEOS_app", JSON.stringify(savedData));
-            
+            const existingStudentIndex = savedData.SPR.findIndex(student => student.id === inputData.id);
+            if(existingStudentIndex === -1)
+            {
+                savedData.SPR.push(inputData);
+            } else {
+                savedData.SPR[existingStudentIndex] = inputData;
+            }
+            localStorage.setItem("GEOS_app", JSON.stringify(savedData));   
         } catch (err) {
             console.log("Unable to load", err);
         }

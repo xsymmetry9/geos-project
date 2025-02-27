@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import {read, utils} from 'xlsx'
-import Student from "../type/Student";
+import {Student} from "../type/Student";
 
 const ImportFromExcel = ({setUserData}) =>{
     const [fileName, setFileName] = useState("");
