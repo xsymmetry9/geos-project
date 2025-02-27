@@ -199,7 +199,9 @@ option{
 .m-t-6 {margin-top: base.$spacing + 20px}
 .m-t-7 {margin-top: base.$spacing + 24px}
 
-
+.width-max{
+    width: 100%;
+}
 
 // flex
 .flex{
@@ -221,6 +223,9 @@ option{
 }
 .justify-center{
     justify-content: center;
+}
+.justify-space-between{
+    justify-content: space-between;
 }
 .items-center{
     align-items: center;
@@ -257,6 +262,9 @@ option{
 }
 
 //Custom buttons
+.toggle-button{
+    
+}
 .btn-help, .btn-close{
     cursor: pointer;
     font-family: inherit;

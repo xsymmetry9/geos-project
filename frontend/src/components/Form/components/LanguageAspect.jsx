@@ -1,9 +1,15 @@
 import { useState, useId } from "react";
-import LevelTabs from "./LevelTabs";
+// import LevelTabs from "./LevelTabs";
 import text from "../../../assets/other/levels.json";
+import ToggleButton from "../../ToggleButton";
 
 function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
 
+    const [displayHelp, setDisplayHelp] = useState({
+        display_initial: false,
+        display_target: false,
+        display_final: false
+    })
     const [displayInitialHelp, setDisplayInitial] = useState(false);
     const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
     const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
@@ -47,7 +53,11 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
         <>
             <div className="input-wrapper p-t-3">
                 <h2>{aspectName}</h2>
-                <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][0]}</label>
+                <div className="flex justify-space-between width-max">
+                    <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][0]}</label>
+                    {!displayInitialHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="initial-open" onClick={handlerHelp}>?</button></div>}
+                </div>
                 <select 
                     className="spacing-sm text-2"
                     id={`${aspectName}-initial`}
@@ -71,14 +81,18 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                         <p>{text[language][aspectName][inputData.levels[aspectName].initial]}</p>
                         <button className="btn-close" id="initial-close" onClick={handlerCloseHelp}>x</button>
                     </div>}
-                    {!displayInitialHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="initial-open" onClick={handlerHelp}>?</button></div>}
+        
                 </div>
 
 
             </div>
             <div className="input-wrapper">
-                <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
+                <div className="flex justify-space-between w-max">
+                    <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
+                    {/* <ToggleButton onToggle={setDisplayHelp}/> */}
+                    {!displayTargetHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="target-open" onClick={handlerHelp}>?</button></div>}
+                </div>
                 <select 
                 className="spacing-sm text-2"
                 id={`${aspectName}-target`}
@@ -93,13 +107,14 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                         <p>{text[language][aspectName][inputData.levels[aspectName].target]}</p>
                         <button className="btn-close" id="target-close" onClick={handlerCloseHelp}>x</button>
                     </div>}
-                    {!displayTargetHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="target-open" onClick={handlerHelp}>?</button></div>}
                 </div>
-
             </div>
             <div className="input-wrapper">
+                <div className="flex justify-space-between w-max">
                     <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][2]}</label>
+                    {!displayFinalHelp && <div className="flex flex-end">
+                        <button className="btn-help" id="final-open" onClick={handlerHelp}>?</button></div>}
+                </div>
                     <select 
                     className="spacing-sm text-2"
                     id={`${aspectName}-final`}
@@ -114,8 +129,7 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
                         <p>{text[language][aspectName][inputData.levels[aspectName].final]}</p>
                         <button className="btn-close" id="final-close" onClick={handlerCloseHelp}>x</button>
                     </div >}
-                    {!displayFinalHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="final-open" onClick={handlerHelp}>?</button></div>}
+                    
                 </div>
             </div>
         </>
