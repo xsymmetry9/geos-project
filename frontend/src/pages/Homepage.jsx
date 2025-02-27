@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import {format} from "date-fns";
 import "../styles/components/dashboard.scss";
 import User from "../type/User";
+import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
+import ImportFromExcel from "../components/ImportFromExcel";
 
 export default function Homepage (){
     const {language} = useParams();
@@ -80,7 +82,8 @@ export default function Homepage (){
             <div className="dashboard"> 
             <h2 className="centered p-b-7">Students Progress Report</h2>
             <div className="centered p-b-3">
-                <button className="btn-primary">to PDF</button>
+                <ExportToExcel userData ={userData} />
+                <ImportFromExcel setUserData={setUserData}/>
             </div>
                 <div className="dashboard-container">
                     {userData.SPR.length != 0 && <PlotTable />}
