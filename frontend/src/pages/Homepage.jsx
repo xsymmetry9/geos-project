@@ -6,6 +6,7 @@ import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 import ImportFromExcel from "../components/ImportFromExcel";
+import {Archive, Pencil, PrinterIcon} from "lucide-react";
 
 export default function Homepage (){
     const {language} = useParams();
@@ -57,7 +58,7 @@ export default function Homepage (){
                 <table className="dashboard-table">
                         <thead>
                             <tr>
-                                {["Date", "Name", "", "", ""].map((item, index) => <th className="text-center" key={`${item}-${index}`}>{item}</th>)}
+                                {["Date", "Name", ""].map((item, index) => <th className="text-center" key={`${item}-${index}`}>{item}</th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -66,9 +67,21 @@ export default function Homepage (){
                                 <tr key={`${item.id}-${index}`}>
                                     <td key={`${item.id}-date`} className="text-center">{format(new Date(), "MM/dd/yyyy")}</td>
                                     <td key={`${item.id}-name`} className="text-center">{item.name}</td>
-                                    <td key={`${item.id}-edit`} className="text-center"><Link className="link-style" to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
-                                    <td key={`${item.id}-delete`} className="text-center"><button className="link-style" id={item.id} onClick={handleDelete}>Delete</button></td>
-                                    <td key={`${item.id}-view`} className="text-center"><Link className="link-style" to={`/spr/${language}/print/${item.id}`}>View</Link></td>
+                                    <td key={`${item.id}-edit`} className="text-center flex justify-space-around gap-1">
+                                        <Link className="link-style" to = {`/spr/${language}/edit/${item.id}`}>
+                                            <Pencil className="icon" size={16} />
+                                            <span className="visually-hidden p-1">Edit</span>
+                                        </Link>
+                                  
+                                        <button className="link-style" id={item.id} onClick={handleDelete}>
+                                            <Archive className="icon" size={16} />
+                                            <span className="visually-hidden p-1">Archive</span>
+                                        </button>
+                                   
+                                        <Link className="link-style" to={`/spr/${language}/print/${item.id}`}>
+                                            <PrinterIcon className="icon" size={16} />
+                                            <span className="visually-hidden p-1">Preview</span>
+                                        </Link></td>
                                 </tr>)
                             })}
                         </tbody>

@@ -1,5 +1,6 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { DownloadIcon } from "lucide-react";
 
 const ExportToExcel = ({userData}) =>{
     const handleExport = () =>{
@@ -45,7 +46,10 @@ const ExportToExcel = ({userData}) =>{
     }
     return(
         <>
-            <button className="btn-primary" onClick={handleExport}>to Excel</button>
+            <button className="btn-primary" onClick={handleExport}>
+                <DownloadIcon className="icon" size={16}/>
+                <span className="visually-hidden">to Excel</span>
+            </button>
         </>
     )
 }

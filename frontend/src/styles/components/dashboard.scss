@@ -26,6 +26,10 @@
     td,th{
         padding: base.$spacing-1;
     }
+    td:last-child, th:last-child{
+        width: 100px;
+        white-space: nowrap;
+    }
     tr{
         background-color: base.$color-light-gray;
     }
@@ -50,10 +54,20 @@
         font-size: inherit;
         border: none;
         background-color: transparent;
-        color: black;
+        color: base.$primary-color-dark;
         text-decoration: none;
+        transition: all ease-in .5s;
         &:hover{
-            color: green;
+            color: base.$color-dark-green;
+            font-weight: 600;
+        }
+
+        .icon{
+            color: inherit;
+            &:hover{
+                color: base.$color-dark-green;
+                
+            }
         }
     }
 }
