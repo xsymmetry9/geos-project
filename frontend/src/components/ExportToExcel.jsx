@@ -2,7 +2,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 const ExportToExcel = ({userData}) =>{
-    const test = () =>{
+    const handleExport = () =>{
         if(!userData || !userData.SPR || userData.SPR.length === 0) {
             alert("No data available to export.");
             return;
@@ -13,13 +13,23 @@ const ExportToExcel = ({userData}) =>{
             Date: item.dateCreated,
             Course: item.course,
             Textbook: item.textbook,
-            Attedance: item.attedance,
-            TotalLessons: item.TotalLessons,
-            Vocabulary: item.levels.vocabulary,
-            Pronunciation: item.levels.pronunciation,
-            Grammar: item.levels.grammar,
-            Listening: item.levels.listening,
-            Conversation: item.levels.conversation,
+            Attendance: item.attendance,
+            TotalLessons: item.totalLessons,
+            Vocabulary_initial: item.levels.vocabulary.initial,
+            Vocabulary_target: item.levels.vocabulary.target,
+            Vocabulary_final: item.levels.vocabulary.final,
+            Pronunciation_initial: item.levels.pronunciation.initial,
+            Pronunciation_target: item.levels.pronunciation.target,
+            Pronunciation_final: item.levels.pronunciation.final,
+            Grammar_initial: item.levels.grammar.initial,
+            Grammar_target: item.levels.grammar.target,
+            Grammar_final: item.levels.grammar.final,
+            Listening_initial: item.levels.listening.initial,
+            Listening_target: item.levels.listening.target,
+            Listening_final: item.levels.listening.final,
+            Conversation_initial: item.levels.conversation.initial,
+            Conversation_target: item.levels.conversation.target,
+            Conversation_final: item.levels.conversation.final,            
             Feedback: item.feedback,
         }));
 
@@ -32,12 +42,10 @@ const ExportToExcel = ({userData}) =>{
         const data = new Blob([excelBuffer], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 
         saveAs(data, "Teacher's backup data");
-
-        alert("Coming soon");
     }
     return(
         <>
-            <button className="btn-primary" onClick={test}>to Excel</button>
+            <button className="btn-primary" onClick={handleExport}>to Excel</button>
         </>
     )
 }

@@ -81,9 +81,9 @@ export default function Homepage (){
         <>
             <div className="dashboard"> 
             <h2 className="centered p-b-7">Students Progress Report</h2>
-            <div className="centered p-b-3">
+            <div className="flex gap-3 justify-center p-b-3">
                 <ExportToExcel userData ={userData} />
-                <ImportFromExcel setUserData={setUserData}/>
+                <ImportFromExcel userData = {userData} setUserData={setUserData}/>
             </div>
                 <div className="dashboard-container">
                     {userData.SPR.length != 0 && <PlotTable />}

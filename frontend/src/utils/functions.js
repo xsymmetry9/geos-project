@@ -22,6 +22,7 @@ export function editDataFromLocal(data) {
     }
 }
 
+//Delete data from the local storage
 export function deleteStudentById(id){
     const data = localStorage.getItem(appName);
     const parsedData = JSON.parse(data);

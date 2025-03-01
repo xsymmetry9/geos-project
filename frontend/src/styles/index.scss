@@ -70,6 +70,7 @@ footer{
     $bgColor: base.$button-bg-color;
 
     cursor: pointer;
+    font-family: base.$font-secondary;
     font-size: base.$font-size-1;
     font-weight: 600;
     text-transform: capitalize;
@@ -293,3 +294,34 @@ option{
         color: red;
     }
 }
+
+.custom-file-input{
+    $length: 150px;
+    $bgColor: base.$button-bg-color;
+    $height: calc(#{$length} / 3);
+
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    width: $length;
+    height: auto;
+
+    // Error for some browsers 
+    &::-webkit-file-upload-button,
+    &::file-selector-button{
+        font-family: base.$font-secondary;
+        font-weight: 700;
+        background-color: base.$color-dark-green;
+        border: none;
+        padding: base.$spacing-1;
+        color: base.$font-color-light;
+        font-size: base.$font-size-1;
+        line-height: 1.5;
+        border-radius: 5px;
+        width: 100%;    
+        }
+}
+
+
