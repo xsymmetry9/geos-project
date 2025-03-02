@@ -6,13 +6,13 @@ import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 import ImportFromExcel from "../components/ImportFromExcel";
-import {Archive, Pencil, PrinterIcon} from "lucide-react";
+import {Archive, Pencil, PrinterIcon, CirclePlus, SquareX, Plus} from "lucide-react";
 
 export default function Homepage (){
     const {language} = useParams();
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
-
+    const [addFormNav, setAddFormNav] = useState(false);
         useEffect(() =>{
             const fetchData = async () => {
                 try{
@@ -38,6 +38,10 @@ export default function Homepage (){
             fetchData();
 
         }, [language]);
+
+        const handleFormControl = () =>{
+            setAddFormNav((prev)=> !prev);
+        }
 
         if(loading){
             return(
@@ -93,21 +97,50 @@ export default function Homepage (){
     return(
         <>
             <div className="dashboard"> 
-            <h2 className="centered p-b-7">Students Progress Report</h2>
-            <div className="flex gap-3 justify-center p-b-3">
-                <ExportToExcel userData ={userData} />
-                <ImportFromExcel userData = {userData} setUserData={setUserData}/>
-            </div>
-                <div className="dashboard-container">
-                    {userData.SPR.length != 0 && <PlotTable />}
-                    {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
-                    
+                <h2 className="centered p-b-7">Students Progress Report</h2>
+                <div className="flex gap-3 justify-center p-b-3">
+                    <ExportToExcel userData ={userData} />
+                    <ImportFromExcel userData = {userData} setUserData={setUserData}/>
                 </div>
+                    <div className="dashboard-container">
+                        {userData.SPR.length != 0 && <PlotTable />}
+                        {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
 
-                <div className="buttons-navigation-container">
-                    <Link className="btn-primary" to={`/spr/${language}`}>+ SPR</Link>
-                    <Link className="btn-primary" to={`/levelCheck/${language}`}>+ Level Check</Link>
-                </div> 
+                    </div>
+                    {
+                        !addFormNav ? (
+                        <div className="btn-circle">
+                            <button onClick= {handleFormControl}>
+                                <CirclePlus size={48} />
+                            </button>
+                        </div>) : (
+                        <div className="form-navigation-container">
+                            <div className="nav-header">
+                                <button onClick={handleFormControl}>
+                                    <SquareX />
+                                </button>
+                            </div>
+                            <div className="nav-body">
+                                <Link className="btn-primary " to={`/spr/${language}`}>
+                                    <div className="two-columns">
+                                        <Plus size={18}/>                        
+                                        <span>SPR</span>
+                                    </div>
+          
+                                </Link>
+                                <Link className="btn-primary two-columns" to={`/levelCheck/${language}`}>
+                                    <Plus size={18} />
+                                    <span >Level Check</span>
+                                </Link>
+                            </div>
+                            
+                         </div> 
+                        )
+
+                    }
+     
+
+               
             </div>
         </>
 
