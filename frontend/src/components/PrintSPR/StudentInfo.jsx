@@ -84,12 +84,12 @@ export const Table = ({levels, language}) =>{
 export const Comment = ({comment, language}) =>{
     const text = (phrase, language) => labelText[language]['SPR'][phrase];
     return(
-        <div className="card">
-            <div className="card-title">
-                <strong><p className="uppercase">{text("comment", language)}</p></strong>
+        <div id="feedback" className="feedback-card">
+            <div className="title">
+                <strong><p className>{text("comment", language)}</p></strong>
             </div>
-            <div className = "card-description">
-                <p className="comment">{comment}</p>
+            <div className = "description">
+                <p>{comment}</p>
             </div>
         </div>
     )

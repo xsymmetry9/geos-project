@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 import { useReactToPrint } from "react-to-print";
 import { getStudentById } from "../utils/functions";
@@ -7,17 +7,33 @@ import PrintStudentProgressiveReport from "../components/PrintStudentProgressRep
 
 const PrintPage = () => {
     const {id, language} = useParams(); //Gets id and language through link
-
     const parsedData = getStudentById(id); //Gets data from localstorage by id
-
     const componentRef = useRef(); //Save reference to print
+    const [isPrinting, setIsPrinting] = useState(false);
+    const promiseResolveRef = useRef(null);
+    
+    useEffect(() => {
+        if(isPrinting && promiseResolveRef.current){
+            promiseResolveRef.current();
+        }
+    }, [isPrinting])
    
     const reactToPrintContent = () =>{
         return componentRef.current;
     }
     const handlePrint = useReactToPrint({
         documentTitle: "Student Progress Report",
-        content: () => componentRef.current
+        content: () => componentRef.current,
+        onBeforePrint: () =>{
+            return new Promise((resolve) => {
+                promiseResolveRef.current = resolve;
+                setIsPrinting(true);
+            });
+        },
+        onAfterPrint: () =>{
+            promiseResolveRef.current = null;
+            setIsPrinting(false);
+        }
     })
 
     return (

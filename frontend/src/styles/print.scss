@@ -3,18 +3,20 @@
 $background-color-dark: rgba(0, 161, 173, 1);
 $background-light: rgba(0, 161, 173, .2);
 $margin-spacing: 35px;
+$print-spacing-1: .3rem;
 
 #print-english{
+    font-family: base.$font-primary;
     h1, h2{text-transform: capitalize;}
-    h1{font-size: base.$print-font-size-4;}
+    h1{font-size: 1.188rem;}
     h2{font-size: base.$print-font-size-3;}
     h3{font-size: base.$print-font-size-3;}
     p{font-size: base.$print-font-size-1;}
 
     .info-container{
         p{
-            font-size: .925rem;
-            line-height: 1.3;
+            font-size: .915rem;
+            line-height: 1.5;
             font-weight: 400;
             text-transform: capitalize;
         }
@@ -47,7 +49,7 @@ $margin-spacing: 35px;
     height: 297mm;
     margin: auto;
     background-color: #fff;
-    padding: 6mm 8mm 6mm 8mm;
+    padding: 12mm 8mm 6mm 8mm;
     box-sizing: border-box;
     font-family: base.$font-secondary;
 
@@ -179,56 +181,56 @@ $margin-spacing: 35px;
 
 }
 
+// Card Section
+
 .cards-container{
-    display: flex;
-    flex-direction: column;
-    gap: .7rem;
-    p{
-        font-size: base.$print-font-size-1;
-    }
-}
-.level-card{
-    border: 1px solid black;
-    font-family: base.$font-secondary;
-    min-height: 32.7mm;
-    .level-card-title{
-        background-color: $background-color-dark;
-        color: white;
-        p{
-            margin-left: .3rem;
+    $margin-left: .3rem;
+    .card{
+        border-collapse: collapse;
+        border: 1px solid black;
+        margin-bottom: .5rem;
+        min-height: 32.7mm;
+        .title{
+            background-color: $background-color-dark;
+            color: base.$bg-white-600;
+            padding: 4px 0;
+            p{
+                margin-left: $margin-left;
+            }
+        }
+        .description{
+            padding: $margin-left;
         }
     }
-    .level-card-description{
-        padding: .3rem;
-    }
+
+
 }
+
+// Graph Section
 .graph-container{
     position: relative;
     aspect-ratio: 1/1;
 }
-.card{
-    $spacing-1: .3rem;
-    padding: 0;
+
+// Feedback Section
+.feedback-card{
     height: 240px;
-    .card-title{
+    .title{
+        color: base.$font-color-light;
         background-color: $background-color-dark;
         padding: 4px;
-        color: white;
         p{
-            font-size: 13.5px;
-            margin-left: $spacing-1;
+            text-transform: capitalize;
+            margin-left: $print-spacing-1;
         }
     }
-    .card-description{
-        padding: $spacing-1;
-        line-height: 1.1;
-        p{
-            line-height: 1.3;
-            font-size: 13.5px;
-        }
+    .description{
+        padding: $print-spacing-1;
     }
-    border: 1px solid black;
+    border: 1px solid base.$primary-color-dark;
 }
+
+// Signature Section
 
 .signature-section{
     margin-top: 10px;
@@ -239,45 +241,8 @@ $margin-spacing: 35px;
     }
 }
 
-.wrapper-two-columns{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.text-capitalized{
-    text-transform: capitalize;
-}
-
 .comment-signature-container{
     display: flex;
     gap: 10px;
     flex-direction: column;
-}
-
-.container-print-view{
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-
-    overflow: hidden;
-}
-.btns-container{
-    display:flex;
-    justify-content: center;
-    gap: 10px;
-    button{
-        color: white;
-    }
-    #print{
-        background-color: blue;
-    }
-    #print:hover, #print:focus{
-        background-color: rgb(100, 100, 252);
-    }
-    #save{
-        background-color: green;
-    }
-    #save:hover, #print:focus{
-        background-color: rgb(71, 125, 71);
-    }
 }
