@@ -1,10 +1,7 @@
 import { useParams } from "react-router-dom"
 import Graph from "./Graph";
 import RenderLogo from "./Image/RenderLogo"
-import {TitleSPR, StudentInfo, AttendanceInfo} from "./PrintSPR/StudentInfo";
-import Table from "./PrintSPR/Table";
-import Signature from "./PrintSPR/Signature";
-import Comment from "./PrintSPR/Comment";
+import {TitleSPR, StudentInfo, AttendanceInfo, Table, Comment, Signature} from "./PrintSPR/StudentInfo";
 import PlotCards from "./PrintSPR/PlotCards";
 
 import "../styles/print.scss";

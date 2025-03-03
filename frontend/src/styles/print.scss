@@ -1,61 +1,66 @@
-@use "../styles/base";
+@use "base";
 
 $background-color-dark: rgba(0, 161, 173, 1);
 $background-light: rgba(0, 161, 173, .2);
+$margin-spacing: 35px;
 
-@media print {
-    @page {
-      size: A4;
-      padding: 0;
-      margin: 0;
+#print-english{
+    h1, h2{text-transform: capitalize;}
+    h1{font-size: base.$print-font-size-4;}
+    h2{font-size: base.$print-font-size-3;}
+    h3{font-size: base.$print-font-size-3;}
+    p{font-size: base.$print-font-size-1;}
+
+    .info-container{
+        p{
+            font-size: .925rem;
+            line-height: 1.3;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
     }
-    .table{
-        height: 89.6px;
-        width: 733.25px;
-    }
-  }
-
-h1, h2{
-    text-transform: capitalize;
-}
-h1{
-    font-size: base.$print-font-size-4;
-}
-h2{
-    font-size: base.$print-font-size-3;
-}
-h3{
-    font-size: base.$print-font-size-3;
-}
-p{
-    font-size: base.$print-font-size-1;
 }
 
-.papersize-A4{
+#print-chinese{
+    h1{font-size: base.$print-font-size-4;}
+    h2{font-size: base.$print-font-size-3;}
+    h3{font-size: base.$print-font-size-3;}
+    p{font-size: base.$print-font-size-1;}
+}
+
+#print-korean{
+    h1{font-size: 1.3rem;}
+    h2{font-size: 1.1rem;}
+    h3{font-size: 1.1rem;}
+    p{font-size: .90rem;}
+}
+
+#print-japanese{
+    h1{font-size: 1.3rem;}
+    h2{font-size: 1.1rem;}
+    h3{font-size: 1.1rem;}
+    p{font-size: .90rem;}
+}
+.print-component{
+    // display: none;
     width: 210mm;
     height: 297mm;
     margin: auto;
-    background-color: white;
+    background-color: #fff;
     padding: 6mm 8mm 6mm 8mm;
     box-sizing: border-box;
     font-family: base.$font-secondary;
-    
-}
-.papersize{
-        width: 210mm;
-        height: 297mm;
-        margin: auto;
-        background-color: white;
+
+    @media print{
+        display: block;
+        size: A4;
         padding: 6mm 8mm 6mm 8mm;
-        box-sizing: border-box;
-        font-family: base.$font-secondary;
+        margin: auto;
     }
+}
 
 .title-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  
+    padding: .2rem;
     .img-container{
         display: flex;
         flex-direction: column;
@@ -69,25 +74,25 @@ p{
         }
     }
 }
-.print-name{
-    strong{
-        font-size: base.$print-font-size-2;
-        color: black;
-    }
-}
 .two-columns-container{
     display: flex;
     gap: 10px;
-
 }
-.justify-end{
-    padding-right: 5px;
-}
-
 .even-columns{
-    padding: .8rem 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 12px;
+    .left{
+        // border: 1px solid red;
+        margin-left: $margin-spacing;
+    }
+
+    .right{
+        // border: 1px solid blue;
+        justify-self: right;
+        margin-right: $margin-spacing;
+
+    }
 }
 .graph-levelInfo{
     margin-top: 14px;
@@ -95,25 +100,23 @@ p{
     gap: 12px;
     grid-template-columns: 1fr 1fr;
 }
-.d-flex{
+
+// --------------------------- Styling for levels -----------------------------------------
+
+.sub-header{
     display: flex;
     color: rgb(129, 129, 129);
     gap: 10px;
 }
-
-
-
-// --------------------------- Styling for levels -----------------------------------------
-table, th, td, tr{
-    border-collapse: collapse;
-}
 .table-levels{
-    $border-color: black;
+    $border-color: #000;
     $spacing: 1.5px;
 
+    border-collapse: collapse;
     font-family: base.$font-secondary;
     font-size: base.$print-font-size-1;
-    width: 100%;
+    width: 700px;
+    margin-inline: auto;
 
     caption{
         caption-side: top;
@@ -125,14 +128,12 @@ table, th, td, tr{
             span{
                 font-size: 10.5px;
             }
-        }
-  
-      
+        }      
     }
     tr{
         display: grid;
         width: 100%;
-        grid-template-columns: 70px repeat(7, 1fr);
+        grid-template-columns: 85px repeat(7, 1fr);
         text-align: center;
     }
     thead{

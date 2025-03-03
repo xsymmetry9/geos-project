@@ -35,7 +35,6 @@ const Table = ({levels, language}) =>{
             </tr>
         )
     }
-    console.log(levels);
     return (
         <>
             <table className="table-levels">

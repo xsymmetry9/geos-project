@@ -61,10 +61,6 @@ footer{
     text-transform: capitalize;
 }
 
-.btn{
-    cursor: pointer;
-}
-
 .btn-primary{
     $length: 150px;
     $height: calc($length/3)px;
@@ -84,6 +80,7 @@ footer{
     border: none;
     padding: base.$spacing-1;
     border-radius: 5px;
+
     transition: all ease-in-out .8s;
     &:hover{
       background-color: white;
@@ -97,7 +94,6 @@ footer{
 
     .icon{
         color: base.$bg-white-600;
-    
     }
 }
 .btn-secondary{
@@ -209,6 +205,7 @@ option{
 .m-t-5 {margin-top: base.$spacing + 16px}
 .m-t-6 {margin-top: base.$spacing + 20px}
 .m-t-7 {margin-top: base.$spacing + 24px}
+.m-inline-auto{margin: auto}
 
 .width-max{
     width: 100%;
@@ -423,4 +420,14 @@ option{
     span{
         text-align: left;
     }
+}
+
+.relative{
+    position: relative;
+}
+
+.btn-home{
+    background-color: base.$color-dark-green;
+
+    color: white;
 }

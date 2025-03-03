@@ -25,7 +25,7 @@ const PrintPage = () => {
             <div>
                 <Link className="btn-primary" to={`/home/${language}`}>Dashboard</Link>
             </div>
-            <div className="print-component papersize-A4" ref={componentRef}>
+            <div id={`print-${language}`} className="print-component" ref={componentRef}>
                 <PrintStudentProgressiveReport parsedData = {parsedData}/>
             </div>
             <div className="center">
