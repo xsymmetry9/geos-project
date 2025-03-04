@@ -1,7 +1,8 @@
 import React from "react";
 import "../../../styles/components/preview.scss";
+import PropTypes from "prop-types";
 
-const Preview = ({inputData, language}) =>{
+const Preview = ({key, inputData, language}) =>{
   const {name,
     textbook,
     course,
@@ -24,7 +25,7 @@ const Preview = ({inputData, language}) =>{
     japanese: ["初期", "目標", "終了"]
   };
   return(
-    <div className="preview-section">
+    <div key={key} className="preview-section">
       <div className="preview-container">
         <h2>Class Information</h2>
         <p><strong>Name:</strong> {name.length != 0 ? name : "No name"}</p>
@@ -66,4 +67,9 @@ const Preview = ({inputData, language}) =>{
   );
 };
 
+Preview.propTypes = {
+  key: PropTypes.string,
+  inputData: PropTypes.object,
+  language: PropTypes.string,
+};
 export default Preview;

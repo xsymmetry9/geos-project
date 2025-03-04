@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import logo from "./logo.svg";
 
 const Image = (props) =>{
@@ -11,4 +12,8 @@ const Image = (props) =>{
 
 };
 
+Image.propTypes = {
+  style: PropTypes.string,
+  description: PropTypes.string,
+};
 export default Image;

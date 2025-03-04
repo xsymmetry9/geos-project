@@ -1,6 +1,7 @@
 import { useId } from "react";
 import "../../../styles/components/levelTabs.scss";
 import React from "react";
+import PropTypes from "prop-types";
 
 const LevelTabs = ({currentPage, titles, handlerPage}) =>{
   const id = useId();
@@ -22,6 +23,12 @@ const LevelTabs = ({currentPage, titles, handlerPage}) =>{
         
     </div>
   );
+};
+
+LevelTabs.propTypes = {
+  currentPage: PropTypes.number,
+  titles: PropTypes.array,
+  handlerPage: PropTypes.func,
 };
 
 export default LevelTabs;

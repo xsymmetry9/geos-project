@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Feedback = ({inputData, handleInputData, language}) =>{
+const Feedback = ({key, inputData, handleInputData, language}) =>{
   const {feedback} = inputData;
 
   const placeholderContent = 
@@ -12,7 +13,7 @@ const Feedback = ({inputData, handleInputData, language}) =>{
     };
     
   return(
-    <div className="form-primary">
+    <div key={key} className="form-primary">
       <h2 className="title text-2 p-2">Feedback</h2>
       <p className="text-2 p-t-3" ><label htmlFor="">{placeholderContent[language]}</label></p>
       <div className= "input-wrapper" id="feedback">
@@ -22,4 +23,10 @@ const Feedback = ({inputData, handleInputData, language}) =>{
   );
 };
 
+Feedback.propTypes = {
+  key: PropTypes.string,
+  inputData: PropTypes.object,
+  handleInputData: PropTypes.func,
+  language: PropTypes.string,
+};
 export default Feedback;

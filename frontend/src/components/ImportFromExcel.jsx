@@ -1,6 +1,7 @@
 
 import React, { useCallback, useState } from "react";
 import {read, utils} from "xlsx";
+import PropTypes from "prop-types";
 import {Student, Levels} from "../type/Student";
 import {editDataFromLocal, getDataFromLocal} from "../utils/functions";
 
@@ -84,6 +85,11 @@ const ImportFromExcel = ({userData, setUserData}) =>{
       <input className="custom-file-input" type='file' accept='.xlsx, .xls' onChange={handleFileUpload} />{fileName && <p>Uploaded: {fileName}</p>}
     </div>
   );
+};
+
+ImportFromExcel.propTypes = {
+  userData: PropTypes.object,
+  setUserData: PropTypes.func,
 };
 
 export default ImportFromExcel;

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { LanguageContext } from "../pages/SPRForm";
 import "../styles/components/popupmessage.scss";
 
@@ -16,6 +17,10 @@ const PopUpMessage = ({setDisplayPopupMessage}) =>{
       </div>
     </div>  
   );
+};
+
+PopUpMessage.propTypes = {
+  setDisplayPopupMessage: PropTypes.func.required
 };
 
 export default PopUpMessage;

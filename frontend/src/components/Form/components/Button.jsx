@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 const Button = ({page, handler, language}) =>{
@@ -26,5 +27,9 @@ const Button = ({page, handler, language}) =>{
     </>
   );
 };
-
+Button.propTypes = {
+  page: PropTypes.number,
+  handler: PropTypes.func,
+  language: PropTypes.string,
+};
 export default Button;

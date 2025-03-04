@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import form_languages from "../form_languages.js";
 
-const PersonalInformation = ({inputData, handleInputData, language}) =>{
+const PersonalInformation = ({key, inputData, handleInputData, language}) =>{
   const {name, course, textbook, attendance, totalLessons} = inputData;
 
   //translation
@@ -13,8 +14,8 @@ const PersonalInformation = ({inputData, handleInputData, language}) =>{
     input_totallessons} = form_languages[language.toLowerCase()];
 
   return(
-    <div className="form-primary" id="personal-information">
-      <h2 className="title text-2 p-2">Student's Information</h2>    
+    <div key={key} className="form-primary" id="personal-information">
+      <h2 className="title text-2 p-2">Student&apos;s Information</h2>    
       <div className="input-wrapper p-t-3">
         <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
         <input type="text" className="text-2" name="name" value={name} onChange={handleInputData} />
@@ -46,4 +47,12 @@ const PersonalInformation = ({inputData, handleInputData, language}) =>{
   );
 };
 
+PersonalInformation.propTypes = 
+{
+  key: PropTypes.string,
+  inputData: PropTypes.obj,
+  handleInputData: PropTypes.func,
+  language: PropTypes.string,
+  
+};
 export default PersonalInformation;

@@ -5,11 +5,18 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginJsxA11y from "eslint-plugin-jsx-a11y";
 import pluginImport from "eslint-plugin-import";
 
-
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ["**/*.{js,mjs,cjs,jsx}"],
+    ignores: [
+      "node_modules/",
+      "dist/",
+      "build/",
+      "**/*.min.js",
+      "src/ignored-folder/**",
+      "src/ignored-file.js",
+    ],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",

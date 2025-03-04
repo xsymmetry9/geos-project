@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import RenderLevel from "../RenderLevel";
 import labelText from "../../assets/other/labelText.json";
 
@@ -61,5 +62,10 @@ const PlotCards = ({levels, language}) =>{
       </div>
     </>
   );
+};
+
+PlotCards.propTypes = {
+  levels: PropTypes.object,
+  language: PropTypes.string,
 };
 export default PlotCards;
