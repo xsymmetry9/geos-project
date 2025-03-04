@@ -1,26 +1,27 @@
 import { useId } from "react";
 import "../../../styles/components/levelTabs.scss";
+import React from "react";
 
 const LevelTabs = ({currentPage, titles, handlerPage}) =>{
-    const id = useId();
+  const id = useId();
     
-    return(
-        <div className="levelTab-container">
-            {titles.map((item, index) =>{
-                return(
-                    <>
-                        <div key={`${id}-${item}-${index}`} className={`nameTab-container ${currentPage == index && "selected"}`}>
-                            <input
-                                key={`${id}-${index}-input`}
-                                className={`tabTitle`} 
-                                type="button" onClick={handlerPage} name={index} value={item}/>                    
-                        </div>
-                    </>
-                )
-            })}
+  return(
+    <div className="levelTab-container">
+      {titles.map((item, index) =>{
+        return(
+          <>
+            <div key={`${id}-${item}-${index}`} className={`nameTab-container ${currentPage == index && "selected"}`}>
+              <input
+                key={`${id}-${index}-input`}
+                className={"tabTitle"} 
+                type="button" onClick={handlerPage} name={index} value={item}/>                    
+            </div>
+          </>
+        );
+      })}
         
-        </div>
-    )
-}
+    </div>
+  );
+};
 
 export default LevelTabs;

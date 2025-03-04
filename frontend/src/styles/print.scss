@@ -1,61 +1,68 @@
-@use "../styles/base";
+@use "base";
 
 $background-color-dark: rgba(0, 161, 173, 1);
 $background-light: rgba(0, 161, 173, .2);
+$margin-spacing: 35px;
+$print-spacing-1: .3rem;
 
-@media print {
-    @page {
-      size: A4;
-      padding: 0;
-      margin: 0;
+#print-english{
+    font-family: base.$font-primary;
+    h1, h2{text-transform: capitalize;}
+    h1{font-size: 1.188rem;}
+    h2{font-size: base.$print-font-size-3;}
+    h3{font-size: base.$print-font-size-3;}
+    p{font-size: base.$print-font-size-1;}
+
+    .info-container{
+        p{
+            font-size: .915rem;
+            line-height: 1.5;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
     }
-    .table{
-        height: 89.6px;
-        width: 733.25px;
-    }
-  }
-
-h1, h2{
-    text-transform: capitalize;
-}
-h1{
-    font-size: base.$print-font-size-4;
-}
-h2{
-    font-size: base.$print-font-size-3;
-}
-h3{
-    font-size: base.$print-font-size-3;
-}
-p{
-    font-size: base.$print-font-size-1;
 }
 
-.papersize-A4{
+#print-chinese{
+    h1{font-size: base.$print-font-size-4;}
+    h2{font-size: base.$print-font-size-3;}
+    h3{font-size: base.$print-font-size-3;}
+    p{font-size: base.$print-font-size-1;}
+}
+
+#print-korean{
+    h1{font-size: 1.3rem;}
+    h2{font-size: 1.1rem;}
+    h3{font-size: 1.1rem;}
+    p{font-size: .90rem;}
+}
+
+#print-japanese{
+    h1{font-size: 1.3rem;}
+    h2{font-size: 1.1rem;}
+    h3{font-size: 1.1rem;}
+    p{font-size: .90rem;}
+}
+.print-component{
+    // display: none;
     width: 210mm;
     height: 297mm;
     margin: auto;
-    background-color: white;
-    padding: 6mm 8mm 6mm 8mm;
+    background-color: #fff;
+    padding: 12mm 8mm 6mm 8mm;
     box-sizing: border-box;
     font-family: base.$font-secondary;
-    
-}
-.papersize{
-        width: 210mm;
-        height: 297mm;
-        margin: auto;
-        background-color: white;
+
+    @media print{
+        display: block;
+        size: A4;
         padding: 6mm 8mm 6mm 8mm;
-        box-sizing: border-box;
-        font-family: base.$font-secondary;
+        margin: auto;
     }
+}
 
 .title-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  
+    padding: .2rem;
     .img-container{
         display: flex;
         flex-direction: column;
@@ -69,25 +76,25 @@ p{
         }
     }
 }
-.print-name{
-    strong{
-        font-size: base.$print-font-size-2;
-        color: black;
-    }
-}
 .two-columns-container{
     display: flex;
     gap: 10px;
-
 }
-.justify-end{
-    padding-right: 5px;
-}
-
 .even-columns{
-    padding: .8rem 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 12px;
+    .left{
+        // border: 1px solid red;
+        margin-left: $margin-spacing;
+    }
+
+    .right{
+        // border: 1px solid blue;
+        justify-self: right;
+        margin-right: $margin-spacing;
+
+    }
 }
 .graph-levelInfo{
     margin-top: 14px;
@@ -95,25 +102,23 @@ p{
     gap: 12px;
     grid-template-columns: 1fr 1fr;
 }
-.d-flex{
+
+// --------------------------- Styling for levels -----------------------------------------
+
+.sub-header{
     display: flex;
     color: rgb(129, 129, 129);
     gap: 10px;
 }
-
-
-
-// --------------------------- Styling for levels -----------------------------------------
-table, th, td, tr{
-    border-collapse: collapse;
-}
 .table-levels{
-    $border-color: black;
+    $border-color: #000;
     $spacing: 1.5px;
 
+    border-collapse: collapse;
     font-family: base.$font-secondary;
     font-size: base.$print-font-size-1;
-    width: 100%;
+    width: 700px;
+    margin-inline: auto;
 
     caption{
         caption-side: top;
@@ -125,14 +130,12 @@ table, th, td, tr{
             span{
                 font-size: 10.5px;
             }
-        }
-  
-      
+        }      
     }
     tr{
         display: grid;
         width: 100%;
-        grid-template-columns: 70px repeat(7, 1fr);
+        grid-template-columns: 85px repeat(7, 1fr);
         text-align: center;
     }
     thead{
@@ -178,56 +181,56 @@ table, th, td, tr{
 
 }
 
+// Card Section
+
 .cards-container{
-    display: flex;
-    flex-direction: column;
-    gap: .7rem;
-    p{
-        font-size: base.$print-font-size-1;
-    }
-}
-.level-card{
-    border: 1px solid black;
-    font-family: base.$font-secondary;
-    min-height: 32.7mm;
-    .level-card-title{
-        background-color: $background-color-dark;
-        color: white;
-        p{
-            margin-left: .3rem;
+    $margin-left: .3rem;
+    .card{
+        border-collapse: collapse;
+        border: 1px solid black;
+        margin-bottom: .5rem;
+        min-height: 32.7mm;
+        .title{
+            background-color: $background-color-dark;
+            color: base.$bg-white-600;
+            padding: 4px 0;
+            p{
+                margin-left: $margin-left;
+            }
+        }
+        .description{
+            padding: $margin-left;
         }
     }
-    .level-card-description{
-        padding: .3rem;
-    }
+
+
 }
+
+// Graph Section
 .graph-container{
     position: relative;
     aspect-ratio: 1/1;
 }
-.card{
-    $spacing-1: .3rem;
-    padding: 0;
+
+// Feedback Section
+.feedback-card{
     height: 240px;
-    .card-title{
+    .title{
+        color: base.$font-color-light;
         background-color: $background-color-dark;
         padding: 4px;
-        color: white;
         p{
-            font-size: 13.5px;
-            margin-left: $spacing-1;
+            text-transform: capitalize;
+            margin-left: $print-spacing-1;
         }
     }
-    .card-description{
-        padding: $spacing-1;
-        line-height: 1.1;
-        p{
-            line-height: 1.3;
-            font-size: 13.5px;
-        }
+    .description{
+        padding: $print-spacing-1;
     }
-    border: 1px solid black;
+    border: 1px solid base.$primary-color-dark;
 }
+
+// Signature Section
 
 .signature-section{
     margin-top: 10px;
@@ -238,45 +241,8 @@ table, th, td, tr{
     }
 }
 
-.wrapper-two-columns{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.text-capitalized{
-    text-transform: capitalize;
-}
-
 .comment-signature-container{
     display: flex;
     gap: 10px;
     flex-direction: column;
-}
-
-.container-print-view{
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-
-    overflow: hidden;
-}
-.btns-container{
-    display:flex;
-    justify-content: center;
-    gap: 10px;
-    button{
-        color: white;
-    }
-    #print{
-        background-color: blue;
-    }
-    #print:hover, #print:focus{
-        background-color: rgb(100, 100, 252);
-    }
-    #save{
-        background-color: green;
-    }
-    #save:hover, #print:focus{
-        background-color: rgb(71, 125, 71);
-    }
 }
