@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import "../../../styles/components/pagination.scss";
 import React from "react";
 
 const Pagination = ({page, language}) =>{
-  const arr = ["Info", "Level", "Feedback", "Done"];
   const title = {
     "english": ["Info", "Level", "Feedback", "Done"],
     "korean": ["정보", "레벨", "피드백", "완료"],
@@ -22,6 +22,11 @@ const Pagination = ({page, language}) =>{
       </div>
     </div>
   );
+};
+
+Pagination.propTypes = {
+  page: PropTypes.number,
+  language: PropTypes.string,
 };
 
 export default Pagination;

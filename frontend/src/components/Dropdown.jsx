@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Dropdown = ({buttonTitle, title}) =>{
@@ -24,6 +25,11 @@ const Dropdown = ({buttonTitle, title}) =>{
     </>
 
   );
+};
+
+Dropdown.propTypes = {
+  buttonTitle: PropTypes.string,
+  title: PropTypes.array,
 };
 
 export default Dropdown;

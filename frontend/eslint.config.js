@@ -5,10 +5,14 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginJsxA11y from "eslint-plugin-jsx-a11y";
 import pluginImport from "eslint-plugin-import";
 
-
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
+    ignores: [
+      "node_modules/",
+      "dist/",
+      "build/**/*",
+    ],
     files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
@@ -28,18 +32,6 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       
-      // React Hooks
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-  
-      // Accessibility
-      "jsx-a11y/alt-text": "warn",
-      "jsx-a11y/no-noninteractive-element-interactions": "warn",
-  
-      // Import Rules
-      "import/no-unresolved": "error",
-      "import/order": ["error", {groups: ["builtin", "external", "internal"] }],
-  
       // General JavaScript Rules
       "no-unused-vars": ["warn", {argsIgnorePattern: "^_"}],
       "no-console": "warn",

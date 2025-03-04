@@ -1,15 +1,11 @@
 import React, { useState, useId } from "react";
 // import LevelTabs from "./LevelTabs";
+import PropTypes from "prop-types";
 import text from "../../../assets/other/levels.json";
 // import ToggleButton from "../../ToggleButton";
 
 function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
 
-  const [displayHelp, setDisplayHelp] = useState({
-    display_initial: false,
-    display_target: false,
-    display_final: false
-  });
   const [displayInitialHelp, setDisplayInitial] = useState(false);
   const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
   const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
@@ -136,4 +132,11 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
   );
 }
 
+LanguageAspect.propTypes = {
+  inputData: PropTypes.obj,
+  aspectName: PropTypes.string,
+  handleLevelInput: PropTypes.func,
+  language: PropTypes.string,
+    
+};
 export default LanguageAspect;

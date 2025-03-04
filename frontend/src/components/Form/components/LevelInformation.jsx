@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import LanguageAspect from "./LanguageAspect";
 
-const LevelInformation = ({inputData, handleLevelInputData, language}) =>{
+const LevelInformation = ({key, inputData, handleLevelInputData, language}) =>{
 
   const titles = {
     english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
@@ -13,8 +14,8 @@ const LevelInformation = ({inputData, handleLevelInputData, language}) =>{
   return(
     <>
       {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
-      <div className="form-primary">
-        <h2 className="title text-2 p-2">Student's Level</h2>
+      <div key={key} className="form-primary">
+        <h2 className="title text-2 p-2">Student&rsquo;s Level</h2>
         {titles.english.map((aspectName) => {
           return(
             <div key= {aspectName}>
@@ -27,6 +28,13 @@ const LevelInformation = ({inputData, handleLevelInputData, language}) =>{
       
     </>
   );
+};
+
+LevelInformation.propTypes = {
+  key: PropTypes.string,
+  inputData: PropTypes.object,
+  handleLevelInputData: PropTypes.func,
+  language: PropTypes.string,
 };
 
 export default LevelInformation;

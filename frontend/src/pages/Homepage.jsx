@@ -1,5 +1,5 @@
-import React,{ Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {format} from "date-fns";
 import "../styles/components/dashboard.scss";
 import {Archive, Pencil, PrinterIcon, CirclePlus, SquareX, Plus} from "lucide-react";
@@ -8,7 +8,7 @@ import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 import ImportFromExcel from "../components/ImportFromExcel";
 
-export default function Homepage (){
+function Homepage (){
   const {language} = useParams();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
@@ -97,7 +97,7 @@ export default function Homepage (){
   return(
     <>
       <div className="dashboard"> 
-        <h2 className="centered p-b-7">Students Progress Report</h2>
+        <h2 className="centered p-b-7">Student&rsquo;s Progress Report</h2>
         <div className="flex gap-3 justify-center p-b-3">
           <ExportToExcel userData ={userData} />
           <ImportFromExcel userData = {userData} setUserData={setUserData}/>
@@ -146,3 +146,5 @@ export default function Homepage (){
 
   );
 }
+
+export default Homepage;

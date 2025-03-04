@@ -2,6 +2,7 @@ import React from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
+import PropTypes from "prop-types";
 
 const ExportToExcel = ({userData}) =>{
   const handleExport = () =>{
@@ -55,4 +56,7 @@ const ExportToExcel = ({userData}) =>{
   );
 };
 
+ExportToExcel.propTypes = {
+  userData: PropTypes.object,
+};
 export default ExportToExcel;

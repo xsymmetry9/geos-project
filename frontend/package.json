@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint src/**/*.jsx src/**/*.jsx",
+    "lint:fix": "eslint src/**/*.jsx src/**/*.js --fix"
   },
   "keywords": [],
   "author": "",

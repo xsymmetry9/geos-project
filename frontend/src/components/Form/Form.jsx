@@ -1,4 +1,5 @@
 import React, {useContext, useState} from "react";
+import PropTypes from "prop-types";
 import PersonalInformation from "./components/PersonalInformation";
 import Feedback from "./components/Feedback";
 import LevelInformation from "./components/LevelInformation";
@@ -9,7 +10,7 @@ import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 
-const Form = ({inputData, setInputData, isNew}) => {
+const Form = ({inputData, setInputData}) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
 
@@ -35,10 +36,10 @@ const Form = ({inputData, setInputData, isNew}) => {
     ));
   };
   const arrOfPages = [
-    <PersonalInformation inputData = {inputData} handleInputData = {handleInputData} language={language}/>,
-    <LevelInformation inputData={inputData} setInputData = {setInputData} handleLevelInputData = {handleLevelInputData} language={language}/>,
-    <Feedback inputData = {inputData} handleInputData = {handleInputData} language = {language}  />,
-    <Preview inputData={inputData} language={language}/>];
+    <PersonalInformation key={"personal-information"} inputData = {inputData} handleInputData = {handleInputData} language={language}/>,
+    <LevelInformation key={"level-information"} inputData={inputData} setInputData = {setInputData} handleLevelInputData = {handleLevelInputData} language={language}/>,
+    <Feedback key={"feedback"} inputData = {inputData} handleInputData = {handleInputData} language = {language}  />,
+    <Preview key={"preview"} inputData={inputData} language={language}/>];
 
   const changePage = (e) =>{
     const {name} = e.currentTarget;
@@ -52,7 +53,7 @@ const Form = ({inputData, setInputData, isNew}) => {
     } else if (name === "back"){
       setPage(prev => prev - 1);
     } else if(name ==="preview"){
-      console.log("go to preview page");
+      alert("Error");
     }
   };
 
@@ -69,7 +70,7 @@ const Form = ({inputData, setInputData, isNew}) => {
       }
       localStorage.setItem("GEOS_app", JSON.stringify(savedData));   
     } catch (err) {
-      console.log("Unable to load", err);
+      alert(err);
     }
 
     setDisplayPopupMessage(true);
@@ -91,4 +92,8 @@ const Form = ({inputData, setInputData, isNew}) => {
   );
 };
 
+Form.propTypes = {
+  inputData: PropTypes.object,
+  setInputData: PropTypes.func,
+};
 export default Form;
