@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+import "@/styles/main.scss";
 
 const LinksLanguages = () => {
   return (
