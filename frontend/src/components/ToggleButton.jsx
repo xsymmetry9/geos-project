@@ -1,9 +1,9 @@
 import "../styles/components/toggleButton.scss";
 import PropTypes from "prop-types";
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 class ToggleButton extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isOn: false,
@@ -11,12 +11,12 @@ class ToggleButton extends Component {
 
     this.handleToggle = this.handleToggle.bind(this);
   }
-  handleToggle(e){
-    const {id} = e.currentTarget;
+  handleToggle(e) {
+    const { id } = e.currentTarget;
     const newState = !this.state.isOn;
-    this.setState({isOn: newState});
+    this.setState({ isOn: newState });
 
-    this.props.onToggle(prev => ({
+    this.props.onToggle((prev) => ({
       ...prev,
       [id]: !prev.id,
     }));
@@ -24,11 +24,11 @@ class ToggleButton extends Component {
 
   render() {
     const { isOn } = this.state;
-    return(
+    return (
       <>
-        <button 
-          id="display_target" 
-          className={`toggle-button ${isOn ? "on" : "off"}`} 
+        <button
+          id="display_target"
+          className={`toggle-button ${isOn ? "on" : "off"}`}
           onClick={this.handleToggle}
         >
           <span className={`toggle-circle ${isOn ? "on" : "off"}`}></span>

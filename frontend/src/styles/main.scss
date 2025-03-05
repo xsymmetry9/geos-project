@@ -1,0 +1,15 @@
+@use "@/styles/base.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Custom SASS styles
+$primary-color: #3498db;
+
+.custom-btn {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

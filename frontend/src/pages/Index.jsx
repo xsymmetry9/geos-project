@@ -1,28 +1,36 @@
 import { Link } from "react-router-dom";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+import "@/styles/main.scss";
 
-const LinksLanguages = () =>{
-  return(
+const LinksLanguages = () => {
+  return (
     <div className="flex flex-col gap-1">
-      <Link className="btn-primary" to={"/home/english"}>English</Link>
-      <Link className="btn-primary" to={"/home/chinese"}>Chinese</Link>
-      <Link className="btn-primary" to={"/home/korean"}>Korean</Link>
-      <Link className="btn-primary" to={"/home/japanese"}>Japanese</Link>
-    </div> 
-    
+      <Link className="btn-primary" to={"/home/english"}>
+        English
+      </Link>
+      <Link className="btn-primary" to={"/home/chinese"}>
+        Chinese
+      </Link>
+      <Link className="btn-primary" to={"/home/korean"}>
+        Korean
+      </Link>
+      <Link className="btn-primary" to={"/home/japanese"}>
+        Japanese
+      </Link>
+    </div>
   );
 };
-const Index = () =>{
+const Index = () => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() =>{
-    const fetchUser = () =>{
+  useEffect(() => {
+    const fetchUser = () => {
       const data = getDataFromLocal();
       if (data != null) {
-        setUser(JSON.parse(data));  
+        setUser(JSON.parse(data));
       } else {
         const newUser = new User();
         editDataFromLocal(newUser);
@@ -33,13 +41,13 @@ const Index = () =>{
 
     fetchUser();
   }, []);
-    
-  if(loading) {
+
+  if (loading) {
     return <div>Loading ...</div>;
   }
-  return(
+  return (
     <div className="centered">
-      <h1 className="p-y-3">Welcome to GEOS App {user.name}!!!</h1>
+      <h1 className="text-3xl font-bold underline">Welcome to GEOS App {user.name}!!!</h1>
       <LinksLanguages />
     </div>
   );

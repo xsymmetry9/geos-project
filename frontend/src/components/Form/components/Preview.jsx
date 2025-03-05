@@ -2,15 +2,9 @@ import React from "react";
 import "../../../styles/components/preview.scss";
 import PropTypes from "prop-types";
 
-const Preview = ({key, inputData, language}) =>{
-  const {name,
-    textbook,
-    course,
-    attendance,
-    totalLessons, 
-    levels,
-    feedback
-  } = inputData;
+const Preview = ({ key, inputData, language }) => {
+  const { name, textbook, course, attendance, totalLessons, levels, feedback } =
+    inputData;
 
   // const titles = {
   //   english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
@@ -22,17 +16,31 @@ const Preview = ({key, inputData, language}) =>{
     english: ["Initial", "Target", "Final"],
     chinese: ["初始", "目標", "結束"],
     korean: ["초기", "목표", "결과"],
-    japanese: ["初期", "目標", "終了"]
+    japanese: ["初期", "目標", "終了"],
   };
-  return(
+  return (
     <div key={key} className="preview-section">
       <div className="preview-container">
         <h2>Class Information</h2>
-        <p><strong>Name:</strong> {name.length != 0 ? name : "No name"}</p>
-        <p className="uppercase"><strong>textbook:</strong> {textbook.length != 0 ? textbook : "No textbook"}</p>
-        <p className="uppercase"><strong>course:</strong> {course.length != 0 ? course : "No course name"}</p>
-        <p className="uppercase"><strong>attendance:</strong> {attendance != 0 ? attendance : "No attendance"}</p>
-        <p className="uppercase"><strong>total lessons:</strong> {totalLessons != 0 ? totalLessons : "No total lessons"}</p>
+        <p>
+          <strong>Name:</strong> {name.length != 0 ? name : "No name"}
+        </p>
+        <p className="uppercase">
+          <strong>textbook:</strong>{" "}
+          {textbook.length != 0 ? textbook : "No textbook"}
+        </p>
+        <p className="uppercase">
+          <strong>course:</strong>{" "}
+          {course.length != 0 ? course : "No course name"}
+        </p>
+        <p className="uppercase">
+          <strong>attendance:</strong>{" "}
+          {attendance != 0 ? attendance : "No attendance"}
+        </p>
+        <p className="uppercase">
+          <strong>total lessons:</strong>{" "}
+          {totalLessons != 0 ? totalLessons : "No total lessons"}
+        </p>
       </div>
       <div className="preview-container">
         <h2>Student Evaluation</h2>
@@ -47,7 +55,7 @@ const Preview = ({key, inputData, language}) =>{
           </thead>
           <tbody>
             {Object.keys(levels).map((item) => {
-              return(
+              return (
                 <tr key={item}>
                   <td>{item.toUpperCase()}</td>
                   <td>{levels[item].initial}</td>
@@ -60,7 +68,7 @@ const Preview = ({key, inputData, language}) =>{
         </table>
       </div>
       <div className="preview-container">
-        <h2>Feedback</h2>            
+        <h2>Feedback</h2>
         <p>{feedback.length != 0 ? feedback : "No comment"}</p>
       </div>
     </div>

@@ -1,71 +1,72 @@
 @use "../base.scss";
 
-.pagination-container{
-    $height: 80px;
-    $width: 90%;
-    $square_width: calc($width/4);
-    padding-bottom: 12px;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    margin-inline: auto;
-    width: $width;
+.pagination-container {
+  $height: 80px;
+  $width: 90%;
+  $square_width: calc($width/4);
+  padding-bottom: 12px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-inline: auto;
+  width: $width;
+  height: $height;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-shadow: 0.5px 1px rgba(0, 0, 0, 0.7);
+  position: relative;
+  .square {
     height: $height;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: .8rem;
-    text-shadow: .5px 1px rgba(0, 0, 0, 0.7);
-    position: relative;
-      .square{
-        height: $height;
-        width: calc(25%);
-        p { text-align: center;}
-      }
-      .circle::after, .circle::before{
-        content: "";
-        height: 2px;
-        position: absolute;
-        background-color: base.$button-bg-color;
-        box-shadow: 1px 1px .5px .5px rgba(173, 216, 230, 0.7);
-        ;
-      }
-      .circle::after{
-        width: calc(50% - 10px);
-        right: 0;
-      }
-      .circle::before{
-        width: calc(50% - 10px);
-        left: 0;
-      }
-      .active{
-        background-color: rgba(65, 56, 56, 0.1);
-      }
-  }
-  .square{
-      position: inherit;
-      display: flex; 
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-  
-  }
-  .circle{
+    width: calc(25%);
+    p {
       text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: .7rem;
-      border: none;
-      box-shadow: 1px 1px 2px 2px rgba(173, 216, 230, 0.7);
-      border: 2px solid base.$button-bg-color;
-      border-radius: 100%;
-      width: 20px;
-      height: 20px;
-      font-weight: 600;
-      margin-inline: auto;
+    }
   }
-  .circle.completed{
-    background-color: rgba(173, 216, 230, 0.3);
-    color: black;
+  .circle::after,
+  .circle::before {
+    content: "";
+    height: 2px;
+    position: absolute;
+    background-color: base.$button-bg-color;
+    box-shadow: 1px 1px 0.5px 0.5px rgba(173, 216, 230, 0.7);
   }
+  .circle::after {
+    width: calc(50% - 10px);
+    right: 0;
+  }
+  .circle::before {
+    width: calc(50% - 10px);
+    left: 0;
+  }
+  .active {
+    background-color: rgba(65, 56, 56, 0.1);
+  }
+}
+.square {
+  position: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.circle {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+  border: none;
+  box-shadow: 1px 1px 2px 2px rgba(173, 216, 230, 0.7);
+  border: 2px solid base.$button-bg-color;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  font-weight: 600;
+  margin-inline: auto;
+}
+.circle.completed {
+  background-color: rgba(173, 216, 230, 0.3);
+  color: black;
+}

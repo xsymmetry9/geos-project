@@ -9,14 +9,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  css:{
-    preprocessorOptions:{
-      scss:{
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/styles/variables.scss" as *;`,
         api: "modern-compiler",
-      }
-    }
+      },
+    },
   },
   server: {
-    port: 3000
-  }
+    port: 3000,
+  },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 
-const LevelCheck = () =>{
+const LevelCheck = () => {
   <h1>This is level check</h1>;
 };
 

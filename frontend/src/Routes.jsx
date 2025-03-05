@@ -10,26 +10,24 @@ const routes = [
   {
     path: "/",
     element: <Layout />,
-    children:[
-      {index: true, element: <Index />},
-      {path: "home/:language", element: <Homepage />},
-    ]
+    children: [
+      { index: true, element: <Index /> },
+      { path: "home/:language", element: <Homepage /> },
+    ],
   },
   {
-    path:"spr/:language",
-    element: <Layout />,
-    children:[
-      { index: true, element: <SPRForm />},
-      { path: "print/:id", element: <PrintPage />},
-      { path: "edit/:id", element: <SPRForm />}
-    ]
-  },
-  {
-    path:"levelCheck/:language",
+    path: "spr/:language",
     element: <Layout />,
     children: [
-      {index: true, element: <LevelCheck_App />}
-    ]
+      { index: true, element: <SPRForm /> },
+      { path: "print/:id", element: <PrintPage /> },
+      { path: "edit/:id", element: <SPRForm /> },
+    ],
+  },
+  {
+    path: "levelCheck/:language",
+    element: <Layout />,
+    children: [{ index: true, element: <LevelCheck_App /> }],
   },
 ];
 
