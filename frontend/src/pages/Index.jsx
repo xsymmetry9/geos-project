@@ -2,11 +2,10 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
-import "@/styles/main.scss";
 
 const LinksLanguages = () => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="bg-primary flex flex-col gap-1">
       <Link className="btn-primary" to={"/home/english"}>
         English
       </Link>
