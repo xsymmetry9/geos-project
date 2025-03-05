@@ -1,5 +1,5 @@
-class User{
-  constructor(language="english") {
+class User {
+  constructor(language = "english") {
     this.name = "Guest";
     this.language = language;
     this.SPR = [];

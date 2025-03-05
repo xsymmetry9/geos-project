@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import PersonalInformation from "./components/PersonalInformation";
 import Feedback from "./components/Feedback";
@@ -10,83 +10,112 @@ import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 
-const Form = ({inputData, setInputData}) => {
+const Form = ({ inputData, setInputData }) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
 
   const language = useContext(LanguageContext);
 
-  const handleInputData = (e) =>{
-    const {name, value} = e.target;
-    setInputData((prev) => ({ ...prev, [name]: value}));   
+  const handleInputData = (e) => {
+    const { name, value } = e.target;
+    setInputData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleLevelInputData = (e) =>{
-    const {name, value} = e.currentTarget;
+  const handleLevelInputData = (e) => {
+    const { name, value } = e.currentTarget;
 
     const parentCategory = name.split("-")[0];
     const childCategory = name.split("-")[1];
 
-    setInputData((prev) => ({ ...prev, 
-      levels: {...prev.levels,
-        [parentCategory]: {...prev.levels[parentCategory],
-          [childCategory]: value
-        }
-      }}
-    ));
+    setInputData((prev) => ({
+      ...prev,
+      levels: {
+        ...prev.levels,
+        [parentCategory]: {
+          ...prev.levels[parentCategory],
+          [childCategory]: value,
+        },
+      },
+    }));
   };
   const arrOfPages = [
-    <PersonalInformation key={"personal-information"} inputData = {inputData} handleInputData = {handleInputData} language={language}/>,
-    <LevelInformation key={"level-information"} inputData={inputData} setInputData = {setInputData} handleLevelInputData = {handleLevelInputData} language={language}/>,
-    <Feedback key={"feedback"} inputData = {inputData} handleInputData = {handleInputData} language = {language}  />,
-    <Preview key={"preview"} inputData={inputData} language={language}/>];
+    <PersonalInformation
+      key={"personal-information"}
+      inputData={inputData}
+      handleInputData={handleInputData}
+      language={language}
+    />,
+    <LevelInformation
+      key={"level-information"}
+      inputData={inputData}
+      setInputData={setInputData}
+      handleLevelInputData={handleLevelInputData}
+      language={language}
+    />,
+    <Feedback
+      key={"feedback"}
+      inputData={inputData}
+      handleInputData={handleInputData}
+      language={language}
+    />,
+    <Preview key={"preview"} inputData={inputData} language={language} />,
+  ];
 
-  const changePage = (e) =>{
-    const {name} = e.currentTarget;
-    if(name ==="next"){
-      if(page > arrOfPages.length - 1)
-      {
+  const changePage = (e) => {
+    const { name } = e.currentTarget;
+    if (name === "next") {
+      if (page > arrOfPages.length - 1) {
         setPage(0);
       } else {
-        setPage(prev => prev + 1);
+        setPage((prev) => prev + 1);
       }
-    } else if (name === "back"){
-      setPage(prev => prev - 1);
-    } else if(name ==="preview"){
+    } else if (name === "back") {
+      setPage((prev) => prev - 1);
+    } else if (name === "preview") {
       alert("Error");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    try{
+    try {
       const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
-      const existingStudentIndex = savedData.SPR.findIndex(student => student.id === inputData.id);
-      if(existingStudentIndex === -1)
-      {
+      const existingStudentIndex = savedData.SPR.findIndex(
+        (student) => student.id === inputData.id,
+      );
+      if (existingStudentIndex === -1) {
         savedData.SPR.push(inputData);
       } else {
         savedData.SPR[existingStudentIndex] = inputData;
       }
-      localStorage.setItem("GEOS_app", JSON.stringify(savedData));   
+      localStorage.setItem("GEOS_app", JSON.stringify(savedData));
     } catch (err) {
       alert(err);
     }
 
     setDisplayPopupMessage(true);
   };
-  return(
+  return (
     <div className={"form-root"}>
-      <Pagination page = {page} language={language}/>
+      <Pagination page={page} language={language} />
       <div>
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
           <div className="container" id="buttons">
-            <Button page={page} handler={changePage} language={language} handleSubmit = {handleSubmit} />
-            {page == 3 && <input className="btn btn-primary" type="submit" value={"Save"}/>}                   
-          </div>      
+            <Button
+              page={page}
+              handler={changePage}
+              language={language}
+              handleSubmit={handleSubmit}
+            />
+            {page == 3 && (
+              <input className="btn btn-primary" type="submit" value={"Save"} />
+            )}
+          </div>
         </form>
-        {displayPopupMessage && <PopUpMessage setDisplayPopupMessage = {setDisplayPopupMessage}/>}
+        {displayPopupMessage && (
+          <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
+        )}
       </div>
     </div>
   );

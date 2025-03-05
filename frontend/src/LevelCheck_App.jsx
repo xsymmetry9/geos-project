@@ -1,6 +1,6 @@
 import React from "react";
 
-const levelcheck_app = () =>{
+const levelcheck_app = () => {
   return (
     <>
       <h1 className="text-center">Coming soon</h1>

@@ -2,14 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import logo from "./logo.svg";
 
-const Image = (props) =>{
-  const {style, description} = props;
-  return(
+const Image = (props) => {
+  const { style, description } = props;
+  return (
     <>
-      <img className= {style} src={logo} alt={description}/> 
+      <img className={style} src={logo} alt={description} />
     </>
   );
-
 };
 
 Image.propTypes = {

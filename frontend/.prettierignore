@@ -1,0 +1,6 @@
+# Ignore artificacts:
+build
+coverage
+dist
+public
+package-lock.json

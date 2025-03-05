@@ -1,6 +1,9 @@
 @use "../base.scss";
 
-input, textarea, option, select{
+input,
+textarea,
+option,
+select {
   -webkit-autofill: none;
   box-sizing: border-box;
   font-family: inherit;
@@ -12,15 +15,15 @@ input, textarea, option, select{
   border: none;
   border-radius: 5px;
   border: 2px solid base.$input-border-primary-color;
-  box-shadow: 1px 1px .5px .5px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 0.5px 0.5px rgba(0, 0, 0, 0.1);
   padding: base.$spacing-1;
 }
-textarea{
+textarea {
   resize: vertical;
   height: 300px;
   overflow: auto;
 }
-.form-root{
+.form-root {
   font-family: base.$font-secondary;
   box-sizing: border-box;
   background-color: base.$bg-white-600;
@@ -42,59 +45,62 @@ textarea{
   }
 }
 
-.form-primary{
+.form-primary {
   max-width: 600px;
   width: 100%;
   margin-inline: auto;
   padding-bottom: 3rem;
 
-  input, textarea, select{
-    &:hover{
+  input,
+  textarea,
+  select {
+    &:hover {
       border: 2px solid base.$color-active;
-      box-shadow: 1px 1px .5px .5px rgba(255, 166, 0, 0.3)
+      box-shadow: 1px 1px 0.5px 0.5px rgba(255, 166, 0, 0.3);
     }
   }
 }
-.input-wrapper{
+.input-wrapper {
   padding-bottom: base.$spacing-1;
 }
-#buttons{
+#buttons {
   display: flex;
   justify-content: space-around;
 }
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: space-around;
 }
 
-.title{
+.title {
   background-color: base.$color-dark-green;
   color: #ddd;
 }
 
-.preview-section{
-  p{
+.preview-section {
+  p {
     font-size: 1.1rem;
     line-height: 1.5;
   }
-  h2{
+  h2 {
     font-size: 1.4rem;
   }
-  table{
-    max-width: 500px;  
+  table {
+    max-width: 500px;
     width: 100%;
     margin: auto;
   }
-  th, td{
+  th,
+  td {
     text-align: center;
   }
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.preview-container{
+.preview-container {
   padding-bottom: base.$spacing-4;
-  h2{
-      padding-bottom: base.$spacing;
+  h2 {
+    padding-bottom: base.$spacing;
   }
 }
