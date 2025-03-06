@@ -6,7 +6,7 @@ import LevelInformation from "./components/LevelInformation";
 import Preview from "./components/Preview";
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
-import "../../styles/components/form.scss";
+// import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 

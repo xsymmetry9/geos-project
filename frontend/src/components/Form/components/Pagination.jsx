@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../../../styles/components/pagination.scss";
+// import "../../../styles/components/pagination.scss";
 import React from "react";
 
 const Pagination = ({ page, language }) => {

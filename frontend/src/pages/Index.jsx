@@ -46,7 +46,7 @@ const Index = () => {
   }
   return (
     <div className="centered">
-      <h1 className="text-3xl font-bold underline">Welcome to GEOS App {user.name}!!!</h1>
+      <h1 className="text-xl underline">Welcome to GEOS App {user.name}!!!</h1>
       <LinksLanguages />
     </div>
   );

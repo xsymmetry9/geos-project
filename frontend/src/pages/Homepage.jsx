@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
-import "../styles/components/dashboard.scss";
+// import "../styles/components/dashboard.scss";
 import { Archive, Pencil, PrinterIcon, CirclePlus, SquareX, Plus } from "lucide-react";
 import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";

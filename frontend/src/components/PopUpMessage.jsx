@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { LanguageContext } from "../pages/SPRForm";
-import "../styles/components/popupmessage.scss";
+// import "../styles/components/popupmessage.scss";
 
 const PopUpMessage = ({ setDisplayPopupMessage }) => {
   const language = useContext(LanguageContext);
