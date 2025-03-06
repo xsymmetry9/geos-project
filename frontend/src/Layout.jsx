@@ -10,7 +10,7 @@ const Layout = () => {
   return (
     <div className="relative grid h-screen grid-rows-[70px_auto_90px] grid-cols-1">
       <Header />
-      <div className="relative mx-auto my-12 w-full max-w-[1100]">
+      <div className="relative mx-auto my-12 w-full max-w-[1100px]">
         <Outlet />
       </div>
       <Footer />

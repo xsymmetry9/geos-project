@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme{
+    --font-primary: Merriweather, serif;
+    --font-secondary: Poppins, sans-serif;
+
+    --button-primary: "w-[150px] h-[50px] font-secondary cursor-pointer font-semibold capitalize text-center bg-teal-700 text-white border-none px-4 py-2 rounded-md transition-all duration-700 ease-in-out hover:bg-white hover:text-teal-700 hover:font-semibold hover:outline hover:outline-3 hover:outline-teal-700";
+}
+
+.button-primary {
+    width: 150px;
+    height: 50px;
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    background-color: #00796b; /* Tailwind Teal 700 */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 0.7s ease-in-out;
+  }

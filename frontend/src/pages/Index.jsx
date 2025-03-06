@@ -6,16 +6,16 @@ import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 const LinksLanguages = () => {
   return (
     <div className="bg-primary flex flex-col gap-1">
-      <Link className="btn-primary" to={"/home/english"}>
+      <Link className="button-primary" to={"/home/english"}>
         English
       </Link>
-      <Link className="btn-primary" to={"/home/chinese"}>
+      <Link className="button-primary" to={"/home/chinese"}>
         Chinese
       </Link>
-      <Link className="btn-primary" to={"/home/korean"}>
+      <Link className="button-primary" to={"/home/korean"}>
         Korean
       </Link>
-      <Link className="btn-primary" to={"/home/japanese"}>
+      <Link className="button-primary" to={"/home/japanese"}>
         Japanese
       </Link>
     </div>
@@ -45,8 +45,8 @@ const Index = () => {
     return <div>Loading ...</div>;
   }
   return (
-    <div className="centered">
-      <h1 className="text-xl underline">Welcome to GEOS App {user.name}!!!</h1>
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <h1 className="text-2xl py-2 font-primary">Welcome to GEOS App {user.name}!!!</h1>
       <LinksLanguages />
     </div>
   );
