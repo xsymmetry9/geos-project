@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import text from "../../../assets/other/levels.json";
 // import ToggleButton from "../../ToggleButton";
 
-function LanguageAspect({ inputData, aspectName, handleLevelInput, language }) {
+function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
   const [displayInitialHelp, setDisplayInitial] = useState(false);
   const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
   const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
@@ -48,38 +48,36 @@ function LanguageAspect({ inputData, aspectName, handleLevelInput, language }) {
   };
   return (
     <>
-      <div className="input-wrapper p-t-3">
+      <div key={key} className="input-wrapper p-t-3">
         <h2>{aspectName}</h2>
-        <div className="justify-space-between width-max flex">
-          <label className="text-2 uppercase">
-            {titleLanguage[language.toLowerCase()][0]}
-          </label>
-          {!displayInitialHelp && (
-            <div className="flex-end flex">
-              <button
-                className="btn-help"
+        <div className="grid grid-cols-1 gap-3">
+          <label key={`${key}-initial`}className="block">
+            <div className="w-full flex justify-between">
+              <span className="text-gray-700 capitalize">{titleLanguage[language.toLowerCase()][0]}</span>
+              {!displayInitialHelp && (<button
+                className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
                 id="initial-open"
-                onClick={handlerHelp}
-              >
+                onClick={handlerHelp}>
                 ?
               </button>
+              )}
             </div>
-          )}
-        </div>
-        <select
-          className="spacing-sm text-2"
-          id={`${aspectName}-initial`}
-          name={`${aspectName}-initial`}
-          value={inputData.levels[aspectName].initial}
-          onChange={handleLevelInput}
-        >
-          <option className="text-2" value={inputData}>
+            <select
+              className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+              id={`${aspectName}-initial`}
+              name={`${aspectName}-initial`}
+              value={inputData.levels[aspectName].initial}
+              onChange={handleLevelInput}
+            >
+            
+            <option className="font-secondary text-base text-inherit" value={inputData}>
             Select score
-          </option>
-          {levelValue.map((item_Value, index) => (
-            <>
+            </option>
+            
+            {levelValue.map((item_Value, index) => (
+              <>
               <option
-                className="text-2"
+                className="font-secondary text-base text-inherit"
                 key={`${initialID}-${item_Value}-${index}`}
                 value={item_Value}
               >
@@ -87,11 +85,12 @@ function LanguageAspect({ inputData, aspectName, handleLevelInput, language }) {
               </option>
             </>
           ))}
-        </select>
-        <div className="m-t-1">
+            </select>
+          </label>
+          <div key={`${key}-initial-display`}className="m-t-1">
           {displayInitialHelp && (
-            <div className="level-text-box-container">
-              <p>
+            <div className="grid grid-cols-[1fr_auto]">
+              <p className="text-secondary text-slate-600">
                 {
                   text[language][aspectName][
                     inputData.levels[aspectName].initial
@@ -99,7 +98,7 @@ function LanguageAspect({ inputData, aspectName, handleLevelInput, language }) {
                 }
               </p>
               <button
-                className="btn-close"
+                className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-red-600 hover:bg-white hover:text-red-600 hover:border-2 hover:border-red-600"
                 id="initial-close"
                 onClick={handlerCloseHelp}
               >
@@ -108,6 +107,11 @@ function LanguageAspect({ inputData, aspectName, handleLevelInput, language }) {
             </div>
           )}
         </div>
+
+
+        </div>
+ 
+ 
       </div>
       <div className="input-wrapper">
         <div className="justify-space-between flex w-max">

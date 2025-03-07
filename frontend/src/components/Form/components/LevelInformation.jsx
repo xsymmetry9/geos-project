@@ -24,18 +24,17 @@ const LevelInformation = ({
   return (
     <>
       {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
-      <div key={key} className="form-primary">
-        <h2 className="title text-2 p-2">Student&rsquo;s Level</h2>
+      <div key={key} className="pb-[3rem]">
+        <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold">Student&rsquo;s Level</h2>
         {titles.english.map((aspectName) => {
           return (
-            <div key={aspectName}>
               <LanguageAspect
+                key={aspectName}
                 aspectName={aspectName}
                 inputData={inputData}
                 handleLevelInput={handleLevelInputData}
                 language={language}
               />
-            </div>
           );
         })}
       </div>
