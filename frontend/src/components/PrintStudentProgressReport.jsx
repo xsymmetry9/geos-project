@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Graph from "./Graph";
-import RenderLogo from "./Image/RenderLogo";
+import RenderLogo from "/logo.svg";
 import {
   TitleSPR,
   StudentInfo,

@@ -1,5 +1,5 @@
 import React from "react";
-import geosImg from "../assets/images/logo.svg";
+import geosImg from "/logo.svg";
 
 const Header = () => {
   return (

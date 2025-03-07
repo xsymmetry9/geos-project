@@ -23,7 +23,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
           <span className="text-gray-700 capitalize">{input_name}</span>
           <input
           type="text"
-          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
           name="name"
           value={name}
           onChange={handleInputData}
@@ -32,7 +32,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
         <label className="block" htmlFor="course">
           <span className="text-gray-700 capitalize">{input_course}</span>
           <select
-          className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
           id="course"
           name="course"
           value={course}
@@ -61,7 +61,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
         <label className="block" htmlFor="textbook">
           <span className="text-gray-700 capitalize">{input_textbook}</span>
           <input
-          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="text"
           name="textbook"
           value={textbook}
@@ -71,7 +71,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
         <label className="block" htmlFor="attendance">
           <span className="text-gray-700 capitalize">{input_attendance}</span>
           <input
-          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
           type="number"
           name="attendance"
           id="attendance"
@@ -82,7 +82,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
         <label className="block" htmlFor="totalLessons">
           <span className="text-gray-700 capitalize">{input_totallessons}</span>
           <input
-          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="number"
           name="totalLessons"
           id="total-lesson"

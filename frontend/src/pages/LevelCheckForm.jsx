@@ -12,8 +12,8 @@ const LevelCheckForm = () => {
   return(
     <div className="w-full max-w-[55em] mx-auto border py-6">
       <h1 className="font-primary text-2xl text-center py-3">Level Check form</h1>
-      <div className="w-full max-w-lg mx-auto ">
       <form action="">
+      <div className="grid grid-cols-1 gap-3 w-full max-w-lg mx-auto ">
         <label className="block" htmlFor="name">
           <span className="text-gray-700 capitalize">Name</span>
           <input
@@ -94,9 +94,10 @@ const LevelCheckForm = () => {
           onChange={handleInputData}
         />
         </label>
+        </div>
+
       </form>
 
-      </div>
 
     </div>
   )
