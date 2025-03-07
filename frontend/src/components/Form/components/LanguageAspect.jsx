@@ -48,7 +48,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
   };
   return (
     <>
-      <div key={key} className="input-wrapper p-t-3">
+      <div key={key} className="p-t-3">
         <h2 className="text-lg font-bold capitalize border-0 border-b-2 my-3">{aspectName}</h2>
         <div className="grid grid-cols-1 gap-3">
 
@@ -71,12 +71,12 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
               value={inputData.levels[aspectName].initial}
               onChange={handleLevelInput}
             >
-            <option className="font-secondary text-base text-inherit" value={inputData}>Select score</option>
+            <option className="font-secondary text-base text-md" value={inputData}>Select score</option>
             
             {levelValue.map((item_Value, index) => (
               <>
               <option
-                className="font-secondary text-base text-inherit"
+                className="font-secondary text-base"
                 key={`${initialID}-${item_Value}-${index}`}
                 value={item_Value}
               >
@@ -130,12 +130,12 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
           value={inputData.levels[aspectName].target}
           onChange={handleLevelInput}
         >
-          <option className="text-2" value={inputData}>
+          <option className="font-secondary text-base text-md" value={inputData}>
             Select score
           </option>
           {levelValue.map((item_Value, index) => (
             <option
-              className="text-2"
+              className="font-secondary text-base text-md"
               key={`${targetID}-${item_Value}-${index}`}
               value={item_Value}
             >
@@ -147,7 +147,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
           <div key={`${key}-final-target`} className="m-t-1">
           {displayTargetHelp && (
             <div className="grid grid-cols-[1fr_auto]">
-              <p>
+              <p className="text-secondary text-slate-600">
                 {
                   text[language][aspectName][
                     inputData.levels[aspectName].target
@@ -183,12 +183,12 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
               value={inputData.levels[aspectName].final}
               onChange={handleLevelInput}
             >
-            <option className="text-2" value={inputData}>
+            <option className="font-secondary text-base text-md" value={inputData}>
               Select score
             </option>
             {levelValue.map((item_Value, index) => (
               <option
-                className="text-2"
+                className="font-secondary text-base text-md"
                 key={`${finalID}-${item_Value}-${index}`}
                 value={item_Value}
               >
@@ -200,7 +200,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
           <div className="m-t-1">
           {displayFinalHelp && (
             <div className="grid grid-cols-[1fr_auto] items-start">
-              <p>
+              <p className="text-secondary text-slate-600">
                 {text[language][aspectName][inputData.levels[aspectName].final]}
               </p>
               <button id="final-close" onClick={handlerCloseHelp}>

@@ -53,7 +53,7 @@ const ExportToExcel = ({ userData }) => {
   };
   return (
     <>
-      <button className="btn-primary" onClick={handleExport}>
+      <button className="btn-primary flex gap-2 items-center justify-center" onClick={handleExport}>
         <DownloadIcon className="icon" size={16} />
         <span className="visually-hidden">to Excel</span>
       </button>

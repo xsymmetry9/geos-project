@@ -91,15 +91,15 @@ const ImportFromExcel = ({ userData, setUserData }) => {
   };
 
   return (
-    <div>
+    <>
       <input
-        className="custom-file-input"
+        className="btn-primary"
         type="file"
         accept=".xlsx, .xls"
         onChange={handleFileUpload}
       />
       {fileName && <p>Uploaded: {fileName}</p>}
-    </div>
+    </>
   );
 };
 

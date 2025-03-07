@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
-// import "../styles/components/dashboard.scss";
-import { Archive, Pencil, PrinterIcon, CirclePlus, SquareX, Plus } from "lucide-react";
+import { Archive, Pencil, PrinterIcon, Plus } from "lucide-react";
 import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 import ImportFromExcel from "../components/ImportFromExcel";
+import {CreateNewFormBtn, CloseBtn} from "../components/CustomizedButtons";
 
 function Homepage() {
   const { language } = useParams();
@@ -108,7 +108,8 @@ function Homepage() {
     <>
       <div className="pb-12 w-full">
         <h2 className="font-primary text-2xl text-center font-semibold mb-6">Student&rsquo;s Progress Report</h2>
-        <div className="p-b-3 flex justify-center gap-3">
+        <div className="p-b-3 flex justify-center gap-3 mb-6">
+          <CreateNewFormBtn handleControl = {handleFormControl}/>
           <ExportToExcel userData={userData} />
           <ImportFromExcel userData={userData} setUserData={setUserData} />
         </div>
@@ -116,27 +117,19 @@ function Homepage() {
           {userData.SPR.length != 0 && <PlotTable />}
           {userData.SPR.length === 0 && <p className="text-center text-gray-500">Click add SPR or Level Check</p>}
         </div>
-        {!addFormNav ? (
-          <div className="fixed bottom-8 right-8">
-            <button className="cursor-pointer rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-700" onClick={handleFormControl}>
-              <CirclePlus size={48} />
-            </button>
-          </div>
-        ) : (
-          <div id="pop-up-navigation" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-1/2 grid grid-rows-[40px_1fr] max-w-[1100px] w-full h-[400px] bg-white shadow-lg rounded-lg">
+        {addFormNav && (
+          <div id="pop-up-navigation" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-1/2 grid grid-rows-[40px_1fr] max-w-[500px] w-full h-[300px] bg-white shadow-lg rounded-lg">
             <div id="pop-up-header" className="relative bg-gray-100 h-8 w-full">
-              <button className="absolute top-0 right-0 p-1 cursor-pointer" onClick={handleFormControl}>
-                <SquareX className="text-teal-700 group-hover:text-white w-6 h-6" />
-              </button>
+              <CloseBtn handleControl={handleFormControl} />
             </div>
             <div id="pop-up-content" className="flex flex-col gap-2 justify-center items-center">
               <Link className="cursor-pointer w-[200px] flex items-center gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/spr/${language}`}>
                   <Plus size={18} />
-                  <span>SPR</span>
+                  <span>SPR Form</span>
               </Link>
               <Link className="flex items-center w-[200px] gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/levelCheck/${language}`}>
                 <Plus size={18} />
-                <span>Level Check</span>
+                <span>Level Check Form</span>
               </Link>
             </div>
           </div>

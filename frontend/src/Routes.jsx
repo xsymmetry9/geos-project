@@ -1,10 +1,10 @@
 import React from "react";
 import Index from "./pages/Index";
 import Layout from "./Layout";
-import LevelCheck_App from "./LevelCheck_App";
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
+import LevelCheckForm from "./pages/LevelCheckForm";
 
 const routes = [
   {
@@ -27,7 +27,7 @@ const routes = [
   {
     path: "levelCheck/:language",
     element: <Layout />,
-    children: [{ index: true, element: <LevelCheck_App /> }],
+    children: [{ index: true, element: <LevelCheckForm /> }],
   },
 ];
 
