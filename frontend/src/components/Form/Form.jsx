@@ -95,12 +95,12 @@ const PlotForm = ({ inputData, setInputData }) => {
     setDisplayPopupMessage(true);
   };
   return (
-    <div className="w-full max-w-[55rem] relative bg-white p-3">
+    <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
       <Pagination page={page} language={language} />
       <div className="w-full max-w-lg m-auto">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
-          <div className="container" id="buttons">
+          <div className="flex gap-2 justify-center" id="buttons">
             <Button
               page={page}
               handler={changePage}

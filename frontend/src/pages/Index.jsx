@@ -6,16 +6,16 @@ import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 const LinksLanguages = () => {
   return (
     <div className="bg-primary flex flex-col gap-1">
-      <Link className="button-primary" to={"/home/english"}>
+      <Link className="btn-primary" to={"/home/english"}>
         English
       </Link>
-      <Link className="button-primary" to={"/home/chinese"}>
+      <Link className="btn-primary" to={"/home/chinese"}>
         Chinese
       </Link>
-      <Link className="button-primary" to={"/home/korean"}>
+      <Link className="btn-primary" to={"/home/korean"}>
         Korean
       </Link>
-      <Link className="button-primary" to={"/home/japanese"}>
+      <Link className="btn-primary" to={"/home/japanese"}>
         Japanese
       </Link>
     </div>
