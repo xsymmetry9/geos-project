@@ -15,89 +15,84 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
   } = form_languages[language.toLowerCase()];
 
   return (
-    <div key={key} className="form-primary" id="personal-information">
-      <h2 className="title text-2 p-2">Student&apos;s Information</h2>
-      <div className="input-wrapper p-t-3">
-        <label className="text-2 uppercase" htmlFor="name">
-          {input_name}
-        </label>
-        <input
+    <div key={key} className="pb-[3rem]" id="personal-information">
+      <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold">Student&apos;s Information</h2>
+      <div className="mt-8 m-auto">
+        <div className="grid grid-cols-1 gap-6">
+        <label className="block" htmlFor="name">
+          <span className="text-gray-700 capitalize">{input_name}</span>
+          <input
           type="text"
-          className="text-2"
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           name="name"
           value={name}
           onChange={handleInputData}
         />
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="course">
-          {input_course}
         </label>
-        <select
-          className="text-2 form-input-primary"
+        <label className="block" htmlFor="course">
+          <span className="text-gray-700 capitalize">{input_course}</span>
+          <select
+          className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           id="course"
           name="course"
           value={course}
           onChange={handleInputData}
         >
-          <option className="text-2" value="">
+          <option className="font-secondary text-base text-inherit" value="">
             Select course
           </option>
-          <option className="text-2" value="ONLINE">
+          <option className="font-secondary text-base text-inherit" value="ONLINE">
             ONLINE
           </option>
-          <option className="text-2" value="PL">
+          <option className="font-secondary text-base text-inherit" value="PL">
             PL
           </option>
-          <option className="text-2" value="GL">
+          <option className="font-secondary text-base text-inherit" value="GL">
             GL
           </option>
-          <option className="text-2" value="SGL">
+          <option className="font-secondary text-base text-inherit" value="SGL">
             SGL
           </option>
-          <option className="text-2" value="FLEX">
+          <option className="font-secondary text-base text-inherit" value="FLEX">
             FLEX
           </option>
         </select>
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="textbook">
-          {input_textbook}
         </label>
-        <input
-          className="text-2"
+        <label className="block" htmlFor="textbook">
+          <span className="text-gray-700 capitalize">{input_textbook}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="text"
           name="textbook"
           value={textbook}
           onChange={handleInputData}
         />
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="attendance">
-          {input_attendance}
         </label>
-        <input
-          className="text-2"
+        <label className="block" htmlFor="attendance">
+          <span className="text-gray-700 capitalize">{input_attendance}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
           type="number"
           name="attendance"
           id="attendance"
           value={attendance}
           onChange={handleInputData}
         />
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="totalLessons">
-          {input_totallessons}
         </label>
-        <input
-          className="text-2"
+        <label className="block" htmlFor="totalLessons">
+          <span className="text-gray-700 capitalize">{input_totallessons}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="number"
           name="totalLessons"
           id="total-lesson"
           value={totalLessons}
           onChange={handleInputData}
         />
+        </label>
+        </div>
       </div>
+
     </div>
   );
 };

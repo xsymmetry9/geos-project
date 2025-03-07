@@ -6,11 +6,10 @@ import LevelInformation from "./components/LevelInformation";
 import Preview from "./components/Preview";
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
-// import "../../styles/components/form.scss";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 
-const Form = ({ inputData, setInputData }) => {
+const PlotForm = ({ inputData, setInputData }) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
 
@@ -96,9 +95,9 @@ const Form = ({ inputData, setInputData }) => {
     setDisplayPopupMessage(true);
   };
   return (
-    <div className={"form-root"}>
+    <div className="w-full max-w-[55rem] relative bg-white p-3">
       <Pagination page={page} language={language} />
-      <div>
+      <div className="w-full max-w-lg m-auto">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
           <div className="container" id="buttons">
@@ -112,17 +111,18 @@ const Form = ({ inputData, setInputData }) => {
               <input className="btn btn-primary" type="submit" value={"Save"} />
             )}
           </div>
+          
         </form>
         {displayPopupMessage && (
           <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
         )}
-      </div>
+    </div>
     </div>
   );
 };
 
-Form.propTypes = {
+PlotForm.propTypes = {
   inputData: PropTypes.object,
   setInputData: PropTypes.func,
 };
-export default Form;
+export default PlotForm;

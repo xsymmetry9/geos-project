@@ -11,7 +11,7 @@ const Pagination = ({ page, language }) => {
   };
 
   return (
-    <div className="root-pagination">
+    <div className="w-full max-w-lg m-auto">
       <div className="pagination-container">
         {title[language.toLowerCase()].map((item, index) => (
           <div key={index} className={`square ${page === index && "active"}`}>

@@ -106,7 +106,7 @@ function Homepage() {
 
   return (
     <>
-      <div className="relative pb-12 w-full">
+      <div className="pb-12 w-full">
         <h2 className="font-primary text-2xl text-center font-semibold mb-6">Student&rsquo;s Progress Report</h2>
         <div className="p-b-3 flex justify-center gap-3">
           <ExportToExcel userData={userData} />
