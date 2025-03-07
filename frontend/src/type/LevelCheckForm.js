@@ -5,8 +5,10 @@ class LevelCheck {
       this.id = id;
       this.dateCreated = new Date();
       this.name = "";
-      this.feedback = "";
-      this.levels = {
+      this.feedback = "",
+      this.language_proficiency_level = "",
+      this.textbook = "",
+      this.language_aspects = {
         vocabulary: "",
         pronunciation: "",
         grammar: "",
