@@ -14,29 +14,29 @@ export const TitleSPR = ({ language }) => {
 };
 export const StudentInfo = ({ name, course, textbook, language }) => {
   return (
-    <div className="info-container left">
-      <p className="uppercase">
+    <div id= "personal-info" className="ml-[3rem]">
+      <p className="capitalize">
         {text("student_name", language)}: <strong>{name}</strong>
       </p>
-      <p className="uppercase">{`${text("course", language)}: ${course}`}</p>
-      <p className="uppercase">{`${text("textbook", language)}: ${textbook}`}</p>
+      <p className="capitalize">{`${text("course", language)}: ${course}`}</p>
+      <p className="capitalize">{`${text("textbook", language)}: ${textbook}`}</p>
     </div>
   );
 };
 export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
   return (
-    <div className="info-container right">
-      <p>
+    <div id="student-info" className="justify-self-end mr-[3rem]">
+      <p className="capitalize">
         {text("date", language)}: {format(new Date(), "MM/dd/yyyy")}
       </p>
-      <p>
+      <p className="capitalize">
         {text("attendance", language)}: {attendance} {text("times", language)}
       </p>
-      <p>
+      <p className="capitalize">
         {text("total_lessons", language)}: {totalLessons}{" "}
         {text("times", language)}
       </p>
-      <p>
+      <p className="capitalize">
         {text("%_of_attendance", language)}:{" "}
         {parseFloat((attendance / totalLessons) * 100).toFixed(2)}%
       </p>
@@ -73,8 +73,8 @@ export const Table = ({ levels, language }) => {
     const avg = () => parseFloat(sum() / 5, 2).toFixed(2);
 
     return (
-      <tr>
-        <td className="print-col title-table text-capitalized">
+      <tr className="">
+        <td className="capitalize">
           {text(label, language)}
         </td>
         <td className="print-col">{levels.vocabulary[label]}</td>
@@ -101,7 +101,7 @@ export const Table = ({ levels, language }) => {
                     </div>
                 </caption> */}
         <thead>
-          <tr>
+          <tr className="">
             {labels.map((item, index) => (
               <th key={index} className="table-header">
                 {text(item, language)}
@@ -123,7 +123,7 @@ export const Comment = ({ comment, language }) => {
   const text = (phrase, language) => labelText[language]["SPR"][phrase];
   return (
     <div id="feedback" className="feedback-card">
-      <div className="title">
+      <div className="title uppercase">
         <strong>
           <p className>{text("comment", language)}</p>
         </strong>
@@ -139,7 +139,7 @@ export const Signature = ({ language }) => {
   return (
     <div className="signature-section">
       <div className="card-title-no-border">
-        <p className="uppercase">{text("signature", language)}</p>
+        <p className="capitalize">{text("signature", language)}</p>
       </div>
       <div className="signature-line" id="line"></div>
     </div>

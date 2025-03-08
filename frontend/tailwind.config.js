@@ -8,8 +8,7 @@ export default {
     theme:{
         extend:{
             colors: {
-                primary: "#1E40AF",
-                secondary: "#9333EA"
+                "custom-aqua": rgba(0, 161, 173, 1),
             }
         },
     },

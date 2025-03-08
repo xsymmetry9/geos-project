@@ -13,90 +13,28 @@ const PlotCards = ({ levels, language }) => {
     listening: levels.listening.final,
     conversation: levels.conversation.final,
   };
-
   return (
     <>
-      <div className="cards-container">
-        <div className="card">
-          <div className="title">
-            <strong>
-              <p className="level-card-title uppercase">
-                {text("vocabulary", language)}
-              </p>
-            </strong>
+      <div className="grid grid-col-1 gap-2">
+        {Object.keys(finalValue).map((item) => {
+          return(
+            <div key={item} className="border">
+              <div key={`${item}-title`}>
+                <p className="bg-[rgb(0,161,173,1)] pl-2 py-1 text-white font-bold capitalize">
+                  {text(item, language)}
+                </p>
+              </div>
+              <div key={`${item}-description`} className="description p-1">
+              <RenderLevel
+                category={item}
+                studentLevel={finalValue[item]}
+                language={language}
+              />
+              </div>
           </div>
-          <div className="description">
-            <RenderLevel
-              category={"vocabulary"}
-              studentLevel={finalValue.vocabulary}
-              language={language}
-            />
-          </div>
-        </div>
-        <div className="card">
-          <div className="title">
-            <strong>
-              <p className="level-card-title uppercase">
-                {text("grammar", language)}
-              </p>
-            </strong>
-          </div>
-          <div className="description">
-            <RenderLevel
-              category={"grammar"}
-              studentLevel={finalValue.grammar}
-              language={language}
-            />
-          </div>
-        </div>
-        <div className="card">
-          <div className="title">
-            <strong>
-              <p className="level-card-title uppercase">
-                {text("pronunciation", language)}
-              </p>
-            </strong>
-          </div>
-          <div className="description">
-            <RenderLevel
-              category={"pronunciation"}
-              studentLevel={finalValue.pronunciation}
-              language={language}
-            />
-          </div>
-        </div>
-        <div className="card">
-          <div className="title">
-            <strong>
-              <p className="level-card-title uppercase">
-                {text("listening", language)}
-              </p>
-            </strong>
-          </div>
-          <div className="description">
-            <RenderLevel
-              category={"listening"}
-              studentLevel={finalValue.listening}
-              language={language}
-            />
-          </div>
-        </div>
-        <div className="card">
-          <div className="title">
-            <strong>
-              <p className="level-card-title uppercase">
-                {text("conversation", language)}
-              </p>
-            </strong>
-          </div>
-          <div className="description">
-            <RenderLevel
-              category={"conversation"}
-              studentLevel={finalValue.conversation}
-              language={language}
-            />
-          </div>
-        </div>
+          )  
+        }
+        )}
       </div>
     </>
   );

@@ -1,0 +1,247 @@
+:root{
+  --font-primary: Merriweather, serif;
+  --font-secondary: Poppins, sans-serif;
+  --background-color-dark: rgba(0, 161, 173, 1);
+  --background-light: rgba(0, 161, 173, 0.2);
+  --font-color-light: #fff;
+  --border-color: rgb(0,0,0);
+  --margin-spacing: 35px;
+  --print-spacing-1: 0.3rem;
+
+  --print-font-size-1: 12px;
+  --print-font-size-2: 16px;
+  --print-font-size-3: 18px;
+  --print-font-size-4: 20px;
+  --print-font-size-5: 24px;
+  --print-font-size-6: 26px;
+
+}
+#print-english {
+  font-family: var(--font-primary);
+}
+#print-english h1,
+#print-english h2{
+  text-transform: capitalize;
+}
+
+#print-english h1{
+  font-size: 1.188rem;
+}
+#print-english h2{
+  font-size: var(--print-font-size-3);
+}
+#print-english h3{
+  font-size: var(--print-font-size-3);
+}
+#print-english p{
+  font-size: var(--print-font-size-1);
+}
+
+#print-english #personal-info p,
+#print-english #student-info p {
+  font-size: 0.843rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+#print-chinese h1{
+  font-size: var(--print-font-size-4);
+}
+#print-chinese h2{ font-size: var(--print-font-size-3);}
+#print-chinese h3 {font-size: var(--print-font-size-2);}
+#print-chinese p {font-size: var(--print-fontsize-1);}
+
+#print-korean h1 { font-size: 1.3rem; }
+  #print-korean h2 {
+    font-size: 1.1rem;
+  }
+  #print-korean h3 {
+    font-size: 1.1rem;
+  }
+  #print-korean p {
+    font-size: 0.9rem;
+  }
+
+#print-japanese h1 { font-size: 1.3rem;}
+#print-japanese h2 {
+    font-size: 1.1rem;
+  }
+#print-japanese h3 {
+    font-size: 1.1rem;
+  }
+#print-japanese p {
+    font-size: 0.9rem;
+  }
+
+.print-component {
+  /* display: none; */
+  width: 210mm;
+  height: 297mm;
+  margin: auto;
+  background-color: #fff;
+  padding: 12mm 8mm 6mm 8mm;
+  box-sizing: border-box;
+  border: 1px solid black;
+  font-family: var(--font-secondary);
+}
+@page{
+  .print-component{
+    size: A4;
+    border: none;
+  }
+}
+@media print {
+  html, body {
+    height: 100vh;
+    margin: 0!important;
+    padding: 0!important;
+    overflow: hidden;
+  }
+  .print-component{
+    display: block;
+    size: A4;
+    border: none;  
+
+  }
+}
+
+/* --------------------------- Styling for levels ----------------------------------------- */
+
+.table-levels .sub-header {
+  display: flex;
+  color: rgb(129, 129, 129);
+  gap: 10px;
+}
+.table-levels {
+  border-collapse: collapse;
+  font-family: var(--font-secondary);
+  font-size: var(--print-font-size-1);
+  width: 700px;
+  margin-inline: auto;
+}
+
+
+.table-levels caption{
+    caption-side: top;
+  }
+
+.table-levels caption .caption-side .caption-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+.table-levels   caption span {font-size: 10.5px}
+  .table-levels tr {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 85px repeat(7, 1fr);
+    text-align: center;
+  }
+  .table-levels thead tr {
+    background-color: var(--background-color-dark);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .table-levels thead tr th{
+    font-weight: 400;
+    color: #fff;
+    text-transform: capitalize;
+    border-right: 1px solid var(--border-color);
+    padding: var(--spacing) 0;
+  }
+
+  thead tr th:first-child{
+    border-left: 1px solid var(--border-color);
+
+  }
+
+.table-levels tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-levels tbody tr:nth-child(odd){
+  background-color: var(--background-light);
+  color: black;
+}
+.table-levels tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.table-levels tbody td {
+  border-right: 1px solid var(--border-color);
+  padding: var(--spacing 0);
+}
+.table-levels tbody td:first-child {
+  border-left: 1px solid var(--border-color);
+}
+/* Card Section */
+
+.cards-container {
+  --margin-left: 0.3rem;
+}
+.cards-container .card {
+  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+  min-height: 32.7mm;
+
+}
+
+.cards-container .title {
+  background-color: var(--background-color-dark);
+  color: var(--font-color-light);
+  padding: var(--spacing) 0;
+}
+
+.cards-container .card .description {
+  padding: var(--spacing);
+}
+
+.cards-container p {
+  margin-left: var(--spacing);
+}
+
+/* Graph Section */
+.graph-container {
+  position: relative;
+  aspect-ratio: 1/1;
+}
+
+/* Feedback Section */
+.feedback-card {
+  height: 240px;
+  border: 1px solid var(--border-color);
+
+}
+.feedback-card .title {
+  color: var(--font-color-light);
+  background-color: var(--background-color-dark);
+  padding: 4px;
+}
+.feedback-card .description {
+  padding: var(--print-spacing-1);
+}
+
+.feedback-card p{
+  text-transform: capitalize;
+  margin-left: var(--print-spacing-1);
+}
+
+/* Signature Section */
+
+.signature-section {
+  margin-top: 10px;
+}
+
+.signature-section .signature-line {
+  height: 16px;
+  width: 100%;
+  border-bottom: 2px solid gray;
+}
+
+.comment-signature-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}

@@ -37,32 +37,22 @@ const Table = ({ levels, language }) => {
     };
     return (
       <tr>
-        <td className="print-col title-table text-capitalized">
+        <td>
           {text(label, language)}
         </td>
-        <td className="print-col">{levels.vocabulary[label]}</td>
-        <td className="print-col">{levels.grammar[label]}</td>
-        <td className="print-col">{levels.pronunciation[label]}</td>
-        <td className="print-col">{levels.listening[label]}</td>
-        <td className="print-col">{levels.conversation[label]}</td>
-        <td className="print-col">{sum()}</td>
-        <td className="print-col">{avg()}</td>
+        <td>{levels.vocabulary[label]}</td>
+        <td>{levels.grammar[label]}</td>
+        <td>{levels.pronunciation[label]}</td>
+        <td>{levels.listening[label]}</td>
+        <td>{levels.conversation[label]}</td>
+        <td>{sum()}</td>
+        <td>{avg()}</td>
       </tr>
     );
   };
   return (
     <>
       <table className="table-levels">
-        <caption>
-          <div className="caption-content">
-            {levelInfo.map((item, index) => (
-              <div key={index} className="d-flex">
-                <span>{item.level}.</span>
-                <span>{item.name}</span>
-              </div>
-            ))}
-          </div>
-        </caption>
         <thead>
           <tr>
             {labels.map((item, index) => (
