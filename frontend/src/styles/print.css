@@ -106,21 +106,12 @@
 }
 
 /* --------------------------- Styling for levels ----------------------------------------- */
-
+/* 
 .table-levels .sub-header {
   display: flex;
   color: rgb(129, 129, 129);
   gap: 10px;
 }
-.table-levels {
-  border-collapse: collapse;
-  font-family: var(--font-secondary);
-  font-size: var(--print-font-size-1);
-  width: 700px;
-  margin-inline: auto;
-}
-
-
 .table-levels caption{
     caption-side: top;
   }
@@ -132,8 +123,8 @@
     gap: 12px;
   }
 
-.table-levels   caption span {font-size: 10.5px}
-  .table-levels tr {
+.table-levels caption span {font-size: 10.5px}
+.table-levels tr {
     display: grid;
     width: 100%;
     grid-template-columns: 85px repeat(7, 1fr);
@@ -143,18 +134,6 @@
     background-color: var(--background-color-dark);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
-  }
-  .table-levels thead tr th{
-    font-weight: 400;
-    color: #fff;
-    text-transform: capitalize;
-    border-right: 1px solid var(--border-color);
-    padding: var(--spacing) 0;
-  }
-
-  thead tr th:first-child{
-    border-left: 1px solid var(--border-color);
-
   }
 
 .table-levels tbody tr {
@@ -175,73 +154,10 @@
 }
 .table-levels tbody td:first-child {
   border-left: 1px solid var(--border-color);
-}
-/* Card Section */
-
-.cards-container {
-  --margin-left: 0.3rem;
-}
-.cards-container .card {
-  border-collapse: collapse;
-  border: 1px solid var(--border-color);
-  min-height: 32.7mm;
-
-}
-
-.cards-container .title {
-  background-color: var(--background-color-dark);
-  color: var(--font-color-light);
-  padding: var(--spacing) 0;
-}
-
-.cards-container .card .description {
-  padding: var(--spacing);
-}
-
-.cards-container p {
-  margin-left: var(--spacing);
-}
+} */
 
 /* Graph Section */
 .graph-container {
   position: relative;
   aspect-ratio: 1/1;
-}
-
-/* Feedback Section */
-.feedback-card {
-  height: 240px;
-  border: 1px solid var(--border-color);
-
-}
-.feedback-card .title {
-  color: var(--font-color-light);
-  background-color: var(--background-color-dark);
-  padding: 4px;
-}
-.feedback-card .description {
-  padding: var(--print-spacing-1);
-}
-
-.feedback-card p{
-  text-transform: capitalize;
-  margin-left: var(--print-spacing-1);
-}
-
-/* Signature Section */
-
-.signature-section {
-  margin-top: 10px;
-}
-
-.signature-section .signature-line {
-  height: 16px;
-  width: 100%;
-  border-bottom: 2px solid gray;
-}
-
-.comment-signature-container {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
 }

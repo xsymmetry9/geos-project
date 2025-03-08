@@ -18,13 +18,13 @@ const PlotCards = ({ levels, language }) => {
       <div className="grid grid-col-1 gap-2">
         {Object.keys(finalValue).map((item) => {
           return(
-            <div key={item} className="border">
+            <div key={item} className="border border-slate-700">
               <div key={`${item}-title`}>
                 <p className="bg-[rgb(0,161,173,1)] pl-2 py-1 text-white font-bold capitalize">
                   {text(item, language)}
                 </p>
               </div>
-              <div key={`${item}-description`} className="description p-1">
+              <div key={`${item}-description`} className="px-2 py-1">
               <RenderLevel
                 category={item}
                 studentLevel={finalValue[item]}

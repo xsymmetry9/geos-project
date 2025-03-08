@@ -73,46 +73,44 @@ export const Table = ({ levels, language }) => {
     const avg = () => parseFloat(sum() / 5, 2).toFixed(2);
 
     return (
-      <tr className="">
-        <td className="capitalize">
+      <tr className="odd:bg-[rgba(0,161,173,.2)] even:bg-white-50">
+        <td className="text-center capitalize p-[2px]">
           {text(label, language)}
         </td>
-        <td className="print-col">{levels.vocabulary[label]}</td>
-        <td className="print-col">{levels.grammar[label]}</td>
-        <td className="print-col">{levels.pronunciation[label]}</td>
-        <td className="print-col">{levels.listening[label]}</td>
-        <td className="print-col">{levels.conversation[label]}</td>
-        <td className="print-col">{sum()}</td>
-        <td className="print-col">{avg()}</td>
+        <td className="text-center p-[2px]">{levels.vocabulary[label]}</td>
+        <td className="text-center p-[2px]">{levels.grammar[label]}</td>
+        <td className="text-center p-[2px]">{levels.pronunciation[label]}</td>
+        <td className="text-center p-[2px]">{levels.listening[label]}</td>
+        <td className="text-center p-[2px]">{levels.conversation[label]}</td>
+        <td className="text-center p-[2px]">{sum()}</td>
+        <td className="text-center p-[2px]">{avg()}</td>
       </tr>
     );
   };
 
   Row.propTypes = {
     levels: PropTypes.object,
-    label: PropTypes.array,
+    label: PropTypes.string,
   };
   return (
     <>
-      <table className="table-levels">
+      <table className="table-fixed font-secondary text-[12px] table-levels w-[700px] m-auto border-collapse border-1 border-slate-700">
         {/* <caption>
                     <div className="caption-content">
                         {levelInfo.map((item, index) => <div key={index} className='sub-header'><span>{item.level}.</span><span>{item.name}</span></div>)}
                     </div>
                 </caption> */}
         <thead>
-          <tr className="">
+          <tr>
             {labels.map((item, index) => (
-              <th key={index} className="table-header">
+              <th key={index} className="bg-[rgb(0,161,173)] text-white font-normal py-[2px] capitalize">
                 {text(item, language)}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          <Row levels={levels} label={"initial"} />
-          <Row levels={levels} label={"target"} />
-          <Row levels={levels} label={"final"} />
+          {["initial", "target", "final"].map((item) => <Row key={item} levels={levels} label={item}/>)}
         </tbody>
       </table>
     </>
@@ -122,13 +120,9 @@ export const Table = ({ levels, language }) => {
 export const Comment = ({ comment, language }) => {
   const text = (phrase, language) => labelText[language]["SPR"][phrase];
   return (
-    <div id="feedback" className="feedback-card">
-      <div className="title uppercase">
-        <strong>
-          <p className>{text("comment", language)}</p>
-        </strong>
-      </div>
-      <div className="description">
+    <div id="feedback" className="border border-slate-700 h-[240px]">
+      <p className= "bg-[rgb(0,161,173)] pl-2 py-1 text-white font-bold capitalize">{text("comment", language)}</p>
+      <div className="px-2 py-1">
         <p>{comment}</p>
       </div>
     </div>
@@ -137,11 +131,9 @@ export const Comment = ({ comment, language }) => {
 
 export const Signature = ({ language }) => {
   return (
-    <div className="signature-section">
-      <div className="card-title-no-border">
-        <p className="capitalize">{text("signature", language)}</p>
-      </div>
-      <div className="signature-line" id="line"></div>
+    <div className="mt-3 signature-section">
+      <p className="capitalize">{text("signature", language)}</p>
+      <div className="h-6 w-full border-b-1 border-slate-700" id="line"></div>
     </div>
   );
 };
