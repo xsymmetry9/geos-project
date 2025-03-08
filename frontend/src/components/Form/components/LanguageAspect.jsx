@@ -179,7 +179,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
                                         </button>)}
             </div>
             <select
-              className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+              className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
               id={`${aspectName}-final`}
               name={`${aspectName}-final`}
               value={inputData.levels[aspectName].final}
