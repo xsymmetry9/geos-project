@@ -1,24 +1,24 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import {format} from "date-fns";
-import "../styles/components/dashboard.scss";
-import {Archive, Pencil, PrinterIcon, CirclePlus, SquareX, Plus} from "lucide-react";
+import { format } from "date-fns";
+import { Archive, Pencil, PrinterIcon, Plus } from "lucide-react";
 import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
 import ImportFromExcel from "../components/ImportFromExcel";
+import {CreateNewFormBtn, CloseBtn} from "../components/CustomizedButtons";
 
-function Homepage (){
-  const {language} = useParams();
+function Homepage() {
+  const { language } = useParams();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [addFormNav, setAddFormNav] = useState(false);
-  useEffect(() =>{
+  useEffect(() => {
     const fetchData = async () => {
-      try{
+      try {
         const savedData = getDataFromLocal();
 
-        if(!savedData) {
+        if (!savedData) {
           const newUser = new User();
           newUser.language = language;
           editDataFromLocal(savedData);
@@ -36,57 +36,67 @@ function Homepage (){
     };
 
     fetchData();
-
   }, [language]);
 
-  const handleFormControl = () =>{
-    setAddFormNav((prev)=> !prev);
+  const handleFormControl = () => {
+    setAddFormNav((prev) => !prev);
   };
 
-  if(loading){
-    return(
-      <><h1>Loading ...</h1></>
+  if (loading) {
+    return (
+      <>
+        <h1>Loading ...</h1>
+      </>
     );
   }
-  const handleDelete = (e) =>{
-    const {id} = e.currentTarget;
+  const handleDelete = (e) => {
+    const { id } = e.currentTarget;
     deleteStudentById(id); // Delete single item from localStorage
-    setUserData((prev) => ({...prev, SPR: prev.SPR.filter((item) => item.id != id)}));
-
+    setUserData((prev) => ({
+      ...prev,
+      SPR: prev.SPR.filter((item) => item.id != id),
+    }));
   };
 
-  const PlotTable = () =>{
-
-    return(
+  const PlotTable = () => {
+    return (
       <>
-        <table className="dashboard-table">
+        <table className="w-full border-collapse shadow-md">
           <thead>
-            <tr>
-              {["Date", "Name", ""].map((item, index) => <th className="text-center" key={`${item}-${index}`}>{item}</th>)}
+            <tr className="bg-gray-200 text-gray-800 font-bold">
+                <th className="p-3 text-center" >Date</th>
+                <th className="p-3 text-center" >Name</th>
+                <th className="p-3 text-center" >Action</th>
             </tr>
           </thead>
           <tbody>
             {userData.SPR.map((item, index) => {
-              return(
-                <tr key={`${item.id}-${index}`}>
-                  <td key={`${item.id}-date`} className="text-center">{format(new Date(), "MM/dd/yyyy")}</td>
-                  <td key={`${item.id}-name`} className="text-center">{item.name}</td>
-                  <td key={`${item.id}-edit`} className="text-center flex justify-space-around gap-1">
-                    <Link className="link-style" to = {`/spr/${language}/edit/${item.id}`}>
-                      <Pencil className="icon" size={16} />
-                      <span className="visually-hidden p-1">Edit</span>
+              return (
+                <tr key={`${item.id}-${index}`} className="odd:bg-gray-100 even:bg-white hover:bg-gray-300">
+                  <td key={`${item.id}-date`} className="p-3 text-center">
+                    {format(new Date(), "MM/dd/yyyy")}
+                  </td>
+                  <td key={`${item.id}-name`} className="p-3 text-center">
+                    {item.name}
+                  </td>
+                  <td
+                    key={`${item.id}-edit`}
+                    className="p-3 flex justify-center gap-2"
+                  >
+                    <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
+                      <Pencil size={18} />
                     </Link>
-                                  
-                    <button className="link-style" id={item.id} onClick={handleDelete}>
-                      <Archive className="icon" size={16} />
-                      <span className="visually-hidden p-1">Archive</span>
+
+                    <button className="text-green-600 cursor-pointer" id={item.id} onClick={handleDelete}>
+                      <Archive size={18} />
                     </button>
-                                   
-                    <Link className="link-style" to={`/spr/${language}/print/${item.id}`}>
-                      <PrinterIcon className="icon" size={16} />
-                      <span className="visually-hidden p-1">Preview</span>
-                    </Link></td>
-                </tr>);
+
+                    <Link className="text-red-600" to={`/spr/${language}/print/${item.id}`}>
+                      <PrinterIcon size={18} />
+                    </Link>
+                  </td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
@@ -94,56 +104,38 @@ function Homepage (){
     );
   };
 
-  return(
+  return (
     <>
-      <div className="dashboard"> 
-        <h2 className="centered p-b-7">Student&rsquo;s Progress Report</h2>
-        <div className="flex gap-3 justify-center p-b-3">
-          <ExportToExcel userData ={userData} />
-          <ImportFromExcel userData = {userData} setUserData={setUserData}/>
+      <div className="pb-12 w-full">
+        <h2 className="font-primary text-2xl text-center font-semibold mb-6">Student&rsquo;s Progress Report</h2>
+        <div className="p-b-3 flex justify-center gap-3 mb-6">
+          <CreateNewFormBtn handleControl = {handleFormControl}/>
+          <ExportToExcel userData={userData} />
+          <ImportFromExcel userData={userData} setUserData={setUserData} />
         </div>
-        <div className="dashboard-container">
+        <div className="overflow-x-auto">
           {userData.SPR.length != 0 && <PlotTable />}
-          {userData.SPR.length === 0 && <p>Click add SPR or Level Check</p>}
-
+          {userData.SPR.length === 0 && <p className="text-center text-gray-500">Click add SPR or Level Check</p>}
         </div>
-        {
-          !addFormNav ? (
-            <div className="btn-circle">
-              <button onClick= {handleFormControl}>
-                <CirclePlus size={48} />
-              </button>
-            </div>) : (
-            <div className="form-navigation-container">
-              <div className="nav-header">
-                <button onClick={handleFormControl}>
-                  <SquareX />
-                </button>
-              </div>
-              <div className="nav-body">
-                <Link className="btn-primary " to={`/spr/${language}`}>
-                  <div className="two-columns">
-                    <Plus size={18}/>                        
-                    <span>SPR</span>
-                  </div>
-          
-                </Link>
-                <Link className="btn-primary two-columns" to={`/levelCheck/${language}`}>
+        {addFormNav && (
+          <div id="pop-up-navigation" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-1/2 grid grid-rows-[40px_1fr] max-w-[500px] w-full h-[300px] bg-white shadow-lg rounded-lg">
+            <div id="pop-up-header" className="relative bg-gray-100 h-8 w-full">
+              <CloseBtn handleControl={handleFormControl} />
+            </div>
+            <div id="pop-up-content" className="flex flex-col gap-2 justify-center items-center">
+              <Link className="cursor-pointer w-[200px] flex items-center gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/spr/${language}`}>
                   <Plus size={18} />
-                  <span >Level Check</span>
-                </Link>
-              </div>
-                            
-            </div> 
-          )
-
-        }
-     
-
-               
+                  <span>SPR Form</span>
+              </Link>
+              <Link className="flex items-center w-[200px] gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/levelCheck/${language}`}>
+                <Plus size={18} />
+                <span>Level Check Form</span>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </>
-
   );
 }
 

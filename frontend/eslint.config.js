@@ -8,16 +8,12 @@ import pluginImport from "eslint-plugin-import";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    ignores: [
-      "node_modules/",
-      "dist/",
-      "build/**/*",
-    ],
+    ignores: ["node_modules/", "dist/", "build/**/*"],
     files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: {...globals.browser, ...globals.node}
+      globals: { ...globals.browser, ...globals.node },
     },
     plugins: {
       react: pluginReact,
@@ -31,18 +27,18 @@ export default [
       "react/jsx-uses-vars": "error",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      
+
       // General JavaScript Rules
-      "no-unused-vars": ["warn", {argsIgnorePattern: "^_"}],
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "no-console": "warn",
-      "semi": ["error", "always"],
-      "quotes": ["error", "double"],
-      "indent": ["error", 2], 
+      semi: ["error", "always"],
+      quotes: ["error", "double"],
+      indent: ["error", 2],
     },
     settings: {
       react: { version: "detect" },
       "import/resolver": {
-        node: {extensions: [".js", ".jsx"]},
+        node: { extensions: [".js", ".jsx"] },
         alias: [["@", "./src"]],
         extensions: [".js", "jsx"],
       },

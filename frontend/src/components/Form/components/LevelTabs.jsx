@@ -3,24 +3,30 @@ import "../../../styles/components/levelTabs.scss";
 import React from "react";
 import PropTypes from "prop-types";
 
-const LevelTabs = ({currentPage, titles, handlerPage}) =>{
+const LevelTabs = ({ currentPage, titles, handlerPage }) => {
   const id = useId();
-    
-  return(
+
+  return (
     <div className="levelTab-container">
-      {titles.map((item, index) =>{
-        return(
+      {titles.map((item, index) => {
+        return (
           <>
-            <div key={`${id}-${item}-${index}`} className={`nameTab-container ${currentPage == index && "selected"}`}>
+            <div
+              key={`${id}-${item}-${index}`}
+              className={`nameTab-container ${currentPage == index && "selected"}`}
+            >
               <input
                 key={`${id}-${index}-input`}
-                className={"tabTitle"} 
-                type="button" onClick={handlerPage} name={index} value={item}/>                    
+                className={"tabTitle"}
+                type="button"
+                onClick={handlerPage}
+                name={index}
+                value={item}
+              />
             </div>
           </>
         );
       })}
-        
     </div>
   );
 };

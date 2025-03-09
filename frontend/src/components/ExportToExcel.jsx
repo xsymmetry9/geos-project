@@ -4,13 +4,13 @@ import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
 import PropTypes from "prop-types";
 
-const ExportToExcel = ({userData}) =>{
-  const handleExport = () =>{
-    if(!userData || !userData.SPR || userData.SPR.length === 0) {
+const ExportToExcel = ({ userData }) => {
+  const handleExport = () => {
+    if (!userData || !userData.SPR || userData.SPR.length === 0) {
       alert("No data available to export.");
       return;
     }
-    const dataToExport = userData.SPR.map((item) =>({
+    const dataToExport = userData.SPR.map((item) => ({
       id: item.id,
       Name: item.name,
       Date: item.dateCreated,
@@ -32,7 +32,7 @@ const ExportToExcel = ({userData}) =>{
       Listening_final: item.levels.listening.final,
       Conversation_initial: item.levels.conversation.initial,
       Conversation_target: item.levels.conversation.target,
-      Conversation_final: item.levels.conversation.final,            
+      Conversation_final: item.levels.conversation.final,
       Feedback: item.feedback,
     }));
 
@@ -41,15 +41,20 @@ const ExportToExcel = ({userData}) =>{
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Teacher's data");
 
-    const excelBuffer = XLSX.write(workbook, {bookType: "xlsx", type: "array"});
-    const data = new Blob([excelBuffer], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const data = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
 
     saveAs(data, "Teacher's backup data");
   };
-  return(
+  return (
     <>
-      <button className="btn-primary" onClick={handleExport}>
-        <DownloadIcon className="icon" size={16}/>
+      <button className="btn-primary flex gap-2 items-center justify-center" onClick={handleExport}>
+        <DownloadIcon className="icon" size={18} />
         <span className="visually-hidden">to Excel</span>
       </button>
     </>

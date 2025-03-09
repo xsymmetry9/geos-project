@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import form_languages from "../form_languages.js";
 
-const PersonalInformation = ({key, inputData, handleInputData, language}) =>{
-  const {name, course, textbook, attendance, totalLessons} = inputData;
+const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
+  const { name, course, textbook, attendance, totalLessons } = inputData;
 
   //translation
   const {
@@ -11,48 +11,96 @@ const PersonalInformation = ({key, inputData, handleInputData, language}) =>{
     input_course,
     input_textbook,
     input_attendance,
-    input_totallessons} = form_languages[language.toLowerCase()];
+    input_totallessons,
+  } = form_languages[language.toLowerCase()];
 
-  return(
-    <div key={key} className="form-primary" id="personal-information">
-      <h2 className="title text-2 p-2">Student&apos;s Information</h2>    
-      <div className="input-wrapper p-t-3">
-        <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
-        <input type="text" className="text-2" name="name" value={name} onChange={handleInputData} />
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="course">{input_course}</label>
-        <select className="text-2 form-input-primary" id="course" name="course" value={course} onChange={handleInputData}>
-          <option className="text-2" value="">Select course</option>
-          <option className="text-2" value="ONLINE">ONLINE</option>
-          <option className="text-2" value="PL">PL</option>
-          <option className="text-2" value="GL">GL</option>
-          <option className="text-2" value="SGL">SGL</option>
-          <option className="text-2" value="FLEX">FLEX</option>
+  return (
+    <div key={key} className="pb-[3rem]" id="personal-information">
+      <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold">Student&apos;s Information</h2>
+      <div className="mt-8 m-auto">
+        <div className="grid grid-cols-1 gap-6">
+        <label className="block" htmlFor="name">
+          <span className="text-gray-700 capitalize">{input_name}</span>
+          <input
+          type="text"
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          name="name"
+          value={name}
+          onChange={handleInputData}
+        />
+        </label>
+        <label className="block" htmlFor="course">
+          <span className="text-gray-700 capitalize">{input_course}</span>
+          <select
+          className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          id="course"
+          name="course"
+          value={course}
+          onChange={handleInputData}
+        >
+          <option className="font-secondary text-base text-inherit" value="">
+            Select course
+          </option>
+          <option className="font-secondary text-base text-inherit" value="ONLINE">
+            ONLINE
+          </option>
+          <option className="font-secondary text-base text-inherit" value="PL">
+            PL
+          </option>
+          <option className="font-secondary text-base text-inherit" value="GL">
+            GL
+          </option>
+          <option className="font-secondary text-base text-inherit" value="SGL">
+            SGL
+          </option>
+          <option className="font-secondary text-base text-inherit" value="FLEX">
+            FLEX
+          </option>
         </select>
+        </label>
+        <label className="block" htmlFor="textbook">
+          <span className="text-gray-700 capitalize">{input_textbook}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          type="text"
+          name="textbook"
+          value={textbook}
+          onChange={handleInputData}
+        />
+        </label>
+        <label className="block" htmlFor="attendance">
+          <span className="text-gray-700 capitalize">{input_attendance}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+          type="number"
+          name="attendance"
+          id="attendance"
+          value={attendance}
+          onChange={handleInputData}
+        />
+        </label>
+        <label className="block" htmlFor="totalLessons">
+          <span className="text-gray-700 capitalize">{input_totallessons}</span>
+          <input
+          className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          type="number"
+          name="totalLessons"
+          id="total-lesson"
+          value={totalLessons}
+          onChange={handleInputData}
+        />
+        </label>
+        </div>
       </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="textbook">{input_textbook}</label>
-        <input className="text-2" type="text" name="textbook" value={textbook} onChange={handleInputData} />
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="attendance">{input_attendance}</label>
-        <input className="text-2" type="number" name="attendance" id="attendance" value={attendance} onChange={handleInputData}/>
-      </div>
-      <div className="input-wrapper">
-        <label className="text-2 uppercase" htmlFor="totalLessons">{input_totallessons}</label>
-        <input className="text-2" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleInputData}/>
-      </div>
+
     </div>
   );
 };
 
-PersonalInformation.propTypes = 
-{
+PersonalInformation.propTypes = {
   key: PropTypes.string,
   inputData: PropTypes.obj,
   handleInputData: PropTypes.func,
   language: PropTypes.string,
-  
 };
 export default PersonalInformation;
