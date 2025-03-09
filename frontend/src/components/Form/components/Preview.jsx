@@ -1,5 +1,4 @@
 import React from "react";
-// import "../../../styles/components/preview.scss";
 import PropTypes from "prop-types";
 
 const Preview = ({ key, inputData, language }) => {

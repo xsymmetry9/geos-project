@@ -9,11 +9,14 @@ class LevelCheck {
       this.language_proficiency_level = "",
       this.textbook = "",
       this.language_aspects = {
-        vocabulary: "",
+        fluency: "",
+        confidence: "",
         pronunciation: "",
-        grammar: "",
-        listening: "",
-        conversation: "",
+        complete_sentence: "",
+        varied_vocabulary: "",
+        errors_in_form: "",
+        colloquial_expressions: "",
+        listening: ""
       };
     }
   }

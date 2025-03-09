@@ -6,7 +6,7 @@
     --font-secondary: Poppins, sans-serif;
     --spacing: 4px;
 
-    --color-dark-green: color-teal-700;
+    --color-dark-green: rgb(0,121,107);
     --color-active: rgb(9, 197, 235);
 }
 
@@ -17,21 +17,18 @@
     font-weight: 600;
     text-transform: capitalize;
     text-align: center;
-    background-color: #00796b; 
+    background-color: var(--color-dark-green); 
     color: white;
     border: none;
     padding: calc(var(--spacing) + 4px);
     border-radius: 5px;
     transition: all 0.7s ease-in-out;
-    &:hover{
-        background-color: white;
-        color: #00796b;
-        outline: 3px solid #00796b;
-    }
   }
-
-
-
+  .btn-primary:hover, .btn-primary:focus {
+      background-color: white;
+      color: #00796b;
+      outline: 3px solid var(--color-dark-green);
+  }
   .pagination-container {
     --height: 80px;
     --width: 100%;

@@ -50,6 +50,11 @@
 #print-chinese h2{ font-size: var(--print-font-size-3);}
 #print-chinese h3 {font-size: var(--print-font-size-2);}
 #print-chinese p {font-size: var(--print-fontsize-1);}
+#print-chinese #info-card #info-card-title p{
+  padding: 4px;
+  font-weight: 400;
+  /* font-size: 14px; */
+} 
 
 #print-korean h1 { font-size: 1.3rem; }
   #print-korean h2 {

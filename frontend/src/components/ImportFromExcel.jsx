@@ -3,6 +3,7 @@ import { read, utils } from "xlsx";
 import PropTypes from "prop-types";
 import { Student, Levels } from "../type/Student";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+import { Upload } from "lucide-react";
 
 const ImportFromExcel = ({ userData, setUserData }) => {
   const { SPR } = userData;
@@ -91,15 +92,19 @@ const ImportFromExcel = ({ userData, setUserData }) => {
   };
 
   return (
-    <>
-      <input
-        className="btn-primary"
-        type="file"
-        accept=".xlsx, .xls"
-        onChange={handleFileUpload}
+    <div className="flex flex-col items-center">
+      <label htmlFor="file-upload" className="btn-primary flex items-center justify-center">
+        <Upload size={18} className="mr-2" /> Upload File
+        <input
+          id="file-upload"
+          className="hidden"
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={handleFileUpload}
       />
+      </label>
       {fileName && <p>Uploaded: {fileName}</p>}
-    </>
+    </div>
   );
 };
 

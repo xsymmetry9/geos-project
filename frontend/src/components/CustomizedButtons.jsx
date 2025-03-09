@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 export function CreateNewFormBtn({handleControl}){
     return(
         <>
-            <button onClick={handleControl} className="btn-primary flex gap-2 justify-center">
-                <SquarePen />
+            <button onClick={handleControl} className="btn-primary flex gap-2 items-center justify-center">
+                <SquarePen size={18}/>
                 <span>Create</span>
             </button>
         </>

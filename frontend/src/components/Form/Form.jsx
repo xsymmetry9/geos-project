@@ -96,7 +96,7 @@ const PlotForm = ({ inputData, setInputData }) => {
   };
   return (
     <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
-      <Pagination page={page} language={language} />
+      <Pagination page={page} language={language} setPage={setPage}/>
       <div className="w-full max-w-lg m-auto">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
