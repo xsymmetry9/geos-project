@@ -5,6 +5,7 @@ import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
 import LevelCheckForm from "./pages/LevelCheckForm";
+import Test from "./pages/Test";
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> }],
   },
+  {
+    path: "test",
+    element: <Test />,
+  }
 ];
 
 export default routes;

@@ -40,10 +40,10 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
     1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7.0, 7.5, 8, 8.5, 9, 9.5, 10,
   ];
 
-  const keyOfValues = Object.keys(text[language].conversation).map(Number).sort();
+  const keysOfValues = Object.keys(text[language].conversation).map(Number).sort();
 
   const titleLanguage = {
-    english: ["Initial", "Target", "Final"],
+    english: ["initial", "target", "final"],
     chinese: ["初始", "目標", "結束"],
     korean: ["초기", "목표", "결과"],
     japanese: ["初期", "目標", "終了"],
@@ -54,10 +54,10 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
         <h2 className="text-lg font-bold capitalize border-0 border-b-2 my-3">{aspectName}</h2>
         <div className="grid grid-cols-1 gap-3">
 
-          {/* ------------------------------------Intial Section --------------------------------- */}
-          <label key={`${key}-initial`}className="block">
+          {/* ------------------------------------Initial Section --------------------------------- */}
+          <label key={`${key}-${titleLanguage.english[0]}`}className="block">
             <div className="w-full flex justify-between">
-              <span className="text-gray-700 capitalize">{titleLanguage[language.toLowerCase()][0]}</span>
+              <span className="text-gray-700 capitalize">{titleLanguage[language][0]}</span>
               {!displayInitialHelp && (<button
                 className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
                 id="initial-open"
@@ -68,14 +68,14 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
             </div>
             <select
               className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
-              id={`${aspectName}-initial`}
-              name={`${aspectName}-initial`}
-              value={inputData.levels[aspectName].initial}
+              id={`${aspectName}-${titleLanguage.english[0]}`}
+              name={`${aspectName}-${titleLanguage.english[0]}`}
+              value={inputData.levels[aspectName][titleLanguage.english[0]]}
               onChange={handleLevelInput}
             >
             <option className="font-secondary text-base text-md" value={inputData}>Select score</option>
             
-            {keyOfValues.map((item_Value, index) => (
+            {levelValue.map((item_Value, index) => (
               <>
               <option
                 className="font-secondary text-base"
@@ -135,7 +135,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
           <option className="font-secondary text-base text-md" value={inputData}>
             Select score
           </option>
-          {keyOfValues.map((item_Value, index) => (
+          {levelValue.map((item_Value, index) => (
             <option
               className="font-secondary text-base text-md"
               key={`${targetID}-${item_Value}-${index}`}
@@ -188,7 +188,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
             <option className="font-secondary text-base text-md" value={inputData}>
               Select score
             </option>
-            {keyOfValues.map((item_Value, index) => (
+            {levelValue.map((item_Value, index) => (
               <option
                 className="font-secondary text-base text-md"
                 key={`${finalID}-${item_Value}-${index}`}
