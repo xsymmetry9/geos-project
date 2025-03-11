@@ -59,54 +59,33 @@ function Test() {
 
   return sortedArray;
   }
+
+  const PlotData = ({lang, cat}) => {
+    return(
+      <>
+         <p>{`"${cat}": [`}</p>
+          {mergeSort(data[`${lang}`][`${cat}`]).map((item, index) =>{
+            return(
+              <>
+              <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
+              </>
+            )
+          })}
+      <p>{`],`}</p>
+      </>
+    )
+  }
   return (
     <>
-    <p>{`"vocabulary": [`}</p>
-      {mergeSort(data.english.vocabulary).map((item, index) =>{
-        return(
-          <>
-            <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
-          </>
-        )
-      })}
-      <p>{`],`}</p>
-      <p>{`"grammar": [`}</p>
-      {mergeSort(data.english.vocabulary).map((item, index) =>{
-        return(
-          <>
-            <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
-          </>
-        )
-      })}
-      <p>{`],`}</p>
-      <p>{`"pronunciation": [`}</p>
-      {mergeSort(data.english.vocabulary).map((item, index) =>{
-        return(
-          <>
-            <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
-          </>
-        )
-      })}
-      <p>{`],`}</p>
-      <p>{`"listening": [`}</p>
-      {mergeSort(data.english.vocabulary).map((item, index) =>{
-        return(
-          <>
-            <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
-          </>
-        )
-      })}
-      <p>{`],`}</p>
-      <p>{`"conversation": [`}</p>
-      {mergeSort(data.english.vocabulary).map((item, index) =>{
-        return(
-          <>
-            <p>{`{"level":"${item.level}", "description": "${item.description}"}${index != 19 ? "," : ""}`}</p>
-          </>
-        )
-      })}
-      <p>{`],`}</p>
-      <p>{`}`}</p>
+    <p>{`"japanese":`}</p>
+      <p>{`{`}</p>
+      <PlotData lang={"japanese"} cat={"vocabulary"} />
+      <PlotData lang={"japanese"} cat={"grammar"} />
+      <PlotData lang={"japanese"} cat={"pronunciation"} />
+      <PlotData lang={"japanese"} cat={"listening"} />
+      <PlotData lang={"japanese"} cat={"conversation"} />
+      <p>{`},`}</p>
+     
     </>
   );
 }
