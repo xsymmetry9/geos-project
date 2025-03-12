@@ -1,4 +1,5 @@
 const appName = "GEOS_app";
+import levelData from "../../public/levelInformation.json";
 
 //Reads data from the local Storage
 export function getDataFromLocal() {
@@ -33,4 +34,21 @@ export function deleteStudentById(id) {
   localStorage.setItem(appName, JSON.stringify(newData));
 
   return newData.SPR;
+}
+
+export function getLevelInformationByLevel(obj) {
+  const {lang, cat, level} = obj;
+  if (level == null) return {id: null, description: "Choose a level"}
+  const aspectOfLanguage = levelData[lang][cat]; // returns an array
+    const results = aspectOfLanguage.filter((item) => item.level == level);
+    const result = results[0];
+
+  return result; // returns an object
+}
+
+export function getAllLevelsInformationByAspect(obj) {
+  const {lang, name} = obj;
+  const result = levelData[lang][name];
+
+  return result; // returns an array
 }
