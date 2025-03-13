@@ -1,5 +1,5 @@
 const appName = "GEOS_app";
-import levelData from "../../public/levelInformation.json";
+import levelData from "@/assets/other/levelInformation.json";
 
 //Reads data from the local Storage
 export function getDataFromLocal() {
@@ -38,7 +38,7 @@ export function deleteStudentById(id) {
 
 export function getLevelInformationByLevel(obj) {
   const {lang, cat, level} = obj;
-  if (level == null) return {id: null, description: "Choose a level"}
+  if (!level) return {id: null, description: "Choose a level"}
   const aspectOfLanguage = levelData[lang][cat]; // returns an array
     const results = aspectOfLanguage.filter((item) => item.level == level);
     const result = results[0];
