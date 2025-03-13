@@ -1,23 +1,29 @@
 import React, { useState, useId } from "react";
 import PropTypes from "prop-types";
-import { SquareX } from "lucide-react";
+import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
 
 function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
+  const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false})
   const [displayInitialHelp, setDisplayInitial] = useState(false);
   const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
   const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
 
-  const handlerHelp = (e) => {
-    const { id } = e.currentTarget;
-    if (id === "initial-open") {
-      setDisplayInitial(true);
-    } else if (id === "target-open") {
-      setDisplayTargetHelp(true);
-    } else {
-      setDisplayFinalHelp(true);
-    }
-  };
+  const displayHandlerOpen = (e) =>{
+    const name = e.currentTarget.id.split('-')[0];
+    setDisplayHelp((prev) =>({
+      ...prev,
+      [name]: true
+    }));
+  }
+
+  const displayHandlerClose = (e) =>{
+    const name = e.currentTarget.id.split('-')[0];
+    setDisplayHelp((prev) => ({
+      ...prev,
+      [name]: false
+    }))
+  }
 
   const handlerCloseHelp = (e) => {
     const { id } = e.currentTarget;
@@ -47,10 +53,11 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
         <div className= "w-full flex justify-between">
           {/* Title */}
           <span className="text-gray-700 capitalize">{titleLanguage[language][numIndex]}</span>
-          { ![displayInitialHelp, displayTargetHelp, displayFinalHelp][numIndex] && <button
-              className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
+          { !displayHelp[itemName] && <button
+              className="cursor-pointer"
               id={`${itemName}-open`}
-              onClick={handlerHelp}>?
+              onClick={displayHandlerOpen}>
+                <Info width={20} className="text-green-600 hover:text-green-300"/>
               </button>}
         </div>
         {/* Language Aspect Input */}
@@ -84,7 +91,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
         <div key={`${aspectName}-${itemName}-display`} className= "m-t-1"/>
 
         {/* Shows the helpbox is not active.  In order to activate it, click the activate button */}
-        {displayInitialHelp && 
+        {displayHelp[itemName] && 
           <div className="grid grid-cols-[1fr_auto]">
               <p className="text-secondary text-slate-600">
                 {
@@ -93,11 +100,11 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
               </p>
               {/* Add a close button */}
               <button
-                className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-red-600 hover:bg-white hover:text-red-600 hover:border-2 hover:border-red-600"
+                className="cursor-pointer"
                 id={`${itemName}-close`}
-                onClick={handlerCloseHelp}
+                onClick={displayHandlerClose}
               >
-                x
+                <SquareX width={20} className="text-red-600 hover:text-red-300"/>
               </button>
             </div>}
       </>
