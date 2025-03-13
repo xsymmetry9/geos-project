@@ -122,12 +122,12 @@ function Homepage() {
             <div id="pop-up-header" className="relative bg-gray-100 h-8 w-full">
               <CloseBtn handleControl={handleFormControl} />
             </div>
-            <div id="pop-up-content" className="flex flex-col gap-2 justify-center items-center">
-              <Link className="cursor-pointer w-[200px] flex items-center gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/spr/${language}`}>
+            <div id="pop-up-content" className="flex flex-col items-center justify-center gap-3">
+              <Link className="cursor-pointer flex items-center w-[250px] h-12 gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/spr/${language}`}>
                   <Plus size={18} />
                   <span>SPR Form</span>
               </Link>
-              <Link className="flex items-center w-[200px] gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/levelCheck/${language}`}>
+              <Link className="flex items-center gap-2 bg-teal-700 w-[250px] h-12 hover:bg-teal-500 text-white p-2 rounded hover:bg-blue-700" to={`/levelCheck/${language}`}>
                 <Plus size={18} />
                 <span>Level Check Form</span>
               </Link>

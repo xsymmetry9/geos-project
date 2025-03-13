@@ -11,7 +11,6 @@ import {
   Signature,
 } from "./PrintSPR/StudentInfo";
 import PlotCards from "./PrintSPR/PlotCards";
-// import "../styles/print.scss";
 
 const PrintContent = ({ parsedData }) => {
   const { language } = useParams();
