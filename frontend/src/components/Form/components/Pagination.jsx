@@ -16,7 +16,7 @@ const Pagination = ({ page, language, setPage }) => {
         {title[language.toLowerCase()].map((item, index) => (
           <button key={index} 
             onClick={() => setPage(index)}
-            className={`square ${page === index && "active"}`}>
+            className={`cursor-pointer square ${page === index && "active"}`}>
             <div className={"circle"}>{index}</div>
             <p>{item}</p>
           </button>

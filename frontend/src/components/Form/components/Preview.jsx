@@ -5,12 +5,12 @@ const Preview = ({ key, inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
     inputData;
 
-  // const titles = {
-  //   english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
-  //   chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
-  //   korean: ["어휘", "문법", "발음", "듣기", "대화"],
-  //   japanese: ["語彙", "文法", "発音", "聴解", "会話"]
-  // };
+  const titles = {
+    english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
+    chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
+    korean: ["어휘", "문법", "발음", "듣기", "대화"],
+    japanese: ["語彙", "文法", "発音", "聴解", "会話"]
+  };
   const titleLanguage = {
     english: ["Initial", "Target", "Final"],
     chinese: ["初始", "目標", "結束"],
@@ -18,57 +18,59 @@ const Preview = ({ key, inputData, language }) => {
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div key={key} className="preview-section">
-      <div className="preview-container">
-        <h2>Class Information</h2>
-        <p>
+    <div key={key} className="font-primary preview-section">
+      <div className="p-3" id="class-infomration">
+        <h2 className="text-2xl text-center bg-dark-green text-white mb-6">Class Information</h2>
+        <p className="text-size-sm" >
           <strong>Name:</strong> {name.length != 0 ? name : "No name"}
         </p>
         <p className="uppercase">
           <strong>textbook:</strong>{" "}
           {textbook.length != 0 ? textbook : "No textbook"}
         </p>
-        <p className="uppercase">
+        <p className="text-size-sm uppercase">
           <strong>course:</strong>{" "}
           {course.length != 0 ? course : "No course name"}
         </p>
-        <p className="uppercase">
+        <p className="text-size-sm uppercase">
           <strong>attendance:</strong>{" "}
           {attendance != 0 ? attendance : "No attendance"}
         </p>
-        <p className="uppercase">
+        <p className="text-size-sm uppercase">
           <strong>total lessons:</strong>{" "}
           {totalLessons != 0 ? totalLessons : "No total lessons"}
         </p>
       </div>
-      <div className="preview-container">
-        <h2>Student Evaluation</h2>
-        <table>
+      <div className="p-3" id="student-evaluation">
+        <h2 className="font-secondary bg-dark-green text-2xl text-center text-white mb-6">Student Evaluation</h2>
+        <table className="table-fixed border-collapse w-full mx-auto">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>{titleLanguage[language][0]}</th>
-              <th>{titleLanguage[language][1]}</th>
-              <th>{titleLanguage[language][2]}</th>
+            <tr className="bg-orange-700 text-white font-secondary text-sm">
+              <th className="px-2 py-1"></th>
+              <th className="px-2 py-1">{titleLanguage[language][0]}</th>
+              <th className="px-2 py-1">{titleLanguage[language][1]}</th>
+              <th className="px-2 py-1">{titleLanguage[language][2]}</th>
             </tr>
           </thead>
           <tbody>
-            {Object.keys(levels).map((item) => {
+            {Object.keys(levels).map((item, index) => {
               return (
-                <tr key={item}>
-                  <td>{item.toUpperCase()}</td>
-                  <td>{levels[item].initial}</td>
-                  <td>{levels[item].target}</td>
-                  <td>{levels[item].final}</td>
+                <tr className="odd:bg-orange-50 even:bg-white" key={item}>
+                  <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].initial}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].target}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].final}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      <div className="preview-container">
-        <h2>Feedback</h2>
-        <p>{feedback.length != 0 ? feedback : "No comment"}</p>
+      <div className="preview-container pb-3">
+        <h2 className="bg-dark-green text-white my-6 text-2xl text-center">Feedback</h2>
+        <div className="font-primary text-sm w-full border border-green-600 min-h-40 p-2">
+          <p>{feedback.length != 0 ? feedback : "No comment"}</p>
+        </div>
       </div>
     </div>
   );
