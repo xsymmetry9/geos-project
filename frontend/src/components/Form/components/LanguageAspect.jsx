@@ -1,9 +1,7 @@
 import React, { useState, useId } from "react";
-// import LevelTabs from "./LevelTabs";
 import PropTypes from "prop-types";
 import { SquareX } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
-// import ToggleButton from "../../ToggleButton";
 
 function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
   const [displayInitialHelp, setDisplayInitial] = useState(false);
@@ -36,174 +34,84 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
   const targetID = useId();
   const finalID = useId();
 
-  const levelValue = [
-    1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7.0, 7.5, 8, 8.5, 9, 9.5, 10,
-  ];
-
   const titleLanguage = {
     english: ["initial", "target", "final"],
     chinese: ["初始", "目標", "結束"],
     korean: ["초기", "목표", "결과"],
     japanese: ["初期", "目標", "終了"],
   };
-  return (
-    <>
-      <div key={key} className="p-t-3">
-        <h2 className="text-lg font-bold capitalize border-0 border-b-2 my-3">{aspectName}</h2>
-        <div className="grid grid-cols-1 gap-3">
 
-          {/* ------------------------------------Initial Section --------------------------------- */}
-          <label key={`${key}-${titleLanguage.english[0]}`}className="block">
-            <div className="w-full flex justify-between">
-              <span className="text-gray-700 capitalize">{titleLanguage[language][0]}</span>
-              {!displayInitialHelp && (<button
-                className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
-                id="initial-open"
-                onClick={handlerHelp}>
-                ?
-              </button>
-              )}
-            </div>
-            <select
-              className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
-              id={`${aspectName}-${titleLanguage.english[0]}`}
-              name={`${aspectName}-${titleLanguage.english[0]}`}
-              value={inputData.levels[aspectName][titleLanguage.english[0]]}
-              onChange={handleLevelInput}
-            >
-            <option className="font-secondary text-base text-md" value={null}>Select score</option>
+  const PlotSelectOptionLevel = ({numIndex, itemName, aspectName}) => {
+    return (      
+      <>
+        <div className= "w-full flex justify-between">
+          {/* Title */}
+          <span className="text-gray-700 capitalize">{titleLanguage[language][numIndex]}</span>
+          { ![displayInitialHelp, displayTargetHelp, displayFinalHelp][numIndex] && <button
+              className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
+              id={`${itemName}-open`}
+              onClick={handlerHelp}>?
+              </button>}
+        </div>
+        {/* Language Aspect Input */}
+        <label htmlFor={`${aspectName}-${itemName}`}>
+          <select className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+          name= {`${aspectName}-${titleLanguage.english[numIndex]}`}
+          id={`${aspectName}-${titleLanguage.english[numIndex]}`}
+          value={inputData.levels[aspectName][titleLanguage.english[numIndex]]}
+          onChange={handleLevelInput}>
+            {/* Contains Several options depending on the JSON file */}
+            {/* An empty string is set to default */}
+
+            <option className ="font-secondary text-base text-md" value= {""}> Select Score</option>
+
+            {/* Reads and maps all level from JSON file */}
             {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
               <>
               <option
+                key={`${aspectName}-${itemName}-${index}`}
                 className="font-secondary text-base"
-                key={`${initialID}-${item_Value.level}-${index}`}
                 value={item_Value.level}
               >
                 {item_Value.level}
               </option>
             </>
           ))}
-            </select>
-          </label>
-          {/* Shows helpbox */}
-          <div key={`${key}-initial-display`}className="m-t-1">
-          {displayInitialHelp && (
-            <div className="grid grid-cols-[1fr_auto]">
-              <p className="text-secondary text-slate-600">
-                {
-                  `${getLevelInformationByLevel({level: inputData.levels[aspectName].initial, cat: aspectName, lang: language}).description}`
-                }
-              </p>
-              <button
-                className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-red-600 hover:bg-white hover:text-red-600 hover:border-2 hover:border-red-600"
-                id="initial-close"
-                onClick={handlerCloseHelp}
-              >
-                x
-              </button>
-            </div>
-          )}
-          </div>
+          </select>
+        </label>
 
-          {/* -------------------------------------Target Section--------------------------------- */}
-          <label key={`${key}-target`} htmlFor={`${aspectName}-target`}>
-            <div className="w-full flex justify-between">
-              <span className="text-gray-700 capitalize">{titleLanguage[language.toLowerCase()][1]}</span>
-              {!displayTargetHelp && (
-                <div className="grid grid-cols-[1fr_auto]">
-                  <button
-                  className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600"
-                  id="target-open"
-                  onClick={handlerHelp}
-                  >?
-                  </button>
-                </div>
-              )}
-            </div>
-            <select
-          className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
-          id={`${aspectName}-target`}
-          name={`${aspectName}-target`}
-          value={inputData.levels[aspectName].target}
-          onChange={handleLevelInput}
-        >
-          <option className="font-secondary text-base text-md" value={null}>
-            Select score
-          </option>
-          {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
-            <option
-              className="font-secondary text-base text-md"
-              key={`${targetID}-${item_Value.level}-${index}`}
-              value={item_Value.level}
-            >
-              {item_Value.level}
-            </option>
-          ))}
-        </select>
-          </label>
-          <div key={`${key}-final-target`} className="m-t-1">
-          {displayTargetHelp && (
-            <div className="grid grid-cols-[1fr_auto]">
+        {/* Displays a help box  */}
+        <div key={`${aspectName}-${itemName}-display`} className= "m-t-1"/>
+
+        {/* Shows the helpbox is not active.  In order to activate it, click the activate button */}
+        {displayInitialHelp && 
+          <div className="grid grid-cols-[1fr_auto]">
               <p className="text-secondary text-slate-600">
                 {
-                  `${getLevelInformationByLevel({level: inputData.levels[aspectName].target, cat: aspectName, lang: language}).description}`
+                  `${getLevelInformationByLevel({level: inputData.levels[aspectName][itemName], cat: aspectName, lang: language}).description}`
                 }
               </p>
+              {/* Add a close button */}
               <button
                 className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-red-600 hover:bg-white hover:text-red-600 hover:border-2 hover:border-red-600"
-                id="target-close"
+                id={`${itemName}-close`}
                 onClick={handlerCloseHelp}
               >
                 x
               </button>
-            </div>
-          )}
-          </div>
-          
-          {/* -------------------------------------Final Section ---------------------------------- */}
-          <label className="block">
-            <div className="w-full flex justify-between">
-              <span className="text-gray-700 capitalize">{titleLanguage[language.toLowerCase()][2]}</span>
-              {!displayFinalHelp && ( <button 
-                                        className="cursor-pointer h-[24px] w-[24px] rounded border-0 text-white font-bold bg-green-600 hover:bg-white hover:text-green-600 hover:border-2 hover:border-green-600" id="final-open"
-                                        onClick={handlerHelp}
-                                      >
-                                      ?
-                                        </button>)}
-            </div>
-            <select
-              className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
-              id={`${aspectName}-final`}
-              name={`${aspectName}-final`}
-              value={inputData.levels[aspectName].final}
-              onChange={handleLevelInput}
-            >
-            <option className="font-secondary text-base text-md" value={null}>
-              Select score
-            </option>
-            {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
-              <option
-                className="font-secondary text-base text-md"
-                key={`${finalID}-${item_Value.level}-${index}`}
-                value={item_Value.level}
-              >
-                {item_Value.level}
-              </option>
-              ))}
-            </select>
-          </label>
-          <div className="m-t-1">
-          {displayFinalHelp && (
-            <div className="grid grid-cols-[1fr_auto] items-start">
-              <p className="text-secondary text-slate-600">
-              {`${getLevelInformationByLevel({level: inputData.levels[aspectName].final, cat: aspectName, lang: language}).description}`}
-              </p>
-              <button id="final-close" onClick={handlerCloseHelp}>
-                <SquareX className="cursor-pointer text-red-600 hover:text-white hover:bg-red-600" />
-              </button>
-            </div>
-          )}
-        </div>
+            </div>}
+      </>
+    )
+    
+  }
+  return (
+    <>
+      <div key={key} className="p-t-3">
+        <h2 className="text-lg font-bold capitalize border-0 border-b-2 my-3">{aspectName}</h2>
+        <div className="grid grid-cols-1 gap-3">
+        {["initial", "target", "final"].map((item, index) => (
+    <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />
+        ))}
 
       </div>
     </div>
@@ -212,7 +120,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
 }
 
 LanguageAspect.propTypes = {
-  inputData: PropTypes.obj,
+  inputData: PropTypes.object,
   aspectName: PropTypes.string,
   handleLevelInput: PropTypes.func,
   language: PropTypes.string,

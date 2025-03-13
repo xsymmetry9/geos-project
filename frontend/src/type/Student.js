@@ -1,5 +1,5 @@
 class Levels {
-  constructor(initial = 0, target = 0, final = 0) {
+  constructor(initial = "", target = "", final = "") {
     this.initial = initial;
     this.target = target;
     this.final = final;

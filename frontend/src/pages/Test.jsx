@@ -1,5 +1,5 @@
 import React from "react";
-import data from "../../public/levelInformation.json";
+import data from "@/assets/other/levelInformation.json";
 
 // Play with sorting arrays
 // const convertLevel = (level) => {

@@ -25,6 +25,7 @@ const PlotForm = ({ inputData, setInputData }) => {
 
     const parentCategory = name.split("-")[0];
     const childCategory = name.split("-")[1];
+    console.log(value);
 
     setInputData((prev) => ({
       ...prev,
