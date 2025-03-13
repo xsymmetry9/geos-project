@@ -63,7 +63,7 @@ function Homepage() {
       <>
         <table className="w-full border-collapse shadow-md">
           <thead>
-            <tr className="bg-gray-200 text-gray-800 font-bold">
+            <tr className="bg-orange-700 text-white font-bold">
                 <th className="p-3 text-center" >Date</th>
                 <th className="p-3 text-center" >Name</th>
                 <th className="p-3 text-center" >Action</th>
@@ -72,7 +72,7 @@ function Homepage() {
           <tbody>
             {userData.SPR.map((item, index) => {
               return (
-                <tr key={`${item.id}-${index}`} className="odd:bg-gray-100 even:bg-white hover:bg-gray-300">
+                <tr key={`${item.id}-${index}`} className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300">
                   <td key={`${item.id}-date`} className="p-3 text-center">
                     {format(new Date(), "MM/dd/yyyy")}
                   </td>
@@ -81,18 +81,18 @@ function Homepage() {
                   </td>
                   <td
                     key={`${item.id}-edit`}
-                    className="p-3 flex justify-center gap-2"
+                    className="flex gap-3 justify-center mt-4"
                   >
                     <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
-                      <Pencil size={18} />
+                      <Pencil size={20} />
                     </Link>
 
                     <button className="text-green-600 cursor-pointer" id={item.id} onClick={handleDelete}>
-                      <Archive size={18} />
+                      <Archive size={20} />
                     </button>
 
-                    <Link className="text-red-600" to={`/spr/${language}/print/${item.id}`}>
-                      <PrinterIcon size={18} />
+                    <Link className="text-red-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
+                      <PrinterIcon size={20} />
                     </Link>
                   </td>
                 </tr>

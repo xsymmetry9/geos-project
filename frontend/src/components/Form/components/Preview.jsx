@@ -18,7 +18,7 @@ const Preview = ({ key, inputData, language }) => {
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div key={key} className="font-primary preview-section">
+    <div key={key} className="font-primary static preview-section">
       <div className="p-3" id="class-infomration">
         <h2 className="text-2xl text-center bg-dark-green text-white mb-6">Class Information</h2>
         <p className="text-size-sm" >

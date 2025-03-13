@@ -97,8 +97,11 @@ const PlotForm = ({ inputData, setInputData }) => {
   };
   return (
     <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
+        {displayPopupMessage && (
+          <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
+        )}
       <Pagination page={page} language={language} setPage={setPage}/>
-      <div className="w-full max-w-lg m-auto">
+      <div className="w-full static max-w-lg m-auto">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
           <div className="flex gap-2 justify-center" id="buttons">
@@ -111,12 +114,9 @@ const PlotForm = ({ inputData, setInputData }) => {
             {page == 3 && (
               <input className="btn btn-primary" type="submit" value={"Save"} />
             )}
-          </div>
-          
+          </div>  
         </form>
-        {displayPopupMessage && (
-          <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
-        )}
+    
     </div>
     </div>
   );

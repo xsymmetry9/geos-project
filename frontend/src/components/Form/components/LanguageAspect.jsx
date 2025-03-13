@@ -1,13 +1,10 @@
-import React, { useState, useId } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
 
 function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
-  const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false})
-  const [displayInitialHelp, setDisplayInitial] = useState(false);
-  const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
-  const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
+  const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
 
   const displayHandlerOpen = (e) =>{
     const name = e.currentTarget.id.split('-')[0];
@@ -24,22 +21,6 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
       [name]: false
     }))
   }
-
-  const handlerCloseHelp = (e) => {
-    const { id } = e.currentTarget;
-    if (id === "initial-close") {
-      setDisplayInitial(false);
-    } else if (id === "target-close") {
-      setDisplayTargetHelp(false);
-    } else {
-      setDisplayFinalHelp(false);
-    }
-  };
-
-  const initialID = useId();
-  const targetID = useId();
-  const finalID = useId();
-
   const titleLanguage = {
     english: ["initial", "target", "final"],
     chinese: ["初始", "目標", "結束"],
