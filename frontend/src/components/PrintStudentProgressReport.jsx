@@ -17,15 +17,17 @@ const PrintContent = ({ parsedData }) => {
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
   // Working on Transforming data
-  // const processData = (data) =>{
-  //   return Object.keys(data).map((category) =>({
-  //     category,
-  //     initial: parseFloat(data[category].initial !== "10+" ? parseFloat(data[category].initial) : 10),
-  //     target: parseFloat(data[category].target !== "10+" ? parseFloat(data[category].target) : 10),
-  //     final: parseFloat(data[category].final !== "10+" ? parseFloat(data[category].final) : 10)
-  //   }));
-  // };
-  // const transformedData = processData(levels);
+  const processData = (data) =>{
+    return Object.keys(data).map((category) =>({
+      category,
+      initial: parseFloat(data[category].initial !== "10+" ? parseFloat(data[category].initial) : 10),
+      target: parseFloat(data[category].target !== "10+" ? parseFloat(data[category].target) : 10),
+      final: parseFloat(data[category].final !== "10+" ? parseFloat(data[category].final) : 10)
+    }));
+  };
+  const transformedData = processData(parsedData.levels);
+
+  console.log(transformedData);
 
   return (
     <>
