@@ -42,8 +42,8 @@ const Preview = ({ key, inputData, language }) => {
         </p>
       </div>
       <div className="p-3" id="student-evaluation">
-        <h2 className="font-secondary bg-dark-green text-2xl text-center text-white mb-6">Student Evaluation</h2>
-        <table className="table-fixed border-collapse w-full mx-auto">
+        <h2 className="bg-dark-green text-2xl text-center text-white mb-6">Student Evaluation</h2>
+        <table className="font-secondary table-fixed border-collapse w-full mx-auto">
           <thead>
             <tr className="bg-orange-700 text-white font-secondary text-sm">
               <th className="px-2 py-1"></th>

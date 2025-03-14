@@ -9,6 +9,7 @@ const PrintPage = () => {
   const { id, language } = useParams(); //Gets id and language through link
   const parsedData = getStudentById(id); //Gets data from localstorage by id
   const componentRef = useRef(); //Save reference to print
+  const pdfRef = useRef();
   const [isPrinting, setIsPrinting] = useState(false);
   const promiseResolveRef = useRef(null);
 
@@ -50,9 +51,11 @@ const PrintPage = () => {
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
-        <button className="btn btn-primary w-[150px] flex items-center justify-center gap-3">
+        {/* Add a to pdf function */}
+        {/* <button onClick={() => generagePDF(pdfRef, {filename: `student-report-${id}.pdf`})}
+          className="btn btn-primary w-[150px] flex items-center justify-center gap-3">
           <FileDown />
-          To PDF</button>
+          To PDF</button> */}
       </div>
     </>
   );

@@ -25,8 +25,6 @@ const Graph = ({ data, language }) => {
       layout: {
         padding: 0,
       },
-      tooltip: false,
-
       legend: {
         position: "bottom",
         align: "center",
@@ -34,10 +32,19 @@ const Graph = ({ data, language }) => {
           position: "center",
         },
         labels: {
+          usePointStyle: true,
+          pointStyle: 'circle',
           font: { size: 13 },
           color: "black",
+          padding: 24,
         },
       },
+      elements:{
+        line: {
+          backgroundColor: "blue",
+        }
+      }
+
     },
 
     scales: {
@@ -46,19 +53,19 @@ const Graph = ({ data, language }) => {
         max: 10,
         ticks: {
           stepSize: 2,
-          color: "gray",
+          color: "#9ca3af",
         },
         padding: 0,
         grid: {
-          color: "gray",
+          color: "#9ca3af",
         },
         angleLines: {
-          color: "gray",
+          color: "#9ca3af",
         },
         pointLabels: {
-          color: "gray",
+          color: "rgb(0,0,0)",
           font: {
-            size: 12,
+            size: 9,
           },
         },
       },
@@ -83,8 +90,11 @@ const Graph = ({ data, language }) => {
           levels.conversation.initial,
         ],
         backgroundColor: "transparent",
-        borderColor: "rgb(0, 0, 250)",
-        borderWidth: 1.5,
+        borderColor: "#155E95",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "blue",
+        pointBackgroundColor: "lightblue"
       },
       {
         label: text("final", language),
@@ -96,8 +106,11 @@ const Graph = ({ data, language }) => {
           levels.conversation.final,
         ],
         backgroundColor: "transparent",
-        borderColor: "rgb(0, 250, 0)",
-        borderWidth: 1.5,
+        borderColor: "#5B913B",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "green",
+        pointBackgroundColor: "lightgreen"
       },
       {
         label: text("target", language),
@@ -109,8 +122,11 @@ const Graph = ({ data, language }) => {
           levels.conversation.target,
         ],
         backgroundColor: "transparent",
-        borderColor: "rgb(250, 0, 0)",
-        borderWidth: 1.5,
+        borderColor: "#BE3144",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "red",
+        pointBackgroundColor: "rgb(238, 112, 112)"
       },
     ],
   };
