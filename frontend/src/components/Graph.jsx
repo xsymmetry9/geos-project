@@ -65,7 +65,7 @@ const Graph = ({ data, language }) => {
         pointLabels: {
           color: "rgb(0,0,0)",
           font: {
-            size: 9,
+            size: 12,
           },
         },
       },

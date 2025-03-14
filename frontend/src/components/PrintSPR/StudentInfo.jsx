@@ -121,7 +121,7 @@ export const Comment = ({ comment, language }) => {
   const text = (phrase, language) => labelText[language]["SPR"][phrase];
   return (
     <div id="feedback" className="border border-slate-700 h-[240px]">
-      <p className= "bg-[rgb(0,161,173)] pl-2 py-1 text-white font-bold capitalize">{text("comment", language)}</p>
+      <p className= "bg-[rgb(0,161,173)] pl-2 py-[2px] text-white font-bold capitalize">{text("comment", language)}</p>
       <div className="px-2 py-1">
         <p>{comment}</p>
       </div>
