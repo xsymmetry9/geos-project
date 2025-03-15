@@ -25,9 +25,7 @@ const PrintContent = ({ parsedData }) => {
       final: parseFloat(data[category].final !== "10+" ? parseFloat(data[category].final) : 10)
     }));
   };
-  const transformedData = processData(parsedData.levels);
-
-  console.log(transformedData);
+  const transformedData = processData(parsedData.levels); 
 
   return (
     <>
@@ -44,7 +42,7 @@ const PrintContent = ({ parsedData }) => {
       <Table levels={levels} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
         <div className="grid grid-cols-1 gap-">
-          <Graph data={parsedData} language={language} />
+          <Graph userData={transformedData} language={language} />
           <Comment comment={feedback} language={language} />
           <Signature language={language} />
         </div>

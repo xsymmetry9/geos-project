@@ -9,7 +9,6 @@ const PrintPage = () => {
   const { id, language } = useParams(); //Gets id and language through link
   const parsedData = getStudentById(id); //Gets data from localstorage by id
   const componentRef = useRef(); //Save reference to print
-  const pdfRef = useRef();
   const [isPrinting, setIsPrinting] = useState(false);
   const promiseResolveRef = useRef(null);
 

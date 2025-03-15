@@ -17,8 +17,7 @@ import labelText from "../assets/other/labelText.json";
 
 const text = (phrase, language) => labelText[language]["SPR"][phrase];
 
-const Graph = ({ data, language }) => {
-  const { levels } = data;
+const Graph = ({ userData, language }) => {
 
   const options = {
     plugins: {
@@ -49,7 +48,7 @@ const Graph = ({ data, language }) => {
 
     scales: {
       r: {
-        min: 1,
+        min: 0,
         max: 10,
         ticks: {
           stepSize: 2,
@@ -83,11 +82,11 @@ const Graph = ({ data, language }) => {
       {
         label: text("initial", language),
         data: [
-          levels.vocabulary.initial,
-          levels.grammar.initial,
-          levels.pronunciation.initial,
-          levels.listening.initial,
-          levels.conversation.initial,
+          userData[0].initial,
+          userData[1].initial,
+          userData[2].initial,
+          userData[3].initial,
+          userData[4].initial,
         ],
         backgroundColor: "transparent",
         borderColor: "#155E95",
@@ -99,11 +98,11 @@ const Graph = ({ data, language }) => {
       {
         label: text("final", language),
         data: [
-          levels.vocabulary.final,
-          levels.grammar.final,
-          levels.pronunciation.final,
-          levels.listening.final,
-          levels.conversation.final,
+          userData[0].final,
+          userData[1].final,
+          userData[2].final,
+          userData[3].final,
+          userData[4].final,
         ],
         backgroundColor: "transparent",
         borderColor: "#5B913B",
@@ -115,11 +114,11 @@ const Graph = ({ data, language }) => {
       {
         label: text("target", language),
         data: [
-          levels.vocabulary.target,
-          levels.vocabulary.target,
-          levels.grammar.target,
-          levels.pronunciation.target,
-          levels.conversation.target,
+          userData[0].target,
+          userData[1].target,
+          userData[2].target,
+          userData[3].target,
+          userData[4].target,
         ],
         backgroundColor: "transparent",
         borderColor: "#BE3144",
