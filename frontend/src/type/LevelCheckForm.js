@@ -1,9 +1,9 @@
 import {v4 as uuidv4} from 'uuid';
 
 class LevelCheck {
-    constructor(id = uuidv4) {
+    constructor(id = uuidv4, dateCreated = new Date()) {
       this.id = id;
-      this.dateCreated = new Date();
+      this.dateCreated = dateCreated
       this.name = "";
       this.feedback = "",
       this.language_proficiency_level = "",

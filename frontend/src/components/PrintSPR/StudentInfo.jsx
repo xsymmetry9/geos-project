@@ -67,7 +67,7 @@ export const Table = ({ levels, language }) => {
   const Row = ({ levels, label }) => {
     const sum = () =>
       Object.keys(levels).reduce(
-        (total, accumulator) => total + parseFloat(levels[accumulator][label]),
+        (total, accumulator) => total + parseFloat((levels[accumulator][label]) === "10+" ? "10.5" : levels[accumulator][label]),
         0,
       );
     const avg = () => parseFloat(sum() / 5, 2).toFixed(2);

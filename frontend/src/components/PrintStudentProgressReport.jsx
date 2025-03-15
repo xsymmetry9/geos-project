@@ -12,12 +12,8 @@ import {
 } from "./PrintSPR/StudentInfo";
 import PlotCards from "./PrintSPR/PlotCards";
 
-const PrintContent = ({ parsedData }) => {
-  const { language } = useParams();
-  const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
-
   // Working on Transforming data
-  const processData = (data) =>{
+export const processData = (data) =>{
     return Object.keys(data).map((category) =>({
       category,
       initial: parseFloat(data[category].initial !== "10+" ? parseFloat(data[category].initial) : 10),
@@ -25,6 +21,11 @@ const PrintContent = ({ parsedData }) => {
       final: parseFloat(data[category].final !== "10+" ? parseFloat(data[category].final) : 10)
     }));
   };
+
+export const PrintContent = ({ parsedData }) => {
+  const { language } = useParams();
+  const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
+
   const transformedData = processData(parsedData.levels); 
 
   return (
@@ -39,7 +40,7 @@ const PrintContent = ({ parsedData }) => {
         <StudentInfo name={name} textbook={textbook} course={course} language={language} />
         <AttendanceInfo attendance={attendance} totalLessons={totalLessons} language={language} />
       </div>
-      <Table levels={levels} language={language} />
+      <Table levels={levels} transformedData = {transformedData} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
         <div className="grid grid-cols-1 gap-">
           <Graph userData={transformedData} language={language} />
@@ -55,5 +56,3 @@ const PrintContent = ({ parsedData }) => {
 PrintContent.propTypes = {
   parsedData: PropTypes.object,
 };
-
-export default PrintContent;

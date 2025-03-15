@@ -6,9 +6,9 @@ class Levels {
   }
 }
 class Student {
-  constructor(id) {
+  constructor(id, dateCreated = new Date()) {
     this.id = id;
-    this.dateCreated = new Date();
+    this.dateCreated = dateCreated;
     this.name = "";
     this.course = "";
     this.textbook = "";

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
-import PrintStudentProgressiveReport from "../components/PrintStudentProgressReport";
-import { FileDown } from "lucide-react";
+import {PrintContent} from "../components/PrintStudentProgressReport";
 
 const PrintPage = () => {
   const { id, language } = useParams(); //Gets id and language through link
@@ -44,7 +43,7 @@ const PrintPage = () => {
         </Link>
       </div>
       <div id={`print-${language}`} className="print-component" ref={componentRef}>
-        <PrintStudentProgressiveReport parsedData={parsedData} />
+        <PrintContent parsedData={parsedData} />
       </div>
       <div className="flex items-center justify-center pt-3 gap-3">
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
