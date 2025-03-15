@@ -27,7 +27,7 @@ const LevelCheckForm = () => {
     <div className="w-full max-w-[55em] mx-auto border py-6">
       <div className="flex flex-col justify-center items-center">
         <img width={100} src="/logo.svg" alt="logo" />
-        <h1 className="font-primary text-lg py-3">Oral Assessment Guidelines</h1>
+        <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
       </div>
       <form action="">
       <div className="grid grid-cols-1 gap-3 w-full max-w-lg mx-auto ">

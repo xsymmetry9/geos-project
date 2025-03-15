@@ -46,7 +46,7 @@ const Index = () => {
   }
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <h1 className="text-2xl py-2 font-primary">Welcome to GEOS App {user.name}!!!</h1>
+      <h1 className="text-2xl py-2 font-secondary">Welcome to GEOS App {user.name}!!!</h1>
       <LinksLanguages />
     </div>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import form_languages from "../form_languages.js";
 import labelText from "../../../assets/other/labelText.json"
 
 const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
@@ -13,7 +12,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
     input_textbook,
     input_attendance,
     input_totallessons,
-  } = form_languages[language.toLowerCase()];
+  } = labelText[language].form;
 
   return (
     <div key={key} className="pb-[3rem]" id="personal-information">

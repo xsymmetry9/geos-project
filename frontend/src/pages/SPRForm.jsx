@@ -15,7 +15,7 @@ const SPRForm = () => {
   return (
     <LanguageContext.Provider value={language}>
       <div className="w-full flex justify-center p-2">
-        <Link className="btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
+        <Link className="font-secondary btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
         <House />
           Home
         </Link>
