@@ -23,22 +23,22 @@ const Preview = ({ key, inputData, language }) => {
       <div className="p-3" id="class-infomration">
         <h2 className="text-2xl text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
         <p className="text-size-sm" >
-          <strong>Name:</strong> {name.length != 0 ? name : "No name"}
+          <strong className="capitalize">{labelText[language].form["input_name"]}:</strong> {name.length != 0 ? name : "No name"}
         </p>
-        <p className="uppercase">
-          <strong>textbook:</strong>{" "}
+        <p className="text-size-sm">
+          <strong className="capitalize">{labelText[language].form["input_textbook"]}:</strong>{" "}
           {textbook.length != 0 ? textbook : "No textbook"}
         </p>
-        <p className="text-size-sm uppercase">
-          <strong>course:</strong>{" "}
+        <p className="text-size-sm">
+          <strong className="capitalize">{labelText[language].form["input_course"]}:</strong>{" "}
           {course.length != 0 ? course : "No course name"}
         </p>
-        <p className="text-size-sm uppercase">
-          <strong>attendance:</strong>{" "}
+        <p className="text-size-sm">
+          <strong className="capitalize">{labelText[language].form["input_attendance"]}:</strong>{" "}
           {attendance != 0 ? attendance : "No attendance"}
         </p>
-        <p className="text-size-sm uppercase">
-          <strong>total lessons:</strong>{" "}
+        <p className="text-size-sm">
+          <strong className="capitalize">{labelText[language].form["input_totallessons"]}</strong>{" "}
           {totalLessons != 0 ? totalLessons : "No total lessons"}
         </p>
       </div>
