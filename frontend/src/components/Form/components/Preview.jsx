@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import labelText from "../../../assets/other/labelText.json";
 
 const Preview = ({ key, inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
@@ -20,7 +21,7 @@ const Preview = ({ key, inputData, language }) => {
   return (
     <div key={key} className="font-primary static preview-section">
       <div className="p-3" id="class-infomration">
-        <h2 className="text-2xl text-center bg-dark-green text-white mb-6">Class Information</h2>
+        <h2 className="text-2xl text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
         <p className="text-size-sm" >
           <strong>Name:</strong> {name.length != 0 ? name : "No name"}
         </p>
@@ -42,7 +43,7 @@ const Preview = ({ key, inputData, language }) => {
         </p>
       </div>
       <div className="p-3" id="student-evaluation">
-        <h2 className="bg-dark-green text-2xl text-center text-white mb-6">Student Evaluation</h2>
+        <h2 className="bg-dark-green text-2xl text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
         <table className="font-secondary table-fixed border-collapse w-full mx-auto">
           <thead>
             <tr className="bg-orange-700 text-white font-secondary text-sm">
@@ -67,7 +68,7 @@ const Preview = ({ key, inputData, language }) => {
         </table>
       </div>
       <div className="preview-container pb-3">
-        <h2 className="bg-dark-green text-white my-6 text-2xl text-center">Feedback</h2>
+        <h2 className="bg-dark-green text-white my-6 text-2xl capitalize text-center">{labelText[language].SPR["class_information"]}</h2>
         <div className="font-primary text-sm w-full border border-green-600 min-h-40 p-2">
           <p>{feedback.length != 0 ? feedback : "No comment"}</p>
         </div>

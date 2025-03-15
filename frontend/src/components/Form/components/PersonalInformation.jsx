@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import form_languages from "../form_languages.js";
+import labelText from "../../../assets/other/labelText.json"
 
 const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
   const { name, course, textbook, attendance, totalLessons } = inputData;
@@ -16,7 +17,7 @@ const PersonalInformation = ({ key, inputData, handleInputData, language }) => {
 
   return (
     <div key={key} className="pb-[3rem]" id="personal-information">
-      <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold">Student&apos;s Information</h2>
+      <h2 className="bg-[#00646c] text-xl text-white text-center p-2 font-bold capitalize">{labelText[language].SPR["student_information"]}</h2>
       <div className="mt-8 m-auto">
         <div className="grid grid-cols-1 gap-6">
         <label className="block" htmlFor="name">

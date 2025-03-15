@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LanguageAspect from "./LanguageAspect";
+import labelText from "../../../assets/other/labelText.json"
 
 const LevelInformation = ({
   key,
@@ -25,7 +26,7 @@ const LevelInformation = ({
     <>
       {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
       <div key={key} className="pb-[3rem]">
-        <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold">Student&rsquo;s Level</h2>
+        <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold capitalize text-center">{labelText[language].SPR["student_level"]}</h2>
         {titles.english.map((aspectName) => {
           return (
               <LanguageAspect

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
+import labelText from "../../../assets/other/labelText.json";
 
 function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
   const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
@@ -95,7 +96,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
   return (
     <>
       <div key={key} className="p-t-3">
-        <h2 className="text-lg font-bold capitalize border-0 border-b-2 my-3">{aspectName}</h2>
+        <h2 className="text-lg font-bold capitalize border-0 border-b-2 border-dark-green my-3">{labelText[language].SPR[aspectName]}</h2>
         <div className="grid grid-cols-1 gap-3">
         {["initial", "target", "final"].map((item, index) => (
     <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />

@@ -11,7 +11,13 @@
     },
     "SPR": {
       "title": "Student Progress Report",
+      "student_information": "student's information",
+      "student_level": "student's level",
+      "student_feedback": "feedback",
       "student_name": "student's name",
+      "class_information": "class information",
+      "student_evaluation": "student evaluation",
+      "teacher_feedback": "teacher's feedback",
       "course": "course",
       "textbook": "textbook",
       "date": "date",
@@ -52,7 +58,13 @@
     },
     "SPR": {
       "title": "學生進度報告",
+      "student_information": " 學生資料",
+      "student_level": "學生程度 ",
+      "student_feedback": " 學生意見",
       "student_name": "學生姓名",
+      "class_information": "課堂資訊 ",
+      "student_evaluation": "學生評估",
+      "teacher_feedback": "教師回饋",
       "course": "課程",
       "textbook": "教材",
       "date": "日期",
@@ -93,7 +105,13 @@
     },
     "SPR": {
       "title": "학생 진도 보고서",
+      "student_information": "  학생 정보",
+      "student_level": "학생 수준",
+      "student_feedback": "학생 피드백 ",
       "student_name": "학생 이름",
+      "class_information": "수업 정보",
+      "student_evaluation": " 학생 평가",
+      "teacher_feedback": " 교사 피드백 ",
       "course": "과정",
       "textbook": "교재",
       "date": "날짜",
@@ -134,7 +152,13 @@
     },
     "SPR": {
       "title": "学生進捗レポート",
+      "student_information": " 学生情報",
+      "student_level": " 学生のレベル",
+      "student_feedback": "学生のフィードバック",
       "student_name": "学生名",
+      "class_information": "cクラス情報 ",
+      "student_evaluation": " 学生評価",
+      "teacher_feedback": "教師のフィードバック",
       "course": "コース",
       "textbook": "教科書",
       "date": "日付",
@@ -161,6 +185,6 @@
       "average": "平均",
       "comment": "コメント",
       "signature": "署名"
-    }
+   }
   }
 }
