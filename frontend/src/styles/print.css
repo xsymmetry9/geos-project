@@ -49,7 +49,7 @@
 }
 #print-chinese h2{ font-size: var(--print-font-size-3);}
 #print-chinese h3 {font-size: var(--print-font-size-2);}
-#print-chinese p {font-size: var(--print-fontsize-1);}
+#print-chinese p {font-size: var(--print-font-size-1);}
 #print-chinese #info-card #info-card-title p{
   padding: 4px;
   font-weight: 400;
@@ -84,7 +84,7 @@
   height: 297mm;
   margin: auto;
   background-color: #fff;
-  padding: 12mm 8mm 6mm 8mm;
+  padding: 8mm 8mm 8mm 8mm;
   box-sizing: border-box;
   border: 1px solid black;
   font-family: var(--font-secondary);

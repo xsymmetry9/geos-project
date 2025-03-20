@@ -45,7 +45,7 @@ const PrintPage = () => {
       <div id={`print-${language}`} className="print-component" ref={componentRef}>
         <PrintContent parsedData={parsedData} />
       </div>
-      <div className="flex items-center justify-center pt-3 gap-3">
+      <div className="flex justify-center pt-3 gap-3">
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
