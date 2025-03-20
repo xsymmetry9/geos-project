@@ -113,7 +113,7 @@ function Homepage() {
           <ExportToExcel userData={userData} />
           <ImportFromExcel userData={userData} setUserData={setUserData} />
         </div>
-        <div className="overflow-x-auto">
+        <div className="px-2">
           {userData.SPR.length != 0 && <PlotTable />}
           {userData.SPR.length === 0 && <p className="text-center text-gray-500">Click add SPR or Level Check</p>}
         </div>
