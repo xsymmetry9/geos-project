@@ -40,7 +40,7 @@ export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
       </p>
       <p className="capitalize">
         {text("%_of_attendance", language)}:{" "}
-        {parseFloat((attendance / totalLessons) * 100).toFixed(2)}%
+        {((attendance / totalLessons) * 100)}%
       </p>
     </div>
   );
