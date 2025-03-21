@@ -19,8 +19,8 @@ class Student {
       vocabulary: new Levels(),
       pronunciation: new Levels(),
       grammar: new Levels(),
-      listening: new Levels(),
       conversation: new Levels(),
+      listening: new Levels(),
     };
   }
 }
