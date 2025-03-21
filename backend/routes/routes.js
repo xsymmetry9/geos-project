@@ -39,6 +39,7 @@ router.post("/api/users/:user/delete");
 
 //Test if it's connected
 router.get("/", async(req, res) =>{
-    res.json({status: true})
+    res.json({status: true, name: "Gary", course: "PL", language: "English"})
+    
 })
 module.exports = router;
