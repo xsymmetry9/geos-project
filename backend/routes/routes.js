@@ -1,6 +1,7 @@
 const {Router} = require("express");
 const router = Router();
 const User = require("../db/queries");
+const levelData = require("../asset/levelInformation.json");
 
 //Gets all users
 router.get("/api/users", async (req, res) =>{
@@ -38,8 +39,14 @@ router.post("/api/users/:user/delete");
 
 
 //Test if it's connected
-router.get("/", async(req, res) =>{
-    res.json({status: true, name: "Gary", course: "PL", language: "English"})
+router.get("/api", async(req, res) =>{
+    res.json({status: true, data: levelData})
+    
+})
+router.get("/api/:language", async(req, res) =>{
+    const language = req.params.language;
+    const getDataByLanguage = levelData[language].vocabulary;
+    res.json({status: true, data: getDataByLanguage})
     
 })
 module.exports = router;

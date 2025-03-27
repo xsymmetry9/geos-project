@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 
+//Get all levels
 function Test() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() =>{
     const getData = async() =>{
       try{
-        const response = await fetch("http://localhost:4000");
+        const response = await fetch("http://localhost:4000/api/english");
         if(!response.ok) {
           throw new Error("Network response not ok");
         }
@@ -20,11 +21,13 @@ function Test() {
     }
     getData()
   },[])
+  console.log(data.data[0]);
 
  return(
     <>
       <h1>Hello</h1>
-      {loading ? <p>Loading ...</p> : <pre>{JSON.stringify(data, null, 2)}</pre>}
+      {loading ? <p>Loading ...</p> : (
+        data.data.map((item) => <p>{item.description}</p>))}
     </>
   )
  
