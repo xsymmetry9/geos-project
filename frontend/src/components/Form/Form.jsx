@@ -12,12 +12,46 @@ import PopUpMessage from "../PopUpMessage";
 const PlotForm = ({ inputData, setInputData }) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
+  const [inputError, setInputError] = useState({
+    name: inputData.name == "" ? true : false,
+    textbook: inputData.textbook == "" ? true : false,
+    course: inputData.course == "" ? true : false,
+    attendance: inputData.attendance == 0 || inputData.attendance == "" ? true : false,
+    totalLessons: inputData.totalAttendance == 0 ? true : false,
+    feedback: inputData.feedback == "" ? true : false
+  })
 
   const language = useContext(LanguageContext);
 
   const handleInputData = (e) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
+
+    if(name === "name"  || name === "textbook" || name==="course")
+    {
+      setInputError((prevError) => ({
+        ...prevError,
+        [name]: value.trim() === "",
+      }))
+    } else if(name === "attendance")
+    {
+      setInputError((prevError) => ({
+        ...prevError,
+        [name]: value <= 0 || value.trim() === ""
+      }))
+    } else if(name === "totalLessons")
+    {
+      setInputError((prevError) =>({
+        ...prevError,
+        [name]: value <= 0 || value.trim() === "" || value < parseInt(inputData.attendance)
+      }))
+    } else if(name === "feedback") {
+      setInputError((prevError) => ({
+        ...prevError, 
+        [name]: value.trim() === ""
+      }))
+    }
+
   };
 
   const handleLevelInputData = (e) => {
@@ -42,6 +76,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     <PersonalInformation
       key={"personal-information"}
       inputData={inputData}
+      inputError = {inputError}
       handleInputData={handleInputData}
       language={language}
     />,
@@ -55,6 +90,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     <Feedback
       key={"feedback"}
       inputData={inputData}
+      inputError = {inputError}
       handleInputData={handleInputData}
       language={language}
     />,
