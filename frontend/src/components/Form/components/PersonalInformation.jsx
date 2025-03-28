@@ -83,6 +83,7 @@ const PersonalInformation = ({ key, inputData, inputError, handleInputData, lang
           name="attendance"
           id="attendance"
           value={attendance}
+          min={0}
           onChange={handleInputData}
         />
         {inputError.attendance && <p className="text-red-600 text-sm">Needs to be greater than 0 and a whole number</p>}
@@ -94,7 +95,8 @@ const PersonalInformation = ({ key, inputData, inputError, handleInputData, lang
           className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="number"
           name="totalLessons"
-          id="total-lesson"
+          id="totalLesson"
+          min={0}
           value={totalLessons}
           onChange={handleInputData}
         />

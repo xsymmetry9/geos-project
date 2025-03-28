@@ -12,8 +12,8 @@ class Student {
     this.name = "";
     this.course = "";
     this.textbook = "";
-    this.attendance = 0;
-    this.totalLessons = 0;
+    this.attendance = "";
+    this.totalLessons = "";
     this.feedback = "";
     this.levels = {
       vocabulary: new Levels(),

@@ -6,6 +6,7 @@ import labelText from "../../../assets/other/labelText.json"
 const LevelInformation = ({
   key,
   inputData,
+  inputError,
   handleLevelInputData,
   language,
 }) => {
@@ -33,6 +34,7 @@ const LevelInformation = ({
                 key={aspectName}
                 aspectName={aspectName}
                 inputData={inputData}
+                inputError = {inputError}
                 handleLevelInput={handleLevelInputData}
                 language={language}
               />
