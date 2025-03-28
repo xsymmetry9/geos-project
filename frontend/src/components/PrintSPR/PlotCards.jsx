@@ -15,7 +15,7 @@ const PlotCards = ({ levels, language }) => {
   };
   return (
     <>
-      <div id="info-card" className="grid grid-col-1 gap-2">
+      <div id="info-card" className="grid grid-col-1 gap-3">
         {Object.keys(finalValue).map((item) => {
           return(
             <div key={item} className="border border-slate-700">
