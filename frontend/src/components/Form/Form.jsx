@@ -17,8 +17,36 @@ const PlotForm = ({ inputData, setInputData }) => {
     textbook: inputData.textbook == "" ? true : false,
     course: inputData.course == "" ? true : false,
     attendance: inputData.attendance == 0 || inputData.attendance == "" ? true : false,
-    totalLessons: inputData.totalAttendance == 0 ? true : false,
-    feedback: inputData.feedback == "" ? true : false
+    totalLessons: inputData.toalLessons == 0 || inputData.totalLessons == "" ? true : false,
+    feedback: inputData.feedback == "" ? true : false,
+    levels: {
+      vocabulary: {
+        initial: inputData.levels.vocabulary.initial == "" ? true : false,
+        target: inputData.levels.vocabulary.target == "" ? true : false,
+        final: inputData.levels.vocabulary.final == "" ? true : false,
+      },
+      grammar: {
+        initial: inputData.levels.grammar.initial == "" ? true : false,
+        target: inputData.levels.grammar.target == "" ? true : false,
+        final: inputData.levels.grammar.final == "" ? true : false,
+      },
+      pronunciation: {
+        initial: inputData.levels.pronunciation.initial == "" ? true : false,
+        target: inputData.levels.pronunciation.target == "" ? true : false,
+        final: inputData.levels.pronunciation.final == "" ? true : false,
+      },
+      listening: {
+      initial: inputData.levels.listening.initial == "" ? true : false,
+      target: inputData.levels.listening.target == "" ? true : false,
+      final: inputData.levels.listening.final == "" ? true : false,
+      },
+      conversation: {
+        initial: inputData.levels.conversation.initial == "" ? true : false,
+        target: inputData.levels.conversation.target == "" ? true : false,
+        final: inputData.levels.conversation.final == "" ? true : false,
+      }
+
+    }
   })
 
   const language = useContext(LanguageContext);
@@ -27,7 +55,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
 
-    if(name === "name"  || name === "textbook" || name==="course")
+    if(name === "name"  || name === "textbook" || name ==="course")
     {
       setInputError((prevError) => ({
         ...prevError,
@@ -43,7 +71,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     {
       setInputError((prevError) =>({
         ...prevError,
-        [name]: value <= 0 || value.trim() === "" || value < parseInt(inputData.attendance)
+        [name]: value.trim() === "" || value <= 0 || value < parseInt(inputData.attendance)
       }))
     } else if(name === "feedback") {
       setInputError((prevError) => ({
@@ -56,10 +84,9 @@ const PlotForm = ({ inputData, setInputData }) => {
 
   const handleLevelInputData = (e) => {
     const { name, value } = e.currentTarget;
-
     const parentCategory = name.split("-")[0];
     const childCategory = name.split("-")[1];
-    console.log(value);
+    console.log(name);
 
     setInputData((prev) => ({
       ...prev,
@@ -71,6 +98,16 @@ const PlotForm = ({ inputData, setInputData }) => {
         },
       },
     }));
+    setInputError((prevError) => ({
+      prevError,
+      levels: {
+        ...prevError.levels,
+        [parentCategory]: {
+          ...prevError.levels[parentCategory],
+          [childCategory]: inputData.levels[parentCategory][childCategory] == "" ? true : false
+        }
+      }
+    }))
   };
   const arrOfPages = [
     <PersonalInformation
@@ -83,6 +120,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     <LevelInformation
       key={"level-information"}
       inputData={inputData}
+      inputError = {inputError}
       setInputData={setInputData}
       handleLevelInputData={handleLevelInputData}
       language={language}

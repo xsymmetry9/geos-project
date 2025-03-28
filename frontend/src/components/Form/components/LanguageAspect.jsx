@@ -4,7 +4,7 @@ import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
 import labelText from "../../../assets/other/labelText.json";
 
-function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
+function LanguageAspect({key, inputData, inputError, aspectName, handleLevelInput, language }) {
   const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
 
   const displayHandlerOpen = (e) =>{
@@ -52,7 +52,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
             {/* Contains Several options depending on the JSON file */}
             {/* An empty string is set to default */}
 
-            <option className ="font-secondary text-base text-md" value= {""}> Select Score</option>
+            <option className ="font-secondary text-base text-md" value = {""}>Select Score</option>
 
             {/* Reads and maps all level from JSON file */}
             {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
@@ -67,6 +67,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
             </>
           ))}
           </select>
+          {inputError.levels[aspectName][titleLanguage.english[numIndex]] && <p className="text-red-500 text-sm">* required</p>}
         </label>
 
         {/* Displays a help box  */}
