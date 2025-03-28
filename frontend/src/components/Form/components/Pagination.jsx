@@ -4,7 +4,7 @@ import React from "react";
 
 const Pagination = ({ page, language, setPage }) => {
   const title = {
-    english: ["Info", "Level", "Feedback", "Done"],
+    english: ["Info", "Level", "Feedback", "Review"],
     korean: ["정보", "레벨", "피드백", "완료"],
     chinese: ["資訊", "級別", "反饋", "完成"],
     japanese: ["情報", "レベル", "フィードバック", "完了"],

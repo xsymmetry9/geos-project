@@ -12,20 +12,81 @@ import PopUpMessage from "../PopUpMessage";
 const PlotForm = ({ inputData, setInputData }) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
+  const [inputError, setInputError] = useState({
+    name: inputData.name == "" ? true : false,
+    textbook: inputData.textbook == "" ? true : false,
+    course: inputData.course == "" ? true : false,
+    attendance: inputData.attendance == 0 || inputData.attendance == "" ? true : false,
+    totalLessons: inputData.toalLessons == 0 || inputData.totalLessons == "" ? true : false,
+    feedback: inputData.feedback == "" ? true : false,
+    levels: {
+      vocabulary: {
+        initial: inputData.levels.vocabulary.initial == "" ? true : false,
+        target: inputData.levels.vocabulary.target == "" ? true : false,
+        final: inputData.levels.vocabulary.final == "" ? true : false,
+      },
+      grammar: {
+        initial: inputData.levels.grammar.initial == "" ? true : false,
+        target: inputData.levels.grammar.target == "" ? true : false,
+        final: inputData.levels.grammar.final == "" ? true : false,
+      },
+      pronunciation: {
+        initial: inputData.levels.pronunciation.initial == "" ? true : false,
+        target: inputData.levels.pronunciation.target == "" ? true : false,
+        final: inputData.levels.pronunciation.final == "" ? true : false,
+      },
+      listening: {
+      initial: inputData.levels.listening.initial == "" ? true : false,
+      target: inputData.levels.listening.target == "" ? true : false,
+      final: inputData.levels.listening.final == "" ? true : false,
+      },
+      conversation: {
+        initial: inputData.levels.conversation.initial == "" ? true : false,
+        target: inputData.levels.conversation.target == "" ? true : false,
+        final: inputData.levels.conversation.final == "" ? true : false,
+      }
+
+    }
+  })
 
   const language = useContext(LanguageContext);
 
   const handleInputData = (e) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
+
+    if(name === "name"  || name === "textbook" || name ==="course")
+    {
+      setInputError((prevError) => ({
+        ...prevError,
+        [name]: value.trim() === "",
+      }))
+    } else if(name === "attendance")
+    {
+      setInputError((prevError) => ({
+        ...prevError,
+        [name]: value <= 0 || value.trim() === ""
+      }))
+    } else if(name === "totalLessons")
+    {
+      setInputError((prevError) =>({
+        ...prevError,
+        [name]: value.trim() === "" || value <= 0 || value < parseInt(inputData.attendance)
+      }))
+    } else if(name === "feedback") {
+      setInputError((prevError) => ({
+        ...prevError, 
+        [name]: value.trim() === ""
+      }))
+    }
+
   };
 
   const handleLevelInputData = (e) => {
     const { name, value } = e.currentTarget;
-
     const parentCategory = name.split("-")[0];
     const childCategory = name.split("-")[1];
-    console.log(value);
+    console.log(name);
 
     setInputData((prev) => ({
       ...prev,
@@ -37,17 +98,29 @@ const PlotForm = ({ inputData, setInputData }) => {
         },
       },
     }));
+    setInputError((prevError) => ({
+      prevError,
+      levels: {
+        ...prevError.levels,
+        [parentCategory]: {
+          ...prevError.levels[parentCategory],
+          [childCategory]: inputData.levels[parentCategory][childCategory] == "" ? true : false
+        }
+      }
+    }))
   };
   const arrOfPages = [
     <PersonalInformation
       key={"personal-information"}
       inputData={inputData}
+      inputError = {inputError}
       handleInputData={handleInputData}
       language={language}
     />,
     <LevelInformation
       key={"level-information"}
       inputData={inputData}
+      inputError = {inputError}
       setInputData={setInputData}
       handleLevelInputData={handleLevelInputData}
       language={language}
@@ -55,6 +128,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     <Feedback
       key={"feedback"}
       inputData={inputData}
+      inputError = {inputError}
       handleInputData={handleInputData}
       language={language}
     />,

@@ -96,7 +96,7 @@ export const Table = ({ levels, language }) => {
   };
   return (
     <>
-      <table className="table-fixed text-[12px] table-levels w-[700px] m-auto border-collapse border-1 border-slate-700">
+      <table className="table-fixed text-[12px] table-levels w-[700px] mt-2 m-auto border-collapse border-1 border-slate-700">
         {/* <caption>
                     <div className="caption-content">
                         {levelInfo.map((item, index) => <div key={index} className='sub-header'><span>{item.level}.</span><span>{item.name}</span></div>)}

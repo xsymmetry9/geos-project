@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json";
 
-const Feedback = ({ key, inputData, handleInputData, language }) => {
+const Feedback = ({ key, inputData, inputError, handleInputData, language }) => {
   const { feedback } = inputData;
 
   const placeholderContent = {
@@ -28,6 +28,8 @@ const Feedback = ({ key, inputData, handleInputData, language }) => {
           onChange={handleInputData}
           placeholder={placeholderContent[language.toLowerCase()]}
         ></textarea>
+        {inputError.feedback && <p className="text-red-600 text-sm">Please fill up the feedback section</p>}
+
       </div>
     </div>
   );
