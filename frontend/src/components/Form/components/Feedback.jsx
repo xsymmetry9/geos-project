@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json";
 
-const Feedback = ({ key, inputData, inputError, handleInputData, language }) => {
+const Feedback = ({ inputData, inputError, handleInputData, language }) => {
   const { feedback } = inputData;
 
   const placeholderContent = {
@@ -13,7 +13,7 @@ const Feedback = ({ key, inputData, inputError, handleInputData, language }) => 
   };
 
   return (
-    <div key={key} className="">
+    <div className="">
       <h2 className="bg-[#00646c] text-xl text-white p-2 font-secondary font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
       <p className="font-secondary text-gray-700 capitalize mt-2">
         <label htmlFor="">{placeholderContent[language]}</label>
@@ -36,7 +36,6 @@ const Feedback = ({ key, inputData, inputError, handleInputData, language }) => 
 };
 
 Feedback.propTypes = {
-  key: PropTypes.string,
   inputData: PropTypes.object,
   handleInputData: PropTypes.func,
   language: PropTypes.string,

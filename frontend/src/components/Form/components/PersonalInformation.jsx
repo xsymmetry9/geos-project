@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json"
 
-const PersonalInformation = ({ key, inputData, inputError, handleInputData, language }) => {
+const PersonalInformation = ({ inputData, inputError, handleInputData, language }) => {
   const { name, course, textbook, attendance, totalLessons } = inputData;
 
   //translation
@@ -15,7 +15,7 @@ const PersonalInformation = ({ key, inputData, inputError, handleInputData, lang
   } = labelText[language].form;
 
   return (
-    <div key={key} className="pb-[3rem]" id="personal-information">
+    <div className="pb-[3rem]" id="personal-information">
       <h2 className="bg-[#00646c] text-xl text-white text-center p-2 font-bold capitalize">{labelText[language].SPR["student_information"]}</h2>
       <div className="mt-8 m-auto">
         <div className="grid grid-cols-1 gap-6">
@@ -111,7 +111,6 @@ const PersonalInformation = ({ key, inputData, inputError, handleInputData, lang
 };
 
 PersonalInformation.propTypes = {
-  key: PropTypes.string,
   inputData: PropTypes.object,
   handleInputData: PropTypes.func,
   language: PropTypes.string,
