@@ -32,11 +32,11 @@ export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
           `${text("date", language)}: ${format(new Date(), "yyyy年M月d日")}`}
       </p>
       <p className="capitalize">
-        {text("attendance", language)}: {attendance} {text("times", language)}
+        {text("attendance", language)}: {attendance} <span className="lowercase">{text("times", language)}</span>
       </p>
       <p className="capitalize">
         {text("total_lessons", language)}: {totalLessons}{" "}
-        {text("times", language)}
+        <span className="lowercase">{text("times", language)}</span>
       </p>
       <p className="capitalize">
         {text("%_of_attendance", language)}:{" "}
