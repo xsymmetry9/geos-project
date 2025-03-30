@@ -96,6 +96,12 @@
   }
 }
 @media print {
+  header{
+    display: none;
+  }
+  footer{
+    display: none;
+  }
   .print-component{
     display: block;
     size: A4;
