@@ -105,6 +105,24 @@
   }
 }
 
+.title-container{
+  width: 100%;
+  padding-bottom: 12px;
+}
+.title-container > .container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.student-information {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 12px;
+}
+
 /* --------------------------- Styling for levels ----------------------------------------- */
 /* 
 .table-levels .sub-header {
