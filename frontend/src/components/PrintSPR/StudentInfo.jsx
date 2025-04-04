@@ -40,7 +40,7 @@ export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
       </p>
       <p className="capitalize">
         {text("%_of_attendance", language)}:{" "}
-        {((attendance / totalLessons) * 100)}%
+        {Math.round((attendance / totalLessons) * 100)}%
       </p>
     </div>
   );
