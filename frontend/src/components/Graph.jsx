@@ -75,16 +75,17 @@ const Graph = ({ userData, language }) => {
       text("vocabulary", language),
       text("grammar", language),
       text("pronunciation", language),
-      text("listening", language),
       text("conversation", language),
+      text("listening", language),
+
     ],
     datasets: [
       {
         label: text("initial", language),
         data: [
-          userData[0].initial,
+          userData[0].initial, 
           userData[1].initial,
-          userData[2].initial,
+          userData[2].initial, 
           userData[3].initial,
           userData[4].initial,
         ],

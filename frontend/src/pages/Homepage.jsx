@@ -86,14 +86,12 @@ function Homepage() {
                     <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
                       <Pencil size={20} />
                     </Link>
-
-                    <button className="text-green-600 cursor-pointer" id={item.id} onClick={handleDelete}>
-                      <Archive size={20} />
-                    </button>
-
-                    <Link className="text-red-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
+                    <Link className="text-green-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
                       <PrinterIcon size={20} />
                     </Link>
+                    <button className="text-red-600 cursor-pointer" id={item.id} onClick={handleDelete}>
+                      <Archive size={20} />
+                    </button>
                   </td>
                 </tr>
               );
@@ -113,7 +111,7 @@ function Homepage() {
           <ExportToExcel userData={userData} />
           <ImportFromExcel userData={userData} setUserData={setUserData} />
         </div>
-        <div className="overflow-x-auto">
+        <div className="px-2">
           {userData.SPR.length != 0 && <PlotTable />}
           {userData.SPR.length === 0 && <p className="text-center text-gray-500">Click add SPR or Level Check</p>}
         </div>

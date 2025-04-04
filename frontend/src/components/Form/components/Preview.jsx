@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json";
 
-const Preview = ({ key, inputData, language }) => {
+const Preview = ({inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
     inputData;
 
@@ -19,7 +19,7 @@ const Preview = ({ key, inputData, language }) => {
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div key={key} className="font-primary static preview-section">
+    <div className="font-primary static preview-section">
       <div className="p-3" id="class-infomration">
         <h2 className="text-2xl text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
         <p className="text-size-sm" >
@@ -78,7 +78,6 @@ const Preview = ({ key, inputData, language }) => {
 };
 
 Preview.propTypes = {
-  key: PropTypes.string,
   inputData: PropTypes.object,
   language: PropTypes.string,
 };

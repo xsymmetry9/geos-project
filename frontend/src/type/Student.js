@@ -12,15 +12,15 @@ class Student {
     this.name = "";
     this.course = "";
     this.textbook = "";
-    this.attendance = 0;
-    this.totalLessons = 0;
+    this.attendance = "";
+    this.totalLessons = "";
     this.feedback = "";
     this.levels = {
       vocabulary: new Levels(),
       pronunciation: new Levels(),
       grammar: new Levels(),
-      listening: new Levels(),
       conversation: new Levels(),
+      listening: new Levels(),
     };
   }
 }

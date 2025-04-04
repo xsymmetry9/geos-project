@@ -10,6 +10,9 @@ export default {
         colors: require("tailwindcss/colors")
         ,
     },
+    future: {
+        unstable_tailwind_color_format: 'rgb', 
+    },
     corePlugins:{
         preflight: false,
     },

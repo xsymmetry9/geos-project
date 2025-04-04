@@ -12,6 +12,8 @@ import {
 } from "./PrintSPR/StudentInfo";
 import PlotCards from "./PrintSPR/PlotCards";
 
+import "../styles/print.css"
+
   // Working on Transforming data
 export const processData = (data) =>{
     return Object.keys(data).map((category) =>({
@@ -30,13 +32,13 @@ export const PrintContent = ({ parsedData }) => {
 
   return (
     <>
-      <div className="w-full pb-3">
-        <div className="flex flex-col justify-center items-center gap-1">
+      <div className="title-container">
+        <div className="container">
           <img width={120} height={60} src={"/logo.svg"} alt = {"Company Logo"} />
           <TitleSPR language={language} />
         </div>
       </div>
-      <div className="grid grid-cols-2 pb-3">
+      <div className="student-information">
         <StudentInfo name={name} textbook={textbook} course={course} language={language} />
         <AttendanceInfo attendance={attendance} totalLessons={totalLessons} language={language} />
       </div>

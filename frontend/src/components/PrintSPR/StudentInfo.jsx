@@ -27,18 +27,20 @@ export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
   return (
     <div id="student-info" className="justify-self-end mr-[3rem]">
       <p className="capitalize">
-        {text("date", language)}: {format(new Date(), "MM/dd/yyyy")}
+        {language != "chinese" ? 
+          `${text("date", language)}: ${format(new Date(), "MM/dd/yyyy")}` : 
+          `${text("date", language)}: ${format(new Date(), "yyyy年M月d日")}`}
       </p>
       <p className="capitalize">
-        {text("attendance", language)}: {attendance} {text("times", language)}
+        {text("attendance", language)}: {attendance} <span className="lowercase">{text("times", language)}</span>
       </p>
       <p className="capitalize">
         {text("total_lessons", language)}: {totalLessons}{" "}
-        {text("times", language)}
+        <span className="lowercase">{text("times", language)}</span>
       </p>
       <p className="capitalize">
         {text("%_of_attendance", language)}:{" "}
-        {parseFloat((attendance / totalLessons) * 100).toFixed(2)}%
+        {Math.round((attendance / totalLessons) * 100)}%
       </p>
     </div>
   );
@@ -94,7 +96,7 @@ export const Table = ({ levels, language }) => {
   };
   return (
     <>
-      <table className="table-fixed font-secondary text-[12px] table-levels w-[700px] m-auto border-collapse border-1 border-slate-700">
+      <table className="table-fixed text-[12px] table-levels w-[700px] mt-2 m-auto border-collapse border-1 border-slate-700">
         {/* <caption>
                     <div className="caption-content">
                         {levelInfo.map((item, index) => <div key={index} className='sub-header'><span>{item.level}.</span><span>{item.name}</span></div>)}

@@ -4,7 +4,7 @@ import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
 import labelText from "../../../assets/other/labelText.json";
 
-function LanguageAspect({key, inputData, aspectName, handleLevelInput, language }) {
+function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
   const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
 
   const displayHandlerOpen = (e) =>{
@@ -52,11 +52,11 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
             {/* Contains Several options depending on the JSON file */}
             {/* An empty string is set to default */}
 
-            <option className ="font-secondary text-base text-md" value= {""}> Select Score</option>
+            <option className ="font-secondary text-base text-md" value = "select_score">Select Score</option>
 
             {/* Reads and maps all level from JSON file */}
             {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
-              <>
+              
               <option
                 key={`${aspectName}-${itemName}-${index}`}
                 className="font-secondary text-base"
@@ -64,7 +64,7 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
               >
                 {item_Value.level}
               </option>
-            </>
+      
           ))}
           </select>
         </label>
@@ -95,11 +95,13 @@ function LanguageAspect({key, inputData, aspectName, handleLevelInput, language 
   }
   return (
     <>
-      <div key={key} className="p-t-3">
+      <div className="p-t-3">
         <h2 className="text-lg font-bold capitalize border-0 border-b-2 border-dark-green my-3">{labelText[language].SPR[aspectName]}</h2>
         <div className="grid grid-cols-1 gap-3">
         {["initial", "target", "final"].map((item, index) => (
-    <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />
+          <div key={index}>
+             <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />
+          </div>
         ))}
 
       </div>

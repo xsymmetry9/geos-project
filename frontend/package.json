@@ -46,7 +46,12 @@
     "axios": "^1.7.7",
     "chart.js": "^4.4.7",
     "file-saver": "^2.0.5",
+<<<<<<< HEAD
     "install": "^0.13.0",
+=======
+    "html2canvas-pro": "^1.5.8",
+    "jspdf": "^3.0.0",
+>>>>>>> 50c0c0dc80359ac0a8ed7678721a42a64111c5dd
     "lucide-react": "^0.477.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
