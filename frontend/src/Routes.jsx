@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
 import LevelCheckForm from "./pages/LevelCheckForm";
 import Test from "./pages/Test";
+import RenderPDF from "./pages/RenderPDF";
 
 const routes = [
   {
@@ -33,6 +34,10 @@ const routes = [
   {
     path: "test",
     element: <Test />,
+  },
+  {
+    path: "renderPDF",
+    element: <RenderPDF />
   }
 ];
 
