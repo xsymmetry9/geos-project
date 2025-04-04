@@ -3,6 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
 import {PrintContent} from "../components/PrintStudentProgressReport";
+import html2canvas from "html2canvas-pro";
 
 const PrintPage = () => {
   const { id, language } = useParams(); //Gets id and language through link
@@ -34,6 +35,23 @@ const PrintPage = () => {
       setIsPrinting(false);
     },
   });
+  const handleCapture = async() =>{
+
+    if(componentRef.current) {
+      const canvas = await html2canvas(componentRef.current, {
+        allowTaint: true,
+        scale: 2,
+        useCORS: true,
+        backgroundColor:"#ffffff",
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = `student-report-${id}.png`;
+      link.click();
+    }
+  };
 
   return (
     <>
@@ -49,6 +67,7 @@ const PrintPage = () => {
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
+        <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button>
         {/* Add a to pdf function */}
         {/* <button onClick={() => generagePDF(pdfRef, {filename: `student-report-${id}.pdf`})}
           className="btn btn-primary w-[150px] flex items-center justify-center gap-3">
