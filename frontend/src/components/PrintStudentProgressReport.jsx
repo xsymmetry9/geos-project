@@ -34,7 +34,7 @@ export const PrintContent = ({ parsedData }) => {
     <>
       <div className="title-container">
         <div className="container">
-          <img width={120} height={60} src={"/logo.svg"} alt = {"Company Logo"} />
+          <img width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
           <TitleSPR language={language} />
         </div>
       </div>
