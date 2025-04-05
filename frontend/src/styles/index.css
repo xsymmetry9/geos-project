@@ -10,6 +10,16 @@
     --color-active: rgb(9, 197, 235);
 }
 
+.btn{
+  cursor: pointer;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+  border-radius: 5px;
+  padding: calc(var(--spacing) + 4px) calc(var(--spacing) + 12px);
+}
+
 .btn-primary {
     cursor: pointer;
     font-family: var(--font-secondary);
