@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { Archive, Pencil, PrinterIcon, Plus } from "lucide-react";
+import { Archive, Pencil, PrinterIcon, Plus, SquareX } from "lucide-react";
 import User from "../type/User";
 import ExportToExcel from "../components/ExportToExcel";
 import { getDataFromLocal, editDataFromLocal, deleteStudentById } from "../utils/functions";
@@ -13,6 +13,7 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [addFormNav, setAddFormNav] = useState(false);
+  const [deletePage, setDeletePage] = useState({display: false, id: null});
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,14 +50,35 @@ function Homepage() {
       </>
     );
   }
-  const handleDelete = (e) => {
-    const { id } = e.currentTarget;
+  const handleDisplayDelete = (e) => {
+    const {id} = e.currentTarget;
+    setDeletePage((prev) => ({
+      ...prev, 
+      display: true,
+      id: id
+    }))
+  };
+  const handleDelete = () =>{
+    const { id } = deletePage;
     deleteStudentById(id); // Delete single item from localStorage
     setUserData((prev) => ({
       ...prev,
       SPR: prev.SPR.filter((item) => item.id != id),
     }));
-  };
+    closePage();
+  }
+
+  const handleCancelDeleteBtn = () =>{
+    closePage();
+  }
+
+  const closePage = () =>{
+    setDeletePage((prev) =>({
+      ...prev,
+      display: false,
+      id: null
+    }))
+  }
 
   const PlotTable = () => {
     return (
@@ -89,7 +111,7 @@ function Homepage() {
                     <Link className="text-green-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
                       <PrinterIcon size={20} />
                     </Link>
-                    <button className="text-red-600 cursor-pointer" id={item.id} onClick={handleDelete}>
+                    <button className="text-red-600 cursor-pointer" id={item.id} onClick={handleDisplayDelete}>
                       <Archive size={20} />
                     </button>
                   </td>
@@ -132,7 +154,26 @@ function Homepage() {
             </div>
           </div>
         )}
-      </div>
+      {deletePage.display && (
+        <div className="font-secondary absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-50 w-[500px] h-[300px] border border-slate-500 grid grid-rows-[40px_1fr]">
+          <div className="mt-0 bg-dark-green w-full flex justify-end py-2">
+            <button className="cursor-pointer" onClick={handleCancelDeleteBtn}>
+              <SquareX className="text-white"/>
+            </button>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <p className="pb-3">Are you want to delete this?</p>
+            <div className="flex gap-3 justify-center">
+              <button className="btn bg-red-500 text-white hover:bg-white hover:text-red-500 hover:outline-2 hover:outline-red-500 transition-colors duration-300" onClick={handleDelete}>Delete</button>
+              <button className="btn bg-white outline-1 outline-black rounded hover:bg-black hover:text-white hover:outline-none transition-colors duration-300" onClick={handleCancelDeleteBtn}>Cancel</button>
+            </div>
+          </div>
+       
+        </div>
+      )}
+    </div>
+   
+      
     </>
   );
 }
