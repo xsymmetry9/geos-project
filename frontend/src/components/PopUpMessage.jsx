@@ -7,7 +7,7 @@ import { SquareX, CircleCheckBig } from "lucide-react";
 const PopUpMessage = ({ setDisplayPopupMessage }) => {
   const language = useContext(LanguageContext);
   return (
-    <div className="sticky m-auto z-1 bg-slate-50 top-0 max-w-[400px] h-[350px] w-full outline-2 outline-dark-green rounded">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1 bg-white top-0 max-w-[400px] h-[350px] w-full outline-2 outline-dark-green rounded">
       <div className="mt-0 bg-dark-green w-full flex justify-end py-2">
         <button className="cursor-pointer" onClick={() => setDisplayPopupMessage(false)}>
           <SquareX className="text-white"/>
