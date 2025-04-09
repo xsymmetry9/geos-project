@@ -77,7 +77,7 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
           <div className="grid grid-cols-[1fr_auto]">
               <p className="text-secondary text-slate-600">
                 {
-                  `${getLevelInformationByLevel({level: inputData.levels[aspectName][itemName], cat: aspectName, lang: language}).description}`
+                  `${getLevelInformationByLevel({level: inputData.levels[aspectName][itemName], cat: aspectName, lang: language})}`
                 }
               </p>
               {/* Add a close button */}
