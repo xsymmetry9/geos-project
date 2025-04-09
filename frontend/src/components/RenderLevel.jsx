@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import levelData from "../assets/other/levels.json";
+import { getLevelInformationByLevel } from "../utils/functions";
 
 const RenderLevelInformation = ({ category, studentLevel, language }) => {
-  const levels = levelData[language][category];
   return (
     <>
-      <p>{levels[studentLevel]}</p>
+      <p>{getLevelInformationByLevel({level: studentLevel, cat: category, lang: language})}</p>
     </>
   );
 };
