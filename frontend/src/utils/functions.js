@@ -38,12 +38,15 @@ export function deleteStudentById(id) {
 
 export function getLevelInformationByLevel(obj) {
   const {lang, cat, level} = obj;
-  if (!level) return {id: null, description: "Choose a level"}
-  const aspectOfLanguage = levelData[lang][cat]; // returns an array
-    const results = aspectOfLanguage.filter((item) => item.level == level);
-    const result = results[0];
+  // if (!level) return {id: null, description: "Choose a level"}
 
-  return result; // returns an object
+  if(level === "select_score") return "Choose a score";
+  const aspectOfLanguage = levelData[lang][cat]; // returns an array
+  const results = aspectOfLanguage.filter((item) => item.level == level);
+  const result = results[0].description;
+
+  return result;
+
 }
 
 export function getAllLevelsInformationByAspect(obj) {
