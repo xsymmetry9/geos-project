@@ -47,14 +47,6 @@ export const AttendanceInfo = ({ attendance, totalLessons, language }) => {
 };
 
 export const Table = ({ levels, language }) => {
-  // const levelInfo = [
-  //   {level: "1", name: text("caption", language)["low_beginner"]},
-  //   {level: "2-3", name: text("caption", language)["low_intermediate"]},
-  //   {level: "4-5", name: text("caption", language)["intermediate"]},
-  //   {level: "8-9", name: text("caption", language)["upper_intermediate"]},
-  //   {level: "10", name: text("caption",language)["advanced"]}
-  // ];
-
   const labels = [
     "",
     "vocabulary",
