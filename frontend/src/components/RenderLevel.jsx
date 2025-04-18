@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import { getLevelInformationByLevel } from "../utils/functions";
 
 const RenderLevelInformation = ({ category, studentLevel, language }) => {
+  const studentInfo = getLevelInformationByLevel({
+    level: studentLevel,
+    cat: category,
+    lang: language
+  })
   return (
     <>
-      <p>{getLevelInformationByLevel({level: studentLevel, cat: category, lang: language})}</p>
+      <p>{studentInfo}</p>
     </>
   );
 };
