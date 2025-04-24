@@ -9,6 +9,8 @@ import Button from "./components/Button";
 import { LanguageContext } from "../../pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 
+import labelText from "../../assets/other/labelText.json"
+
 const PlotForm = ({ inputData, setInputData }) => {
   const [page, setPage] = useState(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
@@ -147,7 +149,7 @@ const PlotForm = ({ inputData, setInputData }) => {
               handleSubmit={handleSubmit}
             />
             {page == 3 && (
-              <input className="btn btn-primary" type="submit" value={"Save"} />
+              <input className="btn btn-primary" type="submit" value={labelText[language].save} />
             )}
           </div>  
         </form>
