@@ -1,5 +1,6 @@
 {
   "english": {
+    "save": "save",
     "form": {
       "title": "Personal Information",
       "input_name": "name",
@@ -47,23 +48,24 @@
     }
   },
   "chinese": {
+    "save": "儲存",
     "form": {
       "title": "個人信息",
       "input_name": "姓名",
       "input_course": "課程",
       "input_textbook": "教材",
-      "input_attendance": "出勤",
-      "input_totallessons": "總課時",
+      "input_attendance": "出席",
+      "input_totallessons": "總課堂數",
       "comment": "評論"
     },
     "SPR": {
       "title": "學生進度報告",
       "student_information": " 學生資料",
       "student_level": "學生程度 ",
-      "student_feedback": " 學生意見",
+      "student_feedback": "教師評語",
       "student_name": "學生姓名",
       "class_information": "課堂資訊 ",
-      "student_evaluation": "學生評估",
+      "student_evaluation": "學習評估",
       "teacher_feedback": "教師回饋",
       "course": "課程",
       "textbook": "教材",
@@ -94,6 +96,7 @@
     }
   },
   "korean": {
+    "save":"save",
     "form": {
       "title": "개인 정보",
       "input_name": "이름",
@@ -141,6 +144,7 @@
     }
   },
   "japanese": {
+    "save": "save",
     "form": {
       "title": "個人情報",
       "input_name": "名前",
