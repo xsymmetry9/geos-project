@@ -43,7 +43,7 @@ export function getLevelInformationByLevel(obj) {
   if(level === "select_score") return "Choose a score";
   const aspectOfLanguage = levelData[lang][cat]; // returns an array
   const results = aspectOfLanguage.filter((item) => item.level == level);
-  const result = results[0].description;
+  const result = results[0] != null ? results[0].description : "Select a score";
 
   return result;
 
