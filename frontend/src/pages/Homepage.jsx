@@ -96,7 +96,7 @@ function Homepage() {
               return (
                 <tr key={`${item.id}-${index}`} className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300">
                   <td key={`${item.id}-date`} className="p-3 text-center">
-                    {format(new Date(), "MM/dd/yyyy")}
+                    {format(new Date(item.dateCreated), "MM/dd/yyyy")}
                   </td>
                   <td key={`${item.id}-name`} className="p-3 text-center">
                     {item.name}
