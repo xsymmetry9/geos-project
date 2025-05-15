@@ -1,59 +1,75 @@
 @use "../base.scss";
 
-.dashboard{
-    padding-bottom: 3rem;
-    width: inherit;
+.dashboard {
+  padding-bottom: 3rem;
+  width: inherit;
 }
 
-.dashboard-container{
-    margin: auto;
-    padding: 0 12px;
-    overflow-x: auto;
+.dashboard-container {
+  margin: auto;
+  padding: 0 12px;
+  overflow-x: auto;
 }
-.buttons-navigation-container{
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    padding-right: 12px;
+.buttons-navigation-container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding-right: 12px;
 }
-.dashboard-table{
-    border-collapse: collapse;
-    max-width: 800px;
-    width: 100%;
-    margin-inline: auto;
+.dashboard-table {
+  border-collapse: collapse;
+  max-width: 800px;
+  width: 100%;
+  margin-inline: auto;
 
-    td,th{
-        padding: base.$spacing-1;
+  td,
+  th {
+    padding: base.$spacing-1;
+  }
+  td:last-child,
+  th:last-child {
+    width: 100px;
+    white-space: nowrap;
+  }
+  tr {
+    background-color: base.$color-light-gray;
+  }
+  tr:nth-child(even) {
+    background-color: base.$bg-white-600;
+  }
+  tr:hover,
+  tr:focus {
+    background-color: #ddd;
+  }
+  th {
+    background-color: base.$bg-white-600;
+    color: base.$color-dark-green;
+    font-weight: 600;
+  }
+  td {
+    padding: base.$spacing-1;
+  }
+
+  .link-style {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    background-color: transparent;
+    color: base.$primary-color-dark;
+    text-decoration: none;
+    transition: all ease-in 0.5s;
+    &:hover {
+      color: base.$color-dark-green;
+      font-weight: 600;
     }
-    tr{
-        background-color: base.$color-light-gray;
-    }
-    tr:nth-child(even){
-        background-color: base.$bg-white-600;
-    }
-    tr:hover, tr:focus{
-        background-color: #ddd;
-    }
-    th{
-        background-color: base.$bg-white-600;
+
+    .icon {
+      color: inherit;
+      &:hover {
         color: base.$color-dark-green;
-        font-weight: 600;
+      }
     }
-    td{
-        padding: base.$spacing-1;
-    }
-  
-    .link-style{
-        cursor: pointer;
-        font-family: inherit;
-        font-size: inherit;
-        border: none;
-        background-color: transparent;
-        color: black;
-        text-decoration: none;
-        &:hover{
-            color: green;
-        }
-    }
+  }
 }

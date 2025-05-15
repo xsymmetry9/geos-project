@@ -1,125 +1,119 @@
-import { useState, useId } from "react";
-import LevelTabs from "./LevelTabs";
-import text from "../../../assets/other/levels.json";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { SquareX, Info } from "lucide-react";
+import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
+import labelText from "../../../assets/other/labelText.json";
 
-function LanguageAspect({inputData, aspectName, handleLevelInput, language}) {
+function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
+  const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
 
-    const [displayInitialHelp, setDisplayInitial] = useState(false);
-    const [displayTargetHelp, setDisplayTargetHelp] = useState(false);
-    const [displayFinalHelp, setDisplayFinalHelp] = useState(false);
+  const displayHandlerOpen = (e) =>{
+    const name = e.currentTarget.id.split('-')[0];
+    setDisplayHelp((prev) =>({
+      ...prev,
+      [name]: true
+    }));
+  }
 
-    const handlerHelp = (e) =>{
-        const {id} = e.currentTarget;
-        if(id === "initial-open"){
-            setDisplayInitial(true);
-        } else if(id === "target-open"){
-            setDisplayTargetHelp(true);
-        } else {
-            setDisplayFinalHelp(true);
-        }
-    }
+  const displayHandlerClose = (e) =>{
+    const name = e.currentTarget.id.split('-')[0];
+    setDisplayHelp((prev) => ({
+      ...prev,
+      [name]: false
+    }))
+  }
+  const titleLanguage = {
+    english: ["initial", "target", "final"],
+    chinese: ["初始", "目標", "結束"],
+    korean: ["초기", "목표", "결과"],
+    japanese: ["初期", "目標", "終了"],
+  };
 
-    const handlerCloseHelp = (e) =>{
-        const {id} = e.currentTarget;
-        if(id === "initial-close"){
-            setDisplayInitial(false);
-        } else if(id === "target-close"){
-            setDisplayTargetHelp(false);
-        } else {
-            setDisplayFinalHelp(false);
-       }
-    }
+  const PlotSelectOptionLevel = ({numIndex, itemName, aspectName}) => {
+    return (      
+      <>
+        <div className= "w-full flex justify-between">
+          {/* Title */}
+          <span className="text-gray-700 capitalize">{titleLanguage[language][numIndex]}</span>
+          { !displayHelp[itemName] && <button
+              className="cursor-pointer"
+              id={`${itemName}-open`}
+              onClick={displayHandlerOpen}>
+                <Info width={20} className="text-green-600 hover:text-green-300"/>
+              </button>}
+        </div>
+        {/* Language Aspect Input */}
+        <label htmlFor={`${aspectName}-${itemName}`}>
+          <select className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+          name= {`${aspectName}-${titleLanguage.english[numIndex]}`}
+          id={`${aspectName}-${titleLanguage.english[numIndex]}`}
+          value={inputData.levels[aspectName][titleLanguage.english[numIndex]]}
+          onChange={handleLevelInput}>
+            {/* Contains Several options depending on the JSON file */}
+            {/* An empty string is set to default */}
 
-    const initialID = useId();
-    const targetID = useId();
-    const finalID = useId();
+            <option className ="font-secondary text-base text-md" value = "select_score">Select Score</option>
 
+            {/* Reads and maps all level from JSON file */}
+            {getAllLevelsInformationByAspect({name: aspectName, lang: language}).map((item_Value, index) => (
+              
+              <option
+                key={`${aspectName}-${itemName}-${index}`}
+                className="font-secondary text-base"
+                value={item_Value.level}
+              >
+                {item_Value.level}
+              </option>
+      
+          ))}
+          </select>
+        </label>
 
-    const levelValue = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7.5, 8, 8.5, 9, 9.5, 10, 10.5];
+        {/* Displays a help box  */}
+        <div key={`${aspectName}-${itemName}-display`} className= "m-t-1"/>
 
-    const titleLanguage = {
-        english: ["Initial", "Target", "Final"],
-        chinese: ["初始", "目標", "結束"],
-        korean: ["초기", "목표", "결과"],
-        japanese: ["初期", "目標", "終了"]
-    }
-    return(
-        <>
-            <div className="input-wrapper p-t-3">
-                <h2>{aspectName}</h2>
-                <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][0]}</label>
-                <select 
-                    className="spacing-sm text-2"
-                    id={`${aspectName}-initial`}
-                    name={`${aspectName}-initial`}
-                    value ={inputData.levels[aspectName].initial}
-                    onChange={handleLevelInput}>
-                    <option className="text-2" value={inputData}>Select score</option>
-                    {levelValue.map((item_Value, index)=> 
-                    <>
-                        <option
-                            className="text-2" 
-                            key={`${initialID}-${item_Value}-${index}`} 
-                            value={item_Value}>
-                                {item_Value}
-                        </option>
-                    </>
-                        )}
-                </select>
-                <div className="m-t-1">
-                    {displayInitialHelp && <div className="level-text-box-container">
-                        <p>{text[language][aspectName][inputData.levels[aspectName].initial]}</p>
-                        <button className="btn-close" id="initial-close" onClick={handlerCloseHelp}>x</button>
-                    </div>}
-                    {!displayInitialHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="initial-open" onClick={handlerHelp}>?</button></div>}
-                </div>
-
-
-            </div>
-            <div className="input-wrapper">
-                <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][1]}</label>
-                <select 
-                className="spacing-sm text-2"
-                id={`${aspectName}-target`}
-                name={`${aspectName}-target`}
-                value ={inputData.levels[aspectName].target}
-                onChange={handleLevelInput}>
-                <option className="text-2" value={inputData}>Select score</option>
-                {levelValue.map((item_Value, index)=> <option className="text-2" key={`${targetID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                </select>
-                <div className="m-t-1">
-                    {displayTargetHelp && <div className="level-text-box-container">
-                        <p>{text[language][aspectName][inputData.levels[aspectName].target]}</p>
-                        <button className="btn-close" id="target-close" onClick={handlerCloseHelp}>x</button>
-                    </div>}
-                    {!displayTargetHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="target-open" onClick={handlerHelp}>?</button></div>}
-                </div>
-
-            </div>
-            <div className="input-wrapper">
-                    <label className="text-2 uppercase">{titleLanguage[language.toLowerCase()][2]}</label>
-                    <select 
-                    className="spacing-sm text-2"
-                    id={`${aspectName}-final`}
-                    name={`${aspectName}-final`}
-                    value ={inputData.levels[aspectName].final}
-                    onChange={handleLevelInput}>
-                    <option className="text-2" value={inputData}>Select score</option>
-                    {levelValue.map((item_Value, index)=> <option className="text-2" key={`${finalID}-${item_Value}-${index}`} value={item_Value}>{item_Value}</option>)}
-                </select>
-                <div className="m-t-1">
-                    {displayFinalHelp && <div className="level-text-box-container">
-                        <p>{text[language][aspectName][inputData.levels[aspectName].final]}</p>
-                        <button className="btn-close" id="final-close" onClick={handlerCloseHelp}>x</button>
-                    </div >}
-                    {!displayFinalHelp && <div className="flex flex-end">
-                        <button className="btn-help" id="final-open" onClick={handlerHelp}>?</button></div>}
-                </div>
-            </div>
-        </>
+        {/* Shows the helpbox is not active.  In order to activate it, click the activate button */}
+        {displayHelp[itemName] && 
+          <div className="grid grid-cols-[1fr_auto]">
+              <p className="text-secondary text-slate-600">
+                {
+                  `${getLevelInformationByLevel({level: inputData.levels[aspectName][itemName], cat: aspectName, lang: language})}`
+                }
+              </p>
+              {/* Add a close button */}
+              <button
+                className="cursor-pointer"
+                id={`${itemName}-close`}
+                onClick={displayHandlerClose}
+              >
+                <SquareX width={20} className="text-red-600 hover:text-red-300"/>
+              </button>
+            </div>}
+      </>
     )
+    
+  }
+  return (
+    <>
+      <div className="p-t-3">
+        <h2 className="text-lg font-bold capitalize border-0 border-b-2 border-dark-green my-3">{labelText[language].SPR[aspectName]}</h2>
+        <div className="grid grid-cols-1 gap-3">
+        {["initial", "target", "final"].map((item, index) => (
+          <div key={index}>
+             <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </>
+  );
 }
 
+LanguageAspect.propTypes = {
+  inputData: PropTypes.object,
+  aspectName: PropTypes.string,
+  handleLevelInput: PropTypes.func,
+  language: PropTypes.string,
+};
 export default LanguageAspect;

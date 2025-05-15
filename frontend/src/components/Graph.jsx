@@ -1,116 +1,148 @@
 import React from "react";
-import {Radar} from "react-chartjs-2";
+import PropTypes from "prop-types";
+import { Radar } from "react-chartjs-2";
 import {
-    Chart as ChartJS,
-    RadialLinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(
-    RadialLinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Tooltip,
-    Legend
-);
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
 import labelText from "../assets/other/labelText.json";
 
-const text = (phrase, language) => labelText[language]['SPR'][phrase];
+const text = (phrase, language) => labelText[language]["SPR"][phrase];
 
-const Graph = ({data, language}) =>{
-    const {levels} = data;
+const Graph = ({ userData, language }) => {
 
-    const options = {
-        plugins:{
-            layout:{
-                padding: 0
-            },
-            tooltip: false,
-
-            legend:{
-                position: "bottom",
-                align: "center",
-                title: {
-                    position: "center",
-                },
-                labels:{
-                    font: {size: 13},
-                    color: "black"
-                },
-            },
+  const options = {
+    plugins: {
+      layout: {
+        padding: 0,
+      },
+      legend: {
+        position: "bottom",
+        align: "center",
+        title: {
+          position: "center",
         },
-
-        scales: {
-            r: {
-                min: 1,
-                max: 10,
-                ticks: {
-                    stepSize: 2,
-                    color: "gray"
-                },
-                padding: 0,
-                grid:{
-                    color: "gray",
-                },
-                angleLines:{
-                    color: "gray",
-                },
-                pointLabels:{
-                    color: "gray",
-                    font: {
-                        size: 12,
-                    },
-                }
-             
-            }
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'circle',
+          font: { size: 13 },
+          color: "black",
+          padding: 24,
         },
-        
-    };
-    const graphData = {
-        labels: [text("vocabulary", language), text("grammar", language), text("pronunciation", language), text("listening", language), text("conversation", language)],
-        datasets:[
-            {
-                label: text("initial", language),
-                data: [levels.vocabulary.initial, levels.grammar.initial, levels.pronunciation.initial, levels.listening.initial, levels.conversation.initial],
-                backgroundColor: "transparent",
-                borderColor: 'rgb(0, 0, 250)',
-                borderWidth: 1.5,
-            },
-            {
-                label: text("final", language),
-                data: [levels.vocabulary.final, levels.grammar.final, levels.pronunciation.final, levels.listening.final, levels.conversation.final],
-                backgroundColor: "transparent",
-                borderColor: 'rgb(0, 250, 0)',
-                borderWidth: 1.5,
-            },
-            {
-                label: text("target", language),
-                data: [levels.vocabulary.target, levels.vocabulary.target, levels.grammar.target, levels.pronunciation.target, levels.conversation.target],
-                backgroundColor: "transparent",
-                borderColor: 'rgb(250, 0, 0)',
-                borderWidth: 1.5,
-            }
+      },
+      elements:{
+        line: {
+          backgroundColor: "blue",
+        }
+      }
 
-        ]
-    }
-    
-    return(
-        <>
-            <div className="graph-container">
-                <Radar
-                    data = {graphData}
-                    options = {options}
-                />
-            </div>
-        
-        </>
-    )
-}
+    },
+
+    scales: {
+      r: {
+        min: 0,
+        max: 10,
+        ticks: {
+          stepSize: 2,
+          color: "#9ca3af",
+        },
+        padding: 0,
+        grid: {
+          color: "#9ca3af",
+        },
+        angleLines: {
+          color: "#9ca3af",
+        },
+        pointLabels: {
+          color: "rgb(0,0,0)",
+          font: {
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+  const graphData = {
+    labels: [
+      text("vocabulary", language),
+      text("grammar", language),
+      text("pronunciation", language),
+      text("conversation", language),
+      text("listening", language),
+
+    ],
+    datasets: [
+      {
+        label: text("initial", language),
+        data: [
+          userData[0].initial, 
+          userData[1].initial,
+          userData[2].initial, 
+          userData[3].initial,
+          userData[4].initial,
+        ],
+        backgroundColor: "transparent",
+        borderColor: "#155E95",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "blue",
+        pointBackgroundColor: "lightblue"
+      },
+      {
+        label: text("final", language),
+        data: [
+          userData[0].final,
+          userData[1].final,
+          userData[2].final,
+          userData[3].final,
+          userData[4].final,
+        ],
+        backgroundColor: "transparent",
+        borderColor: "#5B913B",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "green",
+        pointBackgroundColor: "lightgreen"
+      },
+      {
+        label: text("target", language),
+        data: [
+          userData[0].target,
+          userData[1].target,
+          userData[2].target,
+          userData[3].target,
+          userData[4].target,
+        ],
+        backgroundColor: "transparent",
+        borderColor: "#BE3144",
+        borderWidth: 1.8,
+        pointRadius: 1.8,
+        pointBorderColor: "red",
+        pointBackgroundColor: "rgb(238, 112, 112)"
+      },
+    ],
+  };
+
+  return (
+    <>
+      <div className="graph-container">
+        <Radar data={graphData} options={options} />
+      </div>
+    </>
+  );
+};
+
+Graph.propTypes = {
+  data: PropTypes.object,
+  language: PropTypes.string,
+};
 
 export default Graph;

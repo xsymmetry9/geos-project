@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "./print.css";
+
+@theme{
+    --font-primary: Merriweather, serif;
+    --font-secondary: Poppins, sans-serif;
+    --spacing: 4px;
+
+    --color-dark-green: rgb(0,121,107);
+    --color-active: rgb(9, 197, 235);
+}
+
+.btn{
+  cursor: pointer;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+  border-radius: 5px;
+  padding: calc(var(--spacing) + 4px) calc(var(--spacing) + 12px);
+}
+
+.btn-primary {
+    cursor: pointer;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    background-color: var(--color-dark-green); 
+    color: white;
+    border: none;
+    padding: calc(var(--spacing) + 4px) calc(var(--spacing) + 12px);
+    border-radius: 5px;
+    transition: all 0.7s ease-in-out;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+      background-color: white;
+      color: #00796b;
+      outline: 3px solid var(--color-dark-green);
+  }
+  .pagination-container {
+    --height: 80px;
+    --width: 100%;
+    --square_width: calc($width/4);
+    padding-bottom: 12px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-inline: auto;
+    width: var(--width);
+    height: var(--height);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-shadow: 0.5px 1px rgba(0, 0, 0, 0.7);
+    position: relative;
+    .square {
+      height: var(--height);
+      width: calc(25%);
+      p {
+        text-align: center;
+      }
+    }
+    .circle::after,
+    .circle::before {
+      content: "";
+      height: 2px;
+      position: absolute;
+      background-color: var(--color-dark-green);
+      box-shadow: 1px 1px 0.5px 0.5px rgba(173, 216, 230, 0.7);
+    }
+    .circle::after {
+      width: calc(50% - 10px);
+      right: 0;
+    }
+    .circle::before {
+      width: calc(50% - 10px);
+      left: 0;
+    }
+    .active {
+      background-color: rgba(65, 56, 56, 0.1);
+    }
+  }
+  .square {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .circle {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    border: none;
+    box-shadow: 1px 1px 2px 2px rgba(173, 216, 230, 0.7);
+    border: 2px solid var(--color-dark-green);
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    font-weight: 600;
+    margin-inline: auto;
+  }
+  .circle.completed {
+    background-color: rgba(173, 216, 230, 0.3);
+    color: black;
+  }
+  

@@ -1,26 +1,26 @@
 //_base.scss
 
 $color-light-blue: rgb(9, 197, 235);
-$color-dark-green:  #00646c;
+$color-dark-green: #00646c;
 $color-light-gray: #d1d5db;
 $font-primary: "Merriweather", serif;
 $font-secondary: "Poppins", sans-serif;
 $primary-color: #f3f3f3;
-$primary-color-dark: #1B1833;
-$color-active: #F29F58;
+$primary-color-dark: #1b1833;
+$color-active: #f29f58;
 $body-color: red;
-$font-color: black;
-$font-color-dark: black;
+$font-color: $primary-color-dark;
+$font-color-dark: $primary-color-dark;
 $font-color-light: $primary-color;
 $background-color: #f3f3f3;
 $font-center: center;
 $line-seperator: gray;
 
-$font-size-1: .877rem;
-$font-size-2: $font-size-1 + .2rem;
+$font-size-1: 0.877rem;
+$font-size-2: $font-size-1 + 0.2rem;
 $font-size-3: $font-size-1 + 4rem;
-$font-size-4: $font-size-1 + .6rem;
-$font-size-5: $font-size-1 + .8rem;
+$font-size-4: $font-size-1 + 0.6rem;
+$font-size-5: $font-size-1 + 0.8rem;
 $font-size-6: $font-size-1 + 1rem;
 
 $print-font-size-1: 12px;
@@ -51,25 +51,23 @@ $spacing-6: $spacing + 14px;
 $spacing-7: $spacing + 16px;
 $spacing-8: $spacing + 18px;
 
-
-.spacing-b-1{
-    padding-bottom: 1rem; 
+.spacing-b-1 {
+  padding-bottom: 1rem;
 }
-.spacing-b-2{
-    padding-bottom: 1.1rem; 
+.spacing-b-2 {
+  padding-bottom: 1.1rem;
 }
-.spacing-b-3{
-    padding-bottom: 1.2rem; 
+.spacing-b-3 {
+  padding-bottom: 1.2rem;
 }
-.spacing-b-4{
-    padding-bottom: 1.3rem; 
+.spacing-b-4 {
+  padding-bottom: 1.3rem;
 }
 
 $bg-white-600: white;
 
-$button-primary-color: #AB4459;
+$button-primary-color: #ab4459;
 $button-primary-bg-color: $button-primary-color;
 $button-border-primary-color: $button-primary-color;
-
 
 $input-border-primary-color: $line-seperator;
