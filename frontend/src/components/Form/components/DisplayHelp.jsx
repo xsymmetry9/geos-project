@@ -1,6 +1,6 @@
 import { getAllLevelsInformationByAspect } from "../../../utils/functions";
-import { useState } from "react"; 
-import { X } from "lucide-react"; // ✅ Import Lucide icon
+import { useState, useEffect } from "react"; 
+import { X } from "lucide-react";
 
 import labelText from "../../../assets/other/labelText.json";
 
@@ -8,10 +8,23 @@ const ITEMS_PER_PAGE = 5;
 
 const DisplayHelp = ({language, setDisplayHelp}) =>{
     const DEFAULT_LEVEL = "vocabulary";
+    const [isSticky, setIsSticky] = useState(false);
     const [levelInfo, setLevelInfo] = useState(DEFAULT_LEVEL);
     const [currentPage, setCurrentPage] = useState(1);
 
     const data = getAllLevelsInformationByAspect({name: levelInfo, lang: language});
+
+    useEffect(() =>{
+        const handleScroll = () =>{
+            if(window.scrollY > 200) {
+                setIsSticky(true);
+            } else {
+                setIsSticky(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return() => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     // Pagination Logic
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -20,8 +33,8 @@ const DisplayHelp = ({language, setDisplayHelp}) =>{
     
 
     return(
-        <div className="w-full bg-white absolute">
-                <button className="absolute cursor-pointer top-2 right-2 p-2 bg-gray-200 rounded-full hover:bg-red-100 transition"
+        <div className={`w-full bg-white ${isSticky ? "sticky top-0 shadow-md" : "absolute" }`}>
+                <button className={`absolute cursor-pointer top-2 right-2 p-2 bg-gray-200 rounded-full hover:bg-red-100 transition`}
                     onClick={() => setDisplayHelp(false)}
                     aria-label="close">
                     <X className="w-5 h-5 text-red-600 hover:text-red-800" />
