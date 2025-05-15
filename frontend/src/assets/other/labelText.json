@@ -1,6 +1,8 @@
 {
   "english": {
     "save": "save",
+    "level": "level",
+    "description": "description",
     "form": {
       "title": "Personal Information",
       "input_name": "name",
@@ -49,6 +51,8 @@
   },
   "chinese": {
     "save": "儲存",
+    "level": "程度",
+    "description":"描述",
     "form": {
       "title": "個人信息",
       "input_name": "姓名",
@@ -97,6 +101,8 @@
   },
   "korean": {
     "save":"save",
+    "level": "수준",
+    "description": "설명",
     "form": {
       "title": "개인 정보",
       "input_name": "학생명",
@@ -145,6 +151,8 @@
   },
   "japanese": {
     "save": "save",
+    "level": "程度",
+    "description": "説明",
     "form": {
       "title": "個人情報",
       "input_name": "名前",

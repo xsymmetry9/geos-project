@@ -8,18 +8,6 @@ import { House } from "lucide-react";
 
 export const LanguageContext = createContext();
 
-<<<<<<< HEAD
-const SPRForm = () =>{
-    const {language, id} = useParams();
-    const [inputData, setInputData] = useState(!id ? new Student(uuidv4()): getStudentById(id)); //Creates an new or edit form
- 
-    return(
-   
-        <LanguageContext.Provider value ={language}>
-            <Link className="btn-primary" to={`/home/${language}`}>Dashboard</Link>
-            <Form inputData = {inputData} setInputData={setInputData}/>
-        </LanguageContext.Provider>
-=======
 const SPRForm = () => {
   const { language, id } = useParams();
   const [inputData, setInputData] = useState(!id ? new Student(uuidv4()) : getStudentById(id)); //Creates an new or edit form
@@ -36,6 +24,5 @@ const SPRForm = () => {
     </LanguageContext.Provider>
   );
 };
->>>>>>> 801b1729e44fb8be552d401c981161bf4f1f1e37
 
 export default SPRForm;

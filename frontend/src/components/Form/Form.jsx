@@ -131,61 +131,13 @@ const PlotForm = ({ inputData, setInputData }) => {
       alert(err);
     }
 
-<<<<<<< HEAD
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        try{
-            const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
-
-            const existingStudentIndex = savedData.SPR.findIndex(student => student.id === inputData.id);
-
-            if (existingStudentIndex === -1) {
-                // If student does not exist, add new entry
-                savedData.SPR.push(inputData);
-            } else {
-                // If student exists, update their data
-                savedData.SPR[existingStudentIndex] = inputData;
-            }
-    
-            // Save updated data back to localStorage
-            editDataFromLocal(savedData);
-    
-            setDisplayPopupMessage(true);
- 
-
-            
-        } catch (err) {
-            console.log("Unable to load", err);
-        }
-
-        setDisplayPopupMessage(true);
-    }
-    return(
-        <div className={`form-root`}>
-            <Pagination page = {page} language={language}/>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    {arrOfPages[page]}
-                    <div className="container" id="buttons">
-                        <Button page={page} handler={changePage} language={language} handleSubmit = {handleSubmit} />
-                        {page == 3 && <input className="btn btn-primary" type="submit" value={"Save"}/>}                   
-                    </div>      
-                </form>
-                {displayPopupMessage && <PopUpMessage setDisplayPopupMessage = {setDisplayPopupMessage}/>}
-            </div>
-        </div>
-    )
-}
-
-export default Form;
-=======
     setDisplayPopupMessage(true);
   };
   return (
     <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
-        {displayPopupMessage && (
+        {/* {displayPopupMessage && (
           <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
-        )}
+        )} */}
       <Pagination page={page} language={language} setPage={setPage}/>
       <div className="w-full static max-w-lg m-auto">
         <form onSubmit={handleSubmit}>
@@ -213,4 +165,3 @@ PlotForm.propTypes = {
   setInputData: PropTypes.func,
 };
 export default PlotForm;
->>>>>>> 801b1729e44fb8be552d401c981161bf4f1f1e37

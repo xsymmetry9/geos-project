@@ -19,39 +19,6 @@ function Homepage() {
       try {
         const savedData = getDataFromLocal();
 
-<<<<<<< HEAD
-        useEffect(() =>{
-            const fetchData = async () => {
-                try{
-                    const savedData = getDataFromLocal();
-
-                    if(!savedData) {
-                        const newUser = new User();
-                        newUser.language = language;
-                        editDataFromLocal(savedData);
-                        setUserData(newUser);
-                    } else {
-                        const parsedData = JSON.parse(savedData);
-                        parsedData.language = language;
-                        setUserData(parsedData);
-                        editDataFromLocal(parsedData);
-                        }
-                    } catch (error) {
-                        console.error("Error fetching or updating user data", error);
-                    } finally {
-                        setLoading(false);
-                    }
-                };
-
-            fetchData();
-
-        }, [language]);
-
-        if(loading){
-            return(
-                <><h1>Loading ...</h1></>
-            )
-=======
         if (!savedData) {
           const newUser = new User();
           newUser.language = language;
@@ -61,7 +28,6 @@ function Homepage() {
           const parsedData = JSON.parse(savedData);
           parsedData.language = language;
           setUserData(parsedData);
->>>>>>> 801b1729e44fb8be552d401c981161bf4f1f1e37
         }
       } catch (error) {
         console.error("Error fetching or updating user data", error);
@@ -77,33 +43,6 @@ function Homepage() {
     setAddFormNav((prev) => !prev);
   };
 
-<<<<<<< HEAD
-        return(
-            <>
-                <table className="dashboard-table">
-                        <thead>
-                            <tr>
-                                {["Name", "Date", "Edit", "Delete", "Download", "Print"].map((item) => <th key={item}>{item}</th>)}
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {userData.SPR.map((item) => {
-                            return(
-                                <tr key={item.id}>
-                                    <td>{item.name}</td>
-                                    <td>{format(new Date(), "MM/dd/yyyy")}</td>
-                                    <td><Link to = {`/spr/${language}/edit/${item.id}`}>Edit</Link></td>
-                                    <td><button id={item.id} onClick={handleDelete}>Delete</button></td>
-                                    <td><button>Download</button></td>
-                                    <td><Link to={`/spr/${language}/print/${item.id}`}>View</Link></td>
-                                </tr>)
-                            })}
-                        </tbody>
-                    </table>
-            </>
-        )
-    }
-=======
   if (loading) {
     return (
       <>
@@ -128,7 +67,6 @@ function Homepage() {
     }));
     closePage();
   }
->>>>>>> 801b1729e44fb8be552d401c981161bf4f1f1e37
 
   const handleCancelDeleteBtn = () =>{
     closePage();

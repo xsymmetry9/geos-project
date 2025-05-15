@@ -14,38 +14,6 @@ const PersonalInformation = ({ inputData, inputError, handleInputData, language 
     input_totallessons,
   } = labelText[language].form;
 
-<<<<<<< HEAD
-    return(
-        <div className="form-primary" id="personal-information">
-            <h2 className="title text-2 p-2">Student's Information</h2>    
-            <div className="input-wrapper p-t-3">
-                <label className="text-2 uppercase" htmlFor="name">{input_name}</label>
-                <input type="text" className="text-2" name="name" value={name} id="name" onChange={handleInputData} />
-            </div>
-            <div className="input-wrapper">
-                <label className="text-2 uppercase" htmlFor="course">{input_course}</label>
-                <select className="text-2 form-input-primary" id="course" name="course" value={course} onChange={handleInputData}>
-                    <option className="text-2" value="">Select course</option>
-                    <option className="text-2" value="ONLINE">ONLINE</option>
-                    <option className="text-2" value="PL">PL</option>
-                    <option className="text-2" value="GL">GL</option>
-                    <option className="text-2" value="SGL">SGL</option>
-                    <option className="text-2" value="FLEX">FLEX</option>
-                </select>
-            </div>
-            <div className="input-wrapper">
-                <label className="text-2 uppercase" htmlFor="textbook">{input_textbook}</label>
-                <input className="text-2" type="text" name="textbook" id="textbook" value={textbook} onChange={handleInputData} />
-                </div>
-            <div className="input-wrapper">
-                <label className="text-2 uppercase" htmlFor="attendance">{input_attendance}</label>
-                <input className="text-2" type="number" name="attendance" id="attendance" value={attendance} onChange={handleInputData}/>
-            </div>
-            <div className="input-wrapper">
-                <label className="text-2 uppercase" htmlFor="totalLessons">{input_totallessons}</label>
-                <input className="text-2" type="number" name="totalLessons" id="total-lesson" value={totalLessons} onChange={handleInputData}/>
-            </div>
-=======
   return (
     <div className="pb-[3rem]" id="personal-information">
       <h2 className="bg-[#00646c] text-xl text-white text-center p-2 font-bold capitalize">{labelText[language].SPR["student_information"]}</h2>
@@ -135,7 +103,6 @@ const PersonalInformation = ({ inputData, inputError, handleInputData, language 
         {inputError.totalLessons && <p className="text-red-600 text-sm">Needs to be greater than 0 and greater than attended lessons</p>}
 
         </label>
->>>>>>> 801b1729e44fb8be552d401c981161bf4f1f1e37
         </div>
       </div>
 
