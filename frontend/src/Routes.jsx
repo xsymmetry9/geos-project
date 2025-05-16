@@ -7,6 +7,7 @@ import PrintPage from "./components/PrintSPR";
 import LevelCheckForm from "./pages/LevelCheckForm";
 import Admin from "./pages/Admin/AdminPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
+import TeacherPage from "./pages/Admin/TeacherPage";
 
 const routes = [
   {
@@ -38,7 +39,8 @@ const routes = [
     path: "admin/home",
     element: <Layout />,
     children: [
-      {index: true, element: <AdminHomepage />}
+      {index: true, element: <AdminHomepage />},
+      {path: "teacherPage/:email", element: <TeacherPage />}
     ]
   }
 ];

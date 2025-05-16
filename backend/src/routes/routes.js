@@ -3,7 +3,11 @@ const {Router} = require("express");
 const router = Router();
 const fs = require("fs");
 const path = require("path");
-const {loginAdmin, getAllTeachers, getTeachersByLanguageOnDB} = require("../controllers/adminController.js");
+const {
+    loginAdmin,
+    getAllTeachers,
+    getTeachersByLanguageOnDB,
+    getTeacherByEmailOnDB} = require("../controllers/adminController.js");
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 
@@ -14,7 +18,10 @@ router.post("/api/admin/login", loginAdmin);
 router.get("/api/admin/teachers", getAllTeachers);
 
 // Get Teachers By Language
-router.get("api/admin/teachers/language", getTeachersByLanguageOnDB )
+router.get("api/admin/teachers/language", getTeachersByLanguageOnDB );
+
+// Get Teacher By Email
+router.get("/api/admin/getTeacherByEmail", getTeacherByEmailOnDB);
 
 //Gets all users
 router.get("/api", async (req, res) =>{

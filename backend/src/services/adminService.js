@@ -1,8 +1,6 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const bcrypt = require('bcrypt');
-
 const verifyAdminCredentials = async (name, password) =>{
     const admin = await prisma.admin.findUnique({ where: {name: name}})
     if(!admin) return false;
@@ -25,4 +23,13 @@ const getTeachersByLanguage = async (language) =>{
     return result;
 }
 
-module.exports = {verifyAdminCredentials, getTeachersFromDb, getTeachersByLanguage};
+const getTeacherByEmail = async (email) => {
+    const result = await prisma.teacher.findUnique({where: {email: email}});
+    return result;
+}
+
+module.exports = {
+    verifyAdminCredentials,
+    getTeachersFromDb, 
+    getTeachersByLanguage, 
+    getTeacherByEmail};

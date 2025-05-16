@@ -30,7 +30,7 @@ function AdminHomepage(){
                         <li key={teacher.id} className="flex justify-between mb-2 border-b pb-1">
                             <div>{teacher.name}</div>
                             <div>{teacher.email}</div>
-                            <a href="">View more</a>
+                            <a href={`./home/teacherPage/${teacher.email}`}>View more</a>
                         </li>
                     </>
                 )
