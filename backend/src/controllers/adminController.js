@@ -2,7 +2,8 @@ const {
     verifyAdminCredentials,
     getTeachersFromDb, 
     getTeachersByLanguage,
-    getTeacherByEmail} = require("../services/adminService.js");
+    getTeacherByEmail,
+    create} = require("../services/adminService.js");
 
 const capitalize = (str) =>{
     const result = str.charAt(0).toUpperCase() + str.slice(1);
@@ -44,12 +45,29 @@ const getTeachersByLanguageOnDB = async(req, res) =>{
 }
 
 const getTeacherByEmailOnDB = async(req, res) =>{
-    const {email} = req.query;
+    const {email} = req.body;
+    console.log(req);
     try{
         const result = await getTeacherByEmail(email);
-        return res.json({success: true, data: result});
+        return res.json({success: true, exists: true, data: result});
     } catch (err) {
         return res.status(500).json({success: false, message: "Server Error"});
+    }
+}
+
+const createTeacher = async(req, res) => {
+    const {name, email, password, language} = req.body;
+    try{
+        const checkIfAvailable = await getTeacherByEmail(email);
+        if(!checkIfAvailable) {
+            const result = await create({name: name, email: email, password: password, language: language})
+            return res.json({result: true, message: "Account successfuly created", data: result});
+        } else {
+            return res.json({result: false, message: "Email is taken, try another one"});
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({result: false, message: `Fail to add account`});
     }
 }
 
@@ -57,4 +75,5 @@ module.exports = {
     loginAdmin,
     getAllTeachers,
     getTeachersByLanguageOnDB,
-    getTeacherByEmailOnDB}
+    getTeacherByEmailOnDB,
+    createTeacher}
