@@ -7,7 +7,8 @@ const {
     loginAdmin,
     getAllTeachers,
     getTeachersByLanguageOnDB,
-    getTeacherByEmailOnDB} = require("../controllers/adminController.js");
+    getTeacherByEmailOnDB,
+    createTeacher} = require("../controllers/adminController.js");
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 
@@ -21,7 +22,7 @@ router.get("/api/admin/teachers", getAllTeachers);
 router.get("api/admin/teachers/language", getTeachersByLanguageOnDB );
 
 // Get Teacher By Email
-router.get("/api/admin/getTeacherByEmail", getTeacherByEmailOnDB);
+router.get("/api/getTeacherByEmail", getTeacherByEmailOnDB);
 
 //Gets all users
 router.get("/api", async (req, res) =>{
@@ -33,6 +34,9 @@ router.get("/api", async (req, res) =>{
         res.status(500).json({ error: "Failed to load level data"});
     }
 });
+
+//Create user
+router.post("/api/createTeacherProfile", createTeacher)
 
 router.get("/", async (req, res ) => {
     res.send("backend is working");
