@@ -3,7 +3,7 @@ import LevelCheck from "../type/LevelCheckForm.js";
 import {
   LevelCheckInputData,
   LevelCheckInputAspectsData
-} from "../components/LevelCheckForm/LevelCheckFormComponents.jsx"
+} from "../components/LevelCheckForm/LevelCheckFormComponents.js"
 
 const LevelCheckForm = () => {
   const [NewForm, setNewForm] = useState(new LevelCheck());

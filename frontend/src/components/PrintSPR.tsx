@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
-import {PrintContent} from "../components/PrintStudentProgressReport";
+import {PrintContent} from "./PrintStudentProgressReport";
 import html2canvas from "html2canvas-pro";
 
 const PrintPage = () => {

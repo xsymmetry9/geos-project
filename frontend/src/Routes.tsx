@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./pages/Index";
+import Index from "./pages/Index.jsx";
 import {Layout, LayoutForNonmember} from "./Layout";
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
@@ -8,9 +8,11 @@ import LevelCheckForm from "./pages/LevelCheckForm";
 import Admin from "./pages/Admin/AdminPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import TeacherPage from "./pages/Admin/TeacherPage";
-import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/Nonmember/NonMember";
+import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/Nonmember/NonMember.js";
 
-const routes = [
+import type {RouteObject} from "react-router-dom";
+
+const routes: RouteObject[] = [
   {
     path: "/",
     element: <LayoutForNonmember />,
@@ -22,8 +24,8 @@ const routes = [
         element: <SignInLayout />,
         children: [
         { index: true, element: <Login />},
-        { path: "/login/success", element: <Success type="login" /> },
-        { path: "/login/failure", element: <Failure type="login" />}
+        { path: "success", element: <Success  /> },
+        { path: "failure", element: <Failure  />}
         ]
       },
       {
@@ -31,8 +33,8 @@ const routes = [
         element: <SignInLayout />,
         children: [
           {index: true, element: <CreateNewAccount />},
-          { path: "/createAccount/success", element: <Success type="createAccount"/> },
-          { path: "/createAccount/failure", element: <Failure type="createAccount"/>}
+          { path: "success", element: <Success /> },
+          { path: "failure", element: <Failure />}
         ] 
       }
     ],

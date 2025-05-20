@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet, useNavigate, Link, useLocation} from "react-router-dom";
 import axios from "axios";
 
-
 const SignInLayout = () =>{
 
   return(
