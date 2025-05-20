@@ -8,7 +8,8 @@ const {
     getAllTeachers,
     getTeachersByLanguageOnDB,
     getTeacherByEmailOnDB,
-    createTeacher} = require("../controllers/adminController.js");
+    createTeacher,
+    loginTeacher} = require("../controllers/adminController.js");
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 
@@ -23,6 +24,9 @@ router.get("api/admin/teachers/language", getTeachersByLanguageOnDB );
 
 // Get Teacher By Email
 router.get("/api/getTeacherByEmail", getTeacherByEmailOnDB);
+
+// Member Login
+router.post("/api/login", loginTeacher);
 
 //Gets all users
 router.get("/api", async (req, res) =>{

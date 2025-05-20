@@ -4,6 +4,7 @@ const {
     getTeachersByLanguage,
     getTeacherByEmail,
     create} = require("../services/adminService.js");
+const bcrypt = require("bcrypt");
 
 const capitalize = (str) =>{
     const result = str.charAt(0).toUpperCase() + str.slice(1);
@@ -71,9 +72,26 @@ const createTeacher = async(req, res) => {
     }
 }
 
+const loginTeacher = async(req, res) => {
+    const {email, password} = req.body;
+    console.log(email);
+    try {
+        const teacher = await getTeacherByEmail(email);
+        if(!teacher) return res.status(500).json({success: false, message: "Couldn't find teacher"});
+
+        const match = await bcrypt.compare(password, teacher.password);
+        if(!match) return res.status(500).json({success: false, message: "Incorrect password"})
+
+        return res.json({result: true, message: "Successfully logged in"});
+    } catch (err) {
+        return res.json({result: false, message: "Cannot connect to server"});
+    }
+}
+
 module.exports = {
     loginAdmin,
     getAllTeachers,
     getTeachersByLanguageOnDB,
     getTeacherByEmailOnDB,
-    createTeacher}
+    createTeacher,
+    loginTeacher}
