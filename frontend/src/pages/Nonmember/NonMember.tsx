@@ -1,6 +1,25 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation} from "react-router-dom";
 import axios from "axios";
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+interface CreateAccountFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  language: string;
+}
+
+interface LocationState {
+  from?: string;
+  message?: string;
+  userType?: string;
+}
 
 const SignInLayout = () =>{
 
@@ -12,17 +31,22 @@ const SignInLayout = () =>{
 }
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
 
-  const handleInput = (e) => {
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(e.target.email.value);
-    console.log(e.target.password.value);
+    const target = e.target as typeof e.target & {
+      email: {value: string};
+      password: {value: string};
+    }
+
+    console.log(target.email.value);
+    console.log(target.password.value);
   };
 
   return (
@@ -75,11 +99,17 @@ const Login = () => {
 
 const CreateNewAccount = () =>{
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({name:"", email: "", password: "", confirmPassword: "", language: "english" });
+  const [formData, setFormData] = useState<CreateAccountFormData>({
+    name:"",
+    email: "", 
+    password: "", 
+    confirmPassword: "", 
+    language: "english" });
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInput = (e) => {
+  const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -90,7 +120,7 @@ const CreateNewAccount = () =>{
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!passwordsMatch){
@@ -98,16 +128,21 @@ const CreateNewAccount = () =>{
       return;
     }
 
+    setIsLoading(true);
+    setError("");
+
     try{
        const res = await axios.post("http://localhost:8000/api/createTeacherProfile", formData);
       if(res.data.result) {
-        navigate("/login/success", {state: {from: "createAccount", message: "Account created successfuly", userType: "nonmember"}});
+        navigate("/login/success", {state: {from: "createAccount", message: "Account created successfully", userType: "nonmember"}});
       } else {
         console.log(res);
-        navigate("/login/failure", {state: {from:"createAccount", message: "Email is taken", userType: "nonmember"}})
+        setError("Email is taken, try another one");
       }
     } catch (err) {
       setError("Couldn't connect the server");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,7 +152,7 @@ const CreateNewAccount = () =>{
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             className="border border-gray-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#00646c]"
-            type="name"
+            type="text"
             name="name"
             placeholder="Name"
             onChange={handleInput}
@@ -160,11 +195,25 @@ const CreateNewAccount = () =>{
             <option value="japanese">Japanese</option>
 
           </select>
-          <input
-            className="bg-[#00646c] text-white font-semibold py-3 rounded-md hover:bg-[#005159] cursor-pointer transition duration-200"
+          <button
+            className="flex justify-center bg-[#00646c] text-white font-semibold py-3 rounded-md hover:bg-[#005159] cursor-pointer transition duration-200"
             type="submit"
             value="Done"
-          />
+            disabled= {isLoading}
+            >
+              {
+              isLoading ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg> Loading
+                </>
+                ) : ( 
+                "Done"
+                )}
+              </button>
+ 
         </form>
         {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="text-center mt-6">
