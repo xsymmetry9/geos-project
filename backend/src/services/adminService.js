@@ -1,3 +1,5 @@
+// ./services/adminService.js
+
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt =require('bcrypt');
@@ -26,6 +28,10 @@ const getTeachersByLanguage = async (language) =>{
     return result;
 }
 
+const getTeacherById =  async(id) =>{
+    const result = await prisma.teacher.findUnique({where: {id: id } });
+    return result;
+}
 const getTeacherByEmail = async (email) => {
     const result = await prisma.teacher.findUnique({where: {email: email}});
     return result;
@@ -53,4 +59,5 @@ module.exports = {
     getTeachersFromDb, 
     getTeachersByLanguage, 
     getTeacherByEmail,
+    getTeacherById,
     create};

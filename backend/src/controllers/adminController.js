@@ -72,21 +72,23 @@ const createTeacher = async(req, res) => {
     }
 }
 
-const loginTeacher = async(req, res) => {
-    const {email, password} = req.body;
-    console.log(email);
-    try {
-        const teacher = await getTeacherByEmail(email);
-        if(!teacher) return res.status(500).json({success: false, message: "Couldn't find teacher"});
+const loginTeacher = async(req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+        if(err) return next(err);
+        if(!user) return res.status(401).json({message: info.message || "Login failed"});
 
-        const match = await bcrypt.compare(password, teacher.password);
-        if(!match) return res.status(500).json({success: false, message: "Incorrect password"})
-
-        return res.json({result: true, message: "Successfully logged in"});
-    } catch (err) {
-        return res.json({result: false, message: "Cannot connect to server"});
-    }
-}
+        req.login(user, (err) => {
+            return res.status(200).json({
+                message: "Login successful",
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                },
+            });
+        });
+    })(req, res, next);
+};
 
 module.exports = {
     loginAdmin,

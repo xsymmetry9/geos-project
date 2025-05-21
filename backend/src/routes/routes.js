@@ -12,6 +12,7 @@ const {
     loginTeacher} = require("../controllers/adminController.js");
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
+const passport = require('passport');
 
 //Verify admin
 router.post("/api/admin/login", loginAdmin);

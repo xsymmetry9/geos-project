@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation} from "react-router-dom";
 import axios from "axios";
-import { p } from "react-router/dist/development/fog-of-war-D4x86-Xc";
-import { any } from "prop-types";
 
 interface FormData {
   email: string;
@@ -45,15 +43,17 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
+    setErrorMessage("");
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", formData);
-      setLoading(false);
-      console.log(res);
+      const res = await axios.post("http://localhost:8000/api/login", formData, {
+        withCredentials: true,
+      });
+      console.log("Login success:", res.data);
 
     } catch (err: any) {
       console.log(err.response?.status);
-      setLoading(false);
+      setErrorMessage(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -95,8 +95,9 @@ const Login = () => {
             ) : "Log in"
           }
           </button>
+            {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+
         </form>
-          {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
 
         <div className="text-center mt-4">
           <Link to="/forgotpassword" className="text-[#00646c] text-sm hover:underline">
