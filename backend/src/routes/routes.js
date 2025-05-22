@@ -10,6 +10,7 @@ const {
     getTeacherByEmailOnDB,
     createTeacher,
     loginTeacher} = require("../controllers/adminController.js");
+const {ensureNotAuthenticated, ensureAuthenticated} = require("../middlewares/authMiddleware.js");
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 const passport = require('passport');
@@ -27,8 +28,31 @@ router.get("api/admin/teachers/language", getTeachersByLanguageOnDB );
 router.get("/api/getTeacherByEmail", getTeacherByEmailOnDB);
 
 // Member Login
-router.post("/api/login", loginTeacher);
+router.post("/api/login", ensureNotAuthenticated, loginTeacher); //Blocks logged-users from login page
 
+// Current Member
+router.get("/api/currentTeacher", (req, res) =>{
+    if(req.isAuthenticated()) {
+        return res.json({user: req.user});
+    } else {
+        return res.status(401).json({user: null});
+    }
+})
+
+//Logout route
+router.post("/api/logout", (req, res) => {
+    req.logout((err) => {
+        if(err) return res.status(500).json({message: "Error logging out!"});
+        res.json({message: "Logged out"});
+    })
+})
+// Profile
+router.post("/api/profile", ensureAuthenticated, (req, res) => {
+    res.json({
+        message: "This is a protected route",
+        user: "Some member"
+    })
+})
 //Gets all users
 router.get("/api", async (req, res) =>{
     try {
@@ -38,6 +62,13 @@ router.get("/api", async (req, res) =>{
         console.error("Error loading level information:", err);
         res.status(500).json({ error: "Failed to load level data"});
     }
+});
+
+router.get("/api", (req, res) => {
+    req.logout(err => {
+        if(err) return res.status(500).json({message: "Logout failed"});
+        res.json({message: "Logged out successfully"});
+    });
 });
 
 //Create user

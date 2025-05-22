@@ -5,6 +5,7 @@ const {
     getTeacherByEmail,
     create} = require("../services/adminService.js");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 const capitalize = (str) =>{
     const result = str.charAt(0).toUpperCase() + str.slice(1);

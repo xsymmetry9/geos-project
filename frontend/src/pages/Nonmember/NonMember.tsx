@@ -34,6 +34,7 @@ const Login = () => {
   const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -50,6 +51,7 @@ const Login = () => {
         withCredentials: true,
       });
       console.log("Login success:", res.data);
+      navigate("/profile");
 
     } catch (err: any) {
       console.log(err.response?.status);
