@@ -43,7 +43,10 @@ router.get("/api/currentTeacher", (req, res) =>{
 router.post("/api/logout", (req, res) => {
     req.logout((err) => {
         if(err) return res.status(500).json({message: "Error logging out!"});
-        res.json({message: "Logged out"});
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid');
+            return res.json({status: true, message: "Logged out"});
+        });
     })
 })
 // Profile
