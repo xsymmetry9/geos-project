@@ -5,7 +5,9 @@ const {
     getTeacherByEmail,
     create} = require("../services/adminService.js");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 
 const capitalize = (str) =>{
     const result = str.charAt(0).toUpperCase() + str.slice(1);
@@ -74,17 +76,33 @@ const createTeacher = async(req, res) => {
 }
 
 const loginTeacher = async(req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-        if(err) return next(err);
-        if(!user) return res.status(401).json({message: info.message || "Login failed"});
+    const {email, password} = req.body;
+    try{
+        const user = await getTeacherByEmail(email);
+        if(!user){
+            return res.status(500).json({result: false, message: "User not found"});
+        }
 
-        req.login(user, (err) => {
-            return res.status(200).json({
-                message: "Login successful",
-                user: user,
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch) {
+            return res.status(401).json({result: false, message: "Invalid password"})
+        }
+
+        const payload = {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            language: user.language
+        }
+
+        jwt.sign(payload, process.env.JWT_SECRET || 'secretkey', { expiresIn: '7d' }, (err, token) => {
+            res.json({ token, payload });
             });
-        });
-    })(req, res, next);
+        }
+    catch (err) {
+        return res.status(500).json({result: false, message: "Server error"});
+    }
+
 };
 
 module.exports = {
