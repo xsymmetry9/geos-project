@@ -1,18 +1,16 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
     const navigate = useNavigate();
 
     const handleLogout = async () =>{
-        try{
-            await axios.get("http://localhost:8000/api/logout", {
-                withCredentials: true,
-            });
-            navigate("login");
-        } catch (err) {
-            console.log("Logout failed", err);
+        const token = localStorage.getItem("token");
+
+        if(!token){
+            navigate("/login");
         }
+
+        localStorage.removeItem("token");
     }
     return(
         <button 
