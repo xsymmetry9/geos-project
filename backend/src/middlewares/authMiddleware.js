@@ -16,6 +16,8 @@ function verifyToken(req, res, next) {
         const bearerToken = bearer[1];
         //Set the token 
         req.token = bearerToken;
+            console.log(bearerToken);
+
         try{
             const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
             req.user = decoded.user;
