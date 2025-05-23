@@ -47,10 +47,9 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", formData, {
-        withCredentials: true,
-      });
-      console.log("Login success:", res.data);
+      const res = await axios.post("http://localhost:8000/api/login", formData);
+      console.log(res);
+      localStorage.setItem("token", res.data.token)
       navigate("/profile");
 
     } catch (err: any) {
