@@ -13,13 +13,14 @@ const AuthRedirect = () => {
             return;
         }
         axios
-            .get("http://localhost:8000/api/admin/verify-token", {
+            .get("http://localhost:8000/api/verify-token", {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    authorization: `Bearer ${token}`,
                 },
             })   
             .then((res) => {
-                if(res.data.authenticated) {
+                console.log(res);
+                if(res.data.authenticate) {
                     setStatus("authenticated");
                 } else {
                     setStatus("unauthenticated");
