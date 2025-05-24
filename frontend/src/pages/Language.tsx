@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 
-const Index = () => {
+const Language = () => {
   const [user, setUser] = useState<User |null >(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -57,4 +57,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Language;

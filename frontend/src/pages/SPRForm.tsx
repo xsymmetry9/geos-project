@@ -14,7 +14,6 @@ const SPRForm = () => {
   const isNew = !id ? "new" : "edit";
   const initialStudent = !id? new Student(uuidv4()) : getStudentById(id);
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
-  console.log(inputData);
   return (
     <LanguageContext.Provider value={language}>
       <div className="w-full flex justify-center p-2">

@@ -81,7 +81,7 @@ const ImportFromExcel = ({ userData, setUserData }) => {
         setUserData((prev) => ({ ...prev, SPR: result }));
 
         // Save to Local storage
-        const dataFromLocal = JSON.parse(getDataFromLocal());
+        const dataFromLocal = getDataFromLocal();
         const newData = { ...dataFromLocal, SPR: result };
 
         editDataFromLocal(newData);

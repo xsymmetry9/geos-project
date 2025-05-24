@@ -1,4 +1,4 @@
-import Index from "./pages/Index";
+import Language from "./pages/Language";
 import Layout from "./Layout";
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
@@ -13,7 +13,7 @@ const routes = [
     element: <Layout />,
     children: [
       { index: true, element: <AuthRedirect /> },
-      { path: "language", element: <Index />},
+      { path: "language", element: <Language />},
       { path: "home/:language", element: <Homepage /> },
     ],
   },
