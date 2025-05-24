@@ -29,7 +29,7 @@ const Index = () => {
     const fetchUser = () => {
       const data = getDataFromLocal();
       if (data != null) {
-        setUser(JSON.parse(data));
+        setUser(data);
       } else {
         const newUser = new User();
         editDataFromLocal(newUser);
