@@ -1,9 +1,12 @@
-const appName = "GEOS_app";
+const appName = "GEOS_App";
+import User from "@/type/User";
 import levelData from "@/assets/other/levelInformation.json";
 
 //Reads data from the local Storage
-export function getDataFromLocal() {
-  return localStorage.getItem(appName);
+export function getDataFromLocal(): User | null {
+  const data = localStorage.getItem(appName);
+
+  return data ? JSON.parse(data) as User: null;
 }
 
 export function getStudentById(id) {
@@ -18,7 +21,7 @@ export function editDataFromLocal(data) {
   try {
     localStorage.setItem(appName, JSON.stringify(data));
   } catch (err) {
-    return "Error loading the data", err;
+    return "Error loading the data";
   }
 }
 
@@ -49,7 +52,7 @@ export function getLevelInformationByLevel(obj) {
 
 }
 
-export function getAllLevelsInformationByAspect(obj) {
+export function getAllLevelsInformationByAspect(obj: {lang: string; name: string}): any[] {
   const {lang, name} = obj;
   const result = levelData[lang][name];
 

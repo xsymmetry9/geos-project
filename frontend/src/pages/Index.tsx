@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 
@@ -22,7 +22,7 @@ const LinksLanguages = () => {
   );
 };
 const Index = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User |null >(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Index = () => {
   }
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <h1 className="text-2xl py-2 font-secondary">Welcome to GEOS App {user.name}!!!</h1>
+      <h1 className="text-2xl py-2 font-secondary">Welcome to GEOS App {user ? user.name : "Teacher"}!!!</h1>
       <LinksLanguages />
     </div>
   );

@@ -1,12 +1,33 @@
 class Levels {
+  initial: string;
+  target: string;
+  final: string;
+
   constructor(initial = "", target = "", final = "") {
     this.initial = initial;
     this.target = target;
     this.final = final;
   }
 }
+
 class Student {
-  constructor(id, dateCreated = new Date()) {
+  id: string;
+  dateCreated: Date;
+  name: string;
+  course: string;
+  textbook: string;
+  attendance: string;
+  totalLessons: string;
+  feedback: string;
+  levels: {
+    vocabulary: Levels;
+    pronunciation: Levels;
+    grammar: Levels;
+    conversation: Levels;
+    listening: Levels;
+  };
+
+  constructor(id: string, dateCreated = new Date()) {
     this.id = id;
     this.dateCreated = dateCreated;
     this.name = "";
@@ -20,7 +41,7 @@ class Student {
       pronunciation: new Levels(),
       grammar: new Levels(),
       conversation: new Levels(),
-      listening: new Levels(),
+      listening: new Levels()
     };
   }
 }
