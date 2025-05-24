@@ -1,17 +1,20 @@
 import React, { useState, createContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import Form from "../components/Form/Form";
+import PlotForm from "../components/Form/PlotForm";
 import { Student } from "../type/Student";
 import { getStudentById } from "../utils/functions";
 import { House } from "lucide-react";
 
-export const LanguageContext = createContext();
+export const LanguageContext = createContext<string>("english");
 
 const SPRForm = () => {
-  const { language, id } = useParams();
-  const [inputData, setInputData] = useState(!id ? new Student(uuidv4()) : getStudentById(id)); //Creates an new or edit form
+  const { language ="english", id } = useParams<{language?: string; id?: string}>();
+
   const isNew = !id ? "new" : "edit";
+  const initialStudent = !id? new Student(uuidv4()) : getStudentById(id);
+  const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
+  console.log(inputData);
   return (
     <LanguageContext.Provider value={language}>
       <div className="w-full flex justify-center p-2">
@@ -20,7 +23,7 @@ const SPRForm = () => {
           Home
         </Link>
       </div>
-      <Form inputData={inputData} setInputData={setInputData} isNew={isNew} />
+      <PlotForm inputData={inputData} setInputData={setInputData} />
     </LanguageContext.Provider>
   );
 };

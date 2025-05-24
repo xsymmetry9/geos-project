@@ -2,7 +2,7 @@ import {Navigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 import User from "../type/User";
 
-const appName = 'GEOS_App';
+const appName = 'GEOS_app';
 function AuthRedirect() {
     const [user, setUser] = useState<User | null> (null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -16,7 +16,19 @@ function AuthRedirect() {
             setLoading(false);
         } else {
             const parsedUser = JSON.parse(getUserFromLocalStorage);
-            setUser(parsedUser);
+
+            if(!parsedUser.language)
+            {
+                const updatedUser = {
+                    ...parsedUser,
+                    language: new User().language
+                }
+                localStorage.setItem(appName, JSON.stringify(updatedUser));
+
+                setUser(updatedUser);
+            } else {
+                setUser(parsedUser);
+            }
         }
         setLoading(false);
 
