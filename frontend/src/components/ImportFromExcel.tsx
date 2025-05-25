@@ -7,7 +7,6 @@ import { Upload } from "lucide-react";
 
 const ImportFromExcel = ({ userData, setUserData }) => {
   const { SPR } = userData;
-  const [fileName, setFileName] = useState("");
 
   // Merge two arrays and filters the data
   const mergedArrayFilterUniqueObjects = useCallback((arr1, arr2) => {
@@ -24,7 +23,6 @@ const ImportFromExcel = ({ userData, setUserData }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setFileName(file.name);
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
 
@@ -103,7 +101,6 @@ const ImportFromExcel = ({ userData, setUserData }) => {
           onChange={handleFileUpload}
       />
       </label>
-      {fileName && <p>Uploaded: {fileName}</p>}
     </div>
   );
 };

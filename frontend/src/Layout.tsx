@@ -4,11 +4,13 @@ import Footer from "@/components/Footer";
 
 const Layout = () => {
   return (
-    <div className="grid h-screen grid-rows-[70px_auto_90px] grid-cols-1">
+    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <div className="relative mx-auto my-12 w-full max-w-[1100px]">
-        <Outlet />
-      </div>
+      <main className="px-4 py-6">
+        <div className="mx-auto w-full max-w-[1100px] h-full">
+          <Outlet />
+        </div>
+      </main>
       <Footer />
     </div>
   );
