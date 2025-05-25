@@ -16,8 +16,8 @@ const SPRForm = () => {
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
   return (
     <LanguageContext.Provider value={language}>
-      <div className="w-full flex justify-center p-2">
-        <Link className="font-secondary btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
+      <div className="font-secondary w-full flex justify-center p-2">
+        <Link className="btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
         <House />
           Home
         </Link>
