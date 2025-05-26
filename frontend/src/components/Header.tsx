@@ -3,7 +3,7 @@ import geosImg from "/logo.jpg";
 import { Menu, X } from "lucide-react"; // `lucide-react` for modern icons
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
     <header className="bg-white shadow-md">
