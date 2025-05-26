@@ -15,7 +15,10 @@ import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 
 interface PlotFormProps{
   inputData: Student;
+  inputError: {[key: string]: boolean};
+  handleLevelIputData: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setInputData: React.Dispatch<React.SetStateAction<Student>>;
+  language: string;
 }
 
 const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
@@ -69,8 +72,8 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
 
   };
 
-  const handleLevelInputData = (e) => {
-    const { name, value } = e.currentTarget;
+  const handleLevelInputData = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     const parentCategory = name.split("-")[0];
     const childCategory = name.split("-")[1];
 
