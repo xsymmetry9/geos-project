@@ -9,6 +9,7 @@ const PrintPage = () => {
   const { id, language } = useParams(); //Gets id and language through link
   const parsedData = getStudentById(id); //Gets data from localstorage by id
   const componentRef = useRef(); //Save reference to print
+  const [isPrint, setIsPrint] = useState<boolean>(false);
   const [isPrinting, setIsPrinting] = useState(false);
   const promiseResolveRef = useRef(null);
 
@@ -60,7 +61,7 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-      <div id={`print-${language}`} className="print-component" ref={componentRef}>
+      <div id={`print-${language}`} className={`hidden @print: block print-component`} ref={componentRef}>
         <PrintContent parsedData={parsedData} />
       </div>
       <div className="flex justify-center pt-3 gap-3">
