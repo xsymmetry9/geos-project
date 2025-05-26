@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import LanguageAspect from "./LanguageAspect";
 import labelText from "../../../assets/other/labelText.json"
