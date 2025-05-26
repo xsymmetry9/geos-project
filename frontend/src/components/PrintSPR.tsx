@@ -61,7 +61,7 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-      <div id={`print-${language}`} className={`hidden @print: block print-component`} ref={componentRef}>
+      <div id={`print-${language}`} className={`print-component`} ref={componentRef}>
         <PrintContent parsedData={parsedData} />
       </div>
       <div className="flex justify-center pt-3 gap-3">
