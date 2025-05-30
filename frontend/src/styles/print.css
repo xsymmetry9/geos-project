@@ -86,21 +86,17 @@
   }
 
 .print-component {
-  /* display: none; */
-  width: 210mm;
-  height: 297mm;
-  margin: auto;
-  background-color: #fff;
-  padding: 8mm 8mm 8mm 8mm;
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  margin: 0 auto;
+  padding: 8mm;
   box-sizing: border-box;
-  /* border: 1px solid black; */
-  font-family: var(--font-secondary);
+  background: white;
 }
-@page{
-  .print-component{
-    size: A4;
-    border: none;
-  }
+
+@page {
+  size: A4;
+  margin: 0;
 }
 @media print {
   header{

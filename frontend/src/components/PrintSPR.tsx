@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
@@ -6,11 +6,15 @@ import {PrintContent} from "./PrintStudentProgressReport";
 import html2canvas from "html2canvas-pro";
 
 const PrintPage = () => {
-  const { id, language } = useParams(); //Gets id and language through link
-  const parsedData = getStudentById(id); //Gets data from localstorage by id
-  const componentRef = useRef(); //Save reference to print
+  const { id, language } = useParams<{id: string; language: string}>(); //Gets id and language through link
+  const componentRef = useRef<HTMLDivElement>(null); //Save reference to print
   const [isPrinting, setIsPrinting] = useState(false);
-  const promiseResolveRef = useRef(null);
+  const promiseResolveRef = useRef<null | (()=> void)>(null);
+
+  const parsedData = useMemo(()=> {
+    if (!id) return null;
+    return getStudentById(id); //Gets data from localstorage by id
+  }, [id]);
 
   useEffect(() => {
     if (isPrinting && promiseResolveRef.current) {
@@ -18,18 +22,16 @@ const PrintPage = () => {
     }
   }, [isPrinting]);
 
-  const reactToPrintContent = () => {
-    return componentRef.current;
-  };
+  const reactToPrintContent = useCallback(() => componentRef.current, []);
+
   const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
     documentTitle: "Student Progress Report",
-    content: () => componentRef.current,
-    onBeforePrint: () => {
-      return new Promise((resolve) => {
+    onBeforePrint: () => 
+       new Promise<void>((resolve) => {
         promiseResolveRef.current = resolve;
         setIsPrinting(true);
-      });
-    },
+      }),
     onAfterPrint: () => {
       promiseResolveRef.current = null;
       setIsPrinting(false);
@@ -53,6 +55,8 @@ const PrintPage = () => {
     }
   };
 
+  if(!parsedData) return <div>Loading ...</div>
+
   return (
     <>
       <div className="flex items-center justify-center pb-3">
@@ -72,11 +76,6 @@ const PrintPage = () => {
           Print
         </button>
         <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button>
-        {/* Add a to pdf function */}
-        {/* <button onClick={() => generagePDF(pdfRef, {filename: `student-report-${id}.pdf`})}
-          className="btn btn-primary w-[150px] flex items-center justify-center gap-3">
-          <FileDown />
-          To PDF</button> */}
       </div>
     </>
   );
