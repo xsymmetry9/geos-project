@@ -99,6 +99,15 @@
   margin: 0;
 }
 @media print {
+  body{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+
+  }
+  html, body{
+    height: 100% !important;
+    overflow: visible !important;
+  }
   header{
     display: none;
   }
@@ -108,7 +117,7 @@
   .print-component{
     display: block;
     size: A4;
-    height: 100vh;
+    height: auto !important;
     border: none;  
 
   }
