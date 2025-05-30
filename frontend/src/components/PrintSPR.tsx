@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
 import {PrintContent} from "./PrintStudentProgressReport";
 import html2canvas from "html2canvas-pro";
+import jsPDF from "jspdf";
 
 const PrintPage = () => {
   const { id, language } = useParams<{id: string; language: string}>(); //Gets id and language through link
@@ -55,6 +56,31 @@ const PrintPage = () => {
     }
   };
 
+  const handleGeneratePDF = async () => {
+  if (!componentRef.current) return;
+
+  const canvas = await html2canvas(componentRef.current, {
+    allowTaint: true,
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+
+  // Convert canvas to image scaled for A4
+  const imgProps = pdf.getImageProperties(imgData);
+  const imgRatio = imgProps.width / imgProps.height;
+  const height = pdfWidth / imgRatio;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, height);
+  pdf.save(`student-report-${id}.pdf`);
+};
+
   if(!parsedData) return <div>Loading ...</div>
 
   return (
@@ -75,7 +101,8 @@ const PrintPage = () => {
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
-        <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button>
+        {/* <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button> */}
+        <button className="btn btn-primary print" onClick={handleGeneratePDF}>Save as PDF</button>
       </div>
     </>
   );
