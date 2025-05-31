@@ -38,23 +38,7 @@ const PrintPage = () => {
       setIsPrinting(false);
     },
   });
-  const handleCapture = async() =>{
 
-    if(componentRef.current) {
-      const canvas = await html2canvas(componentRef.current, {
-        allowTaint: true,
-        scale: 2,
-        useCORS: true,
-        backgroundColor:"#ffffff",
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = imgData;
-      link.download = `student-report-${id}.png`;
-      link.click();
-    }
-  };
 
   const handleGeneratePDF = async () => {
   if (!componentRef.current) return;
@@ -101,7 +85,6 @@ const PrintPage = () => {
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
-        {/* <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button> */}
         <button className="btn btn-primary print" onClick={handleGeneratePDF}>Save as PDF</button>
       </div>
     </>

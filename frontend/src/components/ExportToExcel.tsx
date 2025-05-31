@@ -1,12 +1,19 @@
-import React from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
-import PropTypes from "prop-types";
+import { Student } from "@/type/Student";
 
-const ExportToExcel = ({ userData }) => {
+type UserData = {
+  SPR: Student[];
+}
+
+type ExportToExcelProps = {
+  userData: UserData;
+}
+
+const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
   const handleExport = () => {
-    if (!userData || !userData.SPR || userData.SPR.length === 0) {
+    if (!userData?.SPR?.length) {
       alert("No data available to export.");
       return;
     }
@@ -61,7 +68,4 @@ const ExportToExcel = ({ userData }) => {
   );
 };
 
-ExportToExcel.propTypes = {
-  userData: PropTypes.object,
-};
 export default ExportToExcel;

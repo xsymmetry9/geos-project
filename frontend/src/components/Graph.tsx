@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -15,9 +13,27 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, 
 
 import labelText from "../assets/other/labelText.json";
 
-const text = (phrase, language) => labelText[language]["SPR"][phrase];
+type Language = keyof typeof labelText;
 
-const Graph = ({ userData, language }) => {
+type SPR = typeof labelText["english"]["SPR"];
+type SPRStringKey = {
+  [K in keyof SPR]: SPR[K] extends string ? K : never
+}[keyof SPR]
+
+interface TransformedLevel {
+  category: string;
+  initial: number;
+  target: number;
+  final: number;
+}
+
+interface GraphProps {
+  userData: TransformedLevel[];
+  language: Language;
+}
+const text = (phrase: SPRStringKey, language: Language) => labelText[language]["SPR"][phrase];
+
+const Graph: React.FC<GraphProps> = ({ userData, language }) => {
 
   const options = {
     plugins: {
@@ -25,14 +41,14 @@ const Graph = ({ userData, language }) => {
         padding: 0,
       },
       legend: {
-        position: "bottom",
-        align: "center",
+        position: "bottom" as const,
+        align: "center" as const,
         title: {
-          position: "center",
+          position: "center" as const,
         },
         labels: {
           usePointStyle: true,
-          pointStyle: 'circle',
+          pointStyle: 'circle' as const,
           font: { size: 13 },
           color: "black",
           padding: 24,
@@ -83,11 +99,11 @@ const Graph = ({ userData, language }) => {
       {
         label: text("initial", language),
         data: [
-          userData[0].initial, 
-          userData[1].initial,
-          userData[2].initial, 
-          userData[3].initial,
-          userData[4].initial,
+          userData[0].initial, // vocabulary
+          userData[2].initial, // grammar
+          userData[1].initial, // pronunciation
+          userData[4].initial, // conversation
+          userData[3].initial, // listening
         ],
         backgroundColor: "transparent",
         borderColor: "#155E95",
@@ -138,11 +154,6 @@ const Graph = ({ userData, language }) => {
       </div>
     </>
   );
-};
-
-Graph.propTypes = {
-  data: PropTypes.object,
-  language: PropTypes.string,
 };
 
 export default Graph;
