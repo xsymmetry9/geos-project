@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+import { Language } from "@/utils/common";
 
-const Language = () => {
+const LanguagePage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -11,8 +12,12 @@ const Language = () => {
   useEffect(() => {
     const fetchUser = () => {
       const data = getDataFromLocal();
-      if (data != null) {
-        setUser(data);
+      if (data) {
+        const restoredUser = new User(data.name, data.language as Language);
+        restoredUser.SPR = data.SPR;
+        restoredUser.levelCheck = data.levelCheck;
+
+        setUser(restoredUser);
       } else {
         const newUser = new User();
         editDataFromLocal(newUser);
@@ -24,10 +29,11 @@ const Language = () => {
     fetchUser();
   }, []);
 
-  const handleLanguageSelect = (language: string) => {
+  const handleLanguageSelect = (language: Language) => {
     if (!user) return;
 
     const updatedUser = { ...user, language };
+
     editDataFromLocal(updatedUser);
     setUser(updatedUser);
     navigate(`/home/${language}`);
@@ -60,4 +66,4 @@ const Language = () => {
   );
 };
 
-export default Language;
+export default LanguagePage;

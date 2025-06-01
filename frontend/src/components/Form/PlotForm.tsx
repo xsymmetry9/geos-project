@@ -5,20 +5,19 @@ import LevelInformation from "./components/LevelInformation";
 import Preview from "./components/Preview";
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
-import { LanguageContext } from "../../pages/SPRForm";
+import { LanguageContext } from "@/pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
-
-import labelText from "../../assets/other/labelText.json"
-
-import { Student } from "@/type/Student";
+import labelText from "@/assets/other/labelText.json"
+import { Student, Levels } from "@/type/Student";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
+import { Language } from "@/utils/common";
+
+type LevelCategory = keyof Student["levels"];
+type LevelField = keyof Levels;
 
 interface PlotFormProps{
   inputData: Student;
-  inputError: {[key: string]: boolean};
-  handleLevelIputData: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setInputData: React.Dispatch<React.SetStateAction<Student>>;
-  language: string;
 }
 
 const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
@@ -33,49 +32,45 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     feedback: inputData.feedback == "" ? true : false
   });
 
-  const language = useContext(LanguageContext);
+  const language = useContext(LanguageContext) as Language;
 
-  const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) : void => {
     const { name, value } = e.target;
 
     // Update input data (convert numbers where necessary)
-    const newValue = name === "attendance" || name === "totalLessons" ? Number(value) : value;
+    const numericFields = ["attendance", "totalLessons"];
+    const newValue = numericFields.includes(name) ? Number(value) : value;
 
     setInputData((prev) => ({ ...prev, [name]: newValue }));
 
-    if(name === "name"  || name === "textbook" || name ==="course")
-    {
-      setInputError((prevError) => ({
-        ...prevError,
-        [name]: value.trim() === "",
-      }))
-    } else if(name === "attendance")
-    {
-      const numericValue = Number(value);
-      setInputError((prevError) => ({
-        ...prevError,
-        [name]: isNaN(numericValue) || numericValue <= 0,
-      }))
-    } else if(name === "totalLessons")
-    {
-      const numericValue = Number(value);
-      setInputError((prevError) =>({
-        ...prevError,
-        [name]: isNaN(numericValue) || numericValue <= 0 || numericValue < Number(inputData.attendance)
-      }))
-    } else if(name === "feedback") {
-      setInputError((prevError) => ({
-        ...prevError, 
-        [name]: value.trim() === ""
-      }))
-    }
-
+    setInputError((prevError) => {
+      switch (name) {
+        case "name":
+        case "textbook":
+        case "course":
+          return {...prevError, [name]: value.trim() === ""};
+        case "feedback":
+          return {...prevError, feedback: value.trim() === "" || value.length > 475}
+        case "attendance":
+          const att = Number(value);
+          return {...prevError, attendance: isNaN(att) || att <= 0};
+        case "totalLessons":
+          const total = Number(value);
+          return {
+            ...prevError, 
+            totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
+          };
+        default:
+          return prevError;
+      }
+    });
   };
 
-  const handleLevelInputData = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleLevelInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    const parentCategory = name.split("-")[0];
-    const childCategory = name.split("-")[1];
+    const [parentCategoryRaw, childCategoryRaw] = name.split("-");
+    const parentCategory = parentCategoryRaw as LevelCategory;
+    const childCategory = childCategoryRaw as LevelField;
 
     setInputData((prev) => ({
       ...prev,
@@ -114,7 +109,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     <Preview key={"preview"} inputData={inputData} language={language} />,
   ];
 
-  const changePage = (e) => {
+  const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
     if (name === "next") {
       if (page > arrOfPages.length - 1) {
@@ -162,7 +157,6 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
               page={page}
               handler={changePage}
               language={language}
-              handleSubmit={handleSubmit}
             />
             {page == 3 && (
               <input className="btn btn-primary" type="submit" value={labelText[language].save} />

@@ -1,18 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import labelText from "../../../assets/other/labelText.json";
+import labelText from "@/assets/other/labelText.json";
+import { Student } from "@/type/Student";
 
-const Preview = ({inputData, language }) => {
+type Language = keyof typeof labelText;
+
+interface PreviewProps {
+  inputData: Student;
+  language: Language;
+}
+
+const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
     inputData;
 
-  const titles = {
+  const titles: Record<Language, string[]> = {
     english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
     chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
     korean: ["어휘", "문법", "발음", "듣기", "대화"],
     japanese: ["語彙", "文法", "発音", "聴解", "会話"]
   };
-  const titleLanguage = {
+  const titleLanguage: Record<Language, string[]> = {
     english: ["Initial", "Target", "Final"],
     chinese: ["初始", "目標", "結束"],
     korean: ["초기", "목표", "결과"],
@@ -55,12 +61,13 @@ const Preview = ({inputData, language }) => {
           </thead>
           <tbody>
             {Object.keys(levels).map((item, index) => {
+              const key = item as keyof Student["levels"];
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
                   <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].initial}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].target}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].final}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].initial}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].target}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].final}</td>
                 </tr>
               );
             })}
@@ -70,15 +77,11 @@ const Preview = ({inputData, language }) => {
       <div className="preview-container pb-3">
         <h2 className="bg-dark-green text-white my-6 text-2xl font-bold capitalize text-center">{labelText[language].SPR["class_information"]}</h2>
         <div className="text-sm w-full border border-green-600 min-h-40 p-2">
-          <p>{feedback.length != 0 ? feedback : "No comment"}</p>
+          <p>{feedback || "No comment"}</p>
         </div>
       </div>
     </div>
   );
 };
 
-Preview.propTypes = {
-  inputData: PropTypes.object,
-  language: PropTypes.string,
-};
 export default Preview;
