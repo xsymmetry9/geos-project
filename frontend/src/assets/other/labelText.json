@@ -1,6 +1,9 @@
 {
   "english": {
     "save": "save",
+    "nextPage": "Next", 
+    "backPage": "Back", 
+    "printPage": "Print",
     "form": {
       "title": "Personal Information",
       "input_name": "name",
@@ -49,6 +52,9 @@
   },
   "chinese": {
     "save": "儲存",
+    "nextPage": "下一個", 
+    "backPage": "上一個", 
+    "printPage": "列印",
     "form": {
       "title": "個人信息",
       "input_name": "姓名",
@@ -97,6 +103,9 @@
   },
   "korean": {
     "save":"save",
+    "nextPage": "다음", 
+    "backPage": "이전",
+    "printPage": "인쇄",
     "form": {
       "title": "개인 정보",
       "input_name": "학생명",
@@ -156,6 +165,9 @@
     },
     "SPR": {
       "title": "学生進捗レポート",
+        "nextPage": "次へ",
+      "backPage": "前へ",
+      "printPage": "印刷",
       "student_information": " 学生情報",
       "student_level": " 学生のレベル",
       "student_feedback": "学生のフィードバック",
@@ -189,6 +201,6 @@
       "average": "平均",
       "comment": "コメント",
       "signature": "署名"
-   }
+     }
   }
 }

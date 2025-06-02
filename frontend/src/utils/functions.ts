@@ -3,6 +3,14 @@ import User from "@/type/User";
 import {Student} from "@/type/Student";
 import levelData from "@/assets/other/levelInformation.json";
 
+type LanguageKey = "english" | "chinese" | "korean" | "japanese";
+type Aspect = "vocabulary" | "grammar" | "listening" | "conversation" | "pronunciation"
+
+interface LevelDetail {
+  level: string;
+  description: string;
+}
+
 //Reads data from the local Storage
 export function getDataFromLocal(): User {
   const data = localStorage.getItem(appName);
@@ -59,24 +67,29 @@ export function deleteStudentById(id: string) {
   return updatedSPR;
 }
 
-// Needs more work
-export function getLevelInformationByLevel(obj) {
-  const {lang, cat, level} = obj;
+export function getLevelInformationByLevel(params: {
+  lang: LanguageKey,
+  cat: Aspect,
+  level: string;
+}): string {
+  const {lang, cat, level} = params;
   // if (!level) return {id: null, description: "Choose a level"}
 
   if(level === "select_score") return "Choose a score";
-  const aspectOfLanguage = levelData[lang][cat]; // returns an array
-  const results = aspectOfLanguage.filter((item) => item.level == level);
-  const result = results[0] != null ? results[0].description : "Select a score";
 
-  return result;
+  const aspectData = (levelData as any)[lang]?.[cat] as LevelDetail[] | undefined;
+
+  if(!aspectData) return "Invalide category";
+
+  const result = aspectData.find((item) => item.level == level);
+
+  return result?.description ?? "Select a score";
 
 }
 
-// Needs more work
-export function getAllLevelsInformationByAspect(obj: {lang: string; name: string}): any[] {
-  const {lang, name} = obj;
-  const result = levelData[lang][name];
+export function getAllLevelsInformationByAspect(params: {lang: LanguageKey; name: Aspect}): LevelDetail[]{
+  const {lang, name} = params;
+  const data = (levelData as any)[lang]?.[name] as LevelDetail[] | undefined;
 
-  return result; // returns an array
+  return data ?? []; // returns an array
 }

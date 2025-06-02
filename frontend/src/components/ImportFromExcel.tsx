@@ -6,17 +6,16 @@ import { Files, Upload } from "lucide-react";
 import User from "@/type/User";
 
 type ImportFromExcelProps = {
-  userData: User,
-  setUserData: React.Dispatch<React.SetStateAction<User>>;
-}
+  userData: User;
+  setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
 const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
   const { SPR } = userData;
 
-  // Merge two arrays and filters the data
   const mergedArrayFilterUniqueObjects = useCallback((arr1: Student[], arr2: Student[]) => {
     const mergedArray = [...arr1, ...arr2];
     const uniqueObjects = new Map<string, Student>();
-
     mergedArray.forEach((item) => {
       uniqueObjects.set(item.id, item);
     });
@@ -28,24 +27,25 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
     if (!files || files.length === 0) return;
 
     const file = files[0];
-
     const reader = new FileReader();
+
     reader.readAsArrayBuffer(file);
 
     reader.onload = (event) => {
       try {
         const arrayBuffer = event.target?.result;
-        if(!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
+        if (!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
 
         const data = new Uint8Array(arrayBuffer);
         const workbook = read(data, { type: "array" });
 
-        const sheetname = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetname];
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
         const jsonData: any[] = utils.sheet_to_json(worksheet);
 
         const parsedStudents: Student[] = jsonData.map((row) => {
           const student = new Student(row.id);
+          student.dateCreated = new Date(row.dateCreated || Date.now());
 
           student.name = row.Name || "";
           student.course = row.Course || "No course name";
@@ -55,45 +55,24 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
           student.feedback = row.Feedback || "No feedback";
 
           student.levels = {
-            vocabulary: new Levels(
-              String(row.Vocabulary_initial),
-              String(row.Vocabulary_target),
-              String(row.Vocabulary_final)
-            ),
-            pronunciation: new Levels(
-              String(row.Pronunciation_initial),
-              String(row.Pronunciation_target),
-              String(row.Pronunciation_final)
-            ),
-            grammar: new Levels(
-              String(row.Grammar_initial),
-              String(row.Grammar_target),
-              String(row.Grammar_final)
-            ),
-            listening: new Levels(
-              String(row.Listening_initial),
-              String(row.Listening_target),
-              String(row.Listening_final)
-            ),
-            conversation: new Levels(
-              String(row.Conversation_initial),
-              String(row.Conversation_target),
-              String(row.Conversation_final)
-            ),
+            vocabulary: new Levels(String(row.Vocabulary_initial), String(row.Vocabulary_target), String(row.Vocabulary_final)),
+            pronunciation: new Levels(String(row.Pronunciation_initial), String(row.Pronunciation_target), String(row.Pronunciation_final)),
+            grammar: new Levels(String(row.Grammar_initial), String(row.Grammar_target), String(row.Grammar_final)),
+            listening: new Levels(String(row.Listening_initial), String(row.Listening_target), String(row.Listening_final)),
+            conversation: new Levels(String(row.Conversation_initial), String(row.Conversation_target), String(row.Conversation_final)),
           };
+
           return student;
         });
-        // Update the state after removing all the duplicates
+
         const result = mergedArrayFilterUniqueObjects(parsedStudents, SPR);
-        setUserData((prev) => ({ ...prev, SPR: result }));
 
-        // Save to Local storage
-        const dataFromLocal = getDataFromLocal();
-        const newData = { ...dataFromLocal, SPR: result };
-
-        editDataFromLocal(newData);
+        // Update localStorage and component state
+        const updatedUser = { ...userData, SPR: result };
+        editDataFromLocal(updatedUser);
+        setUserData(updatedUser);
       } catch (err: any) {
-        alert(err.message || "An error occurred during fild upload");
+        alert(err.message || "An error occurred during file upload");
       }
     };
   };
@@ -108,7 +87,7 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
           type="file"
           accept=".xlsx, .xls"
           onChange={handleFileUpload}
-      />
+        />
       </label>
     </div>
   );
