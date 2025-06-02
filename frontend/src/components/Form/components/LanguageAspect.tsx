@@ -1,40 +1,65 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { SquareX, Info } from "lucide-react";
 import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
 import labelText from "../../../assets/other/labelText.json";
+import {Levels, Student} from "../../../type/Student";
 
-function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
-  const [displayHelp, setDisplayHelp] = useState({initial: false, target: false, final: false});
+type Language = keyof typeof labelText;
+type LevelKey = keyof Levels;
+type AspectName = keyof Student["levels"];
 
-  const displayHandlerOpen = (e) =>{
-    const name = e.currentTarget.id.split('-')[0];
+interface LanguageAspectProps {
+  inputData: {
+    levels: {
+      [key in AspectName]: Levels;
+    };
+  };
+  inputError: Record<string, boolean>;
+  aspectName: AspectName;
+  handleLevelInput: (e: React.ChangeEvent<HTMLSelectElement> ) => void;
+  language: Language;
+};
+
+
+const LanguageAspect: React.FC<LanguageAspectProps> = ({inputData, aspectName, handleLevelInput, language }) => {
+  const [displayHelp, setDisplayHelp] = useState<Record<LevelKey, boolean>>({
+    initial: false, 
+    target: false, 
+    final: false
+  });
+
+  const displayHandlerOpen = (e: React.MouseEvent<HTMLButtonElement>) =>{
+    const name = e.currentTarget.id.split('-')[0] as LevelKey;
     setDisplayHelp((prev) =>({
       ...prev,
       [name]: true
     }));
   }
 
-  const displayHandlerClose = (e) =>{
-    const name = e.currentTarget.id.split('-')[0];
+  const displayHandlerClose = (e: React.MouseEvent<HTMLButtonElement>) =>{
+    const name = e.currentTarget.id.split('-')[0] as LevelKey;
     setDisplayHelp((prev) => ({
       ...prev,
       [name]: false
     }))
   }
-  const titleLanguage = {
-    english: ["initial", "target", "final"],
-    chinese: ["初始", "目標", "結束"],
-    korean: ["초기", "목표", "결과"],
-    japanese: ["初期", "目標", "終了"],
+  const titleLanguage: Record<Language, Record<LevelKey, string>> = {
+    english: {initial: "initial", target: "target", final: "final"},
+    chinese: {initial: "初始", target: "目標", final: "結束"},
+    korean: {initial: "초기",target: "목표",final: "결과"},
+    japanese: {initial: "初期",target: "目標",final: "終了"},
   };
 
-  const PlotSelectOptionLevel = ({numIndex, itemName, aspectName}) => {
+  const PlotSelectOptionLevel: React.FC<{
+    numIndex: number;
+    itemName: LevelKey;
+    aspectName: AspectName;
+    }> = ({numIndex, itemName, aspectName}) => {
     return (      
       <>
         <div className= "w-full flex justify-between">
           {/* Title */}
-          <span className="text-gray-700 capitalize">{titleLanguage[language][numIndex]}</span>
+          <span className="text-gray-700 capitalize">{titleLanguage[language][itemName]}</span>
           { !displayHelp[itemName] && <button
               className="cursor-pointer"
               id={`${itemName}-open`}
@@ -45,9 +70,9 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
         {/* Language Aspect Input */}
         <label htmlFor={`${aspectName}-${itemName}`}>
           <select className="font-primary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]" 
-          name= {`${aspectName}-${titleLanguage.english[numIndex]}`}
-          id={`${aspectName}-${titleLanguage.english[numIndex]}`}
-          value={inputData.levels[aspectName][titleLanguage.english[numIndex]]}
+          name= {`${aspectName}-${itemName}`}
+          id={`${aspectName}-${itemName}`}
+          value={inputData.levels[aspectName][itemName]}
           onChange={handleLevelInput}>
             {/* Contains Several options depending on the JSON file */}
             {/* An empty string is set to default */}
@@ -98,7 +123,7 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
       <div className="p-t-3">
         <h2 className="text-lg font-bold capitalize border-0 border-b-2 border-dark-green my-3">{labelText[language].SPR[aspectName]}</h2>
         <div className="grid grid-cols-1 gap-3">
-        {["initial", "target", "final"].map((item, index) => (
+        {(["initial", "target", "final"] as LevelKey[]).map((item, index) => (
           <div key={index}>
              <PlotSelectOptionLevel numIndex={index} itemName={item} aspectName={aspectName} key={item} />
           </div>
@@ -110,10 +135,4 @@ function LanguageAspect({inputData, aspectName, handleLevelInput, language }) {
   );
 }
 
-LanguageAspect.propTypes = {
-  inputData: PropTypes.object,
-  aspectName: PropTypes.string,
-  handleLevelInput: PropTypes.func,
-  language: PropTypes.string,
-};
 export default LanguageAspect;

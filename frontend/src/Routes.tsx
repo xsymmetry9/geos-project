@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 //Routes.tsx
 
 import Index from "./pages/Index.jsx";
 import {Layout, ProfileLayout, LayoutForNonmember} from "./Layout";
+=======
+import Language from "./pages/Language";
+import Layout from "./Layout";
+>>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
 import LevelCheckForm from "./pages/LevelCheckForm";
+<<<<<<< HEAD
 import Admin from "./pages/Admin/AdminPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import TeacherPage from "./pages/Admin/TeacherPage";
@@ -50,6 +56,22 @@ const routes: RouteObject[] = [
     ]
   },
   {
+=======
+import Test from "./pages/Test";
+import AuthRedirect from "./components/AuthRedirect";
+
+const routes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <AuthRedirect /> },
+      { path: "language", element: <Language />},
+      { path: "home/:language", element: <Homepage /> },
+    ],
+  },
+  {
+>>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
     path: "spr/:language",
     element: <Layout />,
     children: [
@@ -63,6 +85,7 @@ const routes: RouteObject[] = [
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> }],
   },
+<<<<<<< HEAD
   { path: "admin",
     element: <Admin />
   },
@@ -73,6 +96,11 @@ const routes: RouteObject[] = [
       {index: true, element: <AdminHomepage />},
       {path: "teacherPage/:email", element: <TeacherPage />}
     ]
+=======
+  {
+    path: "test",
+    element: <Test />,
+>>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
   },
 ];
 

@@ -1,66 +1,80 @@
 import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
 import PersonalInformation from "./components/PersonalInformation";
 import Feedback from "./components/Feedback";
 import LevelInformation from "./components/LevelInformation";
 import Preview from "./components/Preview";
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
-import { LanguageContext } from "../../pages/SPRForm";
+import { LanguageContext } from "@/pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
+<<<<<<< HEAD:frontend/src/components/Form/Form.jsx
 import { editDataFromLocal, getStudentById } from "../../utils/functions";
+=======
+import labelText from "@/assets/other/labelText.json"
+import { Student, Levels } from "@/type/Student";
+import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
+import { Language } from "@/utils/common";
+>>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c:frontend/src/components/Form/PlotForm.tsx
 
-import labelText from "../../assets/other/labelText.json"
+type LevelCategory = keyof Student["levels"];
+type LevelField = keyof Levels;
 
-const PlotForm = ({ inputData, setInputData }) => {
-  const [page, setPage] = useState(0);
-  const [displayPopupMessage, setDisplayPopupMessage] = useState(false);
+interface PlotFormProps{
+  inputData: Student;
+  setInputData: React.Dispatch<React.SetStateAction<Student>>;
+}
+
+const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
+  const [page, setPage] = useState<number>(0);
+  const [displayPopupMessage, setDisplayPopupMessage] = useState<boolean>(false);
   const [inputError, setInputError] = useState({
     name: inputData.name == "" ? true : false,
     textbook: inputData.textbook == "" ? true : false,
     course: inputData.course == "" ? true : false,
-    attendance: inputData.attendance == 0 || inputData.attendance == "" ? true : false,
-    totalLessons: inputData.toalLessons == 0 || inputData.totalLessons == "" ? true : false,
+    attendance: inputData.attendance == 0 ? true : false,
+    totalLessons: inputData.totalLessons == 0 ? true : false,
     feedback: inputData.feedback == "" ? true : false
   });
 
-  const language = useContext(LanguageContext);
+  const language = useContext(LanguageContext) as Language;
 
-  const handleInputData = (e) => {
+  const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) : void => {
     const { name, value } = e.target;
-    setInputData((prev) => ({ ...prev, [name]: value }));
 
-    if(name === "name"  || name === "textbook" || name ==="course")
-    {
-      setInputError((prevError) => ({
-        ...prevError,
-        [name]: value.trim() === "",
-      }))
-    } else if(name === "attendance")
-    {
-      setInputError((prevError) => ({
-        ...prevError,
-        [name]: value <= 0 || value.trim() === ""
-      }))
-    } else if(name === "totalLessons")
-    {
-      setInputError((prevError) =>({
-        ...prevError,
-        [name]: value.trim() === "" || value <= 0 || value < parseInt(inputData.attendance)
-      }))
-    } else if(name === "feedback") {
-      setInputError((prevError) => ({
-        ...prevError, 
-        [name]: value.trim() === ""
-      }))
-    }
+    // Update input data (convert numbers where necessary)
+    const numericFields = ["attendance", "totalLessons"];
+    const newValue = numericFields.includes(name) ? Number(value) : value;
 
+    setInputData((prev) => ({ ...prev, [name]: newValue }));
+
+    setInputError((prevError) => {
+      switch (name) {
+        case "name":
+        case "textbook":
+        case "course":
+          return {...prevError, [name]: value.trim() === ""};
+        case "feedback":
+          return {...prevError, feedback: value.trim() === "" || value.length > 475}
+        case "attendance":
+          const att = Number(value);
+          return {...prevError, attendance: isNaN(att) || att <= 0};
+        case "totalLessons":
+          const total = Number(value);
+          return {
+            ...prevError, 
+            totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
+          };
+        default:
+          return prevError;
+      }
+    });
   };
 
-  const handleLevelInputData = (e) => {
-    const { name, value } = e.currentTarget;
-    const parentCategory = name.split("-")[0];
-    const childCategory = name.split("-")[1];
+  const handleLevelInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    const [parentCategoryRaw, childCategoryRaw] = name.split("-");
+    const parentCategory = parentCategoryRaw as LevelCategory;
+    const childCategory = childCategoryRaw as LevelField;
 
     setInputData((prev) => ({
       ...prev,
@@ -99,7 +113,7 @@ const PlotForm = ({ inputData, setInputData }) => {
     <Preview key={"preview"} inputData={inputData} language={language} />,
   ];
 
-  const changePage = (e) => {
+  const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = e.currentTarget;
     if (name === "next") {
       if (page > arrOfPages.length - 1) {
@@ -114,10 +128,10 @@ const PlotForm = ({ inputData, setInputData }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const savedData = JSON.parse(localStorage.getItem("GEOS_app"));
+      const savedData = getDataFromLocal();
       const existingStudentIndex = savedData.SPR.findIndex(
         (student) => student.id === inputData.id,
       );
@@ -126,7 +140,7 @@ const PlotForm = ({ inputData, setInputData }) => {
       } else {
         savedData.SPR[existingStudentIndex] = inputData;
       }
-      localStorage.setItem("GEOS_app", JSON.stringify(savedData));
+      editDataFromLocal(savedData); 
     } catch (err) {
       alert(err);
     }
@@ -147,7 +161,6 @@ const PlotForm = ({ inputData, setInputData }) => {
               page={page}
               handler={changePage}
               language={language}
-              handleSubmit={handleSubmit}
             />
             {page == 3 && (
               <input className="btn btn-primary" type="submit" value={labelText[language].save} />
@@ -158,10 +171,5 @@ const PlotForm = ({ inputData, setInputData }) => {
     </div>
     </div>
   );
-};
-
-PlotForm.propTypes = {
-  inputData: PropTypes.object,
-  setInputData: PropTypes.func,
 };
 export default PlotForm;

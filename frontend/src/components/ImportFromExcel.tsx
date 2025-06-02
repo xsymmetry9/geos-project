@@ -1,45 +1,52 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { read, utils } from "xlsx";
-import PropTypes from "prop-types";
 import { Student, Levels } from "../type/Student";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
-import { Upload } from "lucide-react";
+import { Files, Upload } from "lucide-react";
+import User from "@/type/User";
 
-const ImportFromExcel = ({ userData, setUserData }) => {
+type ImportFromExcelProps = {
+  userData: User;
+  setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+};
+
+const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
   const { SPR } = userData;
-  const [fileName, setFileName] = useState("");
 
-  // Merge two arrays and filters the data
-  const mergedArrayFilterUniqueObjects = useCallback((arr1, arr2) => {
+  const mergedArrayFilterUniqueObjects = useCallback((arr1: Student[], arr2: Student[]) => {
     const mergedArray = [...arr1, ...arr2];
-    const uniqueObjects = new Map();
-
+    const uniqueObjects = new Map<string, Student>();
     mergedArray.forEach((item) => {
       uniqueObjects.set(item.id, item);
     });
     return Array.from(uniqueObjects.values());
   }, []);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target?.files;
+    if (!files || files.length === 0) return;
 
-    setFileName(file.name);
+    const file = files[0];
     const reader = new FileReader();
+
     reader.readAsArrayBuffer(file);
 
-    reader.onload = (e) => {
+    reader.onload = (event) => {
       try {
-        const arrayBuffer = e.target.result;
+        const arrayBuffer = event.target?.result;
+        if (!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
+
         const data = new Uint8Array(arrayBuffer);
         const workbook = read(data, { type: "array" });
 
-        const sheetname = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetname];
-        const jsonData = utils.sheet_to_json(worksheet);
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData: any[] = utils.sheet_to_json(worksheet);
 
-        const parsedStudents = jsonData.map((row) => {
+        const parsedStudents: Student[] = jsonData.map((row) => {
           const student = new Student(row.id);
+          student.dateCreated = new Date(row.dateCreated || Date.now());
+
           student.name = row.Name || "";
           student.course = row.Course || "No course name";
           student.textbook = row.Textbook || "No textbook";
@@ -48,45 +55,24 @@ const ImportFromExcel = ({ userData, setUserData }) => {
           student.feedback = row.Feedback || "No feedback";
 
           student.levels = {
-            vocabulary: new Levels(
-              Number(row.Vocabulary_initial),
-              Number(row.Vocabulary_target),
-              Number(row.Vocabulary_final)
-            ),
-            pronunciation: new Levels(
-              Number(row.Pronunciation_initial),
-              Number(row.Pronunciation_target),
-              Number(row.Pronunciation_final)
-            ),
-            grammar: new Levels(
-              Number(row.Grammar_initial),
-              Number(row.Grammar_target),
-              Number(row.Grammar_final)
-            ),
-            listening: new Levels(
-              Number(row.Listening_initial),
-              Number(row.Listening_target),
-              Number(row.Listening_final)
-            ),
-            conversation: new Levels(
-              Number(row.Conversation_initial),
-              Number(row.Conversation_target),
-              Number(row.Conversation_final)
-            ),
+            vocabulary: new Levels(String(row.Vocabulary_initial), String(row.Vocabulary_target), String(row.Vocabulary_final)),
+            pronunciation: new Levels(String(row.Pronunciation_initial), String(row.Pronunciation_target), String(row.Pronunciation_final)),
+            grammar: new Levels(String(row.Grammar_initial), String(row.Grammar_target), String(row.Grammar_final)),
+            listening: new Levels(String(row.Listening_initial), String(row.Listening_target), String(row.Listening_final)),
+            conversation: new Levels(String(row.Conversation_initial), String(row.Conversation_target), String(row.Conversation_final)),
           };
+
           return student;
         });
-        // Update the state after removing all the duplicates
+
         const result = mergedArrayFilterUniqueObjects(parsedStudents, SPR);
-        setUserData((prev) => ({ ...prev, SPR: result }));
 
-        // Save to Local storage
-        const dataFromLocal = JSON.parse(getDataFromLocal());
-        const newData = { ...dataFromLocal, SPR: result };
-
-        editDataFromLocal(newData);
-      } catch (err) {
-        alert(err.message);
+        // Update localStorage and component state
+        const updatedUser = { ...userData, SPR: result };
+        editDataFromLocal(updatedUser);
+        setUserData(updatedUser);
+      } catch (err: any) {
+        alert(err.message || "An error occurred during file upload");
       }
     };
   };
@@ -101,16 +87,10 @@ const ImportFromExcel = ({ userData, setUserData }) => {
           type="file"
           accept=".xlsx, .xls"
           onChange={handleFileUpload}
-      />
+        />
       </label>
-      {fileName && <p>Uploaded: {fileName}</p>}
     </div>
   );
-};
-
-ImportFromExcel.propTypes = {
-  userData: PropTypes.object,
-  setUserData: PropTypes.func,
 };
 
 export default ImportFromExcel;

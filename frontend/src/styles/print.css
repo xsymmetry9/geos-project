@@ -86,23 +86,28 @@
   }
 
 .print-component {
-  /* display: none; */
-  width: 210mm;
-  height: 297mm;
-  margin: auto;
-  background-color: #fff;
-  padding: 8mm 8mm 8mm 8mm;
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  margin: 0 auto;
+  padding: 8mm;
   box-sizing: border-box;
-  border: 1px solid black;
-  font-family: var(--font-secondary);
+  background: white;
 }
-@page{
-  .print-component{
-    size: A4;
-    border: none;
-  }
+
+@page {
+  size: A4;
+  margin: 0;
 }
 @media print {
+  body{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+
+  }
+  html, body{
+    height: 100% !important;
+    overflow: visible !important;
+  }
   header{
     display: none;
   }
@@ -112,7 +117,7 @@
   .print-component{
     display: block;
     size: A4;
-    height: 100vh;
+    height: auto !important;
     border: none;  
 
   }

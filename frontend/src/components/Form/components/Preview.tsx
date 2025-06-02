@@ -1,27 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
-import labelText from "../../../assets/other/labelText.json";
+import labelText from "@/assets/other/labelText.json";
+import { Student } from "@/type/Student";
 
-const Preview = ({inputData, language }) => {
+type Language = keyof typeof labelText;
+
+interface PreviewProps {
+  inputData: Student;
+  language: Language;
+}
+
+const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
     inputData;
 
-  const titles = {
+  const titles: Record<Language, string[]> = {
     english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
     chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
     korean: ["어휘", "문법", "발음", "듣기", "대화"],
     japanese: ["語彙", "文法", "発音", "聴解", "会話"]
   };
-  const titleLanguage = {
+  const titleLanguage: Record<Language, string[]> = {
     english: ["Initial", "Target", "Final"],
     chinese: ["初始", "目標", "結束"],
     korean: ["초기", "목표", "결과"],
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div className="font-primary static preview-section">
+    <div className="static preview-section">
       <div className="p-3" id="class-infomration">
-        <h2 className="text-2xl text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
+        <h2 className="text-2xl font-bold text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
         <p className="text-size-sm" >
           <strong className="capitalize">{labelText[language].form["input_name"]}:</strong> {name.length != 0 ? name : "No name"}
         </p>
@@ -43,8 +49,8 @@ const Preview = ({inputData, language }) => {
         </p>
       </div>
       <div className="p-3" id="student-evaluation">
-        <h2 className="bg-dark-green text-2xl text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
-        <table className="font-secondary table-fixed border-collapse w-full mx-auto">
+        <h2 className="bg-dark-green text-2xl font-bold text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
+        <table className="table-fixed border-collapse w-full mx-auto">
           <thead>
             <tr className="bg-orange-700 text-white font-secondary text-sm">
               <th className="px-2 py-1"></th>
@@ -55,12 +61,13 @@ const Preview = ({inputData, language }) => {
           </thead>
           <tbody>
             {Object.keys(levels).map((item, index) => {
+              const key = item as keyof Student["levels"];
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
                   <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].initial}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].target}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[item].final}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].initial}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].target}</td>
+                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].final}</td>
                 </tr>
               );
             })}
@@ -68,17 +75,13 @@ const Preview = ({inputData, language }) => {
         </table>
       </div>
       <div className="preview-container pb-3">
-        <h2 className="bg-dark-green text-white my-6 text-2xl capitalize text-center">{labelText[language].SPR["class_information"]}</h2>
-        <div className="font-primary text-sm w-full border border-green-600 min-h-40 p-2">
-          <p>{feedback.length != 0 ? feedback : "No comment"}</p>
+        <h2 className="bg-dark-green text-white my-6 text-2xl font-bold capitalize text-center">{labelText[language].SPR["class_information"]}</h2>
+        <div className="text-sm w-full border border-green-600 min-h-40 p-2">
+          <p>{feedback || "No comment"}</p>
         </div>
       </div>
     </div>
   );
 };
 
-Preview.propTypes = {
-  inputData: PropTypes.object,
-  language: PropTypes.string,
-};
 export default Preview;

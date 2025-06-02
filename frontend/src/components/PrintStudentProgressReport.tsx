@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import Graph from "./Graph";
 import {
@@ -9,26 +7,43 @@ import {
   Table,
   Comment,
   Signature,
-} from "./PrintSPR/StudentInfo";
-import PlotCards from "./PrintSPR/PlotCards";
+} from "./PrintComponents/StudentInfo";
+import PlotCards from "./PrintComponents/PlotCards";
+import { Student } from "@/type/Student";
+import labelText from "../assets/other/labelText.json";
 
 import "../styles/print.css"
 
+// ---------------------------------
+// Type Defintions
+// ---------------------------------
+type Language = keyof typeof labelText;
+
+type TransformedLevel = {
+  category: string;
+  initial: number;
+  target: number;
+  final: number;
+}
+
+type PrintContentProps = {
+  parsedData: Student;
+}
   // Working on Transforming data
-export const processData = (data) =>{
-    return Object.keys(data).map((category) =>({
+export const processData = (data: Student["levels"]): TransformedLevel[] =>{
+    return Object.entries(data).map(([category, level]) =>({
       category,
-      initial: parseFloat(data[category].initial !== "10+" ? parseFloat(data[category].initial) : 10),
-      target: parseFloat(data[category].target !== "10+" ? parseFloat(data[category].target) : 10),
-      final: parseFloat(data[category].final !== "10+" ? parseFloat(data[category].final) : 10)
+      initial: level.initial === "10+" ? 10 : parseFloat(level.initial),
+      target: level.target === "10+" ? 10 : parseFloat(level.target),
+      final: level.final === "10+" ? 10 : parseFloat(level.final)
     }));
   };
 
-export const PrintContent = ({ parsedData }) => {
-  const { language } = useParams();
+export const PrintContent: React.FC<PrintContentProps> = ({ parsedData }) => {
+  const { language } = useParams() as {language: Language};
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
-  const transformedData = processData(parsedData.levels); 
+  const transformedData = processData(levels); 
 
   return (
     <>
@@ -42,7 +57,7 @@ export const PrintContent = ({ parsedData }) => {
         <StudentInfo name={name} textbook={textbook} course={course} language={language} />
         <AttendanceInfo attendance={attendance} totalLessons={totalLessons} language={language} />
       </div>
-      <Table levels={levels} transformedData = {transformedData} language={language} />
+      <Table levels={levels} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
         <div className="grid grid-cols-1 gap-">
           <Graph userData={transformedData} language={language} />
@@ -53,8 +68,4 @@ export const PrintContent = ({ parsedData }) => {
       </div>
     </>
   );
-};
-
-PrintContent.propTypes = {
-  parsedData: PropTypes.object,
 };

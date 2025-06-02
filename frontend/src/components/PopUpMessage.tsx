@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { LanguageContext } from "../pages/SPRForm";
 import { SquareX, CircleCheckBig } from "lucide-react";
 
-const PopUpMessage = ({ setDisplayPopupMessage }) => {
+interface PopUpMessageProps {
+  setDisplayPopupMessage: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const PopUpMessage: React.FC<PopUpMessageProps> = ({ setDisplayPopupMessage }) => {
   const language = useContext(LanguageContext);
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1 bg-white top-0 max-w-[400px] h-[350px] w-full outline-2 outline-dark-green rounded">
@@ -23,9 +26,4 @@ const PopUpMessage = ({ setDisplayPopupMessage }) => {
     </div>
   );
 };
-
-PopUpMessage.propTypes = {
-  setDisplayPopupMessage: PropTypes.func.required,
-};
-
 export default PopUpMessage;

@@ -1,8 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json"
 
-const PersonalInformation = ({ inputData, inputError, handleInputData, language }) => {
+interface InputData {
+  name: string;
+  course: string;
+  textbook: string;
+  attendance: number;
+  totalLessons: number;
+}
+
+interface InputError {
+  name?: boolean;
+  course?: boolean;
+  textbook?: boolean;
+  attendance?: boolean;
+  totalLessons: boolean;
+}
+
+type Language = keyof typeof labelText;
+
+interface PersonalInformationProps {
+  inputData: InputData;
+  inputError: InputError;
+  handleInputData: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  language: Language;
+}
+const PersonalInformation: React.FC<PersonalInformationProps> = ({ inputData, inputError, handleInputData, language }) => {
   const { name, course, textbook, attendance, totalLessons } = inputData;
 
   //translation
@@ -95,7 +117,7 @@ const PersonalInformation = ({ inputData, inputError, handleInputData, language 
           className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0  focus:border-[#09c5eb] hover:border-[#09c5eb]"
           type="number"
           name="totalLessons"
-          id="totalLesson"
+          id="totalLessons"
           min={0}
           value={totalLessons}
           onChange={handleInputData}
@@ -110,9 +132,4 @@ const PersonalInformation = ({ inputData, inputError, handleInputData, language 
   );
 };
 
-PersonalInformation.propTypes = {
-  inputData: PropTypes.object,
-  handleInputData: PropTypes.func,
-  language: PropTypes.string,
-};
 export default PersonalInformation;

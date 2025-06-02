@@ -1,9 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
 import labelText from "../../../assets/other/labelText.json";
+import { useEffect, useState } from "react";
 
-const Feedback = ({ inputData, inputError, handleInputData, language }) => {
+type Language = keyof typeof labelText;
+
+interface InputData {
+  feedback: string;
+}
+
+interface InputError {
+  feedback?: boolean;
+}
+
+interface FeedbackProps {
+  inputData: InputData;
+  inputError: InputError;
+  handleInputData: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  language: Language;
+}
+
+const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, handleInputData, language }) => {
   const { feedback } = inputData;
+  const [count, setCount] = useState<number>(0);
 
   const placeholderContent = {
     english: "Your comment",
@@ -12,8 +29,12 @@ const Feedback = ({ inputData, inputError, handleInputData, language }) => {
     chinese: "評論在此處輸入",
   };
 
+  useEffect(()=>{
+    setCount(feedback.length); //includes spaces
+  }, [feedback])
+
   return (
-    <div className="">
+    <div>
       <h2 className="bg-[#00646c] text-xl text-white p-2 font-secondary font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
       <p className="font-secondary text-gray-700 capitalize mt-2">
         <label htmlFor="">{placeholderContent[language]}</label>
@@ -26,18 +47,15 @@ const Feedback = ({ inputData, inputError, handleInputData, language }) => {
           id="feedback"
           value={feedback}
           onChange={handleInputData}
-          placeholder={placeholderContent[language.toLowerCase()]}
+          placeholder={placeholderContent[language]}
         ></textarea>
-        {inputError.feedback && <p className="text-red-600 text-sm">Please fill up the feedback section</p>}
+        {feedback.trim() === ("") && inputError.feedback && <p className="text-red-600 text-sm">Please fill up this section</p>}
+        {feedback.length > 475 && inputError.feedback && (<p className="text-red-600 text-sm">Too many characters (max 475)</p>)}
+     
 
       </div>
     </div>
   );
 };
 
-Feedback.propTypes = {
-  inputData: PropTypes.object,
-  handleInputData: PropTypes.func,
-  language: PropTypes.string,
-};
 export default Feedback;

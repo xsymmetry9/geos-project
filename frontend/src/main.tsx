@@ -17,12 +17,12 @@ const Routes = createBrowserRouter(routes,
 const container = document.getElementById("app");
 if (!container) throw new Error("No element with ID 'app' found");
 createRoot(container).render(
-  <StrictMode>
+  // <StrictMode>
     <RouterProvider
       router={Routes}
       future={{
         v7_startTransition: true,
       }}
     />
-  </StrictMode>,
+  // </StrictMode>,
 );

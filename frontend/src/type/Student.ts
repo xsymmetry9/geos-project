@@ -16,8 +16,8 @@ class Student {
   name: string;
   course: string;
   textbook: string;
-  attendance: string;
-  totalLessons: string;
+  attendance: number;
+  totalLessons: number;
   feedback: string;
   levels: {
     vocabulary: Levels;
@@ -33,8 +33,8 @@ class Student {
     this.name = "";
     this.course = "";
     this.textbook = "";
-    this.attendance = "";
-    this.totalLessons = "";
+    this.attendance = 0;
+    this.totalLessons = 0;
     this.feedback = "";
     this.levels = {
       vocabulary: new Levels(),

@@ -1,5 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 
+<<<<<<< HEAD
 type LanguageAspects = {
   fluency: string;
   confidence: string;
@@ -38,6 +39,25 @@ class LevelCheck {
   };
 }
   
+=======
+class LevelCheck {
+    id: string;
+    dateCreated: Date;
+    name: string;
+    feedback: string;
+    language_proficiency_level: string;
+    textbook: string;
+    constructor(id = uuidv4(), dateCreated = new Date()) {
+      this.id = id;
+      this.dateCreated = dateCreated;
+      this.name = "";
+      this.feedback = "";
+      this.language_proficiency_level = "";
+      this.textbook = "";
+
+    }
+  }
+>>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 
   export default LevelCheck;
   
