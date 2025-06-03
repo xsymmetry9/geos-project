@@ -26,8 +26,8 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
   };
   return (
     <div className="static preview-section">
-      <div className="p-3" id="class-infomration">
-        <h2 className="text-2xl font-bold text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["class_information"]}</h2>
+      <div className="p-3" id="class-information">
+        <h2 className="text-2xl font-bold text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["student_information"]}</h2>
         <p className="text-size-sm" >
           <strong className="capitalize">{labelText[language].form["input_name"]}:</strong> {name.length != 0 ? name : "No name"}
         </p>
@@ -75,7 +75,7 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
         </table>
       </div>
       <div className="preview-container pb-3">
-        <h2 className="bg-dark-green text-white my-6 text-2xl font-bold capitalize text-center">{labelText[language].SPR["class_information"]}</h2>
+        <h2 className="bg-dark-green text-white my-6 text-2xl font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
         <div className="text-sm w-full border border-green-600 min-h-40 p-2">
           <p>{feedback || "No comment"}</p>
         </div>

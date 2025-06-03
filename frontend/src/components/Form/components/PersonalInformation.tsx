@@ -82,6 +82,9 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({ inputData, in
           <option className="font-secondary text-base text-inherit" value="GL">
             GL
           </option>
+          <option className="font-secondary text-base text-inherit" value="Company">
+            Company
+          </option>
         </select>
         {inputError.course && <p className="text-red-600 text-sm">Missing course</p>}
         </label>
