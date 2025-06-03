@@ -1,19 +1,7 @@
 import { Outlet } from "react-router-dom";
-<<<<<<< HEAD
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Sidebar from "./components/Sidebar";
-
-const Layout = () => {
-  return (
-    <div className="grid h-screen grid-rows-[70px_auto_90px] grid-cols-1">
-      <Header />
-      <div className="relative mx-auto w-full bg-gray-100max-w-[1100px]">
-        <Outlet />
-      </div>
-=======
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Sidebar from "@/components/Sidebar";
 
 const Layout = () => {
   return (
@@ -24,13 +12,11 @@ const Layout = () => {
           <Outlet />
         </div>
       </main>
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
       <Footer />
     </div>
   );
 };
 
-<<<<<<< HEAD
 const ProfileLayout = () =>{
   return (
     <div className="grid h-screen grid-rows-[70px_1fr_90px] grid-cols-1">
@@ -67,6 +53,3 @@ const LayoutForNonmember = () =>{
 }
 
 export {Layout, LayoutForNonmember, ProfileLayout};
-=======
-export default Layout;
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c

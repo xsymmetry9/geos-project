@@ -7,14 +7,10 @@ import Pagination from "./components/Pagination";
 import Button from "./components/Button";
 import { LanguageContext } from "@/pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
-<<<<<<< HEAD:frontend/src/components/Form/Form.jsx
-import { editDataFromLocal, getStudentById } from "../../utils/functions";
-=======
 import labelText from "@/assets/other/labelText.json"
 import { Student, Levels } from "@/type/Student";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 import { Language } from "@/utils/common";
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c:frontend/src/components/Form/PlotForm.tsx
 
 type LevelCategory = keyof Student["levels"];
 type LevelField = keyof Levels;

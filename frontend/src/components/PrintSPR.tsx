@@ -1,22 +1,9 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useRef } from "react";
-=======
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "../utils/functions";
 import {PrintContent} from "./PrintStudentProgressReport";
 import html2canvas from "html2canvas-pro";
-<<<<<<< HEAD
-
-const PrintPage = () => {
-  const { id, language } = useParams(); //Gets id and language through link
-  const parsedData = getStudentById(id); //Gets data from localstorage by id
-  const componentRef = useRef(); //Save reference to print
-  const [isPrinting, setIsPrinting] = useState(false);
-  const promiseResolveRef = useRef(null);
-=======
 import jsPDF from "jspdf";
 
 const PrintPage = () => {
@@ -29,7 +16,6 @@ const PrintPage = () => {
     if (!id) return null;
     return getStudentById(id); //Gets data from localstorage by id
   }, [id]);
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 
   useEffect(() => {
     if (isPrinting && promiseResolveRef.current) {
@@ -37,20 +23,6 @@ const PrintPage = () => {
     }
   }, [isPrinting]);
 
-<<<<<<< HEAD
-  const reactToPrintContent = () => {
-    return componentRef.current;
-  };
-  const handlePrint = useReactToPrint({
-    documentTitle: "Student Progress Report",
-    content: () => componentRef.current,
-    onBeforePrint: () => {
-      return new Promise((resolve) => {
-        promiseResolveRef.current = resolve;
-        setIsPrinting(true);
-      });
-    },
-=======
   const reactToPrintContent = useCallback(() => componentRef.current, []);
 
   const handlePrint = useReactToPrint({
@@ -61,31 +33,11 @@ const PrintPage = () => {
         promiseResolveRef.current = resolve;
         setIsPrinting(true);
       }),
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
     onAfterPrint: () => {
       promiseResolveRef.current = null;
       setIsPrinting(false);
     },
   });
-<<<<<<< HEAD
-  const handleCapture = async() =>{
-
-    if(componentRef.current) {
-      const canvas = await html2canvas(componentRef.current, {
-        allowTaint: true,
-        scale: 2,
-        useCORS: true,
-        backgroundColor:"#ffffff",
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = imgData;
-      link.download = `student-report-${id}.png`;
-      link.click();
-    }
-  };
-=======
 
 
   const handleGeneratePDF = async () => {
@@ -114,7 +66,6 @@ const PrintPage = () => {
 };
 
   if(!parsedData) return <div>Loading ...</div>
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 
   return (
     <>
@@ -123,11 +74,6 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-<<<<<<< HEAD
-      <div id={`print-${language}`} className="print-component" ref={componentRef}>
-        <PrintContent parsedData={parsedData} />
-      </div>
-=======
     <div className= "mx-auto overflow-auto">
       <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
         <PrintContent parsedData={parsedData} />
@@ -135,21 +81,11 @@ const PrintPage = () => {
     </div>
     
   
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
       <div className="flex justify-center pt-3 gap-3">
         <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
           Print
         </button>
-<<<<<<< HEAD
-        <button className="btn btn-primary print" onClick={handleCapture}>Save as Image</button>
-        {/* Add a to pdf function */}
-        {/* <button onClick={() => generagePDF(pdfRef, {filename: `student-report-${id}.pdf`})}
-          className="btn btn-primary w-[150px] flex items-center justify-center gap-3">
-          <FileDown />
-          To PDF</button> */}
-=======
         <button className="btn btn-primary print" onClick={handleGeneratePDF}>Save as PDF</button>
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
       </div>
     </>
   );

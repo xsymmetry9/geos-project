@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import {useState} from "react";
-import PropTypes from "prop-types";
-=======
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
 import LanguageAspect from "./LanguageAspect";
 import DisplayHelp from "./DisplayHelp";
 import labelText from "../../../assets/other/labelText.json"
@@ -27,15 +22,7 @@ const LevelInformation: React.FC<LevelInformationProps> = ({
   handleLevelInputData,
   language,
 }) => {
-<<<<<<< HEAD
-
-  const [displayHelp, setDisplayHelp] = useState(false);
-
-  const titles = {
-    english: [
-=======
   const englishAspects: AspectName[] = [
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
       "vocabulary",
       "grammar",
       "pronunciation",
@@ -54,18 +41,7 @@ const LevelInformation: React.FC<LevelInformationProps> = ({
       {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
       <div className="pb-[3rem] relative">
         <h2 className="bg-[#00646c] text-xl text-white p-2 font-bold capitalize text-center">{labelText[language].SPR["student_level"]}</h2>
-<<<<<<< HEAD
-        <div className="w-full flex justify-center">
-          <button className="btn border border-blue-500 bg-blue-500 bg-white-500 mt-3 text-white hover:text-black hover:bg-white"
-          onClick={() => setDisplayHelp(true)}
-          aria-label="display-help">Learn CEFR Levels</button>
-        </div>
-        {displayHelp && <DisplayHelp language = {language} setDisplayHelp = {setDisplayHelp} />}
-
-        {titles.english.map((aspectName) => {
-=======
         {englishAspects.map((aspectName) => {
->>>>>>> 8dc84781a0d74170503ab50a7efdbde0598b5c9c
           return (
               <LanguageAspect
                 key={aspectName}
