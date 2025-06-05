@@ -10,3 +10,19 @@ App can be view here.![https://main.geos-project.pages.dev/']
 - **Routing**: React Router
 - **Styling**: CSS, SASS
 - **Deployment**: Cloudfare
+
+## Setup for Backend
+
+### For development
+```
+cp .env.development .env
+npx prisma generate
+npx prisma db push
+```
+
+### For production
+```
+cp .env.production .env
+npx prisma generate
+npx prisma db push
+```
