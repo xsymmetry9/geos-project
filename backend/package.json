@@ -5,12 +5,12 @@
   "description": "Backend for the SPR and Level check form",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "generate": "prisma generate",
-    "migrate": "prisma migrate dev",
-    "migrate:deploy": "prisma migrate deploy",
-    "seed": "node seed.js"
+  "start": "NODE_ENV=production node src/server.js",
+  "dev": "NODE_ENV=development nodemon src/server.js",
+  "generate": "cp .env.development .env && prisma generate",
+  "migrate": "cp .env.development .env && prisma migrate dev",
+  "migrate:deploy": "cp .env.production .env && prisma migrate deploy",
+  "seed": "node seed.js"
   },
   "keywords": [],
   "author": "",
