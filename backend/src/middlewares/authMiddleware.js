@@ -1,6 +1,8 @@
 // src/middlewares/authMiddleware.js
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config({path: `.env${process.env.NODE_ENV || development}`})
+
 
 //Format Token
 //Authorization: Bearer <access_token>
