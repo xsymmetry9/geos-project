@@ -34,7 +34,6 @@ router.post("/api/login", loginTeacher); //Blocks logged-users from login page
 
 // Current Member
 router.get("/api/currentTeacher", (req, res) =>{
-
 })
 
 // Profile
