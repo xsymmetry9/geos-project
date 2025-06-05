@@ -3,6 +3,8 @@ node_modules/
 
 # Enviroment Variables
 .env
+.env.development
+.env.production
 
 # Exclude prisma
 /prisma/dev.db
