@@ -1,5 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { Outlet, useNavigate, Link, useLocation} from "react-router-dom";
+import { UserContext } from "@/components/UserContext";
 import axios from "axios";
 
 interface FormData {
@@ -35,6 +36,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const {setUser} = useContext(UserContext);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -48,12 +50,11 @@ const Login = () => {
 
     try {
       const res = await axios.post("http://localhost:8000/api/login", formData);
-      console.log(res);
-      localStorage.setItem("token", res.data.token)
-      navigate("/profile");
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.payload);
+      navigate("/profile", {state: {name: res.data.payload.name, language: res.data.payload.language}});
 
     } catch (err: any) {
-      console.log(err.response?.status);
       setErrorMessage(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);

@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
-import React, { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./Routes";
+import { UserProvider } from "./components/UserContext";
 
 const Routes = createBrowserRouter(routes,
   {
@@ -17,12 +17,10 @@ const Routes = createBrowserRouter(routes,
 const container = document.getElementById("app");
 if (!container) throw new Error("No element with ID 'app' found");
 createRoot(container).render(
-  // <StrictMode>
+  <UserProvider>
     <RouterProvider
       router={Routes}
-      future={{
-        v7_startTransition: true,
-      }}
+      future={{ v7_startTransition: true }}
     />
-  // </StrictMode>,
+  </UserProvider>
 );

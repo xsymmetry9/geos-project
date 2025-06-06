@@ -1,10 +1,11 @@
 // components/authRedirect.tsx
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
 const AuthRedirect = () => {
     const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
+    const navigate = useNavigate()
 
     useEffect(() =>{
         const token = localStorage.getItem("token");
@@ -22,20 +23,20 @@ const AuthRedirect = () => {
                 console.log(res);
                 if(res.data.authenticate) {
                     setStatus("authenticated");
+                    navigate("/profile", {
+                        replace: true, 
+                        state: {user: res.data.user},
+                    });
                 } else {
                     setStatus("unauthenticated");
+                    navigate("/login", {replace: true});
                 }
             })
             .catch(() => { setStatus("unauthenticated")});
     }, [])
 
     if(status === "loading") return <div>Loading ...</div>;
-
-    return status === "authenticated" ? (
-        <Navigate to="/profile" replace />
-    ) : (
-        <Navigate to="/login" replace />
-    );
+    return null;
 };
 
 export default AuthRedirect;
