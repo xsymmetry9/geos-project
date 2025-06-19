@@ -133,7 +133,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language }) => {
         data: [
           userData[0].target,
           userData[2].target,
-          userData[2].target,
+          userData[1].target,
           userData[4].target,
           userData[3].target,
         ],
