@@ -153,9 +153,16 @@
     }
   },
   "japanese": {
+<<<<<<< HEAD
     "save": "save",
     "level": "程度",
     "description": "説明",
+=======
+    "save": "保存",
+    "nextPage": "次へ",
+    "backPage": "前へ",
+    "printPage": "印刷",
+>>>>>>> d72d29d7d4be34d68288ba73c974f42741c3621f
     "form": {
       "title": "個人情報",
       "input_name": "名前",
@@ -167,14 +174,11 @@
     },
     "SPR": {
       "title": "学生進捗レポート",
-        "nextPage": "次へ",
-      "backPage": "前へ",
-      "printPage": "印刷",
       "student_information": " 学生情報",
       "student_level": " 学生のレベル",
       "student_feedback": "学生のフィードバック",
       "student_name": "学生名",
-      "class_information": "cクラス情報 ",
+      "class_information": "クラス情報 ",
       "student_evaluation": " 学生評価",
       "teacher_feedback": "教師のフィードバック",
       "course": "コース",

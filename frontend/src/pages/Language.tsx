@@ -47,7 +47,7 @@ const LanguagePage = () => {
     <div className="flex justify-center items-center w-full h-full">
       <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center gap-4 max-w-sm w-full">
         <h1 className="text-2xl font-bold text-center font-secondary">
-          Welcome to GEOS App {user ? user.name : "Teacher"}!
+          GEOS App
         </h1>
         <button className="btn-primary w-full" onClick={() => handleLanguageSelect("english")}>
           English
