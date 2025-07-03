@@ -45,7 +45,7 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
 
         const parsedStudents: Student[] = jsonData.map((row) => {
           const student = new Student(row.id);
-          student.dateCreated = new Date(row.dateCreated || Date.now());
+          student.dateCreated = row.Date || "";
 
           student.name = row.Name || "";
           student.course = row.Course || "No course name";
