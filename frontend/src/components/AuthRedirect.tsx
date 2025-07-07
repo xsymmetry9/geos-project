@@ -22,12 +22,14 @@ const AuthRedirect = () => {
             .then((res) => {
                 console.log(res);
                 if(res.data.authenticate) {
+                    console.log("logged in");
                     setStatus("authenticated");
                     navigate("/profile", {
                         replace: true, 
                         state: {user: res.data.user},
                     });
                 } else {
+                    console.log("error: not logged in");
                     setStatus("unauthenticated");
                     navigate("/login", {replace: true});
                 }
