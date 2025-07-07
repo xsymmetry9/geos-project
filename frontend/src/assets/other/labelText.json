@@ -153,16 +153,10 @@
     }
   },
   "japanese": {
-<<<<<<< HEAD
-    "save": "save",
-    "level": "程度",
-    "description": "説明",
-=======
     "save": "保存",
     "nextPage": "次へ",
     "backPage": "前へ",
     "printPage": "印刷",
->>>>>>> d72d29d7d4be34d68288ba73c974f42741c3621f
     "form": {
       "title": "個人情報",
       "input_name": "名前",
