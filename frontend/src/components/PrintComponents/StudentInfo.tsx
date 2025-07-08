@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { format } from "date-fns";
 import labelText from "../../assets/other/labelText.json";
 import {Student, Levels} from "../../type/Student";
+import Legend from "../../components/PrintComponents/Legend";
 
 type Language = keyof typeof labelText;
 type LevelKey = keyof Levels;
@@ -122,11 +123,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   return (
     <>
       <table className="table-fixed text-[12px] table-levels w-[700px] mt-2 m-auto border-collapse border-1 border-slate-700">
-        {/* <caption>
-                    <div className="caption-content">
-                        {levelInfo.map((item, index) => <div key={index} className='sub-header'><span>{item.level}.</span><span>{item.name}</span></div>)}
-                    </div>
-                </caption> */}
+        {language === "english" && <Legend />}
         <thead>
           <tr>
             {headers.map((item, index) => (
