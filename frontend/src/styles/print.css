@@ -46,7 +46,7 @@
 
 #print-english #personal-info p,
 #print-english #student-info p {
-  font-size: 0.843rem;
+  font-size: var(--print-font-size-1);
   line-height: 1.5;
   font-weight: 400;
 }
