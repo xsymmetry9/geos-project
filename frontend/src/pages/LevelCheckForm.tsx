@@ -1,49 +1,62 @@
-import React, {useState} from "react";
+import {JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState} from "react";
 import LevelCheck from "../type/LevelCheckForm.js";
-import {
-  LevelCheckInputData,
-  LevelCheckInputAspectsData
-} from "../components/LevelCheckForm/LevelCheckFormComponents.jsx"
+import levelCheckData from "../assets/other/levelCheck.json";
 
 const LevelCheckForm = () => {
-  const [NewForm, setNewForm] = useState(new LevelCheck());
+  const [newForm, setNewForm] = useState<LevelCheck>();
 
-  const handleInputData = (e) =>{
-    const { name, value } = e.target;
-    setNewForm((prev) => ({ ...prev, [name]: value }));
-  }
-
-  const handleInputLanguageAspectData = (e) =>{
-    const {name, value} = e.target;
-    setNewForm((prev) => ({ ...prev, 
-      language_aspects: {
-        ...prev.language_aspects,
-        [name]: value
-      }}))
-
-  }
+  levelCheckData.english.speaking["A1-A2"].strength.forEach((item) => {
+    console.log(item);
+  });
 
   return(
     <div className="w-full max-w-[55em] mx-auto border py-6">
       <div className="flex flex-col justify-center items-center">
-        <img width={100} src="/logo.svg" alt="logo" />
         <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
       </div>
       <form action="">
-      <div className="grid grid-cols-1 gap-3 w-full max-w-lg mx-auto ">
-        <LevelCheckInputData name={"name"} inputName = {"name"} data = {NewForm} handleData = {handleInputData}/>
-        <LevelCheckInputData name={"proficiency level"} inputName = {"language_proficiency_level"} data = {NewForm} handleData ={handleInputData} />
-        <LevelCheckInputData name={"Entry textbook"} inputName ={"textbook"} data={NewForm} handleData={handleInputData} />
+        <section>
+          <h2>Speaking</h2>
+          <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+          <div>
+            {/* Where the magic happens */
+            }
+          </div>
+        </section>
+              <section>
+          <h2>Confidence</h2>
+            <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+        </section>
+              <section>
+          <h2>Vocabulary</h2>
+            <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+        </section>
+              <section>
+          <h2>Grammar</h2>
+            <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+        </section>
+              <section>
+          <h2>Listening</h2>
+            <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+        </section>
+              <section>
+          <h2>Pronunciation</h2>
+            <label htmlFor="">CEFR Score
+            <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" min="0" max="10" type="number" step={.5} id="score" />
+          </label>
+        </section>
 
-        <LevelCheckInputAspectsData name={"Fluency and Coherence"} inputName={"fluency"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Confidence"} inputName={"confidence"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Speech and Pronuciation"} inputName={"pronunciation"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Complete Sentences & Phrases"} inputName={"complete_sentence"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Appropriate & Varied Vocabulary"} inputName={"varied_vocabulary"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Errors in Form and Function"} inputName={"errors_in_form"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Colloquial Expressions"} inputName={"colloquial_expressions"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        <LevelCheckInputAspectsData name={"Understanding of spoken English"} inputName={"listening"} data={NewForm.language_aspects} handleData={handleInputLanguageAspectData} />
-        </div>
+
 
       </form>
 

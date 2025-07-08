@@ -2,7 +2,6 @@
     "english": 
         {
             "speaking":
-                [
                     {
                         "A1-A2":
                         {
@@ -73,9 +72,7 @@
                                 "Occasionally over-elaborates or digresses"
                             ]
                         }
-                    }
-                
-                ],
+                    },
             "confidence":
                 [
                     {
