@@ -71,7 +71,42 @@ interface TableProps {
   levels: Student["levels"];
   language: Language;
 }
+const CEFRFramework = (str) => {
 
+  if (str >= 0 && str < 2)
+  {
+    return "Pre - A1";
+  } else if(str >= 2 && str < 3)
+  {
+    return "A1 - A2";
+  } else if(str >= 3 && str < 4)
+  {
+    return "A2";
+  } else if (str>=4 && str < 5)
+  {
+    return "A2 - B1";
+  } else if(str>=5 && str < 6)
+  {
+    return "B1";
+  } else if(str >= 6 && str < 7)
+  {
+    return "B1 - B2";
+  } else if(str >= 7 && str < 8)
+  {
+    return "B2"
+  } else if(str >= 8 && str < 9)
+  {
+    return "B2 - C1";
+  } else if(str >= 9 && str <= 9.5)
+  {
+    return "C1";
+  } else if(str >= 9.5 && str < 10){
+    return  "C1+"
+  } else {
+    return;
+  }
+
+}
 export const Table: React.FC<TableProps> = ({ levels, language }) => {
   const headers: (SPRStringKey | "")[] = [
     "",
@@ -107,7 +142,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
         </td>
         {labels.map((skill, idx) => (
           <td key={idx} className="text-center p-[2px]">
-            {levels[skill][label]}
+            {levels[skill][label]} <span className="color-slate-600 text-[10px]">{CEFRFramework(levels[skill][label])}</span>
           </td>
         ))}
         <td className="text-center p-[2px]">{sum()}</td>
