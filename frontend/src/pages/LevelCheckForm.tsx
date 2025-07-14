@@ -1,13 +1,37 @@
-import {JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState} from "react";
-import LevelCheck from "../type/LevelCheckForm.js";
+import {useState} from "react";
 import levelCheckData from "../assets/other/levelCheck.json";
 
+const entry = (id) => {
+  this.id = id;
+  this.name = "";
+  this.teacher = "",
+  this.speaking = {level_name: "", strength: "", weakness: ""};
+  this.confidence = {level_name: "", strength: "", weakness: ""};
+  this.vocabulary = {level_name: "", strength: "", weakness: ""};
+  this.grammar = {level_name: "", strength:"", weakness: "";
+    this.listening = {level_name: "", strength: "", weakness: ""};
+    this.pronunciation = {level_name: "", strength: "", weakness: ""}
+  }
+}
 const LevelCheckForm = () => {
-  const [newForm, setNewForm] = useState<LevelCheck>();
+  const [newForm, setNewForm] = useState<
+    {
+      id: string, 
+      name: string, 
+      teacher: string, 
+      speaking: {level_name: string, strength: string, weakness: string}, 
+      confidence: {level_name: string, strength: string, weakness: string}, 
+      vocabulary: {level_name: string, strength: string, weakness: string},
+      grammar: {level_name: string, strength: string, weakness: string},
+      listening: {level_name: string, strength: string, weakness: string},
+      pronunciation: {level_name: string, strength: string, weakness: string}}>(entry);
+
 
   levelCheckData.english.speaking["A1-A2"].strength.forEach((item) => {
     console.log(item);
   });
+
+  console.log(newForm);
 
   return(
     <div className="w-full max-w-[55em] mx-auto border py-6">
