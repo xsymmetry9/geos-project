@@ -101,7 +101,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
     const avg = () => (sum() / labels.length).toFixed(2);
 
     return (
-      <tr className="odd:bg-[rgba(0,161,173,.2)] even:bg-white-50">
+      <tr className="border-l border-r border-slate-600 last:border-b-1 odd:bg-[rgba(0,161,173,.2)] even:bg-white-50">
         <td className="text-center capitalize p-[2px]">
           {text(label, language)}
         </td>
@@ -122,9 +122,9 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   };
   return (
     <>
-      <table className="table-fixed text-[12px] table-levels w-[700px] mt-2 m-auto border-collapse border-1 border-slate-700">
+      <table className="table-fixed text-[12px] table-levels w-full mt-2 m-auto border-collapse">
         {language === "english" && <Legend />}
-        <thead>
+        <thead className="border-l border-r border-slate-500">
           <tr>
             {headers.map((item, index) => (
               <th key={index} className="bg-[rgb(0,161,173)] text-white font-normal py-[2px] capitalize">
