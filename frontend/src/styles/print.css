@@ -138,7 +138,7 @@
 .student-information {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-bottom: 12px;
+  padding-bottom: 4px;
 }
 
 /* --------------------------- Styling for levels ----------------------------------------- */
