@@ -7,7 +7,7 @@ type Props = {
   setForm: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
 };
 
-const LevelCheckSelect = ({ item, setForm }: Props) => {
+const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [level, setLevel] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
@@ -23,10 +23,22 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
   const maxStrengthsReached = selectedStrengths.length >= 3;
   const maxWeaknessesReached = selectedWeaknesses.length >= 3;
 
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) =>{
+    e.preventDefault();
+    // setInputData(...prev => ({
+    //   ...prev,
+    //   [item]: {
+    //     ...prev[item],
+    //   }
+    // }))
+
+  }
+
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLevel(e.target.value);
     setSelectedStrengths([]);
     setSelectedWeaknesses([]);
+
   };
 
   const toggleSelection = (
@@ -71,7 +83,7 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
         weakness: selectedWeaknesses.join(", "),
       };
 
-      setForm(prev => ({
+      setInputData(prev => ({
         ...prev,
         [item]: updated,
       }));
@@ -83,9 +95,7 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
   return (
     <section className="mt-6">
       <h2 className="text-lg font-semibold mb-2">{title}</h2>
-
-      {/* CEFR Level */}
-      <label htmlFor={`${item}_level`}>
+       <label htmlFor={`${item}_level`}>
         <select
           id={`${item}_level`}
           value={level}
@@ -100,24 +110,15 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
           ))}
         </select>
       </label>
+      <div className="flex  justify-center">
+
 
       {level && (
         <>
           {/* Strengths */}
           <div className="mt-4">
             <p className="font-semibold">Select 2–3 strengths:</p>
-            {allStrengths.map((str, idx) => (
-              <label key={idx} className="flex items-center gap-2 mt-1">
-                <input
-                  type="checkbox"
-                  checked={selectedStrengths.includes(str)}
-                  onChange={() => toggleSelection(str, selectedStrengths, setSelectedStrengths)}
-                  disabled={!selectedStrengths.includes(str) && maxStrengthsReached}
-                />
-                {str}
-              </label>
-            ))}
-            <div className="flex gap-2 mt-2">
+                      <div className="flex gap-2 mt-2">
               <input
                 type="text"
                 placeholder="Add custom strength"
@@ -153,6 +154,18 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
                 Add
               </button>
             </div>
+            {allStrengths.map((str, idx) => (
+              <label key={idx} className="flex items-center gap-2 mt-1">
+                <input
+                  type="checkbox"
+                  checked={selectedStrengths.includes(str)}
+                  onChange={() => toggleSelection(str, selectedStrengths, setSelectedStrengths)}
+                  disabled={!selectedStrengths.includes(str) && maxStrengthsReached}
+                />
+                {str}
+              </label>
+            ))}
+  
             {selectedStrengths.length < 2 && (
               <p className="text-sm text-red-600">Select at least 2 strengths.</p>
             )}
@@ -216,6 +229,11 @@ const LevelCheckSelect = ({ item, setForm }: Props) => {
           </div>
         </>
       )}
+      </div>
+      {/* CEFR Level */}
+     
+
+      <button className="primary-btn" onClick={handleSubmit}>Save</button>
     </section>
   );
 };
