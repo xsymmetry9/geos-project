@@ -4,11 +4,10 @@ import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm"
 
 type Props = {
   item: keyof LevelCheckEntry;
-  newForm: LevelCheckEntry;
   setForm: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
 };
 
-const LevelCheckSelect = ({ item, newForm, setForm }: Props) => {
+const LevelCheckSelect = ({ item, setForm }: Props) => {
   const [level, setLevel] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
