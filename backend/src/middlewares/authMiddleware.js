@@ -3,12 +3,12 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config({path: `.env${process.env.NODE_ENV || development}`})
 
-
 //Format Token
 //Authorization: Bearer <access_token>
 function verifyToken(req, res, next) {
     // Get auth header value
     const bearerHeader = req.headers['authorization'];
+    // const bearerHeader = JSON.parse(localStorage.getItem("token"));
 
     if(typeof bearerHeader !== "undefined") {
         //Split at the space
@@ -18,11 +18,11 @@ function verifyToken(req, res, next) {
         const bearerToken = bearer[1];
         //Set the token 
         req.token = bearerToken;
-            console.log(bearerToken);
 
         try{
             const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
-            req.user = decoded.user;
+            req.data = decoded;
+            console.log(req.data);
             next();
         } catch(err) {
             res.status(403).json({message: "Invalid or expired token"})
