@@ -37,16 +37,11 @@ router.get("/api/currentTeacher", (req, res) =>{
 })
 
 // Profile
-router.post("/api/profile", verifyToken, (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(err) {
-            res.sendStatus(403);
-        } else {
-            res.json({
-            authData
-            })
-        }
-    })
+router.get("/api/profile", verifyToken, (req, res) => {
+
+    const data = req.data;
+    res.send({status: true, data: data});
+    console.log(data);
  
 })
 //Gets all users
