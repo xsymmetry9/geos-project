@@ -2,59 +2,45 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
+
+  const teacher = await prisma.teacher.findUnique({
+    where: {email: 'geos@gmail.com'},
+  });
+
+  if(!teacher){
+    throw new Error('Teachers not found');
+  }
+
+  const student = await prisma.student.create({
+    data:{
+    id: crypto.randomUUID(),
+    email: 'student@gmail.com.tw',
+    name: 'Lin Xiao Yang',
+    nickname: 'Linda',
+    teachers: {
+      create: [
+        {
+          teacher: {connect: {id: teacher.id}},
+        },
+      ],
+    },
+    },
+    include: {
+      teachers: {include: {teacher: true}},
+    }
+  });
+
+  console.log('Student created with teacher', student);
   // Create a teacher
-  const createFirstTeacher = await prisma.teacher.create({
-    data: {
-      email: 'Nikita@geos.com',
-      password: 'password123',
-      name: 'Nikita',
-      language: 'Japanese',
-    }
-  });
-    const createSecondTeacher = await prisma.teacher.create({
-    data: {
-      email: 'SoYoung@geos.com',
-      password: 'password123',
-      name: 'So Young',
-      language: 'Korean',
-    }
-
-  });
-    const createThirdTeacher = await prisma.teacher.create({
-    data: {
-      email: 'OngWu@geos.com',
-      password: 'password123',
-      name: 'Ong',
-      language: 'Chinse',
-    }
-
-  });
-    const createFourthTeacher = await prisma.teacher.create({
-    data: {
-      email: 'Caleb@geos.com',
-      password: 'password123',
-      name: 'Caleb',
-      language: 'English',
-    }
-
-  });
-    const createFifthTeacher = await prisma.teacher.create({
-    data: {
-      email: 'Sample@geos.com',
-      password: 'password123',
-      name: 'Sample',
-      language: 'English',
-    }
-
-  });
-
-
-  console.log("Created a teacher: ", createFirstTeacher);
-  console.log("Created a teacher: ", createSecondTeacher);
-  console.log("Created a teacher: ", createThirdTeacher);
-  console.log("Created a teacher: ", createFourthTeacher);
-  console.log("Created a teacher: ", createFifthTeacher);
-
+  // const createFirstTeacher = await prisma.teacher.create({
+  //   data: {
+  //     email: 'Nikita@geos.com',
+  //     password: 'password123',
+  //     name: 'Nikita',
+  //     language: 'Japanese',
+  //   }
+  // });
+ 
 
 
   // Create an entry with skills linked to that teacher
