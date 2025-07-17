@@ -23,19 +23,15 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const maxStrengthsReached = selectedStrengths.length >= 3;
   const maxWeaknessesReached = selectedWeaknesses.length >= 3;
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) =>{
-    e.preventDefault();
-    // setInputData(...prev => ({
-    //   ...prev,
-    //   [item]: {
-    //     ...prev[item],
-    //   }
-    // }))
-
-  }
-
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLevel(e.target.value);
+    setInputData(prev => ({
+      ...prev,
+      [item]: {
+        ...prev[item],
+        level_name: e.target.value,
+      }
+    }))
     setSelectedStrengths([]);
     setSelectedWeaknesses([]);
 
@@ -79,8 +75,8 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     if (level && selectedStrengths.length >= 2 && selectedWeaknesses.length >= 2) {
       const updated: StrengthAndWeakness = {
         level_name: level,
-        strength: selectedStrengths.join(", "),
-        weakness: selectedWeaknesses.join(", "),
+        strength: selectedStrengths,
+        weakness: selectedWeaknesses
       };
 
       setInputData(prev => ({
@@ -232,8 +228,6 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       </div>
       {/* CEFR Level */}
      
-
-      <button className="primary-btn" onClick={handleSubmit}>Save</button>
     </section>
   );
 };
