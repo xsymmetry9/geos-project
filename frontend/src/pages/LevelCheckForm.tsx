@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 const LevelCheckForm = () => {
   const initiateForm = new LevelCheckEntry();
@@ -51,12 +52,20 @@ const LevelCheckForm = () => {
       <div id="preview-level-check">
         {error && <p className="text-red">{error}</p>}
         <p>Form id: {inputData.id}</p>
+        <p>date: {inputData.dateCreated}</p>
         <p>Student Name: {inputData.student_name}</p>
-        <p>Teacher's name: {inputData.teacher_name}</p>
         <p>Feedback: {inputData.feedback}</p>
         <h3>Level</h3>
         <p>Speaking</p>
-        <p>Strength: {inputData.speaking.level_name}</p>
+        <p>Level Name: {inputData.speaking.level_name}</p>
+        <p>Strength</p>
+        <ul>
+          {inputData.speaking.strength.map((item) => <li>{item}</li>)}
+        </ul>
+        <p>Weakness</p>
+        <ul>
+          {inputData.speaking.weakness.map((item) => <li>{item}</li>)}
+        </ul>
       </div>
     </div>
   );
