@@ -89,7 +89,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const title = item.charAt(0).toUpperCase() + item.slice(1);
 
   return (
-    <section className="mt-6">
+    <section className="mt-6 min-h-[400px]">
       <h2 className="text-lg font-semibold mb-2">{title}</h2>
        <label htmlFor={`${item}_level`}>
         <select
@@ -106,13 +106,12 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           ))}
         </select>
       </label>
-      <div className="flex  justify-center">
-
+      <div className="grid grid-cols-2 gap-3">
 
       {level && (
         <>
           {/* Strengths */}
-          <div className="mt-4">
+          <div className="mt-6">
             <p className="font-semibold">Select 2–3 strengths:</p>
                       <div className="flex gap-2 mt-2">
               <input
@@ -144,13 +143,14 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                     predefinedStrengths
                   )
                 }
-                className="bg-blue-500 text-white px-2 rounded disabled:opacity-50"
+                className="btn-primary disabled:opacity-50"
                 disabled={maxStrengthsReached || !customStrengthInput.trim()}
               >
                 Add
               </button>
             </div>
-            {allStrengths.map((str, idx) => (
+            <div className="p-2">
+              {allStrengths.map((str, idx) => (
               <label key={idx} className="flex items-center gap-2 mt-1">
                 <input
                   type="checkbox"
@@ -161,6 +161,8 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                 {str}
               </label>
             ))}
+            </div>
+        
   
             {selectedStrengths.length < 2 && (
               <p className="text-sm text-red-600">Select at least 2 strengths.</p>
@@ -170,20 +172,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           {/* Weaknesses */}
           <div className="mt-6">
             <p className="font-semibold">Select 2–3 weaknesses:</p>
-            {allWeaknesses.map((wk, idx) => (
-              <label key={idx} className="flex items-center gap-2 mt-1">
-                <input
-                  type="checkbox"
-                  checked={selectedWeaknesses.includes(wk)}
-                  onChange={() =>
-                    toggleSelection(wk, selectedWeaknesses, setSelectedWeaknesses)
-                  }
-                  disabled={!selectedWeaknesses.includes(wk) && maxWeaknessesReached}
-                />
-                {wk}
-              </label>
-            ))}
-            <div className="flex gap-2 mt-2">
+                   <div className="flex gap-2 mt-2">
               <input
                 type="text"
                 placeholder="Add custom weakness"
@@ -213,11 +202,26 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                     predefinedWeaknesses
                   )
                 }
-                className="bg-blue-500 text-white px-2 rounded disabled:opacity-50"
+                className="btn-primary disabled:opacity-50"
                 disabled={maxWeaknessesReached || !customWeaknessInput.trim()}
               >
                 Add
               </button>
+            </div>
+            <div className="p-2">
+              {allWeaknesses.map((wk, idx) => (
+              <label key={idx} className="flex items-center gap-2 mt-1">
+                <input
+                  type="checkbox"
+                  checked={selectedWeaknesses.includes(wk)}
+                  onChange={() =>
+                    toggleSelection(wk, selectedWeaknesses, setSelectedWeaknesses)
+                  }
+                  disabled={!selectedWeaknesses.includes(wk) && maxWeaknessesReached}
+                />
+                {wk}
+              </label>
+            ))}
             </div>
             {selectedWeaknesses.length < 2 && (
               <p className="text-sm text-red-600">Select at least 2 weaknesses.</p>
