@@ -20,7 +20,19 @@ model Teacher {
   name      String
   language String
   entries Entry[] @relation("TeacherEmail")
+  students StudentTeacher[]
   createdAt DateTime @default(now())
+
+}
+
+model Student {
+  id String @id @default(uuid())
+  email String @unique
+  name String
+  nickname String
+  createdAt DateTime @default(now())
+  teachers StudentTeacher[]
+
 }
 
 model Entry {
@@ -36,7 +48,6 @@ model Entry {
 
   teacherEmail String
   teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
-
   skills Skill[]
 
 }
@@ -49,4 +60,16 @@ model Skill {
   final String
   entryId String
   entry Entry @relation(fields: [entryId], references: [id] )
+}
+
+model StudentTeacher {
+  id Int @id @default(autoincrement())
+  studentId String
+  teacherId Int
+  assignedAt DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id])
+  teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  @@unique([studentId, teacherId]) 
 }
