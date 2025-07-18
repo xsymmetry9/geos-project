@@ -4,11 +4,14 @@ import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm"
 
 type Props = {
   item: keyof LevelCheckEntry;
+  inputData: LevelCheckEntry;
   setForm: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
 };
 
 const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [level, setLevel] = useState<string>("");
+  const [score, setScore] = useState<number | undefined>();
+  const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
   const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
@@ -23,8 +26,18 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const maxStrengthsReached = selectedStrengths.length >= 3;
   const maxWeaknessesReached = selectedWeaknesses.length >= 3;
 
+  const getScoreRange = (level: string) => {
+    switch(level){
+      case "A1-A2": return [1, 5];
+      case "B1-B2": return [5, 9];
+      case "C1-C2": return [9, 10];
+      default: [0, 10];
+    }
+  }
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLevel(e.target.value);
+    setScore(undefined);
+    setScoreError("");
     setInputData(prev => ({
       ...prev,
       [item]: {
@@ -35,6 +48,23 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     setSelectedStrengths([]);
     setSelectedWeaknesses([]);
 
+  };
+
+  const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputScore = parseFloat(e.target.value);
+    const [min, max] = getScoreRange(level);
+
+    if(isNaN(inputScore)){
+      setScore(undefined);
+      setScoreError("Score must be a number");
+      return;
+    }
+    if(inputScore < min || inputScore > max){
+      setScoreError(`Score for ${level} must be between ${min} and ${max}.`);
+    } else {
+      setScoreError("");
+    }
+    setScore(inputScore);
   };
 
   const toggleSelection = (
@@ -72,7 +102,12 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   // Push form updates to parent when all selections valid
   useEffect(() => {
-    if (level && selectedStrengths.length >= 2 && selectedWeaknesses.length >= 2) {
+    if (
+      level &&
+      selectedStrengths.length >= 2 && 
+      selectedWeaknesses.length >= 2 && 
+      score !== undefined && 
+      !scoreError) {
       const updated: StrengthAndWeakness = {
         level_name: level,
         strength: selectedStrengths,
@@ -106,9 +141,18 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           ))}
         </select>
       </label>
+      <label htmlFor= {`${item}_score`}>Enter a score
+          <input 
+            type="number"
+            value={score ?? ""}
+            onChange={handleScoreChange}
+            className= "form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+            id={`${item}_score`} />
+          {scoreError && <p className= "text-red-600 text-sm">{scoreError}</p>}
+      </label>
       <div className="grid grid-cols-2 gap-3">
 
-      {level && (
+      {level && score !== undefined  && scoreError === "" && (
         <>
           {/* Strengths */}
           <div className="mt-6">
@@ -146,7 +190,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                 className="btn-primary disabled:opacity-50"
                 disabled={maxStrengthsReached || !customStrengthInput.trim()}
               >
-                Add
+                +
               </button>
             </div>
             <div className="p-2">
@@ -205,7 +249,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                 className="btn-primary disabled:opacity-50"
                 disabled={maxWeaknessesReached || !customWeaknessInput.trim()}
               >
-                Add
+                +
               </button>
             </div>
             <div className="p-2">
