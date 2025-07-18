@@ -91,13 +91,20 @@
     font-size: var(--print-japanese-font-size-1);
   }
 
-.print-component {
+
+.print-component{
   width: 210mm; /* A4 width */
   min-height: 297mm; /* A4 height */
   margin: 0 auto;
   padding: 8mm;
   box-sizing: border-box;
   background: white;
+}
+.print-component-landscape {
+  width: 297mm;
+  height: 210mm;
+  border: 2px solid black;
+  background-color: #fff;
 }
 
 @page {
@@ -125,7 +132,6 @@
     size: A4;
     height: auto !important;
     border: none;  
-
   }
 }
 
