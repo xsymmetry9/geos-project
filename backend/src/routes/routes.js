@@ -12,6 +12,11 @@ const {
     loginTeacher} = require("../controllers/adminController.js");
 const {verifyToken} = require("../middlewares/authMiddleware.js");
 
+const {
+    readTeacherStudentByEmail
+} = require("../controllers/teacherController.js");
+
+
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 
 router.get("/api/verify-token", verifyToken, (req, res) => {
@@ -32,18 +37,16 @@ router.get("/api/getTeacherByEmail", getTeacherByEmailOnDB);
 // Member Login
 router.post("/api/login", loginTeacher); //Blocks logged-users from login page
 
-// Current Member
-router.get("/api/currentTeacher", (req, res) =>{
-})
+// ------------------------------------- Teacher---------------
+router.get("/api/profile", verifyToken, readTeacherStudentByEmail);
 
-// Profile
-router.get("/api/profile", verifyToken, (req, res) => {
+router.get("/api/profile/getStudent", verifyToken);
 
-    const data = req.data;
-    res.send({status: true, data: data});
-    console.log(data);
- 
-})
+router.get("/api/profile/addStudent", verifyToken);
+
+router.get("/api/profile/deleteStudent", verifyToken);
+
+router.get("/api/profile/updateStudent", verifyToken);
 //Gets all users
 router.get("/api", async (req, res) =>{
     try {
