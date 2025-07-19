@@ -19,7 +19,10 @@ model Teacher {
   password  String
   name      String
   language String
-  entries Entry[] @relation("TeacherEmail")
+
+  studentProgressReportEntries StudentProgressReportEntry[] @relation("TeacherEmail")
+  levelCheckEntries LevelCheckEntry[] @relation("TeacherEmail")
+
   students StudentTeacher[]
   createdAt DateTime @default(now())
 
@@ -33,43 +36,101 @@ model Student {
   createdAt DateTime @default(now())
   teachers StudentTeacher[]
 
+  levelCheckEntries LevelCheckEntry[]
+  studentProgressReportEntry StudentProgressReportEntry[]
+
 }
 
-model Entry {
+model StudentProgressReportEntry {
   id String @id @default(uuid())
   type  String
-  student_name String
+  studentName String
   course String
   textbook String
-  attendance String
-  totalLessons String
+  attendance Int
+  totalLessons Int
   feedback String
   dateCreated DateTime @default(now())
 
+  vocabularyInitial String
+  vocabularyTarget String
+  vocabularyFinal String
+
+  grammarInitial String
+  grammarTarget String
+  grammarFinal String
+
+  listeningInitial String
+  listeningTarget String
+  listeningFinal String
+
+  speakingInitial String
+  speakingTarget String
+  speakingFinal String
+
   teacherEmail String
   teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
-  skills Skill[]
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+
 
 }
 
-model Skill {
-  id Int @id @default(autoincrement())
-  type String 
-  intial String
-  target String
-  final String
-  entryId String
-  entry Entry @relation(fields: [entryId], references: [id] )
+model LevelCheckEntry {
+  id String @id @default(uuid())
+  name String
+  teacherName String
+
+  speakingNameEntry String
+  speakingScore String
+  speakingStrength String[]
+  speakingWeakness String[]
+
+  confidenceName_entry String
+  confidenceScore String
+  confidenceStrength String[]
+  confidenceWeakness String[]
+
+  vocabularyEntry String
+  vocabularyScore String
+  vocabularyStrength String[]
+  vocabularyWeakness String[]
+
+
+  grammarNameEntry String
+  grammarScore String
+  grammarStrength String[]
+  grammarWeakness String[]
+
+  listeningNameEntry String
+  listeningScore String
+  listeningStrength String[]
+  listeningWeakness String[]
+
+  pronunciationNameEntry String  
+  pronunciationScore String
+  pronunciationStrength String[]
+  pronunciationWeakness String[]
+
+  feedback String
+  
+  teacherEmail String
+  teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
+
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+
 }
 
 model StudentTeacher {
   id Int @id @default(autoincrement())
   studentId String
-  teacherId Int
+  teacherEmail String
   assignedAt DateTime @default(now())
 
   student Student @relation(fields: [studentId], references: [id])
-  teacher Teacher @relation(fields: [teacherId], references: [id])
+  teacher Teacher @relation(fields: [teacherEmail], references: [email])
 
-  @@unique([studentId, teacherId]) 
+  @@unique([studentId, teacherEmail]) 
 }
