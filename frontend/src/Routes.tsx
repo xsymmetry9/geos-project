@@ -14,7 +14,8 @@ import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/N
 import ProfilePage from "./pages/member/ProfilePage";
 import AuthRedirect from "./components/AuthRedirect";
 import ForgotPassword from "./pages/Nonmember/ForgotPassword";
-import {CreateStudent, ViewStudents} from "./pages/member/StudentPage.js";
+import {CreateStudent, ViewStudents} from "./pages/member/StudentPage";
+import SettingPage from "./pages/member/SettingPage";
 
 import type {RouteObject} from "react-router-dom";
 
@@ -58,7 +59,8 @@ const routes: RouteObject[] = [
     children: [
       {index: true, element: <ProfilePage />},
       {path: "createStudent", element: <CreateStudent />},
-      {path: "viewStudents", element: <ViewStudents />}
+      {path: "viewStudents", element: <ViewStudents />},
+      {path: "setting", element: <SettingPage />}
     ]
   },
   {
