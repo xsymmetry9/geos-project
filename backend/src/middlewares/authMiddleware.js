@@ -22,7 +22,6 @@ function verifyToken(req, res, next) {
         try{
             const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
             req.data = decoded;
-            console.log(req.data);
             next();
         } catch(err) {
             res.status(403).json({message: "Invalid or expired token"})
