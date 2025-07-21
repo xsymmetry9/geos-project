@@ -45,6 +45,7 @@ model StudentProgressReportEntry {
   id String @id @default(uuid())
   type  String
   studentName String
+  language String
   course String
   textbook String
   attendance Int
@@ -80,6 +81,7 @@ model StudentProgressReportEntry {
 model LevelCheckEntry {
   id String @id @default(uuid())
   name String
+  language String
   teacherName String
 
   speakingNameEntry String
@@ -129,7 +131,7 @@ model StudentTeacher {
   teacherEmail String
   assignedAt DateTime @default(now())
 
-  student Student @relation(fields: [studentId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   teacher Teacher @relation(fields: [teacherEmail], references: [email])
 
   @@unique([studentId, teacherEmail]) 
