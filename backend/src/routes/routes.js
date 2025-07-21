@@ -13,7 +13,7 @@ const {
 const {verifyToken} = require("../middlewares/authMiddleware.js");
 
 const {
-    readTeacherStudentByEmail
+    createStudentTeacherByEmail, readStudentById, readTeacherStudentByEmail, updateStudentById, deleteStudentById
 } = require("../controllers/teacherController.js");
 
 
@@ -40,13 +40,13 @@ router.post("/api/login", loginTeacher); //Blocks logged-users from login page
 // ------------------------------------- Teacher---------------
 router.get("/api/profile", verifyToken, readTeacherStudentByEmail);
 
-router.get("/api/profile/getStudent", verifyToken);
+router.get("/api/member/getStudentById/:id", verifyToken, readStudentById);
 
-router.get("/api/profile/addStudent", verifyToken);
+router.post("/api/member/addStudent", verifyToken, createStudentTeacherByEmail);
 
-router.get("/api/profile/deleteStudent", verifyToken);
+router.delete("/api/member/deleteStudent/:id", verifyToken, deleteStudentById);
 
-router.get("/api/profile/updateStudent", verifyToken);
+router.put("/api/member/updateStudent/:id", verifyToken, updateStudentById);
 //Gets all users
 router.get("/api", async (req, res) =>{
     try {
