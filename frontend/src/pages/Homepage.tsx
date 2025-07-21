@@ -9,8 +9,46 @@ import ExportToExcel from "../components/ExportToExcel";
 import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
 
+const PlotLevelCheck = ({language, data}) => {
+
+  return(
+    <>
+      <table className="w-full border-collapse shadow-md">
+        <thead>
+          <tr className="bg-orange-700 text-white font-bold">
+              <td className="p-3 text-center">Date</td>
+              <td className="p-3 text-center">Name</td>
+              <td className="p-3 text-center">Functions</td>
+          </tr>
+        </thead>
+        <tbody>
+            {data.map((item) => 
+            <tr className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300" key={`level-check${item.id}`}>
+              <td className="p-3 text-center">{item.dateCreated}</td>
+              <td className="p-3 text-center">{item.student_name}</td>
+
+              <td className="flex gap-3 justify-center mt-4">
+                 <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
+                <Pencil size={20} />
+              </Link>
+              <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/print/${item.id}`}>
+                <PrinterIcon size={20} />
+              </Link>
+              <button className="text-red-600 cursor-pointer" id={item.id} onClick={() => {console.log("something")}}>
+                <Archive size={20} />
+              </button>
+
+              </td>
+            </tr>)}       
+        </tbody>
+      </table>
+    </>
+  )
+}
+
 const Homepage = () => {
   const { language } = useParams<{ language: string }>();
+  const [page, setPage] = useState<string>("spr");
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<User | null>(null);
   const [addFormNav, setAddFormNav] = useState(false);
@@ -48,11 +86,20 @@ const Homepage = () => {
     setDeletePage({ display: false, id: null });
   };
 
+  const toggleLevelCheckSPR = (e:React.MouseEvent<HTMLButtonElement>) => {
+    const {name} = e.currentTarget;
+    if(name === "spr"){
+      setPage("spr");
+    } else {
+      setPage("levelCheck");
+    }
+  }
+
   if (loading) {
     return <h1>Loading ...</h1>;
   }
 
-  const PlotTable = () => (
+  const PlotSPRTable = () => (
     <table className="w-full border-collapse shadow-md">
       <thead>
         <tr className="bg-orange-700 text-white font-bold">
@@ -95,8 +142,17 @@ const Homepage = () => {
         <ImportFromExcel userData={userData!} setUserData={setUserData} />
       </div>
 
+      <div className="flex justify-center gap-5 p-2">
+        <button className={`cursor-pointer font-secondary font-bold bg-dark-green p-2 rounded-md text-white w-[150px] ${page === "spr" ? "bg-white-600" : "bg-dark-blue"}`} onClick={toggleLevelCheckSPR} name="spr" id="spr">SPR</button>
+        <button className={`cursor-pointer font-secondary font-bold bg-dark-green p-2 rounded-md text-white w-[150px]`} onClick={toggleLevelCheckSPR} name="levelCheck" id="levelCheck">level check</button>
+
+      </div>
       <div className="px-2">
-        {userData?.SPR.length ? <PlotTable /> : <p className="text-center text-gray-500">Click add SPR or Level Check</p>}
+        {page === "spr" ? (
+          <>
+            {userData?.SPR.length ? <PlotSPRTable /> : <p className="text-center text-gray-500">Click add SPR</p>}
+          </>
+        ) : <PlotLevelCheck data={userData?.levelCheck} language={language} />}
       </div>
 
       {addFormNav && (
