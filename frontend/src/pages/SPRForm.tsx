@@ -14,16 +14,20 @@ const SPRForm = () => {
   const initialStudent = !id? new Student(uuidv4()) : getStudentById(id);
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
   return (
-    <LanguageContext.Provider value={language}>
-      <div className="font-secondary w-full flex justify-center p-2">
-        <Link className="btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
-        <House />
-          Home
-        </Link>
-      </div>
-      <PlotForm inputData={inputData} setInputData={setInputData} />
-    </LanguageContext.Provider>
+    // <LanguageContext.Provider value={language}>
+    //   <div className="font-secondary w-full flex justify-center p-2">
+    //     <Link className="btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
+    //     <House />
+    //       Home
+    //     </Link>
+    //   </div>
+    //   <PlotForm inputData={inputData} setInputData={setInputData} />
+    // </LanguageContext.Provider>
+  <>
+    <h1>SPR form</h1>
+  </>
   );
+  
 };
 
 export default SPRForm;

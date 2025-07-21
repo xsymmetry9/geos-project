@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import User from "../type/User";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 import { Language } from "@/utils/common";
 
 const LanguagePage = () => {
+  let studentId = useParams().id
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -43,24 +44,27 @@ const LanguagePage = () => {
     return <div className="flex justify-center items-center h-full">Loading...</div>;
   }
 
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+  }
   return (
     <div className="flex justify-center items-center w-full h-full">
       <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center gap-4 max-w-sm w-full">
-        <h1 className="text-2xl font-bold text-center font-secondary">
-          GEOS App
-        </h1>
-        <button className="btn-primary w-full" onClick={() => handleLanguageSelect("english")}>
-          English
-        </button>
-        <button className="btn-primary w-full" onClick={() => handleLanguageSelect("chinese")}>
-          Chinese
-        </button>
-        <button className="btn-primary w-full" onClick={() => handleLanguageSelect("korean")}>
-          Korean
-        </button>
-        <button className="btn-primary w-full" onClick={() => handleLanguageSelect("japanese")}>
-          Japanese
-        </button>
+        <h3 className="text-2xl font-bold text-center font-secondary">
+          Choose a language
+        </h3>
+        <form action="" onSubmit={handleSubmit}>
+          <label htmlFor="language">SPR Form
+            <select name="language" id="language">
+              <option value="">Choose a language</option>
+              <option value="english">English</option>
+              <option value="chinese">Chinese</option>
+              <option value="korean">Korean</option>
+              <option value="japanese">Japanese</option>
+            </select>
+          </label>
+          <input className="btn-primary w-full mt-6" type="submit" value={"create"} />
+        </form>
       </div>
     </div>
   );
