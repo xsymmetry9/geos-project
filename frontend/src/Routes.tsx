@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
-import {LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
+import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
 import Test from "./pages/Test";
 import AuthRedirect from "./components/AuthRedirect";
 
@@ -30,6 +30,7 @@ const routes = [
     path: "levelCheck/:language",
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> },
+      {path: "edit/:id", element: <LevelCheckEdit />},
       {path: "preview/:id", element: <LevelCheckPreview />}
     ],
   },
