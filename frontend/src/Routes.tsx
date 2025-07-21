@@ -14,7 +14,7 @@ import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/N
 import ProfilePage from "./pages/member/ProfilePage";
 import AuthRedirect from "./components/AuthRedirect";
 import ForgotPassword from "./pages/Nonmember/ForgotPassword";
-import {CreateStudent, ViewStudents} from "./pages/member/StudentPage";
+import {StudentPage, CreateStudent, EditStudent} from "./pages/member/StudentPage";
 import SettingPage from "./pages/member/SettingPage";
 
 import type {RouteObject} from "react-router-dom";
@@ -59,21 +59,24 @@ const routes: RouteObject[] = [
     children: [
       {index: true, element: <ProfilePage />},
       {path: "createStudent", element: <CreateStudent />},
-      {path: "viewStudents", element: <ViewStudents />},
+      {path: "viewStudent/:id", element: <StudentPage />},
+      {path: "viewStudents", element: <ProfilePage />},
+      {path: "editStudent/:id", element: <EditStudent />},
       {path: "setting", element: <SettingPage />}
     ]
   },
   {
-    path: "spr/:language",
+    path: "spr/:id",
     element: <Layout />,
     children: [
-      { index: true, element: <SPRForm /> },
-      { path: "print/:id", element: <PrintPage /> },
-      { path: "edit/:id", element: <SPRForm /> },
+      { index: true, element: <Language /> },
+      { path: "create/", element: <SPRForm />},
+      { path: "print/", element: <PrintPage /> },
+      { path: "edit/", element: <SPRForm /> },
     ],
   },
   {
-    path: "levelCheck/:language",
+    path: "levelCheck/",
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> }],
   },
