@@ -24,23 +24,64 @@ const getTeacherStudentsByEmail = async (email) => {
 };
 
 
-const createStudent = async (obj) => {
-    const {email, name, nickname} = obj;
-
+ const createStudent = async (obj) => {
+    const {teacherEmail, email, name, nickname} = obj
     const result = await prisma.student.create({
-        data:{
-            id: crypto.randomUUID(),
-            name: name, 
-            email: email,
-            nickname: nickname,
+    data: {
+      id: crypto.randomUUID(),
+      email: email,
+      name: name,
+      nickname: nickname,
+      teachers: {
+        create: [
+          {
+            teacher: {connect: {email: teacherEmail}},
+          },
+        ],
+      },
+    },
+    include: {
+      teachers: {include: {teacher: true}}
+    }
+  });
+  if (!result) {
+    console.error("Failed to create");
+    return;
+  }
 
-        }
+  return result;
+
+  } 
+  const updateStudent = async(obj) =>{
+    const {name, nickname, email} = obj
+    const result = await prisma.student.update({
+      where: {id: obj.id}, 
+      data: {
+        name: name,
+        nickname: nickname,
+        email: email
+      },
     });
     return result;
-}
+  }
+  const readStudent = async (studentId) => {
+    const result = await prisma.student.findUnique({where: {id: studentId}});
+    return result;
+  }
+
+  const deleteById = async (studentId) => {
+    const {teacherEmail, email, name, nickname} = obj
+
+    const result = await prisma.student.delete({where: {id: studentId}});
+
+    return result;
+  }
 
 module.exports = {
     getTeacherStudentsByEmail,
-    createStudent
+    createStudent,
+    readStudent,
+    updateStudent,
+    deleteById
 }
 
