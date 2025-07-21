@@ -9,8 +9,10 @@ const AuthRedirect = () => {
 
     useEffect(() =>{
         const token = localStorage.getItem("token");
+
         if(!token) {
             setStatus( "unauthenticated");
+            navigate("/login", {replace: true});
             return;
         }
         axios
@@ -34,7 +36,12 @@ const AuthRedirect = () => {
                     navigate("/login", {replace: true});
                 }
             })
-            .catch(() => { setStatus("unauthenticated")});
+            .catch(() => { 
+                setStatus("unauthenticated");
+                navigate("/login", {replace: true});
+            }
+
+            );
     }, [])
 
     if(status === "loading") return <div>Loading ...</div>;
