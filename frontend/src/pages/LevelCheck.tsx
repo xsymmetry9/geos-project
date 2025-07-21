@@ -3,7 +3,116 @@ import { useNavigate, useParams } from "react-router-dom";
 import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
+import { p } from "react-router/dist/development/fog-of-war-D4x86-Xc";
 
+const LevelCheckEdit = () => {
+  let {id, language} = useParams();
+  let [inputData, setInputData] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const {name, value} = e.currentTarget;
+    setInputData((prev) => ({
+      ...prev,
+        [name]: value
+    }));
+  }
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
+    if(!getUser) return;
+
+    const index = getUser.levelCheck.findIndex((item) => item.id === inputData.id);
+
+    if(index !== -1){
+      getUser.levelCheck[index] = inputData;
+    } else {
+      getUser.levelCheck.push(inputData);
+    }
+
+    localStorage.setItem("GEOS_app", JSON.stringify(getUser));
+    navigate(`preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+    }
+
+  useEffect(() => {
+    setLoading(true);
+    try{
+        const data = JSON.parse(localStorage.getItem("GEOS_app"));
+        if(!data) {
+          console.log("Couldn't find the data on localstorage");
+          return;
+        }
+        const levelCheck = data.levelCheck;
+        const filtered = levelCheck.filter((item) => item.id === id);
+        if(filtered.length === 0){
+          console.log("Couldn't find the file");
+          return;
+        } 
+        setInputData(filtered[0]);
+
+    } catch (error){
+          console.log("Error", error);
+          return;
+    } finally{
+          setLoading(false);
+        }
+
+  },[]);
+
+  return(
+      <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
+        {!loading && (
+          <>
+            <div className="flex flex-col justify-center items-center">
+          <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
+        </div>
+        <form autoComplete="off">
+        <section>
+          <div className="p-1">
+            <label htmlFor="student_name"> Student Name:
+              <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+              type="text"
+              name="student_name" 
+              
+              id="input-student_name" 
+              onChange={handleChange} />
+            </label>
+          </div>
+          <div className="p-1">
+            <label htmlFor="dateCreated"> Date:
+              <input type="date" className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
+            </label>
+          </div>
+        </section>
+        <section>
+        <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData}  />
+        <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
+        <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
+        <LevelCheckSelect item="vocabulary" inputData ={inputData} setInputData={setInputData} />
+        <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
+        <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
+        </section>
+        <section id="input-feedback">
+           <label htmlFor="feedback"> Feedback
+            <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
+          </label>
+        </section>
+        <div className="w-full flex justify-center pt-3">
+         <button className="btn-primary" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+      </form>
+          </>
+        ) 
+
+        }
+        
+    </div>
+  );
+}
 const LevelCheckForm = () => {
   const initiateForm = new LevelCheckEntry();
   const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
@@ -189,4 +298,4 @@ const Plot=({data}) => {
       </div>
   )
 }
-export {LevelCheckForm, LevelCheckPreview};
+export {LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
