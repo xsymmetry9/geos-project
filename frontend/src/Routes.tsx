@@ -70,9 +70,9 @@ const routes: RouteObject[] = [
     element: <Layout />,
     children: [
       { index: true, element: <Language /> },
-      { path: "create/", element: <SPRForm />},
-      { path: "print/", element: <PrintPage /> },
-      { path: "edit/", element: <SPRForm /> },
+      { path: ":language/create", element: <SPRForm />},
+      { path: ":language/print/", element: <PrintPage /> },
+      { path: ":language/edit/", element: <SPRForm /> },
     ],
   },
   {
