@@ -10,7 +10,7 @@ type Props = {
 
 const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [level, setLevel] = useState<string>("");
-  const [score, setScore] = useState<number | undefined>();
+  const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
@@ -100,6 +100,15 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     }
   };
 
+  useEffect(() => {
+    const current = inputData[item];
+    console.log(current);
+    setLevel(current.level_name || "");
+    setScore(current.score ?? undefined);
+    setSelectedStrengths(current.strength || []);
+    setSelectedWeaknesses(current.weakness || []);
+  },[])
+
   // Push form updates to parent when all selections valid
   useEffect(() => {
     if (
@@ -110,6 +119,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       !scoreError) {
       const updated: StrengthAndWeakness = {
         level_name: level,
+        score: score,
         strength: selectedStrengths,
         weakness: selectedWeaknesses
       };
