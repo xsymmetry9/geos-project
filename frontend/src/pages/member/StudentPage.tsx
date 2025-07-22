@@ -74,7 +74,7 @@ export const StudentPage = () => {
             <div className="mt-3 max-w-[500px] w-full mx-auto  text-gray-700">
               <p>Name: {formData.name}</p>
               <p>Email: {formData.email}</p>
-              <p>Date Created: {format(formData.createdAt, "MM/dd/yyyy")}</p>
+              <p>Date Created: {new Date(formData.createdAt).toLocaleDateString()}</p>
             </div>
             <div className="mt-6 flex gap-3 justify-center">
                 <Link className= "btn btn-primary" to={`/profile/viewLevelCheck/${id}`}>View Level Check</Link>
