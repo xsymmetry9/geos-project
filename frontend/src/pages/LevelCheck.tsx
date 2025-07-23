@@ -355,19 +355,11 @@ const Plot=({data}) => {
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation"].map((item) => {
                   return(
                     <tr key={item}>
-<<<<<<< HEAD
                       <td className="text-center capitalize border-r border-b border-black p-2">{item}</td>
                       <td className="border-r border-b border-black p-2"><ul>{data[item].strength.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2"><ul>{data[item].weakness.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2">{data[item].score}</td>   
                       <td className="border-b border-black p-2">{data[item].level_name}</td>                      
-=======
-                      <td className="text-center capitalize border-r border-b border-slate-500 p-2">{item}</td>
-                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-slate-500 p-2">{data[item].score}</td>   
-                      <td className="border-b border-slate-500 p-2">{data[item].level_name}</td>                      
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
                     </tr>
                   )
                 })}
