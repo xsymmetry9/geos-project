@@ -6,7 +6,7 @@ class StrengthAndWeakness {
   strength: string[];
   weakness: string[];
 
-  constructor(level_name = "",score: number, strength: string[] = [], weakness: string[] = []){
+  constructor(score: number, level_name = "", strength: string[] = [], weakness: string[] = []){
     this.level_name = level_name;
     this.score = score;
     this.strength = strength;
@@ -36,7 +36,7 @@ class LevelCheckEntry {
       this.grammar = new StrengthAndWeakness();
       this.vocabulary = new StrengthAndWeakness();
       this.listening = new StrengthAndWeakness();
-      this. pronunciation = new StrengthAndWeakness();
+      this.pronunciation = new StrengthAndWeakness();
 
     }
   }
