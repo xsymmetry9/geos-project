@@ -1,9 +1,8 @@
 import { useState, createContext, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import { useNavigate, useParams } from "react-router-dom";
 import PlotForm from "../components/Form/PlotForm";
-import { Student } from "../type/Student";
-import { getStudentById } from "../utils/functions";
+import { StudentProgressReportEntry } from "../type/StudentProgressReportEntry";
+// import { getStudentById } from "../utils/functions";
 import { House } from "lucide-react";
 import axios from "axios";
 
@@ -15,11 +14,11 @@ const SPRForm = () => {
   const preferedLanguage = parameters.language ? parameters.language : "english";
   const studentId = parameters.id
   const { language ="english", id } = useParams<{language?: string; id?: string}>();
+  
+  const initialStudent = new StudentProgressReportEntry(); // Initialize SPR
+  const [inputData, setInputData] = useState<StudentProgressReportEntry>(initialStudent); //Creates an new or edit form
   const [loading, setLoading] = useState<boolean>(false);
 
-  const initialStudent = new Student(uuidv4());
-  const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
-  console.log(initialStudent);
   useEffect(() =>{
     setLoading(true);
 
@@ -38,7 +37,9 @@ const SPRForm = () => {
   })
   return (
     <LanguageContext.Provider value={language}>
-      {/* <PlotForm inputData={inputData} setInputData={setInputData} /> */}
+      {!loading && 
+        <PlotForm inputData={inputData} setInputData={setInputData} />
+      }
     </LanguageContext.Provider>
 
   );
