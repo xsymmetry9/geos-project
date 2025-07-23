@@ -1,10 +1,10 @@
-import { Student } from "./Student";
+import { StudentProgressReportEntry } from "./StudentProgressReportEntry";
 import { Language } from "@/utils/common";
 
 class User {
   name: string;
   language: Language;
-  SPR: Student[];
+  SPR: StudentProgressReportEntry[];
   levelCheck: any[]; // or replace `any` with a proper type if available
 
   constructor(name: string = "Guest", language: Language = "english") {
