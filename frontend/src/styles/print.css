@@ -103,7 +103,9 @@
 .print-component-landscape {
   width: 297mm;
   height: 210mm;
-  border: 2px solid black;
+  padding: 8mmm;
+  margin: 0 auto;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
 

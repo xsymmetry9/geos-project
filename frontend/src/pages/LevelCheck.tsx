@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
-import { p } from "react-router/dist/development/fog-of-war-D4x86-Xc";
-
+import html2canvas from "html2canvas-pro";
+import jsPDF from "jspdf";
 const LevelCheckEdit = () => {
+
+  const initForm = new LevelCheckEntry();
   let {id, language} = useParams();
-  let [inputData, setInputData] = useState();
+  let [inputData, setInputData] = useState(initForm);
   const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = e.currentTarget;
@@ -17,6 +20,7 @@ const LevelCheckEdit = () => {
         [name]: value
     }));
   }
+  console.log(inputData);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -24,7 +28,7 @@ const LevelCheckEdit = () => {
     const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
     if(!getUser) return;
 
-    const index = getUser.levelCheck.findIndex((item) => item.id === inputData.id);
+    const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
 
     if(index !== -1){
       getUser.levelCheck[index] = inputData;
@@ -33,7 +37,8 @@ const LevelCheckEdit = () => {
     }
 
     localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-    navigate(`preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+
+    navigate(`/levelCheck/${language}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
 
   useEffect(() => {
@@ -45,13 +50,15 @@ const LevelCheckEdit = () => {
           return;
         }
         const levelCheck = data.levelCheck;
-        const filtered = levelCheck.filter((item) => item.id === id);
+        const filtered = levelCheck.filter((item: any) => item.id === id);
         if(filtered.length === 0){
           console.log("Couldn't find the file");
           return;
         } 
-        setInputData(filtered[0]);
+        console.log(filtered[0]);
 
+        setInputData(filtered[0]);
+   
     } catch (error){
           console.log("Error", error);
           return;
@@ -75,6 +82,7 @@ const LevelCheckEdit = () => {
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
               type="text"
               name="student_name" 
+              value={inputData.student_name ? inputData.student_name : ""}
               
               id="input-student_name" 
               onChange={handleChange} />
@@ -82,7 +90,13 @@ const LevelCheckEdit = () => {
           </div>
           <div className="p-1">
             <label htmlFor="dateCreated"> Date:
-              <input type="date" className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
+              <input 
+                type="date" 
+                className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+                name="dateCreated" 
+                id="input-dateCreated" 
+                value={inputData.dateCreated}
+                onChange={handleChange}/>
             </label>
           </div>
         </section>
@@ -92,11 +106,15 @@ const LevelCheckEdit = () => {
         <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="vocabulary" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
-        <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
+        <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData}/>
         </section>
         <section id="input-feedback">
            <label htmlFor="feedback"> Feedback
-            <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
+            <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+            name="feedback"  
+            onChange={handleChange}
+            value={inputData.feedback} 
+            id="input-feeback" />
           </label>
         </section>
         <div className="w-full flex justify-center pt-3">
@@ -208,13 +226,16 @@ const LevelCheckForm = () => {
 
 const LevelCheckPreview = () => { 
   let params = useParams();
-  const [data, setData] = useState();
+  const [data, setData] = useState<LevelCheckEntry>();
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  console.log(data);
 
   useEffect(() => {
       let app = JSON.parse(localStorage.getItem("GEOS_app")) || '{}';
       const levelCheckData = app.levelCheck || '[]';
 
-      const index = levelCheckData.findIndex((item) => item.id === params.id);
+      const index = levelCheckData.findIndex((item: any) => item.id === params.id);
       console.log(index);
       if(index != -1)
       {
@@ -227,16 +248,39 @@ const LevelCheckPreview = () => {
 
   },[params.id]);
 
-  console.log(data);
+  const handleGeneratePDF = async () => {
+    if(!componentRef.current) return;
 
+    const canvas = await html2canvas(componentRef.current, {
+      allowTaint: true,
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("landscape","mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgRatio = imgProps.width / imgProps.height;
+    const imgHeight = pdfWidth / imgRatio;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.save(`level-check.pdf-${data.student_name}`);
+  }
 
   return(
     <> 
       { data ? (
         <>
-          <Plot data = {data} />
+          <div ref={componentRef}>
+            <Plot data = {data} />
+          </div>
           <div className="w-full flex justify-center">
-            <button className="btn-primary mt-3">Download to PDF</button>
+            <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
           </div>
         </>
       ) : (
@@ -251,50 +295,55 @@ const LevelCheckPreview = () => {
 }
 const Plot=({data}) => {
   return(
-    <div className="print-component-landscape px-5 py-2" id="print-preview">
+    <div className="print-component-landscape px-12 py-2" id="print-preview">
         <div className="font-primary container relative" id="level-check-content">
           <div className="flex justify-center flex-col items-center w-[400px] absolute right-[50%] left-[50%] translate-[-50%]">
             <img className="" width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
             <h1 className="w-full text-center py-2 text-lg font-bold">Oral Assessment Guidelines</h1>
           </div>
           <div className="mt-15">
-            <p className>Name: {data.student_name}</p>
-            <p className>Date: {data.dateCreated}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Name:</span> {data.student_name}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Date:</span> {data.dateCreated}</p>
           </div>
           <div id="table-container">
-            <table className="w-full mt-3 border border-slate-500 text-sm" id="table-content">
-              <thead>
+            <table className="w-full mt-3 border border-slate-800" id="table-content">
+              <thead className="text-[15px]">
                 <tr className="">
-                  <td className="text-center font-bold border border-slate-500 py-2">Category</td>
-                  <td className="text-center font-bold border border-slate-500 py-2">Strength</td>
-                  <td className="text-center font-bold border border-slate-500 py-2">Weakness</td>
-                  <td className="text-center font-bold border border-slate-500 py-2">Score</td>
-                  <td className="text-center font-bold border border-slate-500 py-2">CEFR</td>
+                  <td className="text-center font-bold border border-slate-800 py-2">Category</td>
+                  <td className="text-center font-bold border border-slate-800 py-2">Strength</td>
+                  <td className="text-center font-bold border border-slate-800 py-2">Weakness</td>
+                  <td className="text-center font-bold border border-slate-800 py-2">Score</td>
+                  <td className="text-center font-bold border border-slate-800 py-2">CEFR</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation"].map((item) => {
                   return(
                     <tr key={item}>
-                      <td className="text-center capitalize border-r border-b border-slate-500 p-2">{item}</td>
-                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-slate-500 p-2">{data[item].level_name}</td>   
-                      <td className="border-b border-slate-500 p-2">{data[item].level_name}</td>                      
+                      <td className="text-center capitalize border-r border-b border-black p-2">{item}</td>
+                      <td className="border-r border-b border-black p-2"><ul>{data[item].strength.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2"><ul>{data[item].weakness.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2">{data[item].score}</td>   
+                      <td className="border-b border-black p-2">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}
               </tbody>
             </table>
-            <div className="mt-3 w-full h-[200px] border border-slate-500">
-              <h2>Feedback</h2>
-            <div>{data.feedback}</div>
-            </div>
-
+            <table className="w-full mt-3 border border-slate-800">
+              <thead className="font-bold text-xs">
+                <tr className="border-b border-black">
+                  <td className="p-2 text-black">Feedback</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="h-[150px]">
+                  <td className="flex p-2 text-[13px]">{data.feedback}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
         </div>
-
       </div>
   )
 }

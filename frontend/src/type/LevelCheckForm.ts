@@ -1,12 +1,12 @@
 import {v4 as uuidv4} from 'uuid';
 
 class StrengthAndWeakness {
-  score: string;
+  score: number;
   level_name: string;
   strength: string[];
   weakness: string[];
 
-  constructor(level_name = "",score: "", strength: string[] = [], weakness: string[] = []){
+  constructor(level_name = "",score: number, strength: string[] = [], weakness: string[] = []){
     this.level_name = level_name;
     this.score = score;
     this.strength = strength;
