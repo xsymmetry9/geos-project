@@ -265,7 +265,7 @@ const LevelCheckPreview = () => {
     const imgHeight = pdfWidth / imgRatio;
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-    pdf.save(`level-check.pdf-${data.student_name}`);
+    pdf.save(`level-check-${data.student_name}.pdf`);
   }
 
   return(
