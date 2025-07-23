@@ -43,7 +43,6 @@ model Student {
 
 model StudentProgressReportEntry {
   id String @id @default(uuid())
-  type  String
   studentName String
   language String
   course String
@@ -69,11 +68,17 @@ model StudentProgressReportEntry {
   speakingTarget String
   speakingFinal String
 
+  pronunciationInitial String
+  pronunciationTarget String
+  pronunciationFinal String
+
   teacherEmail String
   teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
 
   studentId String
   student Student @relation(fields: [studentId], references: [id])
+
+  @@unique([studentId, teacherEmail]) 
 
 
 }
