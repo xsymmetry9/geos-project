@@ -64,7 +64,7 @@ const LevelCheckForm = () => {
         <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
       </div>
       <form autoComplete="off">
-        <section>
+        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
           <div className="p-1">
             <label htmlFor="student_name"> Student Name:
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="student_name" id="input-student_name" onChange={handleChange} type="text" />
@@ -76,7 +76,7 @@ const LevelCheckForm = () => {
             </label>
           </div>
         </section>
-        <section>
+        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
         <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
@@ -84,9 +84,9 @@ const LevelCheckForm = () => {
         <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
         </section>
-        <section id="input-feedback">
+        <section className="px-3 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
            <label htmlFor="feedback"> Feedback
-            <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
+            <textarea className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
           </label>
         </section>
         <div className="w-full flex justify-center pt-3">
@@ -174,7 +174,7 @@ const LevelCheckEdit = () => {
           <h1 className="font-secondary font-bold text-lg py-3">Oral Assessment Guidelines</h1>
         </div>
         <form autoComplete="off">
-        <section>
+        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
           <div className="p-1">
             <label htmlFor="student_name"> Student Name:
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
@@ -191,7 +191,7 @@ const LevelCheckEdit = () => {
             </label>
           </div>
         </section>
-        <section>
+        <section className="px-6 py-6 border-b-6 border-double border-dark-green">
         <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData}  />
         <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
@@ -199,9 +199,9 @@ const LevelCheckEdit = () => {
         <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData}/>
         </section>
-        <section id="input-feedback">
+        <section className="px-6 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
            <label htmlFor="feedback"> Feedback
-            <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+            <textarea className="block w-full h-[100px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
             name="feedback"  
             onChange={handleChange} 
             id="input-feeback"

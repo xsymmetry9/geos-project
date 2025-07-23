@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, PrinterIcon, Plus, SquareX } from "lucide-react";
-
 import User from "../type/User";
 import { getDataFromLocal, deleteStudentById } from "../utils/functions";
 import ExportToExcel from "../components/ExportToExcel";
