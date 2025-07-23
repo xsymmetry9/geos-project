@@ -3,17 +3,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
+<<<<<<< HEAD
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
+=======
+
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
 const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
   let {id, language} = useParams();
+<<<<<<< HEAD
   let [inputData, setInputData] = useState(initForm);
+=======
+  let [inputData, setInputData] = useState<LevelCheckEntry | null>(null);
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.currentTarget;
     setInputData((prev) => ({
       ...prev,
@@ -40,7 +48,7 @@ const LevelCheckEdit = () => {
 
     navigate(`/levelCheck/${language}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
-
+ 
   useEffect(() => {
     setLoading(true);
     try{
@@ -50,12 +58,20 @@ const LevelCheckEdit = () => {
           return;
         }
         const levelCheck = data.levelCheck;
+<<<<<<< HEAD
         const filtered = levelCheck.filter((item: any) => item.id === id);
         if(filtered.length === 0){
           console.log("Couldn't find the file");
           return;
         } 
         console.log(filtered[0]);
+=======
+        const match = data.levelCheck.find((item) => item.id === id);
+        if(match) setInputData(match);
+        else{
+          console.warn("No match for ID", id);
+        }
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
 
         setInputData(filtered[0]);
    
@@ -68,9 +84,13 @@ const LevelCheckEdit = () => {
 
   },[]);
 
+  if(loading || inputData === null ){
+    return <div>Loading ...</div>
+  }
+
   return(
       <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
-        {!loading && (
+        {(!loading) && (
           <>
             <div className="flex flex-col justify-center items-center">
           <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
@@ -82,14 +102,19 @@ const LevelCheckEdit = () => {
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
               type="text"
               name="student_name" 
+<<<<<<< HEAD
               value={inputData.student_name ? inputData.student_name : ""}
               
+=======
+              value={inputData?.student_name || ""}
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
               id="input-student_name" 
               onChange={handleChange} />
             </label>
           </div>
           <div className="p-1">
             <label htmlFor="dateCreated"> Date:
+<<<<<<< HEAD
               <input 
                 type="date" 
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
@@ -97,6 +122,9 @@ const LevelCheckEdit = () => {
                 id="input-dateCreated" 
                 value={inputData.dateCreated}
                 onChange={handleChange}/>
+=======
+              <input type="date" value={inputData.dateCreated} className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
             </label>
           </div>
         </section>
@@ -112,9 +140,15 @@ const LevelCheckEdit = () => {
            <label htmlFor="feedback"> Feedback
             <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
             name="feedback"  
+<<<<<<< HEAD
             onChange={handleChange}
             value={inputData.feedback} 
             id="input-feeback" />
+=======
+            onChange={handleChange} 
+            id="input-feeback"
+            value={inputData.feedback} />
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
           </label>
         </section>
         <div className="w-full flex justify-center pt-3">
@@ -131,6 +165,7 @@ const LevelCheckEdit = () => {
     </div>
   );
 }
+
 const LevelCheckForm = () => {
   const initiateForm = new LevelCheckEntry();
   const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
@@ -320,11 +355,19 @@ const Plot=({data}) => {
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation"].map((item) => {
                   return(
                     <tr key={item}>
+<<<<<<< HEAD
                       <td className="text-center capitalize border-r border-b border-black p-2">{item}</td>
                       <td className="border-r border-b border-black p-2"><ul>{data[item].strength.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2"><ul>{data[item].weakness.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2">{data[item].score}</td>   
                       <td className="border-b border-black p-2">{data[item].level_name}</td>                      
+=======
+                      <td className="text-center capitalize border-r border-b border-slate-500 p-2">{item}</td>
+                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-slate-500 p-2"><ul>{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-slate-500 p-2">{data[item].score}</td>   
+                      <td className="border-b border-slate-500 p-2">{data[item].level_name}</td>                      
+>>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
                     </tr>
                   )
                 })}
