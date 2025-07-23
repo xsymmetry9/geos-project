@@ -16,6 +16,10 @@ const {
     createStudentTeacherByEmail, readStudentById, readTeacherStudentByEmail, updateStudentById, deleteStudentById
 } = require("../controllers/teacherController.js");
 
+const {
+    createStudentProgressReport} = require("../controllers/studentProgressReportController.js");
+
+
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
 
@@ -47,6 +51,10 @@ router.post("/api/member/addStudent", verifyToken, createStudentTeacherByEmail);
 router.delete("/api/member/deleteStudent/:id", verifyToken, deleteStudentById);
 
 router.put("/api/member/updateStudent/:id", verifyToken, updateStudentById);
+
+// ------------------------------------ SPR ----------------------------------
+router.post("/api/member/createSPR/:id", verifyToken, createStudentProgressReport);
+
 //Gets all users
 router.get("/api", async (req, res) =>{
     try {
