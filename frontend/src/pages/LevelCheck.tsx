@@ -242,8 +242,6 @@ const LevelCheckPreview = () => {
       } else {
         console.log("Data not found");
       }
-
-
   },[params.id]);
 
   const handleGeneratePDF = async () => {
@@ -277,7 +275,7 @@ const LevelCheckPreview = () => {
           <div ref={componentRef}>
             <Plot data = {data} />
           </div>
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center gap-2">
             <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
           </div>
         </>
@@ -319,10 +317,10 @@ const Plot=({data}) => {
                   return(
                     <tr key={item}>
                       <td className="text-center capitalize border-r border-b border-black p-2">{item}</td>
-                      <td className="border-r border-b border-black p-2"><ul>{data[item].strength.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2"><ul>{data[item].weakness.map((list, idx) => <li className="ml-4 " key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2">{data[item].score}</td>   
-                      <td className="border-b border-black p-2">{data[item].level_name}</td>                      
+                      <td className="border-r border-b border-black p-2"><ul className="list-disc ml-4">{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2"><ul className="list-disc ml-4">{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 text-center">{data[item].score}</td>   
+                      <td className="border-b border-black p-2 text-center">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}

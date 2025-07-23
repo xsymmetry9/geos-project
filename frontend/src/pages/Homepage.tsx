@@ -15,7 +15,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
       <tr className="bg-orange-700 text-white font-bold">
         <td className="p-3 text-center">Date</td>
         <td className="p-3 text-center">Name</td>
-        <td className="p-3 text-center">Functions</td>
+        <td className="p-3 text-center">Action</td>
       </tr>
     </thead>
     <tbody>
@@ -25,9 +25,9 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
           key={`level-check${item.id}`}
         >
           {/* Need to fix the time */}
-          <td className="p-3 text-center">{item.dateCreated}</td> 
-          <td className="p-3 text-center">{item.student_name}</td>
-          <td className="flex gap-3 justify-center mt-4">
+          <td className="p-3 text-center h-[30px]">{item.dateCreated}</td> 
+          <td className="p-3 text-center h-[30px]">{item.student_name}</td>
+          <td className="flex gap-3 justify-center mt-4 h-[30px]">
             <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
               <Pencil size={20} />
             </Link>
@@ -35,7 +35,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
               <PrinterIcon size={20} />
             </Link>
             <button
-              className="text-red-600 cursor-pointer"
+              className="text-red-600 cursor-pointer flex justify-center"
               onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
             >
               <Archive size={20} />
