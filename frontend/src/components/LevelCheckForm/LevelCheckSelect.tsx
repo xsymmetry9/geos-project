@@ -153,11 +153,11 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
           id={`${item}_level`}
           value={level}
           onChange={handleLevelChange}
-          className="form-input mt-1 block w-full border-b-2 border-gray-200 focus:border-[#09c5eb]"
+          className="font-seconday text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
         >
           <option value="">Choose CEFR Level</option>
           {["A1-A2", "B1-B2", "C1-C2"].map((lvl) => (
-            <option key={lvl} value={lvl}>
+            <option className="font-secondary text-base text-inherit" key={lvl} value={lvl}>
               {lvl}
             </option>
           ))}
@@ -196,7 +196,7 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
                     predefinedStrengths
                   ))
                 }
-                className="flex-1 border-b"
+                className="form-input font-secondary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
               />
               <button
                 type="button"
@@ -255,7 +255,7 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
                     predefinedWeaknesses
                   ))
                 }
-                className="flex-1 border-b"
+                className="form-input font-secondary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
               />
               <button
                 type="button"
