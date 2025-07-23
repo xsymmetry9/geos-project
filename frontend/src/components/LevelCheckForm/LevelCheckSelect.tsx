@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import levelCheckData from "../../assets/other/levelCheck.json";
 import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm";
 
+type EnglishKey = keyof Pick<LevelCheckEntry,
+  "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation"
+>;
+
 type Props = {
-  item: keyof LevelCheckEntry;
+  item: EnglishKey;
   inputData: LevelCheckEntry;
   setForm: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
 };
 
 const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
-  const [level, setLevel] = useState<string>("");
+const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
   const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
@@ -17,8 +21,15 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
   const [customWeaknessInput, setCustomWeaknessInput] = useState<string>("");
 
-  const predefinedStrengths = levelCheckData.english[item]?.[level]?.strength || [];
-  const predefinedWeaknesses = levelCheckData.english[item]?.[level]?.weakness || [];
+const predefinedStrengths =
+  level && levelCheckData.english[item]?.[level]?.strength
+    ? levelCheckData.english[item]?.[level]?.strength
+    : [];
+
+const predefinedWeaknesses =
+  level && levelCheckData.english[item]?.[level]?.weakness
+    ? levelCheckData.english[item]?.[level]?.weakness
+    : [];
 
   const allStrengths = [...predefinedStrengths, ...selectedStrengths.filter(s => !predefinedStrengths.includes(s))];
   const allWeaknesses = [...predefinedWeaknesses, ...selectedWeaknesses.filter(w => !predefinedWeaknesses.includes(w))];
@@ -35,7 +46,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     }
   }
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLevel(e.target.value);
+setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
     setScore(undefined);
     setScoreError("");
     setInputData(prev => ({
@@ -104,10 +115,10 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     const current = inputData[item];
     console.log(current);
     setLevel(current.level_name || "");
-    setScore(current.score ?? undefined);
+    setScore(current.score);
     setSelectedStrengths(current.strength || []);
     setSelectedWeaknesses(current.weakness || []);
-  },[]);
+  },[inputData, item]);
 
   // Push form updates to parent when all selections valid
   useEffect(() => {
@@ -117,6 +128,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       selectedWeaknesses.length >= 2 && 
       score !== undefined && 
       !scoreError) {
+
       const updated: StrengthAndWeakness = {
         level_name: level,
         score: score,
