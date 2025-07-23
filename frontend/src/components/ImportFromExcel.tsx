@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { read, utils } from "xlsx";
-import { Student, Levels } from "../type/Student";
+import { StudentProgressReportEntry, Levels } from "../type/StudentProgressReportEntry";
 import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
 import { Files, Upload } from "lucide-react";
 import User from "@/type/User";
@@ -13,9 +13,9 @@ type ImportFromExcelProps = {
 const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
   const { SPR } = userData;
 
-  const mergedArrayFilterUniqueObjects = useCallback((arr1: Student[], arr2: Student[]) => {
+  const mergedArrayFilterUniqueObjects = useCallback((arr1: StudentProgressReportEntry[], arr2: StudentProgressReportEntry[]) => {
     const mergedArray = [...arr1, ...arr2];
-    const uniqueObjects = new Map<string, Student>();
+    const uniqueObjects = new Map<string, StudentProgressReportEntry>();
     mergedArray.forEach((item) => {
       uniqueObjects.set(item.id, item);
     });
@@ -43,8 +43,8 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
         const worksheet = workbook.Sheets[sheetName];
         const jsonData: any[] = utils.sheet_to_json(worksheet);
 
-        const parsedStudents: Student[] = jsonData.map((row) => {
-          const student = new Student(row.id);
+        const parsedStudents: StudentProgressReportEntry[] = jsonData.map((row) => {
+          const student = new StudentProgressReportEntry(row.id);
           student.dateCreated = row.Date || "";
 
           student.name = row.Name || "";

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import labelText from "../../assets/other/labelText.json";
-import {Student, Levels} from "../../type/Student";
+import {Student, Levels} from "../../type/StudentProgressReportEntry";
 
 type Language = keyof typeof labelText;
 type LevelKey = keyof Levels;

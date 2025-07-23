@@ -1,7 +1,7 @@
 import LanguageAspect from "./LanguageAspect";
 import DisplayHelp from "./DisplayHelp";
 import labelText from "../../../assets/other/labelText.json"
-import { Student } from "@/type/Student";
+import { Student } from "@/type/StudentProgressReportEntry";
 import { SetStateAction, Dispatch, ChangeEvent } from "react";
 
 type Language = keyof typeof labelText;

@@ -1,7 +1,7 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
-import { Student } from "@/type/Student";
+import { Student } from "@/type/StudentProgressReportEntry";
 
 type UserData = {
   SPR: Student[];

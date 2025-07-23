@@ -8,16 +8,16 @@ import Button from "./components/Button";
 import { LanguageContext } from "@/pages/SPRForm";
 import PopUpMessage from "../PopUpMessage";
 import labelText from "@/assets/other/labelText.json"
-import { Student, Levels } from "@/type/Student";
+import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 import { Language } from "@/utils/common";
 
-type LevelCategory = keyof Student["levels"];
+type LevelCategory = keyof StudentProgressReportEntry["levels"];
 type LevelField = keyof Levels;
 
 interface PlotFormProps{
-  inputData: Student;
-  setInputData: React.Dispatch<React.SetStateAction<Student>>;
+  inputData: StudentProgressReportEntry;
+  setInputData: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
 }
 
 const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {

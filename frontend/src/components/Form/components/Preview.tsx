@@ -1,5 +1,5 @@
 import labelText from "@/assets/other/labelText.json";
-import { Student } from "@/type/Student";
+import { Student } from "@/type/StudentProgressReportEntry";
 
 type Language = keyof typeof labelText;
 

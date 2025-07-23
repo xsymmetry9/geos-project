@@ -9,7 +9,7 @@ import {
   Signature,
 } from "./PrintComponents/StudentInfo";
 import PlotCards from "./PrintComponents/PlotCards";
-import { Student } from "@/type/Student";
+import { Student } from "@/type/StudentProgressReportEntry";
 import labelText from "../assets/other/labelText.json";
 
 import "../styles/print.css"
