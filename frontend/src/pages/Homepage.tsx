@@ -19,12 +19,13 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map((item) => (
+      {data.map((item: any) => (
         <tr
           className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300"
           key={`level-check${item.id}`}
         >
-          <td className="p-3 text-center">{item.dateCreated}</td>
+          {/* Need to fix the time */}
+          <td className="p-3 text-center">{item.dateCreated}</td> 
           <td className="p-3 text-center">{item.student_name}</td>
           <td className="flex gap-3 justify-center mt-4">
             <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
@@ -133,8 +134,8 @@ const Homepage = () => {
 
       <div className="flex justify-center gap-5 p-2">
         <button
-          className={`cursor-pointer font-secondary font-bold bg-dark-green p-2 rounded-md text-white w-[150px] ${
-            page === "spr" ? "bg-white-600" : "bg-dark-blue"
+          className={`cursor-pointer font-secondary font-bold p-2 rounded-md text-white w-[150px] ${
+            page === "spr" ? "bg-blue-700" : "bg-dark-green"
           }`}
           onClick={toggleLevelCheckSPR}
           name="spr"
@@ -142,7 +143,9 @@ const Homepage = () => {
           SPR
         </button>
         <button
-          className="cursor-pointer font-secondary font-bold bg-dark-green p-2 rounded-md text-white w-[150px]"
+          className={`cursor-pointer font-secondary font-bold p-2 rounded-md text-white w-[150px] ${
+            page === "levelCheck" ? "bg-blue-700" : "bg-dark-green"
+          }`}
           onClick={toggleLevelCheckSPR}
           name="levelCheck"
         >
