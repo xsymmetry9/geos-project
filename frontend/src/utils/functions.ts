@@ -1,6 +1,6 @@
 const appName = "GEOS_app";
 import User from "@/type/User";
-import {Student} from "@/type/Student";
+import {StudentProgressReportEntry} from "@/type/StudentProgressReportEntry";
 import levelData from "@/assets/other/levelInformation.json";
 
 type LanguageKey = "english" | "chinese" | "korean" | "japanese";
@@ -55,7 +55,7 @@ export function deleteStudentById(id: string) {
 
   if (!Array.isArray(parsedData.SPR)) return null;
 
-  const updatedSPR = parsedData.SPR.filter((student: Student) => student.id !== id);
+  const updatedSPR = parsedData.SPR.filter((student: StudentProgressReportEntry) => student.id !== id);
 
   const newData = {
     ...parsedData,

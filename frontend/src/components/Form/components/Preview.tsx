@@ -1,10 +1,10 @@
 import labelText from "@/assets/other/labelText.json";
-import { Student } from "@/type/StudentProgressReportEntry";
+import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 
 type Language = keyof typeof labelText;
 
 interface PreviewProps {
-  inputData: Student;
+  inputData: StudentProgressReportEntry;
   language: Language;
 }
 
@@ -61,7 +61,7 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
           </thead>
           <tbody>
             {Object.keys(levels).map((item, index) => {
-              const key = item as keyof Student["levels"];
+              const key = item as keyof StudentProgressReportEntry["levels"];
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
                   <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>

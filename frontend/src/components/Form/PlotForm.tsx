@@ -11,6 +11,7 @@ import labelText from "@/assets/other/labelText.json"
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 import { Language } from "@/utils/common";
+import axios from "axios";
 
 type LevelCategory = keyof StudentProgressReportEntry["levels"];
 type LevelField = keyof Levels;
@@ -20,7 +21,7 @@ interface PlotFormProps{
   setInputData: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
 }
 
-const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
+const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, setLoading }) => {
   const [page, setPage] = useState<number>(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState<boolean>(false);
   const [inputError, setInputError] = useState({
@@ -126,23 +127,36 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const savedData = getDataFromLocal();
-      const existingStudentIndex = savedData.SPR.findIndex(
-        (student) => student.id === inputData.id,
-      );
-      if (existingStudentIndex === -1) {
-        savedData.SPR.push(inputData);
-      } else {
-        savedData.SPR[existingStudentIndex] = inputData;
-      }
-      editDataFromLocal(savedData); 
-    } catch (err) {
-      alert(err);
-    }
+    console.log(inputData);
+      const fetchId = async ()=> {
+          setLoading(true);    
+          try{
+              const token = localStorage.getItem("token");
+              if(!token) {
+              console.error("No token, login first to create a new token");
+              return;
+              }
+             const res = await axios.post(`http://localhost:8000/api/member/createSPR/${inputData.studentId}`,
+              {studentId: inputData.studentId, data: inputData},
+              {
+                headers: { Authorization: `Bearer ${token}`},
+              });
 
-    setDisplayPopupMessage(true);
-  };
+              if(res.data?.data){
+              setInputData(res.data.data);
+              }
+    
+              return res;
+            } catch(error){
+            console.error("Error was found", error);
+            return;
+            } finally {
+              setLoading(false);
+            };
+          };
+          
+          fetchId();
+        }
   return (
     <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
         {/* {displayPopupMessage && (
