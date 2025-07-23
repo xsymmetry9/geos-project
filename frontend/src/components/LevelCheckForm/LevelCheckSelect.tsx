@@ -119,7 +119,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       !scoreError) {
       const updated: StrengthAndWeakness = {
         level_name: level,
-        score,
+        score: score,
         strength: selectedStrengths,
         weakness: selectedWeaknesses
       };
