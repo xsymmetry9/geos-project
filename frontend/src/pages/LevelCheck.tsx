@@ -3,21 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
-<<<<<<< HEAD
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
-=======
-
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
 const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
   let {id, language} = useParams();
-<<<<<<< HEAD
   let [inputData, setInputData] = useState(initForm);
-=======
-  let [inputData, setInputData] = useState<LevelCheckEntry | null>(null);
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
@@ -58,20 +50,12 @@ const LevelCheckEdit = () => {
           return;
         }
         const levelCheck = data.levelCheck;
-<<<<<<< HEAD
         const filtered = levelCheck.filter((item: any) => item.id === id);
         if(filtered.length === 0){
           console.log("Couldn't find the file");
           return;
         } 
         console.log(filtered[0]);
-=======
-        const match = data.levelCheck.find((item) => item.id === id);
-        if(match) setInputData(match);
-        else{
-          console.warn("No match for ID", id);
-        }
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
 
         setInputData(filtered[0]);
    
@@ -102,29 +86,14 @@ const LevelCheckEdit = () => {
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
               type="text"
               name="student_name" 
-<<<<<<< HEAD
-              value={inputData.student_name ? inputData.student_name : ""}
-              
-=======
               value={inputData?.student_name || ""}
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
               id="input-student_name" 
               onChange={handleChange} />
             </label>
           </div>
           <div className="p-1">
             <label htmlFor="dateCreated"> Date:
-<<<<<<< HEAD
-              <input 
-                type="date" 
-                className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
-                name="dateCreated" 
-                id="input-dateCreated" 
-                value={inputData.dateCreated}
-                onChange={handleChange}/>
-=======
               <input type="date" value={inputData.dateCreated} className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
             </label>
           </div>
         </section>
@@ -140,15 +109,9 @@ const LevelCheckEdit = () => {
            <label htmlFor="feedback"> Feedback
             <textarea className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
             name="feedback"  
-<<<<<<< HEAD
-            onChange={handleChange}
-            value={inputData.feedback} 
-            id="input-feeback" />
-=======
             onChange={handleChange} 
             id="input-feeback"
             value={inputData.feedback} />
->>>>>>> f0787eff4aaf9fa76c91eb88c23ecf7bd0bdcc36
           </label>
         </section>
         <div className="w-full flex justify-center pt-3">
@@ -182,7 +145,7 @@ const LevelCheckForm = () => {
       getUser.levelCheck.push((inputData)); // Adds new form 
     }
 
-    getUser.levelCheck.forEach((item) =>  {
+    getUser.levelCheck.forEach((item: any) =>  {
       if(item.id === inputData.id)
       {
         console.log(item);
@@ -205,7 +168,7 @@ const LevelCheckForm = () => {
     const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
     if(!getUser) return;
 
-    const index = getUser.levelCheck.findIndex((item) => item.id === inputData.id);
+    const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
 
     if(index !== -1){
       getUser.levelCheck[index] = inputData;
