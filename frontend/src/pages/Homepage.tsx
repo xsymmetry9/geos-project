@@ -31,7 +31,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
             <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
               <Pencil size={20} />
             </Link>
-            <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/print/${item.id}`}>
+            <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/preview/${item.id}`}>
               <PrinterIcon size={20} />
             </Link>
             <button
