@@ -107,7 +107,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     setScore(current.score ?? undefined);
     setSelectedStrengths(current.strength || []);
     setSelectedWeaknesses(current.weakness || []);
-  },[])
+  },[]);
 
   // Push form updates to parent when all selections valid
   useEffect(() => {
@@ -119,7 +119,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       !scoreError) {
       const updated: StrengthAndWeakness = {
         level_name: level,
-        score: score,
+        score,
         strength: selectedStrengths,
         weakness: selectedWeaknesses
       };
@@ -129,7 +129,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         [item]: updated,
       }));
     }
-  }, [level, selectedStrengths, selectedWeaknesses]);
+  }, [level, score, selectedStrengths, selectedWeaknesses]);
 
   const title = item.charAt(0).toUpperCase() + item.slice(1);
 
@@ -154,7 +154,7 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       <label htmlFor= {`${item}_score`}>Enter a score
           <input 
             type="number"
-            value={score ?? ""}
+            value={score}
             onChange={handleScoreChange}
             className= "form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
             id={`${item}_score`} />
