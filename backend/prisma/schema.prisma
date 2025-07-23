@@ -43,43 +43,40 @@ model Student {
 
 model StudentProgressReportEntry {
   id String @id @default(uuid())
-  studentName String
-  language String
-  course String
-  textbook String
-  attendance Int
-  totalLessons Int
-  feedback String
+  studentName String?
+  language String?
+  course String?
+  textbook String?
+  attendance Int?
+  totalLessons Int?
+  feedback String?
   dateCreated DateTime @default(now())
 
-  vocabularyInitial String
-  vocabularyTarget String
-  vocabularyFinal String
+  vocabularyInitial String?
+  vocabularyTarget String?
+  vocabularyFinal String?
 
-  grammarInitial String
-  grammarTarget String
-  grammarFinal String
+  grammarInitial String?
+  grammarTarget String?
+  grammarFinal String?
 
-  listeningInitial String
-  listeningTarget String
-  listeningFinal String
+  listeningInitial String?
+  listeningTarget String?
+  listeningFinal String?
 
-  speakingInitial String
-  speakingTarget String
-  speakingFinal String
+  speakingInitial String?
+  speakingTarget String?
+  speakingFinal String?
 
-  pronunciationInitial String
-  pronunciationTarget String
-  pronunciationFinal String
+  pronunciationInitial String?
+  pronunciationTarget String?
+  pronunciationFinal String?
 
   teacherEmail String
   teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
 
   studentId String
   student Student @relation(fields: [studentId], references: [id])
-
-  @@unique([studentId, teacherEmail]) 
-
 
 }
 
