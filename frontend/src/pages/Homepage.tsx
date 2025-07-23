@@ -70,10 +70,18 @@ const Homepage = () => {
   const handleDelete = () => {
     if (!deletePage.id || !userData) return;
 
-    deleteStudentById(deletePage.id);
+    const fetchData = JSON.parse(localStorage.getItem("GEOS_app"));
+    const result = fetchData[deletePage.type].filter(item => item.id !== deletePage.id);
+
+    fetchData[deletePage.type] = result;
+
+    localStorage.setItem("GEOS_app", JSON.stringify(fetchData));
+
     setUserData((prev) =>
       prev ? { ...prev, [deletePage.type]: prev[deletePage.type].filter((item) => item.id !== deletePage.id) } : prev
     );
+
+    
     closePage();
   };
 
@@ -155,9 +163,10 @@ const Homepage = () => {
 
       <div className="px-2">
         {page === "spr" ? (
-          userData?.SPR.length ? <PlotSPRTable /> : <p className="text-center text-gray-500">Click add SPR</p>
+          userData?.SPR.length ? <PlotSPRTable /> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
         ) : (
-          <PlotLevelCheck data={userData?.levelCheck} language={language} handleDisplayDelete={handleDisplayDelete} />
+          userData?.levelCheck.length ? <PlotLevelCheck data={userData?.levelCheck} language={language} handleDisplayDelete={handleDisplayDelete} />:
+          <p className= "text-center text-gray-500 mt-3">Click add Level Check</p>
         )}
       </div>
 
