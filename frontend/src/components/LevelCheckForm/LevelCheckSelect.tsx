@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import levelCheckData from "../../assets/other/levelCheck.json";
 import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm";
+import levelInformation from "../../assets/other/legend.json";
+import { formatNum } from "../PrintComponents/Legend";
 
 type EnglishKey = keyof Pick<LevelCheckEntry,
   "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation"
@@ -21,31 +23,46 @@ const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
   const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
   const [customWeaknessInput, setCustomWeaknessInput] = useState<string>("");
 
+const getScoreRange = (level: string): [number, number] => {
+  switch (level) {
+    case "Pre-A1": return [0, 2];
+    case "A1": return [2, 3];
+    case "A1-A2": return [3, 4];
+    case "A2": return [4, 5];
+    case "A2-B1": return [5, 6];
+    case "B1": return [6, 7];
+    case "B1-B2": return [7, 8];
+    case "B2": return [8, 9];
+    case "C1": return [9, 9.5];
+    case "C1+": return [9.5, 10];
+    default: return [0, 10];
+  }
+};
+
+const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
+  if (score >= 0 && score <= 5) return "A1-A2";
+  if (score > 5 && score < 9) return "B1-B2";
+  return "C1-C2";
+};
+
+const currentBand = score !== undefined ? mapScoreToBand(score) : level;
+
 const predefinedStrengths =
-  level && levelCheckData.english[item]?.[level]?.strength
-    ? levelCheckData.english[item]?.[level]?.strength
+  currentBand && levelCheckData.english[item]?.[currentBand]?.strength
+    ? levelCheckData.english[item][currentBand].strength
     : [];
 
 const predefinedWeaknesses =
-  level && levelCheckData.english[item]?.[level]?.weakness
-    ? levelCheckData.english[item]?.[level]?.weakness
+  currentBand && levelCheckData.english[item]?.[currentBand]?.weakness
+    ? levelCheckData.english[item][currentBand].weakness
     : [];
 
-  const allStrengths = [...predefinedStrengths, ...selectedStrengths.filter(s => !predefinedStrengths.includes(s))];
-  const allWeaknesses = [...predefinedWeaknesses, ...selectedWeaknesses.filter(w => !predefinedWeaknesses.includes(w))];
+const allStrengths = [...predefinedStrengths, ...selectedStrengths.filter(s => !predefinedStrengths.includes(s))];
+const allWeaknesses = [...predefinedWeaknesses, ...selectedWeaknesses.filter(w => !predefinedWeaknesses.includes(w))];
+const maxStrengthsReached = selectedStrengths.length >= 3;
+const maxWeaknessesReached = selectedWeaknesses.length >= 3;
 
-  const maxStrengthsReached = selectedStrengths.length >= 3;
-  const maxWeaknessesReached = selectedWeaknesses.length >= 3;
-
-  const getScoreRange = (level: string) => {
-    switch(level){
-      case "A1-A2": return [0, 5];
-      case "B1-B2": return [5, 9];
-      case "C1-C2": return [9, 10];
-      default: [0, 10];
-    }
-  }
-  const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
     setScore(undefined);
     setScoreError("");
@@ -61,22 +78,25 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
 
   };
 
-  const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputScore = parseFloat(e.target.value);
-    const [min, max] = getScoreRange(level);
+const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputScore = parseFloat(e.target.value);
+  const [min, max] = getScoreRange(level);
 
-    if(isNaN(inputScore)){
-      setScore(undefined);
-      setScoreError("Score must be a number");
-      return;
-    }
-    if(inputScore < min || inputScore > max){
-      setScoreError(`Score for ${level} must be between ${min} and ${max}.`);
-    } else {
-      setScoreError("");
-    }
-    setScore(inputScore);
-  };
+  if (isNaN(inputScore)) {
+    setScore(undefined);
+    setScoreError("Score must be a number.");
+    return;
+  }
+
+  if (inputScore < min || inputScore > max) {
+    setScoreError(`Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`);
+  } else {
+    setScoreError("");
+  }
+
+  setScore(inputScore);
+};
+
 
   const toggleSelection = (
     value: string,
@@ -143,43 +163,7 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
     }
   }, [level, score, selectedStrengths, selectedWeaknesses]);
 
-  const arrOfLevels = [
-    {
-      label:"Pre-A1",
-      value: "A1-A2",
-      score: {min: 0, max: 1.9}
-    },
-    {
-      label: "A1",
-      value: "A1-A2",
-      score: {min: 2, max: 2.9}
-    },
-    {
-      label: "A1-A2",
-      value: "A1-A2",
-      score: {min: 3, max: 3.9}
-    },
-    {
-      label: "A2",
-      value: "A1-A2",
-      score: {min: 4, max: 4.9},
-    },
-    {
-      label: "A2 - B1",
-      value: "A1-A2",
-      score: {min: 5.0, max: 5.9}
-    },
-    {
-      label: "B1 - B2",
-      value: "B1-B2",
-      score: {min: 6.0, max: 8.9}
-    },
-    {
-      label: "C1 - C2",
-      value: "C1-C2",
-      score: {min: 9.0, max: 10.0}
-    }
-  ]
+  const arrOfLevels = levelInformation.english;
   const title = item.charAt(0).toUpperCase() + item.slice(1);
 
   return (
@@ -194,13 +178,13 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
         >
           <option value="">Choose CEFR Level</option>
           {arrOfLevels.map((lvl) => (
-            <option className="font-secondary text-base text-inherit" key={lvl.value} value={lvl.value}>
-              {lvl.label}
+            <option className="font-secondary text-base text-inherit" key={lvl.name} value={lvl.name}>
+              {`${lvl.name}: ${formatNum(lvl.score)} `}
             </option>
           ))}
         </select>
       </label>
-      <label htmlFor= {`${item}_score`}>Enter a score
+    {level && <label htmlFor= {`${item}_score`}>Enter a score
           <input 
             type="number"
             value={score}
@@ -208,7 +192,7 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
             className= "form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
             id={`${item}_score`} />
           {scoreError && <p className= "text-red-600 text-sm">{scoreError}</p>}
-      </label>
+      </label>}
       <div className="grid grid-cols-2 gap-3">
 
       {level && score !== undefined  && scoreError === "" && (
