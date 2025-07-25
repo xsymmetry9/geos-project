@@ -22,6 +22,12 @@
   --print-chinese-font-size-5: 24px;
   --print-chinese-font-size-6: 26px;
 
+  --print-japanese-font-size-1: 14px;
+  --print-japanese-font-size-2: 16px;
+  --print-japanese-font-size-3: 18px;
+  --print-japanese-font-size-4: 20px;
+  --print-japanese-font-size-5: 24px;
+  --print-japanese-font-size-6: 26px;
 }
 #print-english {
   font-family: var(--font-primary);
@@ -32,10 +38,10 @@
 }
 
 #print-english h1{
-  font-size: 1.188rem;
+  font-size: var(--print-font-size-4);
 }
 #print-english h2{
-  font-size: var(--print-font-size-3);
+  font-size: var(--print-font-size-2);
 }
 #print-english h3{
   font-size: var(--print-font-size-3);
@@ -46,7 +52,7 @@
 
 #print-english #personal-info p,
 #print-english #student-info p {
-  font-size: var(--print-font-size-1);
+  font-size: 13px;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -63,7 +69,7 @@
   /* font-size: 14px; */
 } 
 
-#print-korean h1 { font-size: 1.3rem; }
+#print-korean h1 { font-size: var(--print-size-4); }
   #print-korean h2 {
     font-size: 1.1rem;
   }
@@ -74,15 +80,15 @@
     font-size: 0.9rem;
   }
 
-#print-japanese h1 { font-size: 1.3rem;}
+#print-japanese h1 { font-size: var(--print-japanese-size-4)}
 #print-japanese h2 {
-    font-size: 1.1rem;
+    font-size: var(--print-japanese-size-3);
   }
 #print-japanese h3 {
-    font-size: 1.1rem;
+    font-size: var(--print-japanese-font-size-2);
   }
 #print-japanese p {
-    font-size: 0.9rem;
+    font-size: var(--print-japanese-font-size-1);
   }
 
 .print-component {
@@ -138,7 +144,11 @@
 .student-information {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-bottom: 12px;
+  padding-bottom: 4px;
+}
+
+.personalInformation{
+  font-size: 20px;
 }
 
 /* --------------------------- Styling for levels ----------------------------------------- */

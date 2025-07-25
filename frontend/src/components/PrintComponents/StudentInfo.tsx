@@ -157,7 +157,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   };
   return (
     <>
-      <table className="table-fixed text-[12px] table-levels w-full mt-2 m-auto border-collapse">
+      <table className="table-fixed text-[12px] table-levels w-full mt-1 m-auto border-collapse">
         {language === "english" && <Legend />}
         <thead className="border-l border-r border-slate-500">
           <tr>
