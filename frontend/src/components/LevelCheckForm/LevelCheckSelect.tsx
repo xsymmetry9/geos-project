@@ -39,7 +39,7 @@ const predefinedWeaknesses =
 
   const getScoreRange = (level: string) => {
     switch(level){
-      case "A1-A2": return [1, 5];
+      case "A1-A2": return [0, 5];
       case "B1-B2": return [5, 9];
       case "C1-C2": return [9, 10];
       default: [0, 10];
@@ -143,6 +143,33 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
     }
   }, [level, score, selectedStrengths, selectedWeaknesses]);
 
+  const arrOfLevels = [
+    {
+      label:"Pre-A1",
+      value: "A1-A2",
+      score: {min: 0, max: 1.9}
+    },
+    {
+      label: "A1",
+      value: "A1-A2",
+      score: {min: 2, max: 2.9}
+    },
+    {
+      label: "A1-A2",
+      value: "A1-A2",
+      score: {min: 3, max: 3.9}
+    },
+    {
+      label: "A2",
+      value: "A1-A2",
+      score: {min: 4, max: 4.9},
+    },
+    {
+      label: "A2 - B1",
+      value: "A1-A2",
+      score: {min: 5.0, max: 5.9}
+    }
+  ]
   const title = item.charAt(0).toUpperCase() + item.slice(1);
 
   return (
