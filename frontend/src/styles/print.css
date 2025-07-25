@@ -32,10 +32,10 @@
 }
 
 #print-english h1{
-  font-size: 1.188rem;
+  font-size: var(--print-font-size-4);
 }
 #print-english h2{
-  font-size: var(--print-font-size-3);
+  font-size: var(--print-font-size-2);
 }
 #print-english h3{
   font-size: var(--print-font-size-3);
@@ -46,7 +46,7 @@
 
 #print-english #personal-info p,
 #print-english #student-info p {
-  font-size: var(--print-font-size-1);
+  font-size: 13px;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -139,6 +139,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 4px;
+}
+
+.personalInformation{
+  font-size: 20px;
 }
 
 /* --------------------------- Styling for levels ----------------------------------------- */
