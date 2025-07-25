@@ -168,6 +168,16 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
       label: "A2 - B1",
       value: "A1-A2",
       score: {min: 5.0, max: 5.9}
+    },
+    {
+      label: "B1 - B2",
+      value: "B1-B2",
+      score: {min: 6.0, max: 8.9}
+    },
+    {
+      label: "C1 - C2",
+      value: "C1-C2",
+      score: {min: 9.0, max: 10.0}
     }
   ]
   const title = item.charAt(0).toUpperCase() + item.slice(1);
@@ -183,9 +193,9 @@ setLevel(e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "");
           className="font-seconday text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
         >
           <option value="">Choose CEFR Level</option>
-          {["A1-A2", "B1-B2", "C1-C2"].map((lvl) => (
-            <option className="font-secondary text-base text-inherit" key={lvl} value={lvl}>
-              {lvl}
+          {arrOfLevels.map((lvl) => (
+            <option className="font-secondary text-base text-inherit" key={lvl.value} value={lvl.value}>
+              {lvl.label}
             </option>
           ))}
         </select>
