@@ -22,6 +22,12 @@
   --print-chinese-font-size-5: 24px;
   --print-chinese-font-size-6: 26px;
 
+  --print-japanese-font-size-1: 14px;
+  --print-japanese-font-size-2: 16px;
+  --print-japanese-font-size-3: 18px;
+  --print-japanese-font-size-4: 20px;
+  --print-japanese-font-size-5: 24px;
+  --print-japanese-font-size-6: 26px;
 }
 #print-english {
   font-family: var(--font-primary);
@@ -63,7 +69,7 @@
   /* font-size: 14px; */
 } 
 
-#print-korean h1 { font-size: 1.3rem; }
+#print-korean h1 { font-size: var(--print-size-4); }
   #print-korean h2 {
     font-size: 1.1rem;
   }
@@ -74,15 +80,15 @@
     font-size: 0.9rem;
   }
 
-#print-japanese h1 { font-size: 1.3rem;}
+#print-japanese h1 { font-size: var(--print-japanese-size-4)}
 #print-japanese h2 {
-    font-size: 1.1rem;
+    font-size: var(--print-japanese-size-3);
   }
 #print-japanese h3 {
-    font-size: 1.1rem;
+    font-size: var(--print-japanese-font-size-2);
   }
 #print-japanese p {
-    font-size: 0.9rem;
+    font-size: var(--print-japanese-font-size-1);
   }
 
 .print-component {
