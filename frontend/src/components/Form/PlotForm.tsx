@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PersonalInformation from "./components/PersonalInformation";
 import Feedback from "./components/Feedback";
 import LevelInformation from "./components/LevelInformation";
@@ -6,10 +7,8 @@ import Preview from "./components/Preview";
 import Pagination from "./components/Pagination";
 import Button from "./components/Button";
 import { LanguageContext } from "@/pages/SPRForm";
-import PopUpMessage from "../PopUpMessage";
 import labelText from "@/assets/other/labelText.json"
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
-import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 import { Language } from "@/utils/common";
 import axios from "axios";
 
@@ -17,21 +16,34 @@ type LevelCategory = keyof StudentProgressReportEntry["levels"];
 type LevelField = keyof Levels;
 
 interface PlotFormProps{
+  loading: StudentProgressReportEntry;
   inputData: StudentProgressReportEntry;
   setInputData: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
+  setLoading: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
 }
 
-const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, setLoading }) => {
+const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, setLoading }) => {
+  let navigate = useNavigate();
+
   const [page, setPage] = useState<number>(0);
   const [displayPopupMessage, setDisplayPopupMessage] = useState<boolean>(false);
   const [inputError, setInputError] = useState({
-    name: inputData.name == "" ? true : false,
     textbook: inputData.textbook == "" ? true : false,
     course: inputData.course == "" ? true : false,
     attendance: inputData.attendance == 0 ? true : false,
     totalLessons: inputData.totalLessons == 0 ? true : false,
     feedback: inputData.feedback == "" ? true : false
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  // To disable buttons
+  // const checksError = () => {
+  //   const keys = Object.keys(inputError);
+  //   keys.forEach((item) => {
+  //     if(item) return true;
+  //   })
+
+  //   return false;
+  // }
 
   const language = useContext(LanguageContext) as Language;
 
@@ -127,44 +139,50 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, setLoading
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputData);
       const fetchId = async ()=> {
-          setLoading(true);    
+        setLoading(true);
           try{
               const token = localStorage.getItem("token");
               if(!token) {
               console.error("No token, login first to create a new token");
               return;
               }
-             const res = await axios.post(`http://localhost:8000/api/member/createSPR/${inputData.studentId}`,
-              {studentId: inputData.studentId, data: inputData},
+
+              // const respond = await axios.get(`http://localhost:8000/api/member/getSPR/${inputData.formId}`, {
+              //     headers: { Authorization: `Bearer ${token}`},
+              // });
+
+             const res = await axios.put(`http://localhost:8000/api/member/updateSPR/${inputData.formId}`,
+              {data: inputData},
               {
                 headers: { Authorization: `Bearer ${token}`},
               });
 
-              if(res.data?.data){
-              setInputData(res.data.data);
-              }
-    
-              return res;
+              navigate(`/spr/${inputData.studentId}/print/${inputData.formId}`, {replace: true} )
+
+          
             } catch(error){
             console.error("Error was found", error);
+            setLoading(false);
             return;
-            } finally {
-              setLoading(false);
-            };
+            } 
           };
           
           fetchId();
         }
   return (
-    <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
+    <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto relative">
+      {errorMessage && (
+        <div className="absolute p-2 w-40 border bg-gray-100 border-2">
+          <p className="text-md font-bold">Message: {errorMessage}</p>
+          <button className="btn w-24 bg-blue-500 text-white border-none" onClick={() => setErrorMessage("")}>Ok</button>
+        </div>)}
         {/* {displayPopupMessage && (
           <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
         )} */}
       <Pagination page={page} language={language} setPage={setPage}/>
       <div className="w-full static max-w-lg m-auto">
-        <form onSubmit={handleSubmit}>
+        <form autoComplete="false" onSubmit={handleSubmit}>
           {arrOfPages[page]}
           <div className="flex gap-2 justify-center" id="buttons">
             <Button
