@@ -13,11 +13,20 @@ const {
 const {verifyToken} = require("../middlewares/authMiddleware.js");
 
 const {
-    createStudentTeacherByEmail, readStudentById, readTeacherStudentByEmail, updateStudentById, deleteStudentById
+    createStudentTeacherByEmail, 
+    readStudentById, 
+    readTeacherStudentByEmail, 
+    updateStudentById, 
+    deleteStudentById
 } = require("../controllers/teacherController.js");
 
 const {
-    createStudentProgressReport} = require("../controllers/studentProgressReportController.js");
+    createStudentProgressReport, 
+    getStudentReport, 
+    getAllStudentReportsByStudentID, 
+    updateAllDataStudentReportByFormID, 
+    deleteFormByFormID
+} = require("../controllers/studentProgressReportController.js");
 
 
 
@@ -54,6 +63,9 @@ router.put("/api/member/updateStudent/:id", verifyToken, updateStudentById);
 
 // ------------------------------------ SPR ----------------------------------
 router.post("/api/member/createSPR/:id", verifyToken, createStudentProgressReport);
+router.get("/api/member/getSPR/:formID", verifyToken, getStudentReport);
+router.put("/api/member/updateSPR/:formID", verifyToken, updateAllDataStudentReportByFormID);
+router.delete("/api/member/deleteForm/:formID", verifyToken, deleteFormByFormID);
 
 //Gets all users
 router.get("/api", async (req, res) =>{
