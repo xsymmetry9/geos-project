@@ -71,8 +71,8 @@ const routes: RouteObject[] = [
     children: [
       { index: true, element: <Language /> },
       { path: ":language/create", element: <SPRForm />},
-      { path: ":language/print/", element: <PrintPage /> },
-      { path: ":language/edit/", element: <SPRForm /> },
+      { path: "print/:formId", element: <PrintPage /> },
+      { path: "edit", element: <SPRForm /> },
     ],
   },
   {
