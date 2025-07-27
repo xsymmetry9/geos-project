@@ -11,7 +11,7 @@ class Levels {
 }
 
 class StudentProgressReportEntry {
-  id: string;
+  formId: string;
   studentId: string;
   teacherEmail: string;
   dateCreated: Date;
@@ -31,7 +31,7 @@ class StudentProgressReportEntry {
   };
 
   constructor() {
-    this.id = "";
+    this.formId= "";
     this.dateCreated = new Date();
     this.name = "";
     this.teacherEmail = "";
