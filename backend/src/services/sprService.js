@@ -4,9 +4,9 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const create = async (obj) => {
-  const {studentId, teacherEmail, data} = obj;
-    console.log("StudentId is:", studentId);
+const create = async (req) => {
+    const studentId = req.body.studentId;
+    const teacherEmail = req.data.email;
 
     const student = await prisma.student.findUnique({
       where: {id: studentId},
@@ -17,65 +17,127 @@ const create = async (obj) => {
       }
     });
 
-    console.log("Student is", student);
+    console.log(student);
 
     if(!student|| student.teachers.length === 0){
       console.error("Student or associated teacher not found");
       return;
     }
 
-    const checkIfTeacher = student.teachers.find((item) => item.email === teacherEmail);
-    if(checkIfTeacher) {
+    const checkIfTeacher = await prisma.studentTeacher.findFirst({
+      where: {teacherEmail: teacherEmail}
+    })
+
+    if(!checkIfTeacher) {
       console.error(`Teacher ${teacherEmail} is not assigned to student ${studentId}`);
-      console.log(student.teachers);
       return;
     }
-    if(!data.levels){
-        console.error("Error with the levels");
-        return null;
-    }
 
+    console.log(checkIfTeacher);
 
-    const createForm = await prisma.studentProgressReportEntry.create({
-        data: {
-          studentName: student.name,
-    teacherEmail,
+    const createEmptyForm = await prisma.studentProgressReportEntry.create({
+      data: {
     studentId,
-    language: data.language || "",
-    course: data.course || "",
-    textbook: data.textbook || "",
-    attendance: data.attendance || 0,
-    totalLessons: data.totalLessons || 0,
-    feedback: data.feedback || "",
+    teacherEmail,
+    studentName: student.name,
+    teacherEmail: teacherEmail,
+    language: "",
+    course: "",
+    textbook:"",
+    attendance: 0,
+    totalLessons: 0,
+    feedback: "",
 
-    vocabularyInitial: data.levels?.vocabulary?.initial || "",
-    vocabularyTarget: data.levels?.vocabulary?.target || "",
-    vocabularyFinal: data.levels?.vocabulary?.final || "",
+    vocabularyInitial: "",
+    vocabularyTarget: "",
+    vocabularyFinal: "",
 
-    grammarInitial: data.levels?.grammar?.initial || "",
-    grammarTarget: data.levels?.grammar?.target || "",
-    grammarFinal: data.levels?.grammar?.final || "",
+    grammarInitial: "",
+    grammarTarget: "",
+    grammarFinal: "",
 
-    listeningInitial: data.levels?.listening?.initial || "",
-    listeningTarget: data.levels?.listening?.target || "",
-    listeningFinal: data.levels?.listening?.final || "",
+    listeningInitial: "",
+    listeningTarget: "",
+    listeningFinal: "",
 
-    speakingInitial: data.levels?.speaking?.initial || "",
-    speakingTarget: data.levels?.speaking?.target || "",
-    speakingFinal: data.levels?.speaking?.final || "",
+    speakingInitial: "",
+    speakingTarget: "",
+    speakingFinal: "",
 
-    pronunciationInitial: data.levels?.pronunciation?.initial || "",
-    pronunciationTarget: data.levels?.pronunciation?.target || "",
-    pronunciationFinal: data.levels?.pronunciation?.final || ""
-        }
-    })
-    if(!createForm){
+    pronunciationInitial: "",
+    pronunciationTarget: "",
+    pronunciationFinal: ""
+    }
+});
+
+    if(!createEmptyForm){
         console.error("Error creating SPR entry:", error);
         return;
     }
-    return createForm;
+    return createEmptyForm;
     
 }
+
+const editAll = async(formId, data) =>{
+    const updatedForm = await prisma.studentProgressReportEntry.update({
+      where: {id: formId},
+      data: {
+        course: data.course,
+        textbook: data.textbook,
+        attendance: data.attendance,
+        totalLessons: data.totalLessons,
+        feedback: data.feedback,
+        language: data.language,
+        vocabularyFinal: data.levels.vocabulary.final,
+        vocabularyTarget: data.levels.vocabulary.target,
+        vocabularyInitial: data.levels.vocabulary.initial,
+
+        pronunciationFinal: data.levels.pronunciation.final,
+        pronunciationTarget: data.levels.pronunciation.target,
+        pronunciationInitial: data.levels.pronunciation.initial,
+
+        grammarFinal: data.levels.grammar.final,
+        grammarTarget: data.levels.grammar.target,
+        grammarInitial: data.levels.grammar.initial,
+
+        speakingFinal: data.levels.conversation.final,
+        speakingTarget: data.levels.conversation.target,
+        speakingInitial: data.levels.conversation.initial,
+
+        listeningFinal: data.levels.listening.final,
+        listeningTarget: data.levels.listening.target,
+        listeningInitial: data.levels.listening.initial,
+      }
+    });
+    return updatedForm;
+
+}
+
+const findOneByFormId = async (formId) => {
+  const getForm = await prisma.studentProgressReportEntry.findUnique({where: {id: formId}});
+  return getForm;
+}
+
+const findAll = async (studentId) =>{
+  if(studentId === "teacherId"){
+    const getForm = await prisma.studentProgressReportEntry.findMany({where: {studentId: studentId}});
+    return getForm;
+  } else if(studentId === "studentId"){
+    const getForm = await prisma.studentProgressReportEntry.findMany({where: {studentId: studentId}});
+    return getForm;
+  } else {
+    return [];
+  }
+
+}
+// Update
+const edit = async (formId) => {
+
+}
+
+const remove = async (formId) => {
+
+}
 module.exports = {
-    create
+    create, editAll, findAll, findOneByFormId
 }
