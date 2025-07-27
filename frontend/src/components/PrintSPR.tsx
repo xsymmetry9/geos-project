@@ -1,21 +1,71 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Link, useParams } from "react-router-dom";
-import { getStudentById } from "../utils/functions";
-import {PrintContent} from "./PrintStudentProgressReport";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
+import axios from "axios";
+
+import { PrintContent } from "./PrintStudentProgressReport";
+import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 
 const PrintPage = () => {
-  const { id, language } = useParams<{id: string; language: string}>(); //Gets id and language through link
-  const componentRef = useRef<HTMLDivElement>(null); //Save reference to print
+  const initialStudent = new StudentProgressReportEntry();
+  const [fetchData, setFetchData] = useState<StudentProgressReportEntry>(initialStudent);
+  const { id: formId, language } = useParams<{ id: string; language: string }>();
+  const componentRef = useRef<HTMLDivElement>(null);
+  const promiseResolveRef = useRef<null | (() => void)>(null);
+  const [loading, setLoading] = useState(false);
   const [isPrinting, setIsPrinting] = useState(false);
-  const promiseResolveRef = useRef<null | (()=> void)>(null);
 
-  const parsedData = useMemo(()=> {
-    if (!id) return null;
-    return getStudentById(id); //Gets data from localstorage by id
-  }, [id]);
+  useEffect(() => {
+    const fetchSPR = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token. Please log in.");
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:8000/api/member/getSPR/${formId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = response.data;
+        if (data) {
+          setFetchData(prev => ({
+            ...prev,
+            formId: data.id,
+            name: data.studentName,
+            course: data.course,
+            feedback: data.feedback,
+            language: data.language,
+            textbook: data.textbook,
+            dateCreated: new Date(data.dateCreated),
+            attendance: data.attendance,
+            totalLessons: data.totalLessons,
+            teacherEmail: data.teacherEmail,
+            studentId: data.studentId,
+            levels: {
+              vocabulary: new Levels(data.vocabularyInitial, data.vocabularyTarget, data.vocabularyFinal),
+              pronunciation: new Levels(data.pronunciationInitial, data.pronunciationTarget, data.pronunciationFinal),
+              grammar: new Levels(data.grammarInitial, data.grammarTarget, data.grammarFinal),
+              conversation: new Levels(data.speakingInitial, data.speakingTarget, data.speakingFinal),
+              listening: new Levels(data.listeningInitial, data.listeningTarget, data.listeningFinal),
+            },
+          }));
+        } else {
+          console.warn("No data found");
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSPR();
+  }, [formId]);
 
   useEffect(() => {
     if (isPrinting && promiseResolveRef.current) {
@@ -28,8 +78,8 @@ const PrintPage = () => {
   const handlePrint = useReactToPrint({
     content: reactToPrintContent,
     documentTitle: "Student Progress Report",
-    onBeforePrint: () => 
-       new Promise<void>((resolve) => {
+    onBeforePrint: () =>
+      new Promise<void>(resolve => {
         promiseResolveRef.current = resolve;
         setIsPrinting(true);
       }),
@@ -39,33 +89,28 @@ const PrintPage = () => {
     },
   });
 
-
   const handleGeneratePDF = async () => {
-  if (!componentRef.current) return;
+    if (!componentRef.current) return;
 
-  const canvas = await html2canvas(componentRef.current, {
-    allowTaint: true,
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff",
-  });
+    const canvas = await html2canvas(componentRef.current, {
+      allowTaint: true,
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
 
-  const imgData = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-  const pdf = new jsPDF("p", "mm", "a4");
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgHeight = pdfWidth / (imgProps.width / imgProps.height);
 
-  // Convert canvas to image scaled for A4
-  const imgProps = pdf.getImageProperties(imgData);
-  const imgRatio = imgProps.width / imgProps.height;
-  const height = pdfWidth / imgRatio;
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.save(`student-report-${formId}.pdf`);
+  };
 
-  pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, height);
-  pdf.save(`student-report-${id}.pdf`);
-};
-
-  if(!parsedData) return <div>Loading ...</div>
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
@@ -74,18 +119,18 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-    <div className= "mx-auto overflow-auto">
-      <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
-        <PrintContent parsedData={parsedData} />
+      <div className="mx-auto overflow-auto">
+        <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
+          <PrintContent data={fetchData} />
+        </div>
       </div>
-    </div>
-    
-  
       <div className="flex justify-center pt-3 gap-3">
-        <button className="btn btn-primary print w-[150px]" onClick={() => handlePrint(reactToPrintContent)}>
+        <button className="btn btn-primary print w-[150px]" onClick={handlePrint}>
           Print
         </button>
-        <button className="btn btn-primary print" onClick={handleGeneratePDF}>Save as PDF</button>
+        <button className="btn btn-primary print" onClick={handleGeneratePDF}>
+          Save as PDF
+        </button>
       </div>
     </>
   );

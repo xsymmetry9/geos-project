@@ -9,7 +9,7 @@ import {
   Signature,
 } from "./PrintComponents/StudentInfo";
 import PlotCards from "./PrintComponents/PlotCards";
-import { Student } from "@/type/StudentProgressReportEntry";
+import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 import labelText from "../assets/other/labelText.json";
 
 import "../styles/print.css"
@@ -27,10 +27,10 @@ type TransformedLevel = {
 }
 
 type PrintContentProps = {
-  parsedData: Student;
+  data: StudentProgressReportEntry;
 }
   // Working on Transforming data
-export const processData = (data: Student["levels"]): TransformedLevel[] =>{
+export const processData = (data: StudentProgressReportEntry["levels"]): TransformedLevel[] =>{
     return Object.entries(data).map(([category, level]) =>({
       category,
       initial: level.initial === "10+" ? 10 : parseFloat(level.initial),
@@ -39,9 +39,11 @@ export const processData = (data: Student["levels"]): TransformedLevel[] =>{
     }));
   };
 
-export const PrintContent: React.FC<PrintContentProps> = ({ parsedData }) => {
-  const { language } = useParams() as {language: Language};
-  const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
+export const PrintContent: React.FC<PrintContentProps> = ({ data }) => {
+  const language = data.language
+  const { 
+    name,
+    textbook, course, attendance, totalLessons, feedback, levels } = data;
 
   const transformedData = processData(levels); 
 

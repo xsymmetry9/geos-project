@@ -1,6 +1,6 @@
 import RenderLevel from "../RenderLevel";
 import labelText from "../../assets/other/labelText.json";
-import { Student } from "@/type/StudentProgressReportEntry";
+import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 
 type Language = keyof typeof labelText;
 type SPR = typeof labelText["english"]["SPR"];
@@ -11,7 +11,7 @@ type SPRStringKey =  {
 const text = (phrase: SPRStringKey, language: Language): string => labelText[language]["SPR"][phrase];
 
 interface PlotCardsProps {
-  levels: Student["levels"];
+  levels: StudentProgressReportEntry["levels"];
   language: Language;
 }
 

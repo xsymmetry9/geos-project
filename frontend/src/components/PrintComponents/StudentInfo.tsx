@@ -1,18 +1,22 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import labelText from "../../assets/other/labelText.json";
-import {Student, Levels} from "../../type/StudentProgressReportEntry";
+import {StudentProgressReportEntry, Levels} from "../../type/StudentProgressReportEntry";
 
-type Language = keyof typeof labelText;
 type LevelKey = keyof Levels;
 type SPR = typeof labelText["english"]["SPR"];
 type SPRStringKey =  {
   [K in keyof SPR]: SPR[K] extends string ? K : never
 }[keyof SPR];
 
-const text = (phrase: SPRStringKey, language: Language): string => labelText[language]["SPR"][phrase];
+const text = (phrase: SPRStringKey, language: any): string => {
+  const lang = labelText[language as keyof typeof labelText]
+    ? language 
+    : "english";
+  return labelText[lang]["SPR"][phrase];
+}
 
-export const TitleSPR: React.FC<{ language: Language }> = ({ language }) => {
+export const TitleSPR: React.FC<{ language: languageKey }> = ({ language }) => {
   return <h1>{text("title", language)}</h1>;
 };
 
@@ -20,7 +24,7 @@ interface StudentInfoProps {
   name: string;
   course: string;
   textbook: string;
-  language: Language;
+  language: string;
 }
 export const StudentInfo: React.FC<StudentInfoProps> = ({ name, course, textbook, language }) => {
   return (
@@ -37,7 +41,7 @@ export const StudentInfo: React.FC<StudentInfoProps> = ({ name, course, textbook
 interface AttendanceInfoProps {
   attendance: number;
   totalLessons: number;
-  language: Language;
+  language: string;
 }
 
 export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
@@ -67,8 +71,8 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
 );
 
 interface TableProps {
-  levels: Student["levels"];
-  language: Language;
+  levels: StudentProgressReportEntry["levels"];
+  language: string;
 }
 
 export const Table: React.FC<TableProps> = ({ levels, language }) => {
@@ -146,7 +150,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
 
 interface CommentProps {
   comment: string;
-  language: Language;
+  language: string;
 }
 export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
   return (
@@ -159,7 +163,7 @@ export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
   );
 };
 
-export const Signature: React.FC<{language: Language}> = ({ language }) => {
+export const Signature: React.FC<{language: string}> = ({ language }) => {
   return (
     <div className="mt-3 signature-section">
       <p className="capitalize">{text("signature", language)}</p>
