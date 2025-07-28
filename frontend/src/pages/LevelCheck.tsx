@@ -306,37 +306,37 @@ const Plot=({data}) => {
             <p className ="ml-3 text-[14px]"><span className="font-bold">Date:</span> {data.dateCreated}</p>
           </div>
           <div id="table-container">
-            <table className="w-full mt-3 border border-slate-800" id="table-content">
+            <table className="w-full mt-3 border h-[420px]" id="table-content">
               <thead className="text-[15px]">
                 <tr className="">
-                  <td className="text-center font-bold border border-slate-800 py-2">Category</td>
-                  <td className="text-center font-bold border border-slate-800 py-2">Strength</td>
-                  <td className="text-center font-bold border border-slate-800 py-2">Weakness</td>
-                  <td className="text-center font-bold border border-slate-800 py-2">Score</td>
-                  <td className="text-center font-bold border border-slate-800 py-2">CEFR</td>
+                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Category</td>
+                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Strength</td>
+                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Weakness</td>
+                  <td className="text-center font-bold border border-orange-800 py-2 bg-orange-300">Score</td>
+                  <td className="text-center font-bold border border-orange-800 py-2 bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation"].map((item) => {
                   return(
-                    <tr key={item}>
-                      <td className="text-center capitalize border-r border-b border-black p-2">{item}</td>
-                      <td className="border-r border-b border-black p-2"><ul className="list-disc ml-4">{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2"><ul className="list-disc ml-4">{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2 text-center">{data[item].score}</td>   
-                      <td className="border-b border-black p-2 text-center">{data[item].level_name}</td>                      
+                    <tr key={item} className="h-[76px]">
+                      <td className="text-center font-bold capitalize border-r border-b border-black p-2 bg-teal-50">{item}</td>
+                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="list-disc ml-4">{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="list-disc ml-4">{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 text-center bg-orange-50">{data[item].score}</td>   
+                      <td className="border-b border-black p-2 text-center bg-orange-50">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}
               </tbody>
             </table>
-            <table className="w-full mt-3 border border-slate-800">
-              <thead className="font-bold text-xs">
+            <table className="w-full mt-3 border border-teal-800 bg-teal-600">
+              <thead className="font-bold text-white text-[15px]">
                 <tr className="border-b border-black">
-                  <td className="p-2 text-black">Feedback</td>
+                  <td className="p-2">Feedback</td>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-[13px] bg-teal-50">
                 <tr className="h-[150px]">
                   <td className="flex p-2 text-[13px]">{data.feedback}</td>
                 </tr>
