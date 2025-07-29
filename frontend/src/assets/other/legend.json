@@ -1,0 +1,14 @@
+{
+    "english": [
+        {"name": "Pre-A1", "score": {"min": 0, "max": 2}, "description": "Entry"},
+        {"name": "A1", "score": {"min": 2, "max": 3}, "description": "Pre - A1"},
+        {"name": "A1 - A2", "score": {"min":3, "max": 4}, "description": "Beginner"},
+        {"name": "A2", "score": {"min": 4, "max": 5}, "description": "High Beginner"},
+        {"name": "A2 - B1", "score": {"min": 5, "max": 6}, "description": "Low Intermediate"},
+        {"name": "B1", "score": {"min": 6, "max": 7}, "description": "Intermediate"},
+        {"name": "B1 - B2", "score": {"min": 7, "max": 8}, "description": "Intermediate Plus"},
+        {"name": "B2", "score": {"min": 8, "max": 9}, "description": "Upper - Intermediate"},
+        {"name": "C1", "score": {"min": 9, "max": 9.5}, "description": "Advanced"},
+        {"name": "C1+", "score": {"min": 9.5, "max": 10}, "description": "Proficient"}
+    ]
+}

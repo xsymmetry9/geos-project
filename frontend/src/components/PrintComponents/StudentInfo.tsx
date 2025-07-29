@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { format } from "date-fns";
 import labelText from "../../assets/other/labelText.json";
 import {StudentProgressReportEntry, Levels} from "../../type/StudentProgressReportEntry";
+import Legend from "../../components/PrintComponents/Legend";
 
 type LevelKey = keyof Levels;
 type SPR = typeof labelText["english"]["SPR"];
@@ -74,7 +75,42 @@ interface TableProps {
   levels: StudentProgressReportEntry["levels"];
   language: string;
 }
+const CEFRFramework = (str) => {
 
+  if (str >= 0 && str < 2)
+  {
+    return "Pre - A1";
+  } else if(str >= 2 && str < 3)
+  {
+    return "A1 - A2";
+  } else if(str >= 3 && str < 4)
+  {
+    return "A2";
+  } else if (str>=4 && str < 5)
+  {
+    return "A2 - B1";
+  } else if(str>=5 && str < 6)
+  {
+    return "B1";
+  } else if(str >= 6 && str < 7)
+  {
+    return "B1 - B2";
+  } else if(str >= 7 && str < 8)
+  {
+    return "B2"
+  } else if(str >= 8 && str < 9)
+  {
+    return "B2 - C1";
+  } else if(str >= 9 && str <= 9.5)
+  {
+    return "C1";
+  } else if(str >= 9.5 && str < 10){
+    return  "C1+"
+  } else {
+    return;
+  }
+
+}
 export const Table: React.FC<TableProps> = ({ levels, language }) => {
   const headers: (SPRStringKey | "")[] = [
     "",
@@ -104,13 +140,13 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
     const avg = () => (sum() / labels.length).toFixed(2);
 
     return (
-      <tr className="odd:bg-[rgba(0,161,173,.2)] even:bg-white-50">
+      <tr className="border-l border-r border-slate-600 last:border-b-1 odd:bg-[rgba(0,161,173,.2)] even:bg-white-50">
         <td className="text-center capitalize p-[2px]">
           {text(label, language)}
         </td>
         {labels.map((skill, idx) => (
           <td key={idx} className="text-center p-[2px]">
-            {levels[skill][label]}
+            {levels[skill][label]} <span className="color-slate-600 text-[10px]">{CEFRFramework(levels[skill][label])}</span>
           </td>
         ))}
         <td className="text-center p-[2px]">{sum()}</td>
@@ -125,13 +161,9 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   };
   return (
     <>
-      <table className="table-fixed text-[12px] table-levels w-[700px] mt-2 m-auto border-collapse border-1 border-slate-700">
-        {/* <caption>
-                    <div className="caption-content">
-                        {levelInfo.map((item, index) => <div key={index} className='sub-header'><span>{item.level}.</span><span>{item.name}</span></div>)}
-                    </div>
-                </caption> */}
-        <thead>
+      <table className="table-fixed text-[12px] table-levels w-full mt-1 m-auto border-collapse">
+        {language === "english" && <Legend />}
+        <thead className="border-l border-r border-slate-500">
           <tr>
             {headers.map((item, index) => (
               <th key={index} className="bg-[rgb(0,161,173)] text-white font-normal py-[2px] capitalize">

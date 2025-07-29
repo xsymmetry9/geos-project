@@ -1,17 +1,17 @@
 //Routes.tsx
 
-import Index from "./pages/Index.jsx";
 import {Layout, ProfileLayout, LayoutForNonmember} from "./Layout";
 import Language from "./pages/Language";
 import SPRForm from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
-import LevelCheckForm from "./pages/LevelCheckForm";
 import Admin from "./pages/Admin/AdminPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import TeacherPage from "./pages/Admin/TeacherPage";
 import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/Nonmember/NonMember.js";
 import ProfilePage from "./pages/member/ProfilePage";
+import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
+import Test from "./pages/Test";
 import AuthRedirect from "./components/AuthRedirect";
 import ForgotPassword from "./pages/Nonmember/ForgotPassword";
 import {StudentPage, CreateStudent, EditStudent} from "./pages/member/StudentPage";
@@ -78,7 +78,10 @@ const routes: RouteObject[] = [
   {
     path: "levelCheck/",
     element: <Layout />,
-    children: [{ index: true, element: <LevelCheckForm /> }],
+    children: [{ index: true, element: <LevelCheckForm /> },
+      {path: "edit/:id", element: <LevelCheckEdit />},
+      {path: "preview/:id", element: <LevelCheckPreview />}
+    ],
   },
   { path: "admin",
     element: <Admin />

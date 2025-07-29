@@ -38,10 +38,10 @@
 }
 
 #print-english h1{
-  font-size: 1.188rem;
+  font-size: var(--print-font-size-4);
 }
 #print-english h2{
-  font-size: var(--print-font-size-3);
+  font-size: var(--print-font-size-2);
 }
 #print-english h3{
   font-size: var(--print-font-size-3);
@@ -52,7 +52,7 @@
 
 #print-english #personal-info p,
 #print-english #student-info p {
-  font-size: 0.843rem;
+  font-size: 13px;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -91,13 +91,22 @@
     font-size: var(--print-japanese-font-size-1);
   }
 
-.print-component {
+
+.print-component{
   width: 210mm; /* A4 width */
   min-height: 297mm; /* A4 height */
   margin: 0 auto;
   padding: 8mm;
   box-sizing: border-box;
   background: white;
+}
+.print-component-landscape {
+  width: 297mm;
+  height: 210mm;
+  padding: 8mmm;
+  margin: 0 auto;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 @page {
@@ -125,7 +134,6 @@
     size: A4;
     height: auto !important;
     border: none;  
-
   }
 }
 
@@ -144,7 +152,11 @@
 .student-information {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-bottom: 12px;
+  padding-bottom: 4px;
+}
+
+.personalInformation{
+  font-size: 20px;
 }
 
 /* --------------------------- Styling for levels ----------------------------------------- */

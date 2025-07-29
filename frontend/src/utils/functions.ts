@@ -47,25 +47,27 @@ export function editDataFromLocal(data: User) {
 }
 
 //Delete data from the local storage
-export function deleteStudentById(id: string) {
+export function deleteStudentById(obj) {
+  const { id, type } = obj;
   const data = localStorage.getItem(appName);
   if (!data) return null;
 
   const parsedData = JSON.parse(data);
+  if (!Array.isArray(parsedData[type])) return null;
 
   if (!Array.isArray(parsedData.SPR)) return null;
 
-  const updatedSPR = parsedData.SPR.filter((student: StudentProgressReportEntry) => student.id !== id);
+  const updatedSPR = parsedData.SPR.filter((student: Student) => student.id !== id);
 
   const newData = {
     ...parsedData,
-    SPR: updatedSPR,
+    [type]: updatedList,
   };
 
   localStorage.setItem(appName, JSON.stringify(newData));
-
-  return updatedSPR;
+  return updatedList;
 }
+
 
 export function getLevelInformationByLevel(params: {
   lang: LanguageKey,
