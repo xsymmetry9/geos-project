@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import {format} from "date-fns";
+import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 
 type CreateInputProps = {
         title: string;
@@ -33,31 +34,87 @@ const CreateInput = ({title, type, name, value, error, handle} : CreateInputProp
         )
     }
 export const StudentPage = () => {
+    const initialize = {
+        id: "",
+        name: "",
+        nickname: "",
+        email: "",
+        createdAt: "",
+        studentProgressReportEntry: [],
+        levelCheckEntries: []
+    }
     let {id} = useParams();
-    const [formData, setFormData] = useState({id: "", name: "", email: "", nickname: "", createdAt: ""});
+    const [studentData, setStudentData] = useState(initialize);
+    let location = useLocation();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    console.log(location.state);
+
+    // location.state
+    //{
+//     "studentData": {
+//         "id": "c1f92dfd-2b13-459a-9188-5f91b59d2b12",
+//         "email": "Shana@gmail.com",
+//         "name": "Shana",
+//         "nickname": "Shana",
+//         "createdAt": "2025-07-27T07:42:10.393Z",
+//         "studentProgressReportEntry": [
+//             {
+//                 "id": "be966b39-8429-4fcc-8172-3c18008982f8",
+//                 "studentName": "Shana",
+//                 "language": "english",
+//                 "course": "",
+//                 "textbook": "EF1",
+//                 "attendance": 20,
+//                 "totalLessons": 30,
+//                 "feedback": "This is just a test.",
+//                 "dateCreated": "2025-07-27T07:42:30.599Z",
+//                 "vocabularyInitial": "1.5",
+//                 "vocabularyTarget": "1.5",
+//                 "vocabularyFinal": "1.5",
+//                 "grammarInitial": "",
+//                 "grammarTarget": "8",
+//                 "grammarFinal": "9.5",
+//                 "listeningInitial": "9",
+//                 "listeningTarget": "9.5",
+//                 "listeningFinal": "9.5",
+//                 "speakingInitial": "9",
+//                 "speakingTarget": "9.5",
+//                 "speakingFinal": "7.5",
+//                 "pronunciationInitial": "9",
+//                 "pronunciationTarget": "8",
+//                 "pronunciationFinal": "9",
+//                 "teacherEmail": "xavvier@test.com",
+//                 "studentId": "c1f92dfd-2b13-459a-9188-5f91b59d2b12"
+//             }
+//         ],
+//         "levelCheckEntries": []
+//     }
+// }
      useEffect(() => {
-            setLoading(true);
             let token = localStorage.getItem("token");
             if(!token) {
                 setErrorMessage("Not authenticated");
                 return; //Navigate to login?
             }
             
-            const fetchData = async () => {
+            const fetchAPI = async () => {
                 try {
                     const result = await axios.get(`http://localhost:8000/api/member/getStudentById/${id}`, {
                         headers: { Authorization: `Bearer ${token}`},
                     });
                     const loadData = result.data.data;
-                    setFormData({
+                    setStudentData({
                         id: loadData.id, 
                         name: loadData.name, 
                         email: loadData.email, 
                         nickname: loadData.nickname, 
-                        createdAt: loadData.createdAt
+                        createdAt: loadData.createdAt,
+                        studentProgressReportEntry: loadData.studentProgressReportEntry,
+                        levelCheckEntries: loadData.levelCheckEntries
                     });
+
+                    console.log(result);
 
                 } catch(err) {
                     console.log("Error:", err);
@@ -65,28 +122,90 @@ export const StudentPage = () => {
                     setLoading(false);
                 }
             };
-        fetchData();
+            if(location.state?.studentData)
+            {
+                const {id, name, email, nickname, createdAt, studentProgressReportEntry, levelCheckEntries} = location.state.studentData;
+                setStudentData((prev) => ({
+                    ...prev,
+                    id: id,
+                    email: email,
+                    name: name,
+                    nickname: nickname,
+                    createdAt: createdAt,
+                    studentProgressReportEntry: studentProgressReportEntry,
+                    levelCheckEntries: levelCheckEntries
+                }));
+                return;
+            }
+
+            setLoading(true);
+            fetchAPI();
       },[id]); 
     return(
         <div className="font-secondary w-full max-w-[1100px] m-auto relative">
             {errorMessage && <div className="w-[120px] h-[40px] z-1 bg-white absolute top-0 left-1/2 translate-x-1/2 translate-y-1/2 flex justify-center items-center border border-slate-500"><p className="text-center">Error Message</p></div>}
             <h1 className="font-secondary text-center text-2xl font-bold">Personal Information</h1>
             <div className="mt-3 max-w-[500px] w-full mx-auto  text-gray-700">
-              <p>Name: {formData.name}</p>
-              <p>Email: {formData.email}</p>
-              <p>Date Created: {new Date(formData.createdAt).toLocaleDateString()}</p>
+              <p>Name: {studentData.name}</p>
+              <p>Email: {studentData.email}</p>
+              <p>Date Created: {new Date(studentData.createdAt).toLocaleDateString()}</p>
             </div>
-            <div className="mt-6 flex gap-3 justify-center">
-                <Link className= "btn btn-primary" to={`/profile/viewLevelCheck/${id}`}>View Level Check</Link>
+            <div className="mt-6 flex gap-3 justify-center" id="student-nav">
                 <Link className= "btn btn-primary" to={`/profile/createSPR/${id}`}>Create a SPR</Link>
                 <Link className= "btn btn-primary" to={`/profile/editStudent/${id}`}>Edit Student</Link>
             </div>
-            <div id="initial-level-table">
 
-            </div>
-        </div>
+            <section className="h-70" id="level-check">
+                <div className="mt-7 content">
+                    {studentData.levelCheckEntries.length != 0 ? (
+                        <>
+                            <p className="text-center">There is a level check</p>
+                        </> 
+                    ) : (
+                        <>
+                            <Link className= "text-center mt-3 text-blue-600 underline" to={`/profile/viewLevelCheck/${id}`}>Create a Level Check</Link>                        
+                        </>
+                        )}
+                </div>
+
+            </section>
+            <section className="mt-6" id="initial-level-table">
+                {studentData.studentProgressReportEntry && (
+                    <>
+                        <h3 className="text-center font-bold">Student Progress Report</h3>
+                        <table className="table border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
+                            <thead>
+                                <tr className="border-b border-gray-300">
+                                    <td className="text-center p-2 font-bold">Textbook</td>
+                                    <td className="text-center p-2 font-bold">Course</td>
+                                    <td className ="text-center p-2 font-bold">Attendance</td> 
+                                    <td className="text-center p-2 font-bold">Total Lessons</td>
+                                    <td className="text-center p-2 font-bold"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 {studentData.studentProgressReportEntry.map((item) => (
+                                <tr key={item.id} className="border-b border-gray-300 relative hover:bg-gray-200">
+                                    <td className="text-center p-2">{item.textbook}</td>
+                                    <td className="text-center p-2">{item.course}</td>
+                                    <td className="text-center p-2">{item.attendance}</td>
+                                    <td className="text-center p-2">{item.totalLessons}</td>
+                                    <td className="text-center p-2">
+                                        <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-300 hover:rounded-full">
+                                            <button className="cursor-pointer bg-none text-slate-500 hover:underline">
+                                              ...
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>))}
+                            </tbody>
+                        </table>
+                    </>
+                )}
+        </section>
+    </div>
     )
-}
+    }
 export const CreateStudent = () => {
     const [formData, setFormData] = useState({name: "", nickname: "", email: ""});
     const [error, setError] = useState({name: "Enter a name", nickname: "Enter a nickname", email: "Enter an email"});
@@ -127,8 +246,6 @@ export const CreateStudent = () => {
                 setLoading(false);
             }
         }
-
-        axios
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
