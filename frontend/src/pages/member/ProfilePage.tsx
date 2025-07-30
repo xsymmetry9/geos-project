@@ -26,6 +26,7 @@ const ProfilePage = () => {
         });
 
         const loadData = result.data;
+        console.log(loadData);
         setUser(loadData.user);
         setStudents(loadData.data);
       } catch (err) {
@@ -75,6 +76,7 @@ const ProfilePage = () => {
       setStudents((prev) => prev.filter((student) => student.id !== id));
       console.log(result.data.message); 
     } catch (err) {
+      setError("Failed to load the students data");
       console.error("Delete failed:", err);
     }
   };
@@ -84,14 +86,15 @@ const ProfilePage = () => {
 
   return (
     <>
-      <h1 className="text-center font-bold text-3xl">{user.name}!</h1>
+      <h1 className="text-center capitalize font-bold text-3xl">Hi, {user.name}.</h1>
       <table className="border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
         <thead>
           <tr className="border-b border-gray-300">
             <td className="p-2 font-bold">Name</td>
             <td className="p-2 font-bold">Joined</td>
             <td className="p-2 font-bold">Nickname</td>
-            <td className="p-2 font-bold">Email</td>
+            <td className ="p-2 font-bold"># of SPR Entries</td> 
+            <td className="p-2 font-bold">Level Check</td>
             <td className="p-2 font-bold"></td>
           </tr>
         </thead>
@@ -101,7 +104,8 @@ const ProfilePage = () => {
               <td className="p-2">{item.name}</td>
               <td className="p-2">{new Date(item.createdAt).toLocaleDateString()}</td>
               <td className="p-2">{item.nickname}</td>
-              <td className="p-2">{item.email}</td>
+              <td className="p-2">{item.studentProgressReportEntry.length}</td>
+              <td className="p-2">{item.levelCheckEntries.length}</td>
               <td className="p-2">
                 <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-300 hover:rounded-full">
                 <button onClick={() => toggleOptions(item.id)} className="cursor-pointer bg-none text-slate-500 hover:underline">
@@ -117,7 +121,7 @@ const ProfilePage = () => {
                   <div
                     ref={dropdownRef} 
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
-                    <Link to={`/profile/viewStudent/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">View Student</Link>
+                    <Link to={`/profile/viewStudent/${item.id}`} state={{studentData: item}} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">View Student</Link>
                     <Link to={`/spr/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">SPR</Link>
                     <Link to={`/levelCheck/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">Level Check</Link>
                     <Link to={`/profile/editStudent/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:text-blue-600 hover:underline">Edit</Link>
