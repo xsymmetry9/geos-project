@@ -15,12 +15,12 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
-          <a
+          {/* <a
             href="/language"
             className="hover:text-blue-600 transition duration-200"
           >
             Language
-          </a>
+          </a> */}
         </nav>
 
         {/* Mobile Burger Icon */}
