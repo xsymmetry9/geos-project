@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {format} from "date-fns";
 import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 
@@ -48,7 +48,6 @@ export const StudentPage = () => {
     let location = useLocation();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    console.log(location.state);
 
     // location.state
     //{
@@ -99,6 +98,7 @@ export const StudentPage = () => {
             }
             
             const fetchAPI = async () => {
+                console.log("You fetched me and getting data from backend");
                 try {
                     const result = await axios.get(`http://localhost:8000/api/member/getStudentById/${id}`, {
                         headers: { Authorization: `Bearer ${token}`},
@@ -110,20 +110,18 @@ export const StudentPage = () => {
                         email: loadData.email, 
                         nickname: loadData.nickname, 
                         createdAt: loadData.createdAt,
-                        studentProgressReportEntry: loadData.studentProgressReportEntry,
-                        levelCheckEntries: loadData.levelCheckEntries
+                        studentProgressReportEntry: loadData.studentProgressReportEntry != null ? loadData.studentProgressReportEntry : [],
+                        levelCheckEntries: loadData.levelCheckEntries != null ? loadData.levelCheckEntries : []
                     });
-
-                    console.log(result);
-
                 } catch(err) {
                     console.log("Error:", err);
                 } finally {
                     setLoading(false);
                 }
             };
-            if(location.state?.studentData)
+            if(location.state.studentData != null)
             {
+                console.log("You used localstate");
                 const {id, name, email, nickname, createdAt, studentProgressReportEntry, levelCheckEntries} = location.state.studentData;
                 setStudentData((prev) => ({
                     ...prev,
@@ -141,6 +139,8 @@ export const StudentPage = () => {
             setLoading(true);
             fetchAPI();
       },[id]); 
+      if (loading) return <p>Loading ...</p>
+      console.log(studentData);
     return(
         <div className="font-secondary w-full max-w-[1100px] m-auto relative">
             {errorMessage && <div className="w-[120px] h-[40px] z-1 bg-white absolute top-0 left-1/2 translate-x-1/2 translate-y-1/2 flex justify-center items-center border border-slate-500"><p className="text-center">Error Message</p></div>}
@@ -157,7 +157,7 @@ export const StudentPage = () => {
 
             <section className="h-70" id="level-check">
                 <div className="mt-7 content">
-                    {studentData.levelCheckEntries.length != 0 ? (
+                    {studentData.levelCheckEntries != null ? (
                         <>
                             <p className="text-center">There is a level check</p>
                         </> 
@@ -170,7 +170,7 @@ export const StudentPage = () => {
 
             </section>
             <section className="mt-6" id="initial-level-table">
-                {studentData.studentProgressReportEntry && (
+                {studentData.studentProgressReportEntry != undefined && (
                     <>
                         <h3 className="text-center font-bold">Student Progress Report</h3>
                         <table className="table border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
@@ -211,6 +211,7 @@ export const CreateStudent = () => {
     const [error, setError] = useState({name: "Enter a name", nickname: "Enter a nickname", email: "Enter an email"});
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("")
+    let navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         
@@ -234,7 +235,13 @@ export const CreateStudent = () => {
                         headers: {Authorization: `Bearer ${token}`}
                     }
                 );
-                return res;
+                const result = res.data.data;
+                navigate(`/profile/viewStudent/${result.id}`, {
+                    state: {
+                        studentData: result
+                    }
+                });
+                // return res;
             } catch (error: any)
             {
                 if(error.response?.status === 404){
