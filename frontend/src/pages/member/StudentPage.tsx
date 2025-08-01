@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import {format} from "date-fns";
 import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
@@ -48,49 +48,13 @@ export const StudentPage = () => {
     let location = useLocation();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    console.log(location.state);
+    const [selectedSPRID, setSelectedSPRID] = useState<string | null>(null);
 
-    // location.state
-    //{
-//     "studentData": {
-//         "id": "c1f92dfd-2b13-459a-9188-5f91b59d2b12",
-//         "email": "Shana@gmail.com",
-//         "name": "Shana",
-//         "nickname": "Shana",
-//         "createdAt": "2025-07-27T07:42:10.393Z",
-//         "studentProgressReportEntry": [
-//             {
-//                 "id": "be966b39-8429-4fcc-8172-3c18008982f8",
-//                 "studentName": "Shana",
-//                 "language": "english",
-//                 "course": "",
-//                 "textbook": "EF1",
-//                 "attendance": 20,
-//                 "totalLessons": 30,
-//                 "feedback": "This is just a test.",
-//                 "dateCreated": "2025-07-27T07:42:30.599Z",
-//                 "vocabularyInitial": "1.5",
-//                 "vocabularyTarget": "1.5",
-//                 "vocabularyFinal": "1.5",
-//                 "grammarInitial": "",
-//                 "grammarTarget": "8",
-//                 "grammarFinal": "9.5",
-//                 "listeningInitial": "9",
-//                 "listeningTarget": "9.5",
-//                 "listeningFinal": "9.5",
-//                 "speakingInitial": "9",
-//                 "speakingTarget": "9.5",
-//                 "speakingFinal": "7.5",
-//                 "pronunciationInitial": "9",
-//                 "pronunciationTarget": "8",
-//                 "pronunciationFinal": "9",
-//                 "teacherEmail": "xavvier@test.com",
-//                 "studentId": "c1f92dfd-2b13-459a-9188-5f91b59d2b12"
-//             }
-//         ],
-//         "levelCheckEntries": []
-//     }
-// }
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const toggleOptions = (id: string) => {
+        setSelectedSPRID((prev) => (prev === id ? null : id));
+    }
+
      useEffect(() => {
             let token = localStorage.getItem("token");
             if(!token) {
@@ -141,6 +105,20 @@ export const StudentPage = () => {
             setLoading(true);
             fetchAPI();
       },[id]); 
+
+          useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if(dropdownRef.current && !dropdownRef.current.contains(event.target as Node)){
+                setSelectedSPRID(null);
+            } 
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return() => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    })
+
     return(
         <div className="font-secondary w-full max-w-[1100px] m-auto relative">
             {errorMessage && <div className="w-[120px] h-[40px] z-1 bg-white absolute top-0 left-1/2 translate-x-1/2 translate-y-1/2 flex justify-center items-center border border-slate-500"><p className="text-center">Error Message</p></div>}
@@ -192,11 +170,24 @@ export const StudentPage = () => {
                                     <td className="text-center p-2">{item.totalLessons}</td>
                                     <td className="text-center p-2">
                                         <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-300 hover:rounded-full">
-                                            <button className="cursor-pointer bg-none text-slate-500 hover:underline">
+                                            <button className="cursor-pointer bg-none text-slate-500 hover:underline"
+                                                    onClick={() => toggleOptions(item.id)}>
                                               ...
                                             </button>
                                         </div>
                                     </td>
+                                    {selectedSPRID === item.id && (
+                                        <td colSpan={5} className="relative">
+                                            <div
+                                                ref={dropdownRef}
+                                                className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded absolute top-0 right-[90px]">
+                                                    <Link to="#">View</Link>
+                                                    <Link to={`/spr/${studentData.id}/edit/${item.id}`}>Edit</Link>
+                                                    <Link to="#">Download</Link>
+                                                    <Link to="#">Delete</Link>
+                                            </div>
+                                        </td>
+                                    )}
                                 </tr>))}
                             </tbody>
                         </table>

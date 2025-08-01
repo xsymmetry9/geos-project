@@ -16,10 +16,10 @@ type LevelCategory = keyof StudentProgressReportEntry["levels"];
 type LevelField = keyof Levels;
 
 interface PlotFormProps{
-  loading: StudentProgressReportEntry;
+  loading: boolean;
   inputData: StudentProgressReportEntry;
   setInputData: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
-  setLoading: React.Dispatch<React.SetStateAction<StudentProgressReportEntry>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, setLoading }) => {

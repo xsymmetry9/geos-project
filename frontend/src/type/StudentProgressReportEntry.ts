@@ -52,4 +52,12 @@ class StudentProgressReportEntry {
   }
 }
 
-export { StudentProgressReportEntry, Levels };
+class StudentProgressReportBackend {
+  id: string;
+  
+  constructor() {
+    this.id=""
+  }
+}
+
+export { StudentProgressReportEntry, Levels, StudentProgressReportBackend };

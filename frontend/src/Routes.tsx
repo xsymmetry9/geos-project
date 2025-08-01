@@ -2,7 +2,7 @@
 
 import {Layout, ProfileLayout, LayoutForNonmember} from "./Layout";
 import Language from "./pages/Language";
-import SPRForm from "./pages/SPRForm";
+import {SPRForm, EditSPRForm} from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
 import Admin from "./pages/Admin/AdminPage";
@@ -72,7 +72,7 @@ const routes: RouteObject[] = [
       { index: true, element: <Language /> },
       { path: ":language/create", element: <SPRForm />},
       { path: "print/:formId", element: <PrintPage /> },
-      { path: "edit", element: <SPRForm /> },
+      { path: "edit/:formId", element: <EditSPRForm /> },
     ],
   },
   {
