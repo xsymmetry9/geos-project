@@ -11,15 +11,12 @@ const createStudentTeacherByEmail = async (req, res) => {
     try {
         const user = req.data;
         const data = req.body;
-
         const obj = {teacherEmail: user.email, name: data.name, nickname: data.nickname, email: data.email};
 
         const result = await createStudent(obj);
-        console.log(result);
-        res.send({status: true, user: user, data: "Received"});
+        return res.send({status: true, user: user, message: "Student created", data: result});
     } catch (err) {
-        console.log(result);
-        res.send({status: false, user: user, message: "didn't receive it"});
+        return res.send({status: false, user: user, message: "Failed to create a student"});
     }
 }
 
