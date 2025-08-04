@@ -18,6 +18,11 @@ const getStudentReport = async(req, res) => {
     try{
         const formID = req.params.formID
         const form = await findOneByFormId(formID);
+        if(!form) {
+            console.log(new Date(), form);
+
+            return res.status(500).json({error: "Couldn't find form"});
+        }
 
         return res.send(form);
     } catch (error) {
@@ -51,6 +56,8 @@ const updateAllDataStudentReportByFormID = async (req, res) => {
         } 
         
         const updatedData = await editAll(formId, data);
+
+        console.log(updatedData);
     
 
         // return res.status(200).json(form);
