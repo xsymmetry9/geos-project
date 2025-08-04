@@ -40,12 +40,13 @@ export const processData = (data: StudentProgressReportEntry["levels"]): Transfo
   };
 
 export const PrintContent: React.FC<PrintContentProps> = ({ data }) => {
-  const language = data.language
+  const language = data.language;
   const { 
     name,
     textbook, course, attendance, totalLessons, feedback, levels } = data;
 
   const transformedData = processData(levels); 
+
 
   return (
     <>

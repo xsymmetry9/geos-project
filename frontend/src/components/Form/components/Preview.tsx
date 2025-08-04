@@ -62,6 +62,7 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
           <tbody>
             {Object.keys(levels).map((item, index) => {
               const key = item as keyof StudentProgressReportEntry["levels"];
+              console.log(key);
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
                   <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>

@@ -11,7 +11,7 @@ import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReport
 const PrintPage = () => {
   const initialStudent = new StudentProgressReportEntry();
   const [fetchData, setFetchData] = useState<StudentProgressReportEntry>(initialStudent);
-  const { id: formId, language } = useParams<{ id: string; language: string }>();
+  const { formId: formId, language } = useParams<{ formId: string; language: string }>();
   const componentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<null | (() => void)>(null);
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ const PrintPage = () => {
           console.warn("No data found");
         }
       } catch (error) {
-        console.error("Failed to fetch data:", error);
+        console.log("Failed to fetch data");
       } finally {
         setLoading(false);
       }
@@ -119,11 +119,12 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-      <div className="mx-auto overflow-auto">
+      {fetchData.formId === "" && <Link to={`/`}>Please go back</Link>}
+      {fetchData.formId !== "" && ( <div className="mx-auto overflow-auto">
         <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
           <PrintContent data={fetchData} />
         </div>
-      </div>
+      </div>) }
       <div className="flex justify-center pt-3 gap-3">
         <button className="btn btn-primary print w-[150px]" onClick={handlePrint}>
           Print

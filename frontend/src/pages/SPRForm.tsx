@@ -3,6 +3,15 @@ import { useParams, useLocation } from "react-router-dom";
 import PlotForm from "../components/Form/PlotForm";
 import { StudentProgressReportEntry, Levels } from "../type/StudentProgressReportEntry";
 import axios from "axios";
+import Pagination from "@/components/Form/components/Pagination";
+import PersonalInformation from "@/components/Form/components/PersonalInformation";
+import LevelInformation from "@/components/Form/components/LevelInformation";
+import Feedback from "@/components/Form/components/Feedback";
+import Button from "@/components/Form/components/Button";
+import Preview from "@/components/Form/components/Preview";
+
+type LevelField = keyof Levels;
+type LevelCategory = keyof StudentProgressReportEntry["levels"];
 
 export const LanguageContext = createContext<string>("english");
 
@@ -55,7 +64,79 @@ export const EditSPRForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>("english");
   const [backendErrorMessage, setBackendErrorMessage] = useState<string>(""); 
+  const [page, setPage] = useState<number>(0)
+  const [inputError, setInputError]= useState({
+    textbook: inputData.textbook == "" ? true: false,
+    course: inputData.course == "" ? true : false,
+    attendance: inputData.attendance === 0 ? true : false,
+    totalLessons: inputData.totalLessons == 0 ? true : false,
+    feedback: inputData.feedback == "" ? true : false
+  })
 
+  const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) : void => {
+      const { name, value } = e.target;
+  
+      // Update input data (convert numbers where necessary)
+      const numericFields = ["attendance", "totalLessons"];
+      const newValue = numericFields.includes(name) ? Number(value) : value;
+  
+      setInputData((prev) => ({ ...prev, [name]: newValue }));
+  
+      setInputError((prevError) => {
+        switch (name) {
+          case "name":
+          case "textbook":
+          case "course":
+            return {...prevError, [name]: value.trim() === ""};
+          case "feedback":
+            return {...prevError, feedback: value.trim() === "" || value.length > 475}
+          case "attendance":
+            const att = Number(value);
+            return {...prevError, attendance: isNaN(att) || att <= 0};
+          case "totalLessons":
+            const total = Number(value);
+            return {
+              ...prevError, 
+              totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
+            };
+          default:
+            return prevError;
+        }
+      });
+    };
+
+  const handleLevelInputData = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const {name, value} = e.target;
+    const [parentCategoryRaw, childCategoryRaw] = name.split("-");
+    const parentCategory = parentCategoryRaw as LevelCategory;
+    const childCategory = childCategoryRaw as LevelCategory; 
+
+     setInputData((prev) => ({
+      ...prev,
+      levels: {
+        ...prev.levels,
+        [parentCategory]: {
+          ...prev.levels[parentCategory],
+          [childCategory]: value,
+        },
+      },
+    }));
+
+  }
+
+  const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const {name} = e.currentTarget;
+    if(name === "next") {
+      if(page > arrOfPages.length -1) {
+        setPage(0);
+      } else {
+        setPage((prev)  => prev + 1);
+    } 
+    } else {
+      setPage((prev) => prev -1);
+    } 
+
+  }
   useEffect(() => {
     const fetchApi = async () => {
       try{
@@ -69,18 +150,21 @@ export const EditSPRForm = () => {
           headers: { Authorization: `Bearer ${token}`},
         });
 
-        console.log(result);
         const data = result.data;
 
         setLanguage(data.language);
         setInputData((prev) => ({
           ...prev,
+          formId: data.id,
+          teacherEmail: data.teacherEmail,
+          studentId: data.studentId,
           name: data.studentName,
           dateCreated: data.dateCreated,
           textbook: data.textbook,
           attendance: data.attendance,
           totalLessons: data.totalLessons,
           feedback: data.feedback,
+          language: data.language,
           course: data.course,
           levels: {
               vocabulary: new Levels(data.vocabularyInitial, data.vocabularyTarget, data.vocabularyFinal),
@@ -89,6 +173,16 @@ export const EditSPRForm = () => {
               conversation: new Levels(data.speakingInitial, data.speakingTarget, data.speakingFinal),
               listening: new Levels(data.listeningInitial, data.listeningTarget, data.listeningFinal),
           }
+
+        }));
+        
+        setInputError((prevError) => ({
+          ...prevError,
+          course: data.course == "" ? true : false,
+          textbook: data.textbook === "" ? true : false,
+          attendance: data.attendance === "" ? true : false,
+          totalLessons: data.totalLessons === "" ? true : false,
+          feedback: data.feedback === "" ? true : false,
 
         }))
       } catch(error){
@@ -103,13 +197,89 @@ export const EditSPRForm = () => {
 
     fetchApi();
   }, [formData]);
+
+  const arrOfPages = [
+    <PersonalInformation 
+      key= "personal-information"
+      inputData={inputData}
+      inputError={inputError}
+      handleInputData={handleInputData}
+      language = {language} />,
+      <LevelInformation
+      key= "level-information" 
+      inputData={inputData}
+      inputError={inputError}
+      setInputData={setInputData}
+      handleLevelInputData={handleLevelInputData}
+      language= {language}
+      />,
+      <Feedback 
+      key="feedback"
+      inputData = {inputData}
+      inputError = {inputError}
+      handleInputData = {handleInputData}
+      language= {language} />,
+      <Preview 
+      key ="preview"
+      inputData = {inputData}
+      language= {language} />
+    ];
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const fetchId = async () => {
+        setLoading(true);
+        try {
+          const token = localStorage.getItem("token");
+          if(!token) {
+            console.error("No token, login first");
+            return;
+          }
+
+          console.log("Form ID is: ", inputData.formId);
+
+          const res = await axios.put(`http://localhost:8000/api/member/updateSPR/${inputData.formId}`,
+            { data: inputData },
+            { headers: { Authorization: `Bearer ${token}`},
+          });
+
+          console.log(res);
+        } catch(err) {
+
+        } finally{
+          setLoading(false);
+        }
+      }
+      // Test if it can fetch.
+      const hasError = Object.keys(inputError).filter((item) => inputError[item] === true);
+
+      if(hasError.length === 0){
+        fetchId();
+      } else {
+        console.log(hasError.map((item) => item));
+      }
+    }
   
   if(loading) return <p>Loading ...</p>
 
   return(
     <LanguageContext.Provider value={language}>
-      {!backendErrorMessage && <p className="text-red">{backendErrorMessage}</p>}
-      <PlotForm inputData = {inputData} setInputData={setInputData} loading={loading} setLoading={setLoading}/>
+      <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto relative">
+        {!backendErrorMessage && <p className="text-red">{backendErrorMessage}</p>}
+        <Pagination page = {page} language = {language} setPage = {setPage} />
+        <div className="w-full static max-wg-lg m-auto">
+          <form onSubmit={handleSubmit} autoComplete="false">
+            {arrOfPages[page]}
+            <div className="flex gap-2 justify-center" id="buttons">
+              <Button page= {page} handler={changePage} language = {language} />
+              {page === arrOfPages.length -1 && <input className="btn btn-primary w-32" type="submit" value={"Save"}/>}
+            </div>
+          </form>
+          
+        </div>
+      </div>
+
     </LanguageContext.Provider>
   )
 

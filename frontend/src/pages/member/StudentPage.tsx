@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import {format} from "date-fns";
-import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
+import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 
 type CreateInputProps = {
         title: string;
@@ -135,7 +135,7 @@ export const StudentPage = () => {
 
             <section className="h-70" id="level-check">
                 <div className="mt-7 content">
-                    {studentData.levelCheckEntries.length != 0 ? (
+                    {studentData.levelCheckEntries ? (
                         <>
                             <p className="text-center">There is a level check</p>
                         </> 

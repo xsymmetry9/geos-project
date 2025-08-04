@@ -46,7 +46,6 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, s
   // }
 
   const language = useContext(LanguageContext) as Language;
-
   const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) : void => {
     const { name, value } = e.target;
 
@@ -78,6 +77,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, s
       }
     });
   };
+
 
   const handleLevelInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -147,18 +147,19 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, s
               console.error("No token, login first to create a new token");
               return;
               }
-
-              // const respond = await axios.get(`http://localhost:8000/api/member/getSPR/${inputData.formId}`, {
-              //     headers: { Authorization: `Bearer ${token}`},
-              // });
-
+              
+              console.log("Form ID is: ", inputData);
              const res = await axios.put(`http://localhost:8000/api/member/updateSPR/${inputData.formId}`,
               {data: inputData},
               {
                 headers: { Authorization: `Bearer ${token}`},
               });
 
-              navigate(`/spr/${inputData.studentId}/print/${inputData.formId}`, {replace: true} )
+              console.log(res);
+
+              navigate(`/spr/${inputData.studentId}/print/${inputData.formId}`, {
+                state: inputData,
+                replace: true})
 
           
             } catch(error){
