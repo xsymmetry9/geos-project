@@ -115,6 +115,8 @@ const editAll = async(formId, data) =>{
 
 const findOneByFormId = async (formId) => {
   const getForm = await prisma.studentProgressReportEntry.findUnique({where: {id: formId}});
+
+  console.log(formId);
   return getForm;
 }
 
