@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, EventHandler } from "react";
 import levelCheckData from "../../assets/other/levelCheck.json";
 import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm";
 import levelInformation from "../../assets/other/legend.json";
@@ -15,7 +15,7 @@ type Props = {
   setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
 };
 
-const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
+export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
   const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
@@ -294,5 +294,32 @@ const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     </section>
   );
 };
+type LevelCheckOverallProps = {
+  name: string;
+  item: string;
+  data: string;
+}
+export const LevelCheckOverall = ({name, item, data, handleChange}: LevelCheckOverallProps) => {
+    const arrOfLevels = levelInformation.english;
 
-export default LevelCheckSelect;
+
+  return(
+    <div className="pb-3">
+      <label className="font-bold capitalize" htmlFor="overallCEFR">{name}
+        <select 
+          name="overallCEFR"
+          id="overallCEFR"
+          onChange={handleChange}
+          value={data}
+          className="font-secondary text-base text-black font-normal block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+        >
+          {arrOfLevels.map((lvl) => (
+            <option key={lvl.name} className="font-normal" value={lvl.name}>{lvl.name}</option>
+          ) )}
+        </select>
+      </label>
+    
+    </div>
+  )
+}
+

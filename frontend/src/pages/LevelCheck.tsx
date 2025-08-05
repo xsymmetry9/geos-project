@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import LevelCheckSelect from "../components/LevelCheckForm/LevelCheckSelect";
+import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
 import html2canvas from "html2canvas-pro";
@@ -85,6 +85,16 @@ const LevelCheckForm = () => {
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
         </section>
         <section className="px-3 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
+           <label className="font-bold" htmlFor ="bookRecommendation">Book Recommendation:
+            <input 
+              type="text" 
+              name="bookRecommendation" 
+              id="bookRecommendation"
+              value={inputData.bookRecommendation}
+              onChange={handleChange}
+              className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
+          </label>
+          <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
            <label htmlFor="feedback"> Feedback
             <textarea className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
           </label>
@@ -200,8 +210,18 @@ const LevelCheckEdit = () => {
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData}/>
         </section>
         <section className="px-6 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
-           <label htmlFor="feedback"> Feedback
-            <textarea className="block w-full h-[100px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+          <label className="font-bold" htmlFor ="bookRecommendation">Book Recommendation:
+            <input 
+              type="text" 
+              name="bookRecommendation" 
+              id="bookRecommendation"
+              value= {inputData.bookRecommendation}
+              onChange={setInputData}
+              className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
+          </label>
+          <LevelCheckOverall name="overall level" item="overallLevel" data = {inputData.overallCEFR} handleChange={handleChange}/>
+           <label className="font-bold" htmlFor="feedback"> Feedback
+            <textarea className="font-normal block w-full h-[100px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
             name="feedback"  
             onChange={handleChange} 
             id="input-feeback"
@@ -226,8 +246,6 @@ const LevelCheckPreview = () => {
   let params = useParams();
   const [data, setData] = useState<LevelCheckEntry>();
   const componentRef = useRef<HTMLDivElement>(null);
-
-  console.log(data);
 
   useEffect(() => {
       let app = JSON.parse(localStorage.getItem("GEOS_app")) || '{}';
@@ -306,7 +324,7 @@ const Plot=({data}) => {
             <p className ="ml-3 text-[14px]"><span className="font-bold">Date:</span> {data.dateCreated}</p>
           </div>
           <div id="table-container">
-            <table className="w-full mt-3 border h-[420px]" id="table-content">
+            <table className="w-full mt-3 border h-[420px] table-auto" id="table-content">
               <thead className="text-[15px]">
                 <tr className="">
                   <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Category</td>
@@ -321,8 +339,8 @@ const Plot=({data}) => {
                   return(
                     <tr key={item} className="h-[76px]">
                       <td className="text-center font-bold capitalize border-r border-b border-black p-2 bg-teal-50">{item}</td>
-                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="list-disc ml-4">{data[item].strength.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="list-disc ml-4">{data[item].weakness.map((list, idx) => <li key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="">{data[item].strength.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="">{data[item].weakness.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2 text-center bg-orange-50">{data[item].score}</td>   
                       <td className="border-b border-black p-2 text-center bg-orange-50">{data[item].level_name}</td>                      
                     </tr>
@@ -330,18 +348,20 @@ const Plot=({data}) => {
                 })}
               </tbody>
             </table>
-            <table className="w-full mt-3 border border-teal-800 bg-teal-600">
-              <thead className="font-bold text-white text-[15px]">
-                <tr className="border-b border-black">
-                  <td className="p-2">Feedback</td>
-                </tr>
-              </thead>
-              <tbody className="text-[13px] bg-teal-50">
-                <tr className="h-[150px]">
-                  <td className="flex p-2 text-[13px]">{data.feedback}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="w-full mt-3 border border-teal-800 bg-teal-600">
+              <div className="font-bold text-white text-[15px] w-full">
+                <div className="grid grid-cols-3 w-full justify-self-center border-b border-black">
+                  <p className="p-2">Feedback</p>
+                  <p className="text-center">Textbook Recommendation: {data.bookRecommendation}</p>
+                  <p className="text-center">Overall CEFR: {data.overallCEFR}</p>
+                </div>
+              </div>
+              <div className="text-[13px] bg-teal-50">
+                <div className="h-[150px]">
+                  <p className="flex p-2 text-[13px]">{data.feedback}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
