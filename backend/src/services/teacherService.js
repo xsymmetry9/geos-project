@@ -65,7 +65,9 @@ const getTeacherStudentsByEmail = async (email) => {
     return result;
   }
   const readStudent = async (studentId) => {
-    const result = await prisma.student.findUnique({where: {id: studentId}});
+    const result = await prisma.student.findUnique(
+      {where: {id: studentId},
+      include: {studentProgressReportEntry: true, levelCheckEntries: true}});
     return result;
   }
 

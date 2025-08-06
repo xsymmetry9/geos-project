@@ -1,4 +1,4 @@
-const {create, findOneByFormId, findAll, editAll} = require("../services/sprService");
+const {create, findOneByFormId, findAll, remove, editAll} = require("../services/sprService");
 // Create
 const createStudentProgressReport = async (req, res) => { 
     try{
@@ -69,9 +69,11 @@ const updateAllDataStudentReportByFormID = async (req, res) => {
 }
 
 const deleteFormByFormID = async (req, res) => {
+    const formId = req.params.formID;
     try {
-        const deleted = await deleteFormByFormID(req);
-        return res.status(204).json(deleted);
+        const deleted = await remove(formId);
+        console.log(deleted);
+        return res.status(204).json({message: "deleted"});
     } catch (error) {
         return res.status(500).json({error: "Error on the server side"});
     }
