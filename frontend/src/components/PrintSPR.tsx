@@ -115,7 +115,7 @@ const PrintPage = () => {
   return (
     <>
       <div className="flex items-center justify-center pb-3">
-        <Link className="btn-primary" to={`/home/${language}`}>
+        <Link className="btn-primary" to={`/profile/viewStudent/${fetchData.studentId}`}>
           Dashboard
         </Link>
       </div>
