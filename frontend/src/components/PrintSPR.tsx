@@ -8,13 +8,10 @@ import axios from "axios";
 import { PrintContent } from "./PrintStudentProgressReport";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 
-import "../styles/print.css"
-
-
 const PrintPage = () => {
   const initialStudent = new StudentProgressReportEntry();
   const [fetchData, setFetchData] = useState<StudentProgressReportEntry>(initialStudent);
-  const { formId: formId, language } = useParams<{ formId: string; language: string }>();
+  const { formId: formId } = useParams<{ formId: string; }>();
   const componentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<null | (() => void)>(null);
   const [loading, setLoading] = useState(false);
@@ -124,7 +121,7 @@ const PrintPage = () => {
       </div>
       {fetchData.formId === "" && <Link to={`/`}>Please go back</Link>}
       {fetchData.formId !== "" && ( <div className="mx-auto overflow-auto">
-        <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
+        <div id={`print-${fetchData.language}`} className="shadow-lg print-component" ref={componentRef}>
           <PrintContent data={fetchData} />
         </div>
       </div>) }
