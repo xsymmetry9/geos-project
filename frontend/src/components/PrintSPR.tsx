@@ -8,6 +8,9 @@ import axios from "axios";
 import { PrintContent } from "./PrintStudentProgressReport";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 
+import "../styles/print.css"
+
+
 const PrintPage = () => {
   const initialStudent = new StudentProgressReportEntry();
   const [fetchData, setFetchData] = useState<StudentProgressReportEntry>(initialStudent);
