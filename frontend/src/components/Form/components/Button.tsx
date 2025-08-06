@@ -17,7 +17,7 @@ const getPageLabels = (language: LanguageKey): ButtonLabels => {
 
 interface ButtonProps {
   page: number;
-  handler: (e: React.MouseEvent<HTMLInputElement>) => void;
+  handler: (e: React.MouseEvent< HTMLInputElement>) => void;
   language: LanguageKey;
 }
 
