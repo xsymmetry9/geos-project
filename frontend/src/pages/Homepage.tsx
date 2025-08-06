@@ -7,11 +7,12 @@ import { getDataFromLocal, deleteStudentById } from "../utils/functions";
 import ExportToExcel from "../components/ExportToExcel";
 import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
+import {parse} from "date-fns"
 
 const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
-  <table className="w-full border-collapse shadow-md">
+  <table className="w-full">
     <thead>
-      <tr className="bg-orange-700 text-white font-bold">
+      <tr className="bg-stone-600 text-white font-bold">
         <td className="p-3 text-center">Date</td>
         <td className="p-3 text-center">Name</td>
         <td className="p-3 text-center">Action</td>
@@ -20,11 +21,11 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
     <tbody>
       {data.map((item: any) => (
         <tr
-          className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300"
+          className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
           key={`level-check${item.id}`}
         >
           {/* Need to fix the time */}
-          <td className="p-3 text-center h-[30px]">{item.dateCreated}</td> 
+          <td className="p-3 text-center h-[30px]">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td> 
           <td className="p-3 text-center h-[30px]">{item.student_name}</td>
           <td className="flex gap-3 justify-center mt-4 h-[30px]">
             <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
@@ -94,9 +95,9 @@ const Homepage = () => {
   if (loading) return <h1>Loading ...</h1>;
 
   const PlotSPRTable = () => (
-    <table className="w-full border-collapse shadow-md">
+    <table className="w-full shadow-md">
       <thead>
-        <tr className="bg-orange-700 text-white font-bold">
+        <tr className="bg-stone-600 text-white font-bold">
           <th className="p-3 text-center">Date</th>
           <th className="p-3 text-center">Name</th>
           <th className="p-3 text-center">Action</th>
@@ -106,7 +107,7 @@ const Homepage = () => {
         {userData?.SPR.map((item, index) => (
           <tr
             key={`${item.id}-${index}`}
-            className="border-b-3 border-orange-100 odd:bg-orange-50 even:bg-white hover:bg-gray-300"
+            className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
           >
             <td className="p-3 text-center">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
             <td className="p-3 text-center">{item.name}</td>
@@ -131,18 +132,20 @@ const Homepage = () => {
   );
 
   return (
-    <div className="pb-12 w-full">
-      <h2 className="font-secondary text-2xl text-center font-semibold mb-6">Student&rsquo;s Progress Report</h2>
+    <div className="pb-12">
+      <h2 className="font-secondary text-2xl text-center font-semibold mb-6">
+        {page === "spr" ? `Student's Progress Report` : "Level Checks"}
+        </h2>
       <div className="p-b-3 flex justify-center gap-3 mb-6">
         <CreateNewFormBtn handleControl={handleFormControl} />
         <ExportToExcel userData={userData} />
         <ImportFromExcel userData={userData} setUserData={setUserData} />
       </div>
 
-      <div className="flex justify-center gap-5 p-2">
+      <div className="flex">
         <button
-          className={`cursor-pointer font-secondary font-bold p-2 rounded-md text-white w-[150px] ${
-            page === "spr" ? "bg-blue-700" : "bg-dark-green"
+          className={`cursor-pointer font-secondary font-bold p-2 w-[150px] text-center ${
+            page === "spr" ? "bg-stone-600 text-white" : "text-black bg-white border-2 border-stone-600"
           }`}
           onClick={toggleLevelCheckSPR}
           name="spr"
@@ -150,8 +153,8 @@ const Homepage = () => {
           SPR
         </button>
         <button
-          className={`cursor-pointer font-secondary font-bold p-2 rounded-md text-white w-[150px] ${
-            page === "levelCheck" ? "bg-blue-700" : "bg-dark-green"
+          className={`cursor-pointer font-secondary font-bold p-2 p-2 w-[150px] text-center border-2 ${
+            page === "levelCheck" ? "bg-stone-600 border - 2 text-white" : "text-black bg-white border-stone-600"
           }`}
           onClick={toggleLevelCheckSPR}
           name="levelCheck"
@@ -160,9 +163,9 @@ const Homepage = () => {
         </button>
       </div>
 
-      <div className="px-2">
+      <div className="">
         {page === "spr" ? (
-          userData?.SPR.length ? <PlotSPRTable /> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
+          userData?.SPR.length ? <PlotSPRTable page = {page}/> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
         ) : (
           userData?.levelCheck.length ? <PlotLevelCheck data={userData?.levelCheck} language={language} handleDisplayDelete={handleDisplayDelete} />:
           <p className= "text-center text-gray-500 mt-3">Click add Level Check</p>

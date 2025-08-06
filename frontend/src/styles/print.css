@@ -215,3 +215,9 @@
   position: relative;
   aspect-ratio: 1/1;
 }
+
+.print-list::before{
+  content: "•";
+  padding: 8px;
+
+}
