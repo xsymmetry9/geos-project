@@ -122,7 +122,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, s
     <Preview key={"preview"} inputData={inputData} language={language} />,
   ];
 
-  const changePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const changePage = (e: React.MouseEvent<HTMLInputElement >) => {
     const { name } = e.currentTarget;
     if (name === "next") {
       if (page > arrOfPages.length - 1) {
