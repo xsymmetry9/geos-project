@@ -138,8 +138,11 @@ const edit = async (formId) => {
 }
 
 const remove = async (formId) => {
+  const result = await prisma.studentProgressReportEntry.delete({where: {id: formId}});
+
+  return result;
 
 }
 module.exports = {
-    create, editAll, findAll, findOneByFormId
+    create, editAll, findAll, findOneByFormId, remove
 }
