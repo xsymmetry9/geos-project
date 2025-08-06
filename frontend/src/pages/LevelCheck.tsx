@@ -113,7 +113,7 @@ const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
   let {id, language} = useParams();
-  let [inputData, setInputData] = useState(initForm);
+  let [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
@@ -124,8 +124,6 @@ const LevelCheckEdit = () => {
         [name]: value
     }));
   }
-  console.log(inputData);
-
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -159,9 +157,25 @@ const LevelCheckEdit = () => {
           console.log("Couldn't find the file");
           return;
         } 
-        console.log(filtered[0]);
+        const result = filtered[0];
+        console.log("result:", result);
 
-        setInputData(filtered[0]);
+
+        setInputData((prev) => ({
+          ...prev,
+          id: result.id,
+          dateCreated: result.dateCreated,
+          student_name: result.student_name,
+          feedback: result.feedback,
+          bookRecommendation: result.bookRecommendation,
+          overallCEFR: result.overallCEFR,
+          speaking: result.speaking,
+          confidence: result.confidence,
+          grammar: result.grammar,
+          vocabulary: result.vocabulary,
+          listening: result.listening,
+          pronunciation: result.pronunciation
+        }));
    
     } catch (error){
           console.log("Error", error);
@@ -224,7 +238,7 @@ const LevelCheckEdit = () => {
             <textarea className="font-normal block w-full h-[100px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
             name="feedback"  
             onChange={handleChange} 
-            id="input-feeback"
+            id="inputFeeback"
             value={inputData.feedback} />
           </label>
         </section>
@@ -339,26 +353,31 @@ const Plot=({data}) => {
                   return(
                     <tr key={item} className="h-[76px]">
                       <td className="text-center font-bold capitalize border-r border-b border-black p-2 bg-teal-50">{item}</td>
-                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="">{data[item].strength.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2 bg-teal-50"><ul className="">{data[item].weakness.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2 text-center bg-orange-50">{data[item].score}</td>   
-                      <td className="border-b border-black p-2 text-center bg-orange-50">{data[item].level_name}</td>                      
+                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].strength.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].weakness.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
+                      <td className="border-b border-black p-2 text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}
               </tbody>
             </table>
-            <div className="w-full mt-3 border border-teal-800 bg-teal-600">
+            <div className="w-full mt-3 border border-teal-800">
               <div className="font-bold text-white text-[15px] w-full">
-                <div className="grid grid-cols-3 w-full justify-self-center border-b border-black">
-                  <p className="p-2">Feedback</p>
-                  <p className="text-center">Textbook Recommendation: {data.bookRecommendation}</p>
-                  <p className="text-center">Overall CEFR: {data.overallCEFR}</p>
+                <div className="grid grid-cols-[130px_1fr_125px] w-full justify-self-center border-b border-black">
+                  <p className="border-r border-teal-800 bg-teal-600 p-2 text-center">Comment</p>
+                  <p className="border-r border-teal-800 bg-teal-600 p-2"></p>
+                  <p className="p-2 bg-orange-300 text-center text-black">Placement</p>
                 </div>
               </div>
-              <div className="text-[13px] bg-teal-50">
-                <div className="h-[150px]">
-                  <p className="flex p-2 text-[13px]">{data.feedback}</p>
+              <div className="text-[15px] bg-white">
+                <div className="grid grid-cols-[1fr_125px] h-[150px]">
+                  <p className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</p>
+                  <div className="grid grid-rows-3 bg-orange-50 text-[16px]">
+                    <p className="text-[15px] p-2 text-center self-center">{data.overallCEFR}</p>
+                    <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-teal-800 font-bold self-center">Book Suggestion</p>
+                    <p className="text-[15px] self-center text-center">{data.bookRecommendation}</p>
+                  </div>
                 </div>
               </div>
             </div>
