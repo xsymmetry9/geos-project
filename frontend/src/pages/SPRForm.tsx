@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import PlotForm from "../components/Form/PlotForm";
 import { StudentProgressReportEntry, Levels } from "../type/StudentProgressReportEntry";
 import axios from "axios";
@@ -54,8 +54,8 @@ export const SPRForm = () => {
 };
 
 export const EditSPRForm = () => {
-
   let location = useLocation();
+  let navigate = useNavigate();
   const formData = location.state;
   let params = useParams();
   const studentFormID = params.formId; 
@@ -244,7 +244,9 @@ export const EditSPRForm = () => {
             { headers: { Authorization: `Bearer ${token}`},
           });
 
-          console.log(res);
+          navigate(`/spr/${inputData.studentId}/print/${inputData.formId}`, {
+            state: inputData,
+            replace: true});
         } catch(err) {
 
         } finally{
