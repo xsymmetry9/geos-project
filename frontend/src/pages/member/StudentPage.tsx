@@ -14,6 +14,33 @@ type CreateInputProps = {
     }
 const initialForm = {name: "", nickname: "", email:""};
 
+const deleteSPRByFormId = (formId: string) => {
+    const deleteId = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if(!token) {
+                return "No token found";
+            }
+
+            const res = await axios.delete(`http://localhost:8000/api/member/deleteForm/${formId}`, {
+                headers: { Authorization: `Bearer ${token}`},
+            });
+            if(res)
+            {
+                window.location.reload();
+            } else {
+                console.log("It failed");
+            }
+            
+
+        } catch (error) {
+            console.error("Couldn't connect to backend", error);
+        }
+    }
+    deleteId();
+
+}
+
 const CreateInput = ({title, type, name, value, error, handle} : CreateInputProps) => {
         return(
              <>
@@ -117,7 +144,7 @@ export const StudentPage = () => {
         return() => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-    })
+    });
 
     return(
         <div className="font-secondary w-full max-w-[1100px] m-auto relative">
@@ -129,13 +156,13 @@ export const StudentPage = () => {
               <p>Date Created: {new Date(studentData.createdAt).toLocaleDateString()}</p>
             </div>
             <div className="mt-6 flex gap-3 justify-center" id="student-nav">
-                <Link className= "btn btn-primary" to={`/profile/createSPR/${id}`}>Create a SPR</Link>
+                <Link className= "btn btn-primary" to={`/spr/${id}`}>Create a SPR</Link>
                 <Link className= "btn btn-primary" to={`/profile/editStudent/${id}`}>Edit Student</Link>
             </div>
 
             <section className="h-70" id="level-check">
                 <div className="mt-7 content">
-                    {studentData.levelCheckEntries ? (
+                    {studentData.levelCheckEntries.length != 0 ? (
                         <>
                             <p className="text-center">There is a level check</p>
                         </> 
@@ -148,7 +175,7 @@ export const StudentPage = () => {
 
             </section>
             <section className="mt-6" id="initial-level-table">
-                {studentData.studentProgressReportEntry && (
+                {!loading && studentData.studentProgressReportEntry.length != 0 && (
                     <>
                         <h3 className="text-center font-bold">Student Progress Report</h3>
                         <table className="table border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
@@ -162,7 +189,7 @@ export const StudentPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                 {studentData.studentProgressReportEntry.map((item) => (
+                                 {studentData.studentProgressReportEntry.map((item: any) => (
                                 <tr key={item.id} className="border-b border-gray-300 relative hover:bg-gray-200">
                                     <td className="text-center p-2">{item.textbook}</td>
                                     <td className="text-center p-2">{item.course}</td>
@@ -181,10 +208,10 @@ export const StudentPage = () => {
                                             <div
                                                 ref={dropdownRef}
                                                 className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded absolute top-0 right-[90px]">
-                                                    <Link to="#">View</Link>
+                                                    <Link to={`/spr/${studentData.id}/print/${item.id}`}>View</Link>
                                                     <Link to={`/spr/${studentData.id}/edit/${item.id}`}>Edit</Link>
                                                     <Link to="#">Download</Link>
-                                                    <Link to="#">Delete</Link>
+                                                    <button className="text-left" onClick = {() => deleteSPRByFormId(item.id)}>Delete</button>
                                             </div>
                                         </td>
                                     )}
