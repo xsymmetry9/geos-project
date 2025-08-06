@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Graph from "./Graph";
 import {
   TitleSPR,
@@ -11,8 +10,6 @@ import {
 import PlotCards from "./PrintComponents/PlotCards";
 import { StudentProgressReportEntry } from "@/type/StudentProgressReportEntry";
 import labelText from "../assets/other/labelText.json";
-
-import "../styles/print.css"
 
 // ---------------------------------
 // Type Defintions
