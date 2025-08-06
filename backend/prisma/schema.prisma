@@ -81,50 +81,65 @@ model StudentProgressReportEntry {
 }
 
 model LevelCheckEntry {
-  id String @id @default(uuid())
-  name String
-  language String
-  teacherName String
+  id                        String             @id @default(uuid())
+  name                      String
+  language                  String
+  teacherName               String
+  bookRecomendation         String
+  overallCEFR               String
 
-  speakingNameEntry String
-  speakingScore String
-  speakingStrength String[]
-  speakingWeakness String[]
+  speakingNameEntry         String
+  speakingScore             String
 
-  confidenceName_entry String
-  confidenceScore String
-  confidenceStrength String[]
-  confidenceWeakness String[]
+  confidenceName_entry      String
+  confidenceScore           String
 
-  vocabularyEntry String
-  vocabularyScore String
-  vocabularyStrength String[]
-  vocabularyWeakness String[]
+  vocabularyEntry           String
+  vocabularyScore           String
 
+  grammarNameEntry          String
+  grammarScore              String
 
-  grammarNameEntry String
-  grammarScore String
-  grammarStrength String[]
-  grammarWeakness String[]
+  listeningNameEntry        String
+  listeningScore            String
 
-  listeningNameEntry String
-  listeningScore String
-  listeningStrength String[]
-  listeningWeakness String[]
+  pronunciationNameEntry    String  
+  pronunciationScore        String
 
-  pronunciationNameEntry String  
-  pronunciationScore String
-  pronunciationStrength String[]
-  pronunciationWeakness String[]
+  feedback                  String
 
-  feedback String
-  
-  teacherEmail String
-  teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
+  teacherEmail              String
+  teacher                   Teacher            @relation("TeacherEmail", fields: [teacherEmail], references: [email])
 
-  studentId String
-  student Student @relation(fields: [studentId], references: [id])
+  studentId                 String
+  student                   Student            @relation(fields: [studentId], references: [id])
 
+  strengthsWeaknesses       StrengthWeakness[] // fixed: model name and field name
+
+}
+
+model StrengthWeakness {
+  id                 Int              @id @default(autoincrement())
+  levelCheckEntryId  String         
+  category           SkillCategory
+  type               StrengthType
+  description        String
+
+  levelCheckEntry    LevelCheckEntry  @relation(fields: [levelCheckEntryId], references: [id])
+}
+
+enum SkillCategory {
+  speaking
+  confidence
+  vocabulary
+  grammar
+  listening
+  pronunciation
+}
+
+enum StrengthType {
+  strength
+  weakness
 }
 
 model StudentTeacher {
