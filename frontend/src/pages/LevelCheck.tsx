@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
@@ -7,27 +8,59 @@ import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 
 const LevelCheckForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const initiateForm = new LevelCheckEntry();
+  let params = useParams();
   const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  const studentId = params.id;
+
    useEffect(() =>{
-    const getUser = JSON.parse(localStorage.getItem("GEOS_app")) || "{}";
-    if(!getUser)
-    {
-      console.log("Create a new token that stores it at the localStorage");
+    setLoading(true);
+
+    const createForm = async () => {
+      try{
+        const token = localStorage.getItem("token");
+        if(!token){
+          console.log("token not found, you need to login again.");
+          return;
+        }
+        const res = await axios.post(`http://localhost:8000/api/member/createLevelCheck/${studentId}`,
+          {studentId: studentId},
+          {headers: { Authorization: `Bearer ${token}`},
+        });
+
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    // const getUser = JSON.parse(localStorage.getItem("GEOS_app")) || null;
+    // if(getUser === null)
+    // {
+    //   console.log("Create a new token that stores it at the localStorage");
+    //   return;
+    // } else {
+    //   getUser.levelCheck.push((inputData)); // Adds new form 
+    // }
+
+    // getUser.levelCheck.forEach((item: any) =>  {
+    //   if(item.id === inputData.id)
+    //   {
+    //     console.log(item);
+    //   }
+    // })
+
+    if(inputData.id !== "") {
+      console.log("Already have an id", inputData.id);
+      setLoading(false);
       return;
-    } else {
-      getUser.levelCheck.push((inputData)); // Adds new form 
     }
 
-    getUser.levelCheck.forEach((item: any) =>  {
-      if(item.id === inputData.id)
-      {
-        console.log(item);
-      }
-    })
+    createForm();
     
   }, []);
 
@@ -42,26 +75,28 @@ const LevelCheckForm = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
-    if(!getUser) return;
+    // const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
+    // if(!getUser) return;
 
-    const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
+    // const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
 
-    if(index !== -1){
-      getUser.levelCheck[index] = inputData;
-    } else {
-      getUser.levelCheck.push(inputData);
-    }
+    // if(index !== -1){
+    //   getUser.levelCheck[index] = inputData;
+    // } else {
+    //   getUser.levelCheck.push(inputData);
+    // }
 
-    localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-    navigate(`preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+    // localStorage.setItem("GEOS_app", JSON.stringify(getUser));
+    // navigate(`preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
   
 
+  if(loading) return <p>Loading...</p>;
   return (
-    <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
+    <div className="font-secondary w-full h-full max-w-[55em] mx-auto shadow-2xl px-3 py-6">
       <div className="flex flex-col justify-center items-center">
-        <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
+        <h1 className="font-bold text-2xl py-3">Oral Assessment Guidelines</h1>
+        <p>{inputData.id}</p>
       </div>
       <form autoComplete="off">
         <section className="px-3 py-6 border-b-6 border-double border-dark-green">
@@ -367,7 +402,7 @@ const Plot=({data}) => {
                 <div className="grid grid-cols-[130px_1fr_125px] w-full justify-self-center border-b border-black">
                   <p className="border-r border-teal-800 bg-teal-600 p-2 text-center">Comment</p>
                   <p className="border-r border-teal-800 bg-teal-600 p-2"></p>
-                  <p className="p-2 bg-orange-300 text-center text-black">Placement</p>
+                  <p className="p-2 bg-orange-300 text-center text-black">Level</p>
                 </div>
               </div>
               <div className="text-[15px] bg-white">
