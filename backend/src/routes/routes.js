@@ -28,6 +28,13 @@ const {
     deleteFormByFormID
 } = require("../controllers/studentProgressReportController.js");
 
+const {
+    createLevelCheckForm,
+    getLevelCheckReport,
+    updateAllDataLevelcheckFormByFormID,
+    deleteLevelCheckByFormID
+} = require("../controllers/levelCheckFormController.js");
+
 
 
 const levelDataPath = path.join(__dirname, "../../asset/levelInformation.json");
@@ -66,6 +73,12 @@ router.post("/api/member/createSPR/:id", verifyToken, createStudentProgressRepor
 router.get("/api/member/getSPR/:formID", verifyToken, getStudentReport);
 router.put("/api/member/updateSPR/:formID", verifyToken, updateAllDataStudentReportByFormID);
 router.delete("/api/member/deleteForm/:formID", verifyToken, deleteFormByFormID);
+
+// ------------------------------------ Level Check ---------------------------
+router.post("/api/member/createLevelCheck/:id", verifyToken, createLevelCheckForm);
+router.get("/api/member/getLevelCheck/:formID", verifyToken, getLevelCheckReport);
+router.get("/api/member/updateLevelCheck/:formID", verifyToken, updateAllDataLevelcheckFormByFormID);
+router.delete("api/member/deleteLevelCheck/:formID", verifyToken, deleteLevelCheckByFormID);
 
 //Gets all users
 router.get("/api", async (req, res) =>{
