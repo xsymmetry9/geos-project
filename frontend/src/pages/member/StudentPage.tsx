@@ -168,7 +168,7 @@ export const StudentPage = () => {
                         </> 
                     ) : (
                         <>
-                            <Link className= "text-center mt-3 text-blue-600 underline" to={`/levelCheck`}>Create a Level Check</Link>                        
+                            <Link className= "text-center mt-3 text-blue-600 underline" to={`/levelCheck/${id}`}>Create a Level Check</Link>                        
                         </>
                         )}
                 </div>
