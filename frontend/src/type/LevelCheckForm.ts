@@ -28,8 +28,8 @@ class LevelCheckEntry {
     listening: StrengthAndWeakness;
     pronunciation: StrengthAndWeakness;
 
-    constructor(id = uuidv4()) {
-      this.id = id;
+    constructor() {
+      this.id = "";
       this.dateCreated = "";
       this.student_name = "";
       this.feedback = "";
