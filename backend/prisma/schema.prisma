@@ -85,26 +85,28 @@ model LevelCheckEntry {
   name                      String
   language                  String
   teacherName               String
-  bookRecomendation         String
+  bookRecommendation        String
   overallCEFR               String
+  dateUpdated               DateTime @updatedAt @default(now())
+  createdAt                 DateTime  @default(now())
 
   speakingNameEntry         String
-  speakingScore             String
+  speakingScore             Float
 
-  confidenceName_entry      String
-  confidenceScore           String
+  confidenceNameEntry       String
+  confidenceScore           Float
 
-  vocabularyEntry           String
-  vocabularyScore           String
+  vocabularyNameEntry       String
+  vocabularyScore           Float
 
   grammarNameEntry          String
-  grammarScore              String
+  grammarScore              Float
 
   listeningNameEntry        String
-  listeningScore            String
+  listeningScore            Float
 
   pronunciationNameEntry    String  
-  pronunciationScore        String
+  pronunciationScore        Float
 
   feedback                  String
 
@@ -114,7 +116,7 @@ model LevelCheckEntry {
   studentId                 String
   student                   Student            @relation(fields: [studentId], references: [id])
 
-  strengthsWeaknesses       StrengthWeakness[] // fixed: model name and field name
+  strengthsWeaknesses       StrengthWeakness[] 
 
 }
 

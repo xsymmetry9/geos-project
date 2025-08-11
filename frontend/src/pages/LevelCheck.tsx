@@ -1,113 +1,68 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
+import { format, parseISO } from "date-fns";
 
-const LevelCheckForm = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const initiateForm = new LevelCheckEntry();
-  let params = useParams();
-  const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
-  const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
-
-  const studentId = params.id;
-
-   useEffect(() =>{
-    setLoading(true);
-
-    const createForm = async () => {
-      try{
-        const token = localStorage.getItem("token");
-        if(!token){
-          console.log("token not found, you need to login again.");
-          return;
-        }
-        const res = await axios.post(`http://localhost:8000/api/member/createLevelCheck/${studentId}`,
-          {studentId: studentId},
-          {headers: { Authorization: `Bearer ${token}`},
-        });
-
-      } catch (error) {
-        console.log("Error: ", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    // const getUser = JSON.parse(localStorage.getItem("GEOS_app")) || null;
-    // if(getUser === null)
-    // {
-    //   console.log("Create a new token that stores it at the localStorage");
-    //   return;
-    // } else {
-    //   getUser.levelCheck.push((inputData)); // Adds new form 
-    // }
-
-    // getUser.levelCheck.forEach((item: any) =>  {
-    //   if(item.id === inputData.id)
-    //   {
-    //     console.log(item);
-    //   }
-    // })
-
-    if(inputData.id !== "") {
-      console.log("Already have an id", inputData.id);
-      setLoading(false);
+const createForm = async (studentId: string) => {
+  try{
+    const token = localStorage.getItem("token");
+    if(!token){
+      console.log("token not found, you need to login again.");
       return;
     }
-
-    createForm();
+    const res = await axios.post(`http://localhost:8000/api/member/createLevelCheck/${studentId}`,
+      {studentId: studentId},
+      {headers: { Authorization: `Bearer ${token}`},
+    })
+    const data = res.data.data;
+    return data;
+  } catch (error) {
+    console.log("Error in the backend.  Check log: ", error);
+    return;
+  } 
     
-  }, []);
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value} = e.currentTarget;
-    setInputData((prev) => ({
-      ...prev,
-        [name]: value
-    }));
-  }
+interface FormProps {
+  inputData: LevelCheckEntry,
+  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>,
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void,
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    // const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
-    // if(!getUser) return;
-
-    // const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
-
-    // if(index !== -1){
-    //   getUser.levelCheck[index] = inputData;
-    // } else {
-    //   getUser.levelCheck.push(inputData);
-    // }
-
-    // localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-    // navigate(`preview/${inputData.id}`, {replace: true, state: {data: inputData}});
-    }
-  
-
-  if(loading) return <p>Loading...</p>;
-  return (
-    <div className="font-secondary w-full h-full max-w-[55em] mx-auto shadow-2xl px-3 py-6">
+const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
+  return(
+     <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
       <div className="flex flex-col justify-center items-center">
         <h1 className="font-bold text-2xl py-3">Oral Assessment Guidelines</h1>
         <p>{inputData.id}</p>
       </div>
-      <form autoComplete="off">
+      <form autoComplete="off" onSubmit={handleSubmit}>
         <section className="px-3 py-6 border-b-6 border-double border-dark-green">
           <div className="p-1">
             <label htmlFor="student_name"> Student Name:
-              <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="student_name" id="input-student_name" onChange={handleChange} type="text" />
+              <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+                name="student_name" 
+                id="input-student_name" 
+                onChange={handleChange} 
+                value={inputData.student_name}
+                type="text" />
             </label>
           </div>
           <div className="p-1">
             <label htmlFor="dateCreated"> Date:
-              <input type="date" className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
+              <input 
+                type="date" 
+                className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
+                name="dateCreated" 
+                id="input-dateCreated"
+                value={inputData.dateCreated ? format(parseISO(inputData.dateCreated), "yyyy-MM-dd") : ""} 
+                onChange={handleChange}/>
             </label>
           </div>
         </section>
@@ -130,19 +85,127 @@ const LevelCheckForm = () => {
               className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
           </label>
           <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
-           <label htmlFor="feedback"> Feedback
-            <textarea className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" name="feedback"  onChange={handleChange} id="input-feeback" />
+           <label htmlFor="feedback">Overall Level
+            <textarea 
+              className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+              name="feedback"  
+              onChange={handleChange} 
+              id="input-feeback" 
+              value={inputData.feedback}/>
           </label>
         </section>
         <div className="w-full flex justify-center pt-3">
-         <button className="btn-primary" onClick={handleSubmit}>
-            Submit
-          </button>
+         <input type="submit" className="btn-primary" value="submit"/>
         </div>
       </form>
     </div>
-  );
+  )
+}
+
+const LevelCheckForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const initiateForm = new LevelCheckEntry();
+  let params = useParams();
+  const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
+  const [error, setError] = useState<string>("");
+  const location = useLocation();
+  const userData = location.state;
+  if(!userData) return <p>No data found</p>
+
+  const studentId = params.id;
+
+   useEffect(() =>{
+    setLoading(true);
+
+    const fetchForm = async () => {
+      try{
+        const token = localStorage.getItem("token");
+        if(!token){
+          console.log("token not found, you need to login again.");
+          return;
+        }
+
+        const res = await axios.get(`http://localhost:8000/api/member/getLevelCheckForm/${formId}`,
+          {headers: { Authorization: `Bearer ${token}`}});
+
+        const data = res.data.data;
+        console.log(data);
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if(!userData) {
+      fetchForm();
+      setLoading(false);
+      return;
+    } else {
+      setInputData((prev) => ({
+        ...prev,
+        id: userData.id,
+        student_name: userData.name,
+        overallCEFR: userData.overallCEFR,
+        bookRecommendation: userData.bookRecommendation,
+        feedback: userData.feedback,
+        dateCreated: userData.createdAt
+      }));
+
+      setLoading(false);
+    }
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement| HTMLTextAreaElement >) => {
+    const {name, value} = e.currentTarget;
+    setInputData((prev) => ({
+      ...prev,
+        [name]: value
+    }));
+  }
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    
+    const updateForm = async () => {
+      try{
+        console.log(inputData);
+      const token = localStorage.getItem("token");
+        if(!token){
+          console.log("token not found, you need to login again.");
+          return;
+        }
+
+      const result = await axios.put("http://localhost:8000/api/member/updateLevelCheck", 
+        { data: inputData},
+        { headers: {Authorization: `Bearer ${token}`},
+      });
+
+      console.log(result);
+
+        return;
+    } catch (error) {
+      console.log(error);
+      return;
+      }
+    }
+
+    updateForm();
+
+
+
+
+  }
+
+  if(loading) return <p>Loading...</p>;
+  return (
+    <>
+      <Form inputData={inputData} setInputData={setInputData} handleChange={handleChange} handleSubmit={handleSubmit} />
+    </>)
+
 };
+
 
 const LevelCheckEdit = () => {
 
@@ -152,14 +215,14 @@ const LevelCheckEdit = () => {
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const {name, value} = e.currentTarget;
     setInputData((prev) => ({
       ...prev,
         [name]: value
     }));
   }
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
@@ -181,7 +244,8 @@ const LevelCheckEdit = () => {
   useEffect(() => {
     setLoading(true);
     try{
-        const data = JSON.parse(localStorage.getItem("GEOS_app"));
+        const raw = localStorage.getItem("GEOS_app");
+        const data = raw ? JSON.parse(raw) : null;        
         if(!data) {
           console.log("Couldn't find the data on localstorage");
           return;
@@ -221,74 +285,12 @@ const LevelCheckEdit = () => {
 
   },[]);
 
-  if(loading || inputData === null ){
-    return <div>Loading ...</div>
-  }
-
-  return(
-      <div className="w-full max-w-[55rem] relative bg-white mx-auto">
-        {(!loading) && (
-          <>
-            <div className="flex flex-col justify-center items-center">
-          <h1 className="font-secondary font-bold text-lg py-3">Oral Assessment Guidelines</h1>
-        </div>
-        <form autoComplete="off">
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
-          <div className="p-1">
-            <label htmlFor="student_name"> Student Name:
-              <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
-              type="text"
-              name="student_name" 
-              value={inputData?.student_name || ""}
-              id="input-student_name" 
-              onChange={handleChange} />
-            </label>
-          </div>
-          <div className="p-1">
-            <label htmlFor="dateCreated"> Date:
-              <input type="date" value={inputData.dateCreated} className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" name="dateCreated" id="input-dateCreated" onChange={handleChange}/>
-            </label>
-          </div>
-        </section>
-        <section className="px-6 py-6 border-b-6 border-double border-dark-green">
-        <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData}  />
-        <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
-        <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
-        <LevelCheckSelect item="vocabulary" inputData ={inputData} setInputData={setInputData} />
-        <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
-        <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData}/>
-        </section>
-        <section className="px-6 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
-          <label className="font-bold" htmlFor ="bookRecommendation">Book Recommendation:
-            <input 
-              type="text" 
-              name="bookRecommendation" 
-              id="bookRecommendation"
-              value= {inputData.bookRecommendation}
-              onChange={setInputData}
-              className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
-          </label>
-          <LevelCheckOverall name="overall level" item="overallLevel" data = {inputData.overallCEFR} handleChange={handleChange}/>
-           <label className="font-bold" htmlFor="feedback"> Feedback
-            <textarea className="font-normal block w-full h-[100px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
-            name="feedback"  
-            onChange={handleChange} 
-            id="inputFeeback"
-            value={inputData.feedback} />
-          </label>
-        </section>
-        <div className="w-full flex justify-center pt-3">
-         <button className="btn-primary" onClick={handleSubmit}>
-            Submit
-          </button>
-        </div>
-      </form>
-          </>
-        ) 
-        }
-        
-    </div>
-  );
+  if(loading) return <p>Loading...</p>;
+  
+  return (
+    <>
+      <Form inputData={inputData} setInputData={setInputData} handleChange={handleChange} handleSubmit={handleSubmit} />
+    </>)
 }
 
 const LevelCheckPreview = () => { 
@@ -360,7 +362,7 @@ const LevelCheckPreview = () => {
     </>
   );
 }
-const Plot=({data}) => {
+const Plot: React.FC<LevelCheckEntry>=({data}) => {
   return(
     <div className="print-component-landscape px-12 py-2" id="print-preview">
         <div className="font-primary container relative" id="level-check-content">
@@ -369,27 +371,27 @@ const Plot=({data}) => {
             <h1 className="w-full text-center py-2 text-lg font-bold">Oral Assessment Guidelines</h1>
           </div>
           <div className="mt-15">
-            <p className ="ml-3 text-[14px]"><span className="font-bold">Name:</span> {data.student_name}</p>
-            <p className ="ml-3 text-[14px]"><span className="font-bold">Date:</span> {data.dateCreated}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Name: </span>{data.student_name}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{format(data.dateCreated, "MM/dd/yyyy")}</p>
           </div>
           <div id="table-container">
-            <table className="w-full mt-3 border h-[420px] table-auto" id="table-content">
+            <table className="w-full mt-3 border border-black h-[420px] table-auto" id="table-content">
               <thead className="text-[15px]">
                 <tr className="">
-                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Category</td>
-                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Strength</td>
-                  <td className="text-white text-center font-bold border border-teal-800 py-2 bg-teal-600">Weakness</td>
-                  <td className="text-center font-bold border border-orange-800 py-2 bg-orange-300">Score</td>
-                  <td className="text-center font-bold border border-orange-800 py-2 bg-orange-300">CEFR</td>
+                  <td className="text-white text-center font-bold border border-black py-2 bg-teal-600">Category</td>
+                  <td className="text-white text-center font-bold border border-black py-2 bg-teal-600">Strength</td>
+                  <td className="text-white text-center font-bold border border-black py-2 bg-teal-600">Weakness</td>
+                  <td className="text-center font-bold border border-black py-2 bg-orange-300">Score</td>
+                  <td className="text-center font-bold border border-black py-2 bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation"].map((item) => {
                   return(
                     <tr key={item} className="h-[76px]">
-                      <td className="text-center font-bold capitalize border-r border-b border-black p-2 bg-teal-50">{item}</td>
-                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].strength.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].weakness.map((list, idx) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="text-center font-bold capitalize border-r border-b border-black-600 p-2 bg-teal-50">{item}</td>
+                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-black p-2 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-black p-2 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
                       <td className="border-b border-black p-2 text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
                     </tr>
@@ -397,20 +399,20 @@ const Plot=({data}) => {
                 })}
               </tbody>
             </table>
-            <div className="w-full mt-3 border border-teal-800">
+            <div className="w-full mt-3 border border-black">
               <div className="font-bold text-white text-[15px] w-full">
                 <div className="grid grid-cols-[130px_1fr_125px] w-full justify-self-center border-b border-black">
-                  <p className="border-r border-teal-800 bg-teal-600 p-2 text-center">Comment</p>
-                  <p className="border-r border-teal-800 bg-teal-600 p-2"></p>
+                  <p className="border-r border-black bg-teal-600 p-2 text-center">Comment</p>
+                  <p className="border-r border-black bg-teal-600 p-2"></p>
                   <p className="p-2 bg-orange-300 text-center text-black">Level</p>
                 </div>
               </div>
               <div className="text-[15px] bg-white">
                 <div className="grid grid-cols-[1fr_125px] h-[150px]">
                   <p className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</p>
-                  <div className="grid grid-rows-3 bg-orange-50 text-[16px]">
-                    <p className="text-[15px] p-2 text-center self-center">{data.overallCEFR}</p>
-                    <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-teal-800 font-bold self-center">Book Suggestion</p>
+                  <div className="grid grid-rows-[1fr_40px_1fr] border-b-1 border-black bg-orange-50 text-[16px]">
+                    <p className="text-[15px] text-center self-center">{data.overallCEFR}</p>
+                    <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-black-800 font-bold self-center">Book Suggestion</p>
                     <p className="text-[15px] self-center text-center">{data.bookRecommendation}</p>
                   </div>
                 </div>
@@ -421,4 +423,4 @@ const Plot=({data}) => {
       </div>
   )
 }
-export {LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
+export {createForm, LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
