@@ -4,11 +4,10 @@ const createLevelCheckForm = async (req, res) => {
     try{
         const result = await create(req, res);
         console.log(result);
-
-        res.send({status: true, message: "It worked!"});
+        res.send({status: true, message: "It worked!", data: result});
 
     } catch (error) {
-        return res.status(500).json({error: "Error in the backend"});
+        return res.status(500).json({error: "Couldn't create form"});
     }
     return;
 }
@@ -23,10 +22,13 @@ const getLevelCheckReport = async (req, res) => {
 const updateAllDataLevelcheckFormByFormID = async (req, res) => {
     try{
 
+        const result = await editAll(req, res);
+        console.log(result);
+        return res.send({status: true, message: "Uploaded", data: result});
+
     } catch (error) {
         return res.status(500).json({error: "Error in the backend"});
     }
-    return;
 }
 const deleteLevelCheckByFormID = async (req, res) => {
     try{
