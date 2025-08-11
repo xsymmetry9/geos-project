@@ -14,7 +14,6 @@ const create = async (req, res) =>  {
     });
     const teacher = student.teachers[0].teacher;
 
-
     const entry = await prisma.levelCheckEntry.create({
         data: {
             studentId,
@@ -22,14 +21,14 @@ const create = async (req, res) =>  {
             name: student.name || "",
             language: teacher.language,
             teacherName: teacher.name,
-            bookRecomendation: "",
+            bookRecommendation: "",
             overallCEFR: "",
 
             speakingNameEntry: "",
             speakingScore: "",
-            confidenceName_entry: "",
+            confidenceNameEntry: "",
             confidenceScore: "",
-            vocabularyEntry: "",
+            vocabularyNameEntry: "",
             vocabularyScore: "",
             grammarNameEntry: "",
             grammarScore: "",
@@ -42,46 +41,46 @@ const create = async (req, res) =>  {
         }
     });
 
-    console.log("Entry is: ", entry);
+    return entry;
 
-    const categories = [
-        "speaking",
-        "confidence",
-        "vocabulary",
-        "grammar", 
-        "listening",
-        "pronunciation",
-    ];
+    // const categories = [
+    //     "speaking",
+    //     "confidence",
+    //     "vocabulary",
+    //     "grammar", 
+    //     "listening",
+    //     "pronunciation",
+    // ];
 
-    const seedRows = categories.flatMap((cat) => {[
-        {
-            levelCheckEntryId: entry.id,
-            category: cat,
-            type: "strength",
-            description: "This is a strength"
-        },
-        {
-            levelCheckEntryId: entry.id,
-            category: cat,
-            type: "weakness",
-            description: "This is a weakness"
-        },
-    ]});
+    // const seedRows = categories.flatMap((cat) => {[
+    //     {
+    //         levelCheckEntryId: entry.id,
+    //         category: cat,
+    //         type: "strength",
+    //         description: "This is a strength"
+    //     },
+    //     {
+    //         levelCheckEntryId: entry.id,
+    //         category: cat,
+    //         type: "weakness",
+    //         description: "This is a weakness"
+    //     },
+    // ]});
 
-    console.log(seedRows);
+    // console.log(seedRows);
 
-    await prisma.strengthWeakness.createMany({
-        data: seedRows,
-    })
+    // await prisma.strengthWeakness.createMany({
+    //     data: seedRows,
+    // })
 
-    const finalResult = await prisma.levelCheckEntry.findUnique({
-        where: { id: entry.id},
-        include: {strengthWeaknesses: true}
-    });
+    // const finalResult = await prisma.levelCheckEntry.findUnique({
+    //     where: { id: entry.id},
+    //     include: {strengthWeaknesses: true}
+    // });
 
-    console.log("The final result is:", finalResult);
+    // console.log("The final result is:", finalResult);
 
-    return finalResult;
+    // return finalResult;
 
 
 }
@@ -95,6 +94,39 @@ const remove = async (req, res) =>  {
 
 }
 const editAll = async (req, res) =>  {
+    const data = req.body.data;
+    const formId = data.id;
+
+    console.log(data);
+    try{
+        const updatedEntry = await prisma.levelCheckEntry.update({
+            where: {id: formId},
+            data: {
+                name: data.student_name,
+                feedback: data.feedback,
+                bookRecommendation: data.bookRecommendation,
+                overallCEFR: data.overallCEFR,
+                createdAt: data.dateCreated,
+
+                speakingNameEntry: data.speaking.level_name,
+                speakingScore: data.speaking.score,
+                confidenceNameEntry: data.confidence.level_name,
+                // confidenceScore: data.confidence.score,
+                grammarNameEntry: data.grammar.level_name,
+                // grammarScore: data.grammar.score,
+                vocabularyNameEntry: data.vocabulary.level_name,
+                // vocabularyScore: data.vocabulary.score,
+                listeningNameEntry: data.listening.level_name,
+                // listeningScore: data.listening.score,
+                pronunciationNameEntry: data.pronunciation.level_name,
+                // pronunciationScore: data.pronunciation.score
+            }
+        })
+
+        return updatedEntry;
+    } catch (error) {
+        return error;
+    }
 
 }
 
