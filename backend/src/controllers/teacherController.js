@@ -24,8 +24,6 @@ const readStudentById = async(req, res) => {
     const {id} = req.params;
     try {
         const result = await readStudent(id);
-
-        console.log(result);
         res.send({status: true, data: result, message: "Success!"})
     } catch(err) {
         console.log(err);
@@ -36,7 +34,6 @@ const readTeacherStudentByEmail = async(req, res) => {
     try{
         const {email} = req.data;
         const result = await getTeacherStudentsByEmail(email);
-        console.log("Teacher's student data: ", result);
         res.send({status: true, user: req.data, data: result});
     } catch (err){
         console.log(err);
