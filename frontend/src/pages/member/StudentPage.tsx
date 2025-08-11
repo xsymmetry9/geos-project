@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {format} from "date-fns";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
+import { createForm } from "../LevelCheck";
 
 type CreateInputProps = {
         title: string;
@@ -12,6 +13,25 @@ type CreateInputProps = {
         error: string;
         handle: (e: React.ChangeEvent<HTMLInputElement>) => void;
     }
+
+type CreateLevelCheckFormButtonProps = {
+    studentId: string;
+}
+export const CreateLevelCheckFormButton = ({studentId} : CreateLevelCheckFormButtonProps) => {
+    let navigate = useNavigate();
+    const handler = async () => {
+        const newForm = await createForm(studentId);
+        navigate(`/levelcheck/${studentId}}`, {state: newForm});
+    }
+    return(
+        <>
+            <button 
+                className= "text-center mt-3 text-blue-600 underline"
+                onClick={handler}>Create a form
+            </button>
+        </>
+    )
+}
 const initialForm = {name: "", nickname: "", email:""};
 
 const deleteSPRByFormId = (formId: string) => {
@@ -168,7 +188,7 @@ export const StudentPage = () => {
                         </> 
                     ) : (
                         <>
-                            <Link className= "text-center mt-3 text-blue-600 underline" to={`/levelCheck/${id}`}>Create a Level Check</Link>                        
+                            <CreateLevelCheckFormButton studentId = {id}/>                      
                         </>
                         )}
                 </div>

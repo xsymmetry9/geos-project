@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { CreateLevelCheckFormButton } from "./StudentPage";
 import {format} from "date-fns";
 
 const ProfilePage = () => {
@@ -123,7 +124,7 @@ const ProfilePage = () => {
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
                     <Link to={`/profile/viewStudent/${item.id}`} state={{studentData: item}} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">View Student</Link>
                     <Link to={`/spr/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">SPR</Link>
-                    <Link to={`/levelCheck/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">Level Check</Link>
+                    <CreateLevelCheckFormButton studentId={item.id}/>
                     <Link to={`/profile/editStudent/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:text-blue-600 hover:underline">Edit</Link>
                     <button onClick={() => handleDelete(item.id)} className="cursor-pointer text-sm text-red-600 hover:underline">
                       Delete
