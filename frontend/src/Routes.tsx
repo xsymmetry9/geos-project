@@ -76,11 +76,11 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: "levelCheck/:id",
+    path: "levelCheck/:studentId",
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> },
-      {path: "edit/:id", element: <LevelCheckEdit />},
-      {path: "preview/:id", element: <LevelCheckPreview />}
+      {path: "edit/:formId", element: <LevelCheckEdit />},
+      {path: "preview/:formId", element: <LevelCheckPreview />}
     ],
   },
   { path: "admin",
