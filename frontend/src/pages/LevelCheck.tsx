@@ -326,25 +326,25 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
 
           </div>
           <div id="table-container">
-            <table className="w-full mt-1 h-[420px] border table-auto" id="table-content">
+            <table className="w-full mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
               <thead className="text-[15px]">
-                <tr className="border-b border-black">
-                  <td className="text-white text-center font-bold border-r border-black py-1 bg-teal-600">Category</td>
-                  <td className="text-white text-center font-bold border-r border-black py-1 bg-teal-600">Strength</td>
-                  <td className="text-white text-center font-bold border-r border-black py-1 bg-teal-600">Weakness</td>
-                  <td className="text-center font-bold black py-1 border-r border-black bg-orange-300">Score</td>
-                  <td className="text-center font-bold black py-1 bg-orange-300">CEFR</td>
+                <tr>
+                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Category</td>
+                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Strength</td>
+                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Weakness</td>
+                  <td className="text-center font-bold border-r border-black py-1 bg-orange-300">Score</td>
+                  <td className="text-center font-bold py-1 bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"].map((item) => {
                   return(
                     <tr key={item} className="h-[72px]">
-                      <td className="border-r border-b text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
-                      <td className="border-r border-b border-black px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-black px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
-                      <td className="border-black px-1 border-b text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
+                      <td className="border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
+                      <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border-r border-b border-t border-black px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
+                      <td className="border-black px-1 border-b border-t text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}
@@ -361,7 +361,7 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
               <div className="text-[15px] bg-white">
                 <div className="grid grid-cols-[1fr_125px] h-[150px]">
                   <p className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</p>
-                  <div className="grid grid-rows-[1fr_40px_1fr] border-black bg-orange-50 text-[16px]">
+                  <div className="grid grid-rows-[1fr_40px_1fr] border-b border-black bg-orange-50 text-[16px]">
                     <p className="text-[15px] text-center self-center">{data.overallCEFR}</p>
                     <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-black-800 font-bold self-center">Book Suggestion</p>
                     <p className="text-[15px] self-center text-center">{data.bookRecommendation}</p>
