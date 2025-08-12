@@ -37,10 +37,9 @@ interface FormProps {
 
 const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
   return(
-     <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
+     <div className="w-full h-full bg-white max-w-[55em] mx-auto px-3 py-6 shadow-lg">
       <div className="flex flex-col justify-center items-center">
         <h1 className="font-bold text-2xl py-3">Oral Assessment Guidelines</h1>
-        <p>{inputData.id}</p>
       </div>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <section className="px-3 py-6 border-b-6 border-double border-dark-green">
@@ -110,8 +109,14 @@ const LevelCheckForm = () => {
   const [error, setError] = useState<string>("");
   const location = useLocation();
   const userData = location.state;
-  if(!userData) return <p>No data found</p>
 
+  if(!userData) return (
+      <>
+        <p className="text-red-500">Link not found</p>
+        <Link className="underline text-blue-500" to={`/profile/viewStudents`}>Go back to Student Profile</Link>
+      </>
+
+  )
   const studentId = params.id;
 
    useEffect(() =>{
@@ -142,6 +147,8 @@ const LevelCheckForm = () => {
       setLoading(false);
       return;
     } else {
+
+      console.log(inputData);
       setInputData((prev) => ({
         ...prev,
         id: userData.id,
@@ -190,12 +197,7 @@ const LevelCheckForm = () => {
       return;
       }
     }
-
     updateForm();
-
-
-
-
   }
 
   if(loading) return <p>Loading...</p>;
