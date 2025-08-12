@@ -85,30 +85,30 @@ model LevelCheckEntry {
   name                      String
   language                  String
   teacherName               String
-  bookRecommendation        String
-  overallCEFR               String
+  bookRecommendation        String?
+  overallCEFR               String?
   dateUpdated               DateTime @updatedAt @default(now())
   createdAt                 DateTime  @default(now())
 
-  speakingNameEntry         String
-  speakingScore             Float
+  speakingNameEntry         String?
+  speakingScore             Float?
 
-  confidenceNameEntry       String
-  confidenceScore           Float
+  confidenceNameEntry       String?
+  confidenceScore           Float?
 
-  vocabularyNameEntry       String
-  vocabularyScore           Float
+  vocabularyNameEntry       String?
+  vocabularyScore           Float?
 
-  grammarNameEntry          String
-  grammarScore              Float
+  grammarNameEntry          String?
+  grammarScore              Float?
 
-  listeningNameEntry        String
-  listeningScore            Float
+  listeningNameEntry        String?
+  listeningScore            Float?
 
-  pronunciationNameEntry    String  
-  pronunciationScore        Float
+  pronunciationNameEntry    String?  
+  pronunciationScore        Float?
 
-  feedback                  String
+  feedback                  String?
 
   teacherEmail              String
   teacher                   Teacher            @relation("TeacherEmail", fields: [teacherEmail], references: [email])
