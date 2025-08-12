@@ -4,6 +4,8 @@ import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm"
 import levelInformation from "../../assets/other/legend.json";
 import { formatNum } from "../PrintComponents/Legend";
 
+type LevelName = |""|"Pre-A1" | "A1" | "A1-A2" | "A2" | "A2-B1" | "B1 - B2" | "B2" | "C1" | "C1+" | "C1-C2";
+
 type EnglishKey = keyof Pick<
   LevelCheckEntry,
   "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation"
@@ -16,7 +18,7 @@ type Props = {
 };
 
 export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
-  const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
+  const [level, setLevel] = useState<LevelName>("");
   const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
@@ -64,9 +66,8 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const isScoreValid = level && score !== undefined && scoreError === "";
 
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLevel = e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "";
+    const newLevel = e.target.value as LevelName;
     setLevel(newLevel);
-    setScore(undefined);
     setScoreError("");
     setSelectedStrengths([]);
     setSelectedWeaknesses([]);
@@ -75,7 +76,6 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       [item]: {
         ...prev[item],
         level_name: newLevel,
-        score: undefined,
         strength: [],
         weakness: [],
       }
@@ -83,25 +83,27 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   };
 
   const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputScore = parseFloat(e.target.value);
-    if (isNaN(inputScore)) {
+    const raw = e.target.value;
+    if(raw === ""){
       setScore(undefined);
-      setScoreError("Score must be a number.");
+      setScoreError("Score is required");
       return;
     }
-    setScore(inputScore);
-  };
 
-  useEffect(() => {
-    if (score !== undefined && level) {
-      const [min, max] = getScoreRange(level);
-      if (score < min || score > max) {
-        setScoreError(`Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`);
-      } else {
-        setScoreError("");
-      }
+    const inputScore = parseFloat(raw);
+
+    if(Number.isNaN(inputScore)) {
+      setScore(undefined);
+      setScoreError("Score must be a number");
+      return;
     }
-  }, [score, level]);
+
+    setScore(inputScore);
+    setInputData(prev => ({
+      ...prev, 
+      [item]: {...prev[item], score: inputScore}
+    }));
+  };
 
   const toggleSelection = (
     value: string,
@@ -138,32 +140,35 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   useEffect(() => {
     const current = inputData[item];
-    setLevel(current.level_name || "");
+    setLevel((current.level_name as LevelName)|| "");
     setScore(current.score);
     setSelectedStrengths(current.strength || []);
     setSelectedWeaknesses(current.weakness || []);
-  }, [inputData, item]);
+  }, [item]);
 
   useEffect(() => {
-    if (
-      level &&
-      selectedStrengths.length >= 2 &&
-      selectedWeaknesses.length >= 2 &&
-      score !== undefined &&
-      !scoreError
-    ) {
-      const updated: StrengthAndWeakness = {
-        level_name: level,
+    setInputData((prev) => ({
+      ...prev,
+      [item]: {
+        ...prev[item],
+        level_name: level || "",
         score: score,
         strength: selectedStrengths,
         weakness: selectedWeaknesses
-      };
-      setInputData(prev => ({
-        ...prev,
-        [item]: updated,
-      }));
+      }
+    }));
+  }, [level, score, selectedStrengths, selectedWeaknesses, item]);
+
+  useEffect(() => {
+    if (score !== undefined && level) {
+      const [min, max] = getScoreRange(level);
+      if (score < min || score > max) {
+        setScoreError(`Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`);
+      } else {
+        setScoreError("");
+      }
     }
-  }, [level, score, selectedStrengths, selectedWeaknesses, scoreError]);
+  }, [score, level]);
 
   const arrOfLevels = levelInformation.english;
   const title = item.charAt(0).toUpperCase() + item.slice(1);
