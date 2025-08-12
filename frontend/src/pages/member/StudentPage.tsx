@@ -21,6 +21,8 @@ export const CreateLevelCheckFormButton = ({studentId} : CreateLevelCheckFormBut
     let navigate = useNavigate();
     const handler = async () => {
         const newForm = await createForm(studentId);
+        if(!newForm) return;
+
         navigate(`/levelcheck/${studentId}}`, {state: newForm});
     }
     return(
