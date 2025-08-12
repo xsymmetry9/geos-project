@@ -25,17 +25,17 @@ const create = async (req, res) =>  {
             overallCEFR: "",
 
             speakingNameEntry: "",
-            speakingScore: "",
+            speakingScore: null,
             confidenceNameEntry: "",
-            confidenceScore: "",
+            confidenceScore: null,
             vocabularyNameEntry: "",
-            vocabularyScore: "",
+            vocabularyScore: null,
             grammarNameEntry: "",
-            grammarScore: "",
+            grammarScore: null,
             listeningNameEntry: "",
-            listeningScore: "",
+            listeningScore: null,
             pronunciationNameEntry: "",
-            pronunciationScore: "",
+            pronunciationScore: null,
             feedback : "",
 
         }
@@ -111,16 +111,14 @@ const editAll = async (req, res) =>  {
                 speakingNameEntry: data.speaking.level_name,
                 speakingScore: data.speaking.score,
                 confidenceNameEntry: data.confidence.level_name,
-                // confidenceScore: data.confidence.score,
+                confidenceScore: data.confidence.score,
                 grammarNameEntry: data.grammar.level_name,
-                // grammarScore: data.grammar.score,
+                grammarScore: data.grammar.score,
                 vocabularyNameEntry: data.vocabulary.level_name,
-                // vocabularyScore: data.vocabulary.score,
+                vocabularyScore: data.vocabulary.score,
                 listeningNameEntry: data.listening.level_name,
-                // listeningScore: data.listening.score,
-                pronunciationNameEntry: data.pronunciation.level_name,
-                // pronunciationScore: data.pronunciation.score
-            }
+                listeningScore: data.listening.score,
+                pronunciationNameEntry: data.pronunciation.level_name,            }
         })
 
         return updatedEntry;
