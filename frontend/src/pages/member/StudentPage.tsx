@@ -247,6 +247,7 @@ export const StudentPage = () => {
     )
     }
 export const CreateStudent = () => {
+    let navigate = useNavigate();
     const [formData, setFormData] = useState({name: "", nickname: "", email: ""});
     const [error, setError] = useState({name: "Enter a name", nickname: "Enter a nickname", email: "Enter an email"});
     const [loading, setLoading] = useState(false);
@@ -274,7 +275,11 @@ export const CreateStudent = () => {
                         headers: {Authorization: `Bearer ${token}`}
                     }
                 );
-                return res;
+                if(res.status === 200) {
+                    const data = res.data.data;
+                    navigate(`/profile/viewStudent/${data.id}`, {state: data});
+                    
+                }
             } catch (error: any)
             {
                 if(error.response?.status === 404){
