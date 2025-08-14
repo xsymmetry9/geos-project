@@ -105,6 +105,7 @@ const LevelCheckForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const initiateForm = new LevelCheckEntry();
   let params = useParams();
+  let navigate = useNavigate();
   const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
   const [error, setError] = useState<string>("");
   const location = useLocation();
@@ -188,16 +189,21 @@ const LevelCheckForm = () => {
         { data: inputData},
         { headers: {Authorization: `Bearer ${token}`},
       });
-
       console.log(result);
 
-        return;
+      if(result.status === 200)
+      {
+        navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+
+      }
     } catch (error) {
       console.log(error);
       return;
       }
+
     }
     updateForm();
+
   }
 
   if(loading) return <p>Loading...</p>;
@@ -212,7 +218,7 @@ const LevelCheckForm = () => {
 const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
-  let {id, language} = useParams();
+  let {formId} = useParams();
   let [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
@@ -226,65 +232,76 @@ const LevelCheckEdit = () => {
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const updateForm = async () => {
+      try{
+        console.log(inputData);
+      const token = localStorage.getItem("token");
+        if(!token){
+          console.log("token not found, you need to login again.");
+          return;
+        }
 
-    const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
-    if(!getUser) return;
+      const result = await axios.put("http://localhost:8000/api/member/updateLevelCheck", 
+        { data: inputData},
+        { headers: {Authorization: `Bearer ${token}`},
+      });
+      console.log(result);
 
-    const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
+      if(result.status === 200)
+      {
+        navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
 
-    if(index !== -1){
-      getUser.levelCheck[index] = inputData;
-    } else {
-      getUser.levelCheck.push(inputData);
+      }
+    } catch (error) {
+      console.log(error);
+      return;
+      }
+
     }
+    updateForm();
 
-    localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-
-    navigate(`/levelCheck/${language}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+    navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
  
   useEffect(() => {
     setLoading(true);
-    try{
-        const raw = localStorage.getItem("GEOS_app");
-        const data = raw ? JSON.parse(raw) : null;        
-        if(!data) {
-          console.log("Couldn't find the data on localstorage");
+    const fetchData = async () =>{
+      try{
+
+        const token = localStorage.getItem("token");
+        if(!token) {
+          console.log("Need to login again");
           return;
         }
-        const levelCheck = data.levelCheck;
-        const filtered = levelCheck.filter((item: any) => item.id === id);
-        if(filtered.length === 0){
-          console.log("Couldn't find the file");
-          return;
-        } 
-        const result = filtered[0];
-        console.log("result:", result);
+        
+        const result = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+          {headers: { Authorization: `Bearer ${token}`}});
 
-
-        setInputData((prev) => ({
-          ...prev,
-          id: result.id,
-          dateCreated: result.dateCreated,
-          student_name: result.student_name,
-          feedback: result.feedback,
-          bookRecommendation: result.bookRecommendation,
-          overallCEFR: result.overallCEFR,
-          speaking: result.speaking,
-          confidence: result.confidence,
-          grammar: result.grammar,
-          vocabulary: result.vocabulary,
-          listening: result.listening,
-          pronunciation: result.pronunciation
+        if(result.status === 200 )
+        {
+          const data = result.data.data;
+          setInputData((prev) => ({
+            ...prev,
+            id: data.id,
+            dateCreated: data.createdAt,
+            student_name: data.name,
+            feedback: data.feedback,
+            bookRecommendation: data.bookRecommendation,
+            overallCEFR: data.overallCEFR,
         }));
-   
-    } catch (error){
-          console.log("Error", error);
-          return;
-    } finally{
-          setLoading(false);
+
+        console.log(data);
+        } else {
+          console.log("Error in the backend");
         }
 
+      } catch (error) {
+        console.log("Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
   },[]);
 
   if(loading) return <p>Loading...</p>;
@@ -297,23 +314,69 @@ const LevelCheckEdit = () => {
 
 const LevelCheckPreview = () => { 
   let params = useParams();
-  const [data, setData] = useState<LevelCheckEntry>();
+  let location = useLocation();
+  const initData = new LevelCheckEntry();
+  const [data, setData] = useState<LevelCheckEntry>(initData);
   const componentRef = useRef<HTMLDivElement>(null);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  
   useEffect(() => {
-      let app = JSON.parse(localStorage.getItem("GEOS_app")) || '{}';
-      const levelCheckData = app.levelCheck || '[]';
+    setLoading(true);
 
-      const index = levelCheckData.findIndex((item: any) => item.id === params.id);
-      console.log(index);
-      if(index != -1)
-      {
-        console.log("Data found");
-        setData(levelCheckData[index]);
-      } else {
-        console.log("Data not found");
+    if(location.state === null){
+      const fetchData = async () =>{
+        console.log("Fetching data");
+        const formId = params.formId;
+        try{
+          const token = localStorage.getItem("token");
+          if(!token) {
+            console.log("Need to login again");
+          return;
+          }
+          const result = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+            {headers: { Authorization: `Bearer ${token}`}});
+
+          if(result.status === 200 )
+          {
+          const getData = result.data.data;
+          setData((prev: LevelCheckEntry) => ({
+            ...prev,
+            id: getData.id,
+            dateCreated: getData.createdAt,
+            student_name: getData.name,
+            feedback: getData.feedback,
+            bookRecommendation: getData.bookRecommendation,
+            overallCEFR: getData.overallCEFR,
+          }));
+        } else {
+          console.log("Error in the backend");
+        }
+
+      } catch (error) {
+        console.log("Failed to fetch data");
+      } finally {
+          setLoading(false);
       }
-  },[params.id]);
+        } 
+      
+      fetchData();
+
+
+    } else {
+      console.log("State data");
+      const userData = location.state.data;
+
+      setData((prev: LevelCheckEntry) =>  ({
+        ...prev, 
+          id: userData.id,
+          student_name: userData.name,
+          overallCEFR: userData.overallCEFR,
+          bookRecommendation: userData.bookRecommendation,
+          feedback: userData.feedback,
+          dateCreated: userData.createdAt
+      }));
+    }
+  },[]);
 
   const handleGeneratePDF = async () => {
     if(!componentRef.current) return;
@@ -339,6 +402,7 @@ const LevelCheckPreview = () => {
     pdf.save(`level-check-${data.student_name}.pdf`);
   }
 
+  !loading && <p>Loading...</p>
   return(
     <> 
       { data ? (
@@ -374,7 +438,7 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
           </div>
           <div className="mt-15">
             <p className ="ml-3 text-[14px]"><span className="font-bold">Name: </span>{data.student_name}</p>
-            <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{format(data.dateCreated, "MM/dd/yyyy")}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{data.dateCreated === "" ? "NA" : format(parseISO(data.dateCreated), "MM/dd/yyyy")}</p>
           </div>
           <div id="table-container">
             <table className="w-full mt-3 border border-black h-[420px] table-auto" id="table-content">

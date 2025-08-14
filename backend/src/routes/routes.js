@@ -76,7 +76,7 @@ router.delete("/api/member/deleteForm/:formID", verifyToken, deleteFormByFormID)
 
 // ------------------------------------ Level Check ---------------------------
 router.post("/api/member/createLevelCheck/:id", verifyToken, createLevelCheckForm);
-router.get("/api/member/getLevelCheck/:formID", verifyToken, getLevelCheckReport);
+router.get("/api/member/getLevelCheck/:formId", verifyToken, getLevelCheckReport);
 router.put("/api/member/updateLevelCheck", verifyToken, updateAllDataLevelcheckFormByFormID);
 router.delete("api/member/deleteLevelCheck/:formID", verifyToken, deleteLevelCheckByFormID);
 
