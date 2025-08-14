@@ -14,10 +14,13 @@ const createLevelCheckForm = async (req, res) => {
 const getLevelCheckReport = async (req, res) => {
     try{
 
+        const data = await findOneByFormId(req, res);
+
+        return res.status(200).json({message: "Went through", data: data});
+
     } catch (error) {
         return res.status(500).json({error: "Error in the backend"});
     }
-    return;
 }
 const updateAllDataLevelcheckFormByFormID = async (req, res) => {
     try{
