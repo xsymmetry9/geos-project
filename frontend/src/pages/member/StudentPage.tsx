@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
-import {format} from "date-fns";
+import {format, parseISO} from "date-fns";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 import { createForm } from "../LevelCheck";
 
@@ -98,10 +98,15 @@ export const StudentPage = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [selectedSPRID, setSelectedSPRID] = useState<string | null>(null);
+    const [selectedLevelCheckID, setSelectedLevelCheckID] = useState<string | null>(null);
 
     const dropdownRef = useRef<HTMLDivElement | null>(null);
-    const toggleOptions = (id: string) => {
-        setSelectedSPRID((prev) => (prev === id ? null : id));
+    const toggleOptions = (type: string, id: string) => {
+        if(type === "spr")
+            return setSelectedSPRID((prev) => (prev === id ? null : id));
+
+        if(type === "levelCheck")
+            return setSelectedLevelCheckID((prev) => (prev === id ? null : id));
     }
 
      useEffect(() => {
@@ -181,12 +186,60 @@ export const StudentPage = () => {
                 <Link className= "btn btn-primary" to={`/spr/${id}`}>Create a SPR</Link>
                 <Link className= "btn btn-primary" to={`/profile/editStudent/${id}`}>Edit Student</Link>
             </div>
-
             <section className="h-70" id="level-check">
                 <div className="mt-7 content">
                     {studentData.levelCheckEntries.length != 0 ? (
                         <>
-                            <p className="text-center">There is a level check</p>
+                            <h3 className="text-center font-bold pb-3 text-xl">Level Check Entries</h3>
+                            <table className="border-collapse border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
+                                <thead>
+                                    <tr className="border-t border-b border-gray-300 bg-orange-700">
+                                        <td className="text-center p-2 font-bold text-white">Date</td>
+                                        <td className="text-center p-2 font-bold text-white">Speaking</td>
+                                        <td className="text-center p-2 font-bold text-white">Confidence</td>
+                                        <td className="text-center p-2 font-bold text-white">Grammar</td>
+                                        <td className="text-center p-2 font-bold text-white">Vocabulary</td>
+                                        <td className="text-center p-2 font-bold text-white">Listening</td>
+                                        <td className="text-center p-2 font-bold text-white">Pronunciation</td>
+                                        <td className="text-center p-2 font-bold text-white">CEFR</td>
+                                        <td className="text-center p-2 font-bold"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {studentData.levelCheckEntries.map((item: any) => (
+                                        <tr key={item.id} className="border-b border-gray-300 relative hover:bg-gray-200">
+                                            <td className="text-center p-2">{format(parseISO(item.createdAt), "MM/dd/yyyy")}</td>
+                                            <td className="text-center p-2">{item.speakingNameEntry == "" ? "NA" : item.speakingNameEntry}</td>
+                                            <td className="text-center p-2">{item.confidenceNameEntry == "" ? "NA" : item.confidenceNameEntry}</td>
+                                            <td className="text-center p-2">{item.grammarNameEntry == "" ? "NA" : item.grammarNameEntry}</td>
+                                            <td className="text-center p-2">{item.vocabularyNameEntry == "" ? "NA" : item.vocabularyNameEntry}</td>
+                                            <td className="text-center p-2">{item.listeningNameEntry == "" ? "NA" : item.listeningNameEntry}</td>
+                                            <td className="text-center p-2">{item.pronunciationNameEntry == "" ? "NA" : item.pronunciationNameEntry}</td>
+                                            <td className="text-center p-2">{item.overallCEFR == "" ? "NA" : item.overallCEFR}</td>
+                                            <td>
+                                                <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-300 hover:rounded-full">
+                                                    <button className="cursor-pointer bg-none text-slate-500 hover:underline"
+                                                        onClick={() => toggleOptions("levelCheck", item.id)}>
+                                                        ...
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            {selectedLevelCheckID === item.id && (
+                                                <td colSpan={5} className="relative">
+                                                    <div
+                                                        ref={dropdownRef}
+                                                        className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded absolute top-0 right-[90px]">
+                                                        <Link to={`/levelCheck/${studentData.id}/print/${item.id}`}>View</Link>
+                                                        <Link to={`/levelCheck/${studentData.id}/edit/${item.id}`}>Edit</Link>
+                                                        <Link to="#">Download</Link>
+                                                        <button className="text-left" onClick = {() => deleteSPRByFormId(item.id)}>Delete</button>
+                                                    </div>
+                                                </td>
+                                            )}
+                                        </tr>                            
+                                    ))}
+                                </tbody>
+                            </table>
                         </> 
                     ) : (
                         <>
@@ -199,14 +252,14 @@ export const StudentPage = () => {
             <section className="mt-6" id="initial-level-table">
                 {!loading && studentData.studentProgressReportEntry.length != 0 && (
                     <>
-                        <h3 className="text-center font-bold">Student Progress Report</h3>
-                        <table className="table border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
+                        <h3 className="text-center font-bold text-xl pb-3">Student Progress Report</h3>
+                        <table className="table border-collapse border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
                             <thead>
-                                <tr className="border-b border-gray-300">
-                                    <td className="text-center p-2 font-bold">Textbook</td>
-                                    <td className="text-center p-2 font-bold">Course</td>
-                                    <td className ="text-center p-2 font-bold">Attendance</td> 
-                                    <td className="text-center p-2 font-bold">Total Lessons</td>
+                                <tr className="border-t border-b border-gray-300 bg-orange-700">
+                                    <td className="text-center p-2 font-bold text-white">Textbook</td>
+                                    <td className="text-center p-2 font-bold text-white">Course</td>
+                                    <td className ="text-center p-2 font-bold text-white">Attendance</td> 
+                                    <td className="text-center p-2 font-bold text-white">Total Lessons</td>
                                     <td className="text-center p-2 font-bold"></td>
                                 </tr>
                             </thead>
@@ -220,7 +273,7 @@ export const StudentPage = () => {
                                     <td className="text-center p-2">
                                         <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-300 hover:rounded-full">
                                             <button className="cursor-pointer bg-none text-slate-500 hover:underline"
-                                                    onClick={() => toggleOptions(item.id)}>
+                                                    onClick={() => toggleOptions("spr", item.id)}>
                                               ...
                                             </button>
                                         </div>
