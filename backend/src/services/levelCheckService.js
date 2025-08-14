@@ -85,7 +85,23 @@ const create = async (req, res) =>  {
 
 }
 const findOneByFormId = async (req, res) =>  {
+    const formId = req.params.formId;
 
+    try{
+        const fetchData = await prisma.levelCheckEntry.findUnique({
+            where: {id: formId},
+            include: {
+                strengthsWeaknesses: true
+            }
+        })
+
+        if(!fetchData) {
+            return "Couldn't find entry";
+        }
+        return fetchData;
+    } catch (error) {
+        return "Failed to get data from db"
+    }
 }
 const findAll = async (req, res) =>  {
 
