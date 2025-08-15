@@ -134,7 +134,9 @@ const editAll = async (req, res) =>  {
                 vocabularyScore: data.vocabulary.score,
                 listeningNameEntry: data.listening.level_name,
                 listeningScore: data.listening.score,
-                pronunciationNameEntry: data.pronunciation.level_name,            }
+                pronunciationNameEntry: data.pronunciation.level_name,
+                pronunciationScore: data.pronunciation.score,            
+            }
         })
 
         return updatedEntry;
