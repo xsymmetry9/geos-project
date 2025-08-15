@@ -7,6 +7,7 @@ import "../styles/print.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format, parseISO } from "date-fns";
+import { safeFormatISO } from "@/utils/functions";
 
 const createForm = async (studentId: string) => {
   try{
@@ -60,7 +61,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
                 name="dateCreated" 
                 id="input-dateCreated"
-                value={inputData.dateCreated ? format(parseISO(inputData.dateCreated), "yyyy-MM-dd") : ""} 
+                value={safeFormatISO(inputData.dateCreated, "yyyy-MM-dd")} 
                 onChange={handleChange}/>
             </label>
           </div>
@@ -288,6 +289,32 @@ const LevelCheckEdit = () => {
             feedback: data.feedback,
             bookRecommendation: data.bookRecommendation,
             overallCEFR: data.overallCEFR,
+            speaking: ({...prev.speaking,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            confidence: ({...prev.confidence,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            grammar: ({...prev.grammar,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            vocabulary: ({...prev.vocabulary,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            listening: ({...prev.listening,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            pronunciation: ({...prev.pronunciation,
+              level_name: data.speakingNameEntry,
+              score: data.speakingScore
+            }),
+            
+
         }));
 
         console.log(data);
@@ -325,7 +352,6 @@ const LevelCheckPreview = () => {
 
     if(location.state === null){
       const fetchData = async () =>{
-        console.log("Fetching data");
         const formId = params.formId;
         try{
           const token = localStorage.getItem("token");
@@ -339,14 +365,40 @@ const LevelCheckPreview = () => {
           if(result.status === 200 )
           {
           const getData = result.data.data;
+          console.log("Fetching data:", getData);
+
           setData((prev: LevelCheckEntry) => ({
             ...prev,
             id: getData.id,
-            dateCreated: getData.createdAt,
-            student_name: getData.name,
-            feedback: getData.feedback,
-            bookRecommendation: getData.bookRecommendation,
-            overallCEFR: getData.overallCEFR,
+            dateCreated: getData.createdAt ?? "",
+            student_name: getData.name ?? "",
+            feedback: getData.feedback ?? "",
+            bookRecommendation: getData.bookRecommendation ?? "",
+            overallCEFR: getData.overallCEFR ?? "",
+            speaking: ({...prev.speaking,
+              level_name: getData.speakingNameEntry,
+              score: getData.speakingScore
+            }),
+            confidence: ({...prev.confidence,
+              level_name: getData.confidenceNameEntry,
+              score: getData.confidenceScore
+            }),
+            grammar: ({...prev.grammar,
+              level_name: getData.grammarNameEntry,
+              score: getData.grammarScore
+            }),
+            vocabulary: ({...prev.vocabulary,
+              level_name: getData.vocabularyNameEntry,
+              score: getData.vocabularyScore
+            }),
+            listening: ({...prev.listening,
+              level_name: getData.listeningNameEntry,
+              score: getData.listeningScore
+            }),
+            pronunciation: ({...prev.pronunciation,
+              level_name: getData.pronunciationNameEntry,
+              score: getData.pronunciationScore
+            }),
           }));
         } else {
           console.log("Error in the backend");
@@ -365,15 +417,39 @@ const LevelCheckPreview = () => {
     } else {
       console.log("State data");
       const userData = location.state.data;
-
+      console.log(userData);
       setData((prev: LevelCheckEntry) =>  ({
         ...prev, 
           id: userData.id,
-          student_name: userData.name,
+          student_name: userData.student_name,
           overallCEFR: userData.overallCEFR,
           bookRecommendation: userData.bookRecommendation,
           feedback: userData.feedback,
-          dateCreated: userData.createdAt
+          dateCreated: userData.dateCreated,
+          speaking: ({...prev.speaking,
+            level_name: userData.speaking.level_name,
+            score: userData.speaking.score
+          }),
+          confidence: ({...prev.confidence,
+            level_name: userData.confidence.level_name,
+            score: userData.confidence.score
+          }),
+          grammar: ({...prev.grammar,
+            level_name: userData.grammar.level_name,
+            score: userData.grammar.score
+          }),
+          vocabulary: ({...prev.vocabulary,
+            level_name: userData.vocabulary.level_name,
+            score: userData.vocabulary.score
+          }),
+          listening: ({...prev.listening,
+            level_name: userData.listening.level_name,
+            score: userData.listening.score
+          }),
+          pronunciation: ({...prev.pronunciation,
+            level_name: userData.pronunciation.level_name,
+            score: userData.pronunciation.score
+          }),
       }));
     }
   },[]);
@@ -438,7 +514,7 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
           </div>
           <div className="mt-15">
             <p className ="ml-3 text-[14px]"><span className="font-bold">Name: </span>{data.student_name}</p>
-            <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{data.dateCreated === "" ? "NA" : format(parseISO(data.dateCreated), "MM/dd/yyyy")}</p>
+            <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{safeFormatISO(data.dateCreated, "MM/dd/yyyy")}</p>
           </div>
           <div id="table-container">
             <table className="w-full mt-3 border border-black h-[420px] table-auto" id="table-content">
