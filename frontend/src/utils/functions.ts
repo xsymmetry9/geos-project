@@ -2,6 +2,7 @@ const appName = "GEOS_app";
 import User from "@/type/User";
 import {StudentProgressReportEntry} from "@/type/StudentProgressReportEntry";
 import levelData from "@/assets/other/levelInformation.json";
+import {format, parseISO, isValid} from "date-fns";
 
 type LanguageKey = "english" | "chinese" | "korean" | "japanese";
 type Aspect = "vocabulary" | "grammar" | "listening" | "conversation" | "pronunciation"
@@ -11,6 +12,17 @@ interface LevelDetail {
   description: string;
 }
 
+export function safeFormatISO(iso: unknown, fmt: string, fallback = "NA"){
+  if(typeof iso!== "string" || iso.trim() === "") return;
+
+  try{
+    const d = parseISO(iso);
+    if(!isValid(d)) return fallback;
+    return format(d, fmt);
+  } catch {
+    return fallback;
+  }
+}
 //Reads data from the local Storage
 export function getDataFromLocal(): User {
   const data = localStorage.getItem(appName);
