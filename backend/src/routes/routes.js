@@ -78,7 +78,7 @@ router.delete("/api/member/deleteForm/:formID", verifyToken, deleteFormByFormID)
 router.post("/api/member/createLevelCheck/:id", verifyToken, createLevelCheckForm);
 router.get("/api/member/getLevelCheck/:formId", verifyToken, getLevelCheckReport);
 router.put("/api/member/updateLevelCheck", verifyToken, updateAllDataLevelcheckFormByFormID);
-router.delete("api/member/deleteLevelCheck/:formID", verifyToken, deleteLevelCheckByFormID);
+router.delete("/api/member/deleteLevelCheck/:formId", verifyToken, deleteLevelCheckByFormID);
 
 //Gets all users
 router.get("/api", async (req, res) =>{
