@@ -6,7 +6,6 @@ import { LevelCheckEntry } from "../type/LevelCheckForm";
 import "../styles/print.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
-import { format, parseISO } from "date-fns";
 import { safeFormatISO } from "@/utils/functions";
 
 const createForm = async (studentId: string) => {
@@ -27,6 +26,27 @@ const createForm = async (studentId: string) => {
     return;
   } 
     
+}
+
+const deleteForm = async (formId: string) => {
+  try{
+    const token = localStorage.getItem("token");
+    if(!token){
+      console.log("Can't delete because token wasn't found");
+      return;
+    }
+    const deleted = await axios.delete(`http://localhost:8000/api/member/deleteLevelCheck/${formId}`, 
+    {headers: {Authorization: `Bearer ${token}`},
+    });
+
+      return deleted;
+
+
+  // console.log(deleted);
+  } catch (error){
+    return error;
+  }
+  
 }
 
 interface FormProps {
@@ -176,10 +196,8 @@ const LevelCheckForm = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    
     const updateForm = async () => {
       try{
-        console.log(inputData);
       const token = localStorage.getItem("token");
         if(!token){
           console.log("token not found, you need to login again.");
@@ -190,11 +208,9 @@ const LevelCheckForm = () => {
         { data: inputData},
         { headers: {Authorization: `Bearer ${token}`},
       });
-      console.log(result);
-
       if(result.status === 200)
       {
-        navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+        navigate(`/levelCheck/${studentId}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
 
       }
     } catch (error) {
@@ -219,7 +235,7 @@ const LevelCheckForm = () => {
 const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
-  let {formId} = useParams();
+  let {studentId, formId} = useParams();
   let [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
@@ -250,7 +266,8 @@ const LevelCheckEdit = () => {
 
       if(result.status === 200)
       {
-        navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+        // navigate(`/levelCheck/${studentId}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+        console.log("success!");
 
       }
     } catch (error) {
@@ -261,7 +278,7 @@ const LevelCheckEdit = () => {
     }
     updateForm();
 
-    navigate(`/levelCheck/english/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+    // navigate(`/levelCheck/${studentId}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
  
   useEffect(() => {
@@ -341,6 +358,7 @@ const LevelCheckEdit = () => {
 
 const LevelCheckPreview = () => { 
   let params = useParams();
+  const {studentId, formId} = params;
   let location = useLocation();
   const initData = new LevelCheckEntry();
   const [data, setData] = useState<LevelCheckEntry>(initData);
@@ -352,7 +370,6 @@ const LevelCheckPreview = () => {
 
     if(location.state === null){
       const fetchData = async () =>{
-        const formId = params.formId;
         try{
           const token = localStorage.getItem("token");
           if(!token) {
@@ -484,13 +501,13 @@ const LevelCheckPreview = () => {
       { data ? (
         <>
         <div className="container flex justify-center mb-3" id="navigation">
-          <Link className="btn btn-primary" to={`/home/${params.language}`}>Home</Link>
+          <Link className="btn btn-primary" to={`/profile`}>Home</Link>
         </div>
           <div ref={componentRef}>
             <Plot data = {data} />
           </div>
           <div className="w-full flex justify-center gap-2">
-            <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary mt-3">Edit</Link>
+            <Link to={`/levelCheck/${studentId}/edit/${formId}`} className="btn btn-primary mt-3">Edit</Link>
             <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
           </div>
         </>
@@ -566,4 +583,4 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
       </div>
   )
 }
-export {createForm, LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
+export {createForm, deleteForm, LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
