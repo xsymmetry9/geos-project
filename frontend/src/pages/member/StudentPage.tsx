@@ -3,8 +3,17 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {format, parseISO} from "date-fns";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
-import { createForm } from "../LevelCheck";
+import { createForm, deleteForm } from "../LevelCheck";
 
+type StudentData = {
+        id: string;
+        name: string;
+        nickname: string;
+        email: string,
+        createdAt: string,
+        studentProgressReportEntry: [],
+        levelCheckEntries: []
+}
 type CreateInputProps = {
         title: string;
         type: string;
@@ -15,21 +24,57 @@ type CreateInputProps = {
     }
 
 type CreateLevelCheckFormButtonProps = {
-    studentId: string;
+    studentId?: string;
+    label: string;
+    className?: string;
 }
-export const CreateLevelCheckFormButton = ({studentId} : CreateLevelCheckFormButtonProps) => {
+
+type CreateLevelCheckDeleteButtonProps = {
+    studentData: StudentData;
+    setStudentData: React.Dispatch<React.SetStateAction<StudentData>>;
+    formId: string;
+    label: string;
+    className?: string;
+}
+export const CreateLevelCheckDeleteButton = ({studentData, setStudentData, formId, label, className = ""} : CreateLevelCheckDeleteButtonProps) =>{
+
+
+    const handler = async() => {
+        const deleted: any = await deleteForm(formId);
+        
+        if(deleted.status === 200){
+            setStudentData((prev:any) => ({
+                ...prev,
+                levelCheckEntries: prev.levelCheckEntries.filter((item: any) => item.id != formId ) 
+            }));
+            return;
+        } else {
+            console.log("Fail to delete");
+        }
+    }
+    return(
+        <>
+            <button className={className} onClick={handler}>
+                {label}
+            </button>
+        </>
+    )
+}
+export const CreateLevelCheckFormButton = ({studentId, label, className = ""} : CreateLevelCheckFormButtonProps) => {
     let navigate = useNavigate();
     const handler = async () => {
         const newForm = await createForm(studentId);
         if(!newForm) return;
 
-        navigate(`/levelcheck/${studentId}}`, {state: newForm});
+        navigate(`/levelcheck/${studentId}`, {state: newForm});
     }
     return(
         <>
             <button 
-                className= "text-center mt-3 text-blue-600 underline"
-                onClick={handler}>Create a form
+                className = {className}
+                onClick={handler}
+                disabled={!studentId}>
+                    {label}
             </button>
         </>
     )
@@ -160,10 +205,11 @@ export const StudentPage = () => {
             fetchAPI();
       },[id]); 
 
-          useEffect(() => {
+    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if(dropdownRef.current && !dropdownRef.current.contains(event.target as Node)){
                 setSelectedSPRID(null);
+                setSelectedLevelCheckID(null);
             } 
         }
         document.addEventListener("mousedown", handleClickOutside);
@@ -232,7 +278,7 @@ export const StudentPage = () => {
                                                         <Link to={`/levelCheck/${studentData.id}/print/${item.id}`}>View</Link>
                                                         <Link to={`/levelCheck/${studentData.id}/edit/${item.id}`}>Edit</Link>
                                                         <Link to="#">Download</Link>
-                                                        <button className="text-left" onClick = {() => deleteSPRByFormId(item.id)}>Delete</button>
+                                                        <CreateLevelCheckDeleteButton studentData = {studentData} setStudentData = {setStudentData} formId = {item.id} label="Delete" className="text-left"/>
                                                     </div>
                                                 </td>
                                             )}
@@ -243,7 +289,7 @@ export const StudentPage = () => {
                         </> 
                     ) : (
                         <>
-                            <CreateLevelCheckFormButton studentId = {id}/>                      
+                            <CreateLevelCheckFormButton studentId = {id} label = "Level Check" className="text-red-600"/>                      
                         </>
                         )}
                 </div>
