@@ -1,6 +1,5 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
-const dotenv = require('dotenv');
 
 const create = async (req, res) =>  {
     const studentId = req.body.studentId;
@@ -23,7 +22,6 @@ const create = async (req, res) =>  {
             teacherName: teacher.name,
             bookRecommendation: "",
             overallCEFR: "",
-
             speakingNameEntry: "",
             speakingScore: null,
             confidenceNameEntry: "",
@@ -37,86 +35,53 @@ const create = async (req, res) =>  {
             pronunciationNameEntry: "",
             pronunciationScore: null,
             feedback : "",
-
         }
     });
 
     return entry;
-
-    // const categories = [
-    //     "speaking",
-    //     "confidence",
-    //     "vocabulary",
-    //     "grammar", 
-    //     "listening",
-    //     "pronunciation",
-    // ];
-
-    // const seedRows = categories.flatMap((cat) => {[
-    //     {
-    //         levelCheckEntryId: entry.id,
-    //         category: cat,
-    //         type: "strength",
-    //         description: "This is a strength"
-    //     },
-    //     {
-    //         levelCheckEntryId: entry.id,
-    //         category: cat,
-    //         type: "weakness",
-    //         description: "This is a weakness"
-    //     },
-    // ]});
-
-    // console.log(seedRows);
-
-    // await prisma.strengthWeakness.createMany({
-    //     data: seedRows,
-    // })
-
-    // const finalResult = await prisma.levelCheckEntry.findUnique({
-    //     where: { id: entry.id},
-    //     include: {strengthWeaknesses: true}
-    // });
-
-    // console.log("The final result is:", finalResult);
-
-    // return finalResult;
-
-
 }
 const findOneByFormId = async (req, res) =>  {
     const formId = req.params.formId;
 
-    try{
-        const fetchData = await prisma.levelCheckEntry.findUnique({
-            where: {id: formId},
+    const fetchData = await prisma.levelCheckEntry.findUnique({
+        where: {id: formId},
             include: {
                 strengthsWeaknesses: true
-            }
-        })
-
-        if(!fetchData) {
-            return "Couldn't find entry";
-        }
-        return fetchData;
-    } catch (error) {
-        return "Failed to get data from db"
-    }
+                }
+        });
+    return fetchData;
 }
 const findAll = async (req, res) =>  {
 
 }
 const remove = async (req, res) =>  {
 
+    const formId = req.params.formId;
+    console.log(formId);
+
+    const checkIfExist = await prisma.levelCheckEntry.findUnique({
+        where: {id: formId}
+    });
+
+    if(checkIfExist){
+        const deleted = await prisma.levelCheckEntry.delete({
+        where: {id: formId}
+        });
+        console.log(deleted);
+        return deleted;
+    }
+
+    // console.log(deleted);
+
+    return null;
+
 }
 const editAll = async (req, res) =>  {
     const data = req.body.data;
     const formId = data.id;
 
-    console.log(data);
-    try{
-        const updatedEntry = await prisma.levelCheckEntry.update({
-            where: {id: formId},
+    const updatedEntry = await prisma.levelCheckEntry.update({
+        where: {id: formId},
             data: {
                 name: data.student_name,
                 feedback: data.feedback,
@@ -139,10 +104,45 @@ const editAll = async (req, res) =>  {
             }
         })
 
+        const cats = ["speaking", "confidence", "grammar", "vocabulary", "listening","pronunciation"];
+        
+        await prisma.strengthWeakness.deleteMany({
+            where: {levelCheckEntry: {id: formId}}
+        });
+        cats.forEach((cat) => {
+     
+            if(data[cat].strength.length != 0);
+            {
+                data[cat].strength.forEach(async (description) => {
+                    await prisma.strengthWeakness.create({
+                        data:{
+                            levelCheckEntry: {connect: {id: formId}},
+                            category: cat,
+                            type: "strength",
+                            description: description
+                        }
+                    });
+                });
+            }
+
+            if(data[cat].weakness.length != 0)
+            {
+                data[cat].weakness.forEach(async (description) => {
+                    await prisma.strengthWeakness.create({
+                        data:{
+                            levelCheckEntry: {connect: {id: formId}},
+                            category: cat,
+                            type: "weakness",
+                            description: description
+                        }
+                    });
+                });
+            }
+        });
+
+        console.log(updatedEntry);
+
         return updatedEntry;
-    } catch (error) {
-        return error;
-    }
 
 }
 
