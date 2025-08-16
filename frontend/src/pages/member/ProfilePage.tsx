@@ -69,10 +69,11 @@ const ProfilePage = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      console.log(id);
       const result = await axios.delete(`http://localhost:8000/api/member/deleteStudent/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
+      console.log(result);
 
       setStudents((prev) => prev.filter((student) => student.id !== id));
       console.log(result.data.message); 
@@ -124,7 +125,7 @@ const ProfilePage = () => {
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
                     <Link to={`/profile/viewStudent/${item.id}`} state={{studentData: item}} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">View Student</Link>
                     <Link to={`/spr/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600">SPR</Link>
-                    <CreateLevelCheckFormButton studentId={item.id}/>
+                    <CreateLevelCheckFormButton studentId={item.id} label="Level Check" className="cursor-pointer w-full text-center text-sm hover:underline hover:text-blue-600" />
                     <Link to={`/profile/editStudent/${item.id}`} className="cursor-pointer w-full text-center text-sm hover:text-blue-600 hover:underline">Edit</Link>
                     <button onClick={() => handleDelete(item.id)} className="cursor-pointer text-sm text-red-600 hover:underline">
                       Delete
