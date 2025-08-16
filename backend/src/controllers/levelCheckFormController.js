@@ -26,7 +26,6 @@ const updateAllDataLevelcheckFormByFormID = async (req, res) => {
     try{
 
         const result = await editAll(req, res);
-        console.log(result);
         return res.send({status: true, message: "Uploaded", data: result});
 
     } catch (error) {
@@ -34,12 +33,15 @@ const updateAllDataLevelcheckFormByFormID = async (req, res) => {
     }
 }
 const deleteLevelCheckByFormID = async (req, res) => {
+    
     try{
+        const result = await remove(req, res);
+        return res.send({data: result});
+        // return res.send({status: true, message:"Deleted", data: result});
 
     } catch (error) {
         return res.status(500).json({error: "Error in the backend"});
     }
-    return;
 }
 
 module.exports = {
