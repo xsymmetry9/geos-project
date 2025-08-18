@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
@@ -6,6 +6,7 @@ import "../styles/print.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
+import { useReactToPrint } from "react-to-print";
 
 interface FormProps {
   inputData: LevelCheckEntry,
@@ -247,6 +248,8 @@ const LevelCheckPreview = () => {
   let params = useParams();
   const [data, setData] = useState<LevelCheckEntry>();
   const componentRef = useRef<HTMLDivElement>(null);
+  const promiseResolveRef = useRef<null | (() => void)>(null);
+  const [isPrinting, setIsPrinting] = useState<boolean>(false);
 
   useEffect(() => {
       let app = JSON.parse(localStorage.getItem("GEOS_app")) || '{}';
@@ -262,6 +265,37 @@ const LevelCheckPreview = () => {
         console.log("Data not found");
       }
   },[params.id]);
+
+  const reactToPrintContent = useCallback(() => componentRef.current, []);
+
+  const handlePrint = async () => useReactToPrint({
+    content: useReactToPrint,
+    documentTitle: "Level Check Report",
+    removeAfterPrint: true,
+    pageStyle:`
+    @page {size: A4 landscape;}
+    @media print {
+    #navigation, #actions {display: none !important}
+    html, body {-webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    `,
+    onBeforePrint: () => 
+      new Promise<void>((resolve) => {
+        promiseResolveRef.current = resolve;
+        setIsPrinting(true);
+      }),
+      onAfterPrint: () => {
+        promiseResolveRef.current = null;
+        setIsPrinting(false);
+      }
+  });
+
+
+  useEffect(() => {
+    if(isPrinting && promiseResolveRef.current) {
+      promiseResolveRef.current();
+    }
+  }, [isPrinting]);
 
   const handleGeneratePDF = async () => {
     if(!componentRef.current) return;
@@ -281,9 +315,16 @@ const LevelCheckPreview = () => {
 
     const imgProps = pdf.getImageProperties(imgData);
     const imgRatio = imgProps.width / imgProps.height;
-    const imgHeight = pdfWidth / imgRatio;
+    let renderWidth = pdfWidth;
+    let renderHeight = renderWidth / imgRatio;
+    if(renderHeight > pdfHeight){
+      renderHeight = pdfHeight
+      renderWidth = renderHeight * imgRatio;
+    }
+    const offsetX = (pdfWidth - renderWidth) / 2;
+    const offsetY = (pdfHeight - renderHeight) / 2;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.addImage(imgData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
     pdf.save(`level-check-${data.student_name}.pdf`);
   }
 
@@ -300,6 +341,7 @@ const LevelCheckPreview = () => {
           <div className="w-full flex justify-center gap-2">
             <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary mt-3">Edit</Link>
             <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
+            <button className="btn-primary mt-3" onClick = {() => handlePrint(reactToPrintContent)}>Print</button>
           </div>
         </>
       ) : (
