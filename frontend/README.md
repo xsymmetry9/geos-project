@@ -6,9 +6,9 @@ App can be view here.![https://main.geos-project.pages.dev/']
 
 ## Tech Stack
 
-- **Frontend**: React, Javascript
+- **Frontend**: React, Typescript
 - **Routing**: React Router
-- **Styling**: CSS, SASS
+- **Styling**: CSS, Tailwindcss
 - **Deployment**: Cloudfare
 
 ## Setup for Backend
