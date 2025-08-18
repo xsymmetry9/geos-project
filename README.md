@@ -8,7 +8,7 @@ You can access the app here:![https://main.geos-project.pages.dev/']
 
 ## Tech Stack
 
-- **Frontend**: React, Javascript
+- **Frontend**: React, Typescript
 - **Routing**: React Router
 - **Styling**: CSS, Tailwindcss
 - **Deployment**: Cloudfare
@@ -17,12 +17,26 @@ You can access the app here:![https://main.geos-project.pages.dev/']
 
 To run the project locally, follow these steps:
 
+```
+touch .env .env.development .env.production
+```
+
+Add .env file and add the following:
+
+```
+DATABASE_URL="postgresql://username:password@localhost:5432/db_name"
+SESSION_SECRET="[Secret word]"
+PORT=[Port number]
+```
+
+
 ``` 
 cd frontend
 npm install
 npm run dev
 
 ```
+
 
 ## Features
 1. Displays data using a **radar chart** powered by Chart.js.
