@@ -65,7 +65,7 @@ const routes: RouteObject[] = [
     ]
   },
   {
-    path: "spr/:id",
+    path: "spr/:studentId",
     element: <Layout />,
     children: [
       { index: true, element: <Language /> },

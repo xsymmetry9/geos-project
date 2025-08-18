@@ -10,7 +10,6 @@ import Feedback from "@/components/Form/components/Feedback";
 import Button from "@/components/Form/components/Button";
 import Preview from "@/components/Form/components/Preview";
 
-type LevelField = keyof Levels;
 type LevelCategory = keyof StudentProgressReportEntry["levels"];
 
 export const LanguageContext = createContext<string>("english");
@@ -20,8 +19,7 @@ export const SPRForm = () => {
   const formData = location.state;
   let parameters = useParams();
   const preferedLanguage = parameters.language ? parameters.language : "english";
-  const studentId = parameters.id
-  const { language ="english", id } = useParams<{language?: string; id?: string}>();
+  const studentId = parameters.studentId
   
   const initialStudent = new StudentProgressReportEntry(); // Initialize SPR
   const [inputData, setInputData] = useState<StudentProgressReportEntry>(initialStudent); //Creates an new or edit form
@@ -40,10 +38,10 @@ export const SPRForm = () => {
       teacherEmail: formData.teacherEmail,
       language: preferedLanguage
     }));
-  },[studentId, language, formData]);
+  },[studentId, preferedLanguage, formData]);
 
   return (
-    <LanguageContext.Provider value={language}>
+    <LanguageContext.Provider value={preferedLanguage}>
       {!loading && 
         <PlotForm inputData={inputData} setInputData={setInputData} loading = {loading} setLoading ={setLoading} />
       }
