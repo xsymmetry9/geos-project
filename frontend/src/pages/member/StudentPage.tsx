@@ -2,8 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {format, parseISO} from "date-fns";
-import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
-import { createForm, deleteForm } from "../LevelCheck";
+import { createForm, getForm, deleteForm } from "../LevelCheck";
 
 type StudentData = {
         id: string;
@@ -33,6 +32,14 @@ type CreateLevelCheckDeleteButtonProps = {
     studentData: StudentData;
     setStudentData: React.Dispatch<React.SetStateAction<StudentData>>;
     formId: string;
+    label: string;
+    className?: string;
+}
+
+type ViewLevelCheckFormButtonProps = {
+    formId: string;
+    studentId: string;
+    setStudentData: React.Dispatch<React.SetStateAction<StudentData>>;
     label: string;
     className?: string;
 }
@@ -74,6 +81,26 @@ export const CreateLevelCheckFormButton = ({studentId, label, className = ""} : 
                 className = {className}
                 onClick={handler}
                 disabled={!studentId}>
+                    {label}
+            </button>
+        </>
+    )
+}
+
+export const CreateViewLevelCheckFormButton = ({formId, label, className=""} : ViewLevelCheckFormButtonProps) => {
+    let navigate = useNavigate();
+
+    const handler = async() => {
+        const getData = await getForm(formId);
+        if(!getData) return;
+
+        console.log(getData);
+    }
+
+    return(
+        <>
+            <button className= {className}
+                onClick={handler}>
                     {label}
             </button>
         </>
@@ -275,7 +302,7 @@ export const StudentPage = () => {
                                                     <div
                                                         ref={dropdownRef}
                                                         className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded absolute top-0 right-[90px]">
-                                                        <Link to={`/levelCheck/${studentData.id}/print/${item.id}`}>View</Link>
+                                                        <Link to={`/levelCheck/${studentData.id}/preview/${item.id}`}>View</Link>
                                                         <Link to={`/levelCheck/${studentData.id}/edit/${item.id}`}>Edit</Link>
                                                         <Link to="#">Download</Link>
                                                         <CreateLevelCheckDeleteButton studentData = {studentData} setStudentData = {setStudentData} formId = {item.id} label="Delete" className="text-left"/>
