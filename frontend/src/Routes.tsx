@@ -11,7 +11,6 @@ import TeacherPage from "./pages/Admin/TeacherPage";
 import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/Nonmember/NonMember.js";
 import ProfilePage from "./pages/member/ProfilePage";
 import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
-import Test from "./pages/Test";
 import AuthRedirect from "./components/AuthRedirect";
 import ForgotPassword from "./pages/Nonmember/ForgotPassword";
 import {StudentPage, CreateStudent, EditStudent} from "./pages/member/StudentPage";
@@ -94,10 +93,6 @@ const routes: RouteObject[] = [
       {path: "teacherPage/:email", element: <TeacherPage />}
     ]
   },
-  // {
-  //   path: "test",
-  //   element: <Test />,
-  // },
 ];
 
 export default routes;
