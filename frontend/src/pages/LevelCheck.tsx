@@ -28,6 +28,26 @@ const createForm = async (studentId: string) => {
     
 }
 
+const getForm = async(formId: string) => {
+  try {
+    const token = localStorage.getItem("token");
+    if(!token){
+      console.log("token not found, you need to login again");
+      return;
+    }
+
+    const res = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+      {headers: { Authorization: `Bearer ${token}`},
+    });
+
+    return res;
+
+  } catch(error) {
+    console.log(error);
+
+  }
+}
+
 const deleteForm = async (formId: string) => {
   try{
     const token = localStorage.getItem("token");
@@ -266,7 +286,7 @@ const LevelCheckEdit = () => {
 
       if(result.status === 200)
       {
-        // navigate(`/levelCheck/${studentId}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+        navigate(`/levelCheck/${studentId}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
         console.log("success!");
 
       }
@@ -298,49 +318,29 @@ const LevelCheckEdit = () => {
         if(result.status === 200 )
         {
           const data = result.data.data;
-          setInputData((prev) => ({
+
+          setInputData((prev: LevelCheckEntry) => ({
             ...prev,
             id: data.id,
-            dateCreated: data.createdAt,
-            student_name: data.name,
+            dateCreated: data.dateCreated,
+            student_name: data.student_name,
             feedback: data.feedback,
             bookRecommendation: data.bookRecommendation,
             overallCEFR: data.overallCEFR,
-            speaking: ({...prev.speaking,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            confidence: ({...prev.confidence,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            grammar: ({...prev.grammar,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            vocabulary: ({...prev.vocabulary,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            listening: ({...prev.listening,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            pronunciation: ({...prev.pronunciation,
-              level_name: data.speakingNameEntry,
-              score: data.speakingScore
-            }),
-            
+            speaking: data.speaking,
+            confidence: data.confidence,
+            grammar: data.grammar,
+            vocabulary: data.vocabulary,
+            pronunciation: data.pronunciation,
+            listening: data.listening,
+            }));
 
-        }));
-
-        console.log(data);
         } else {
           console.log("Error in the backend");
         }
 
       } catch (error) {
-        console.log("Failed to fetch data");
+        console.log("Failed to fetch data", error);
       } finally {
         setLoading(false);
       }
@@ -387,34 +387,48 @@ const LevelCheckPreview = () => {
           setData((prev: LevelCheckEntry) => ({
             ...prev,
             id: getData.id,
-            dateCreated: getData.createdAt ?? "",
-            student_name: getData.name ?? "",
+            dateCreated: getData.dateCreated ?? "",
+            student_name: getData.student_name ?? "",
             feedback: getData.feedback ?? "",
             bookRecommendation: getData.bookRecommendation ?? "",
             overallCEFR: getData.overallCEFR ?? "",
             speaking: ({...prev.speaking,
-              level_name: getData.speakingNameEntry,
-              score: getData.speakingScore
+              level_name: getData.speaking.level_name,
+              score: getData.speaking.score,
+              strength: Array.isArray(getData.speaking.weakness) ? [...getData.speaking.strength] : [],
+              weakness: Array.isArray(getData.speaking.weakness) ? [...getData.speaking.weakness] : [],
+         
             }),
             confidence: ({...prev.confidence,
-              level_name: getData.confidenceNameEntry,
-              score: getData.confidenceScore
+              level_name: getData.confidence.level_name,
+              score: getData.confidence.score,
+              strength: Array.isArray(getData.confidence.weakness) ? [...getData.confidence.strength] : [],
+              weakness: Array.isArray(getData.confidence.weakness) ? [...getData.confidence.weakness] : [],
+
             }),
             grammar: ({...prev.grammar,
-              level_name: getData.grammarNameEntry,
-              score: getData.grammarScore
+              level_name: getData.grammar.level_name,
+              score: getData.grammar.score,
+              strength: Array.isArray(getData.grammar.stregnth) ? [...getData.grammar.strength] : [],
+              weakness: Array.isArray(getData.grammar.weakness) ? [...getData.grammar.weakness] : [],
             }),
             vocabulary: ({...prev.vocabulary,
-              level_name: getData.vocabularyNameEntry,
-              score: getData.vocabularyScore
+              level_name: getData.vocabulary.level_name,
+              score: getData.vocabulary.score,
+              strength: Array.isArray(getData.vocabulary.strength) ? [...getData.vocabulary.strength] : [],
+              weakness: Array.isArray(getData.vocabulary.weakness) ? [...getData.vocabulary.weakness] : [],
             }),
             listening: ({...prev.listening,
-              level_name: getData.listeningNameEntry,
-              score: getData.listeningScore
+              level_name: getData.listening.level_name,
+              score: getData.listening.score,
+              strength: Array.isArray(getData.listening.strength) ? [...getData.listening.strength] : [],
+              weakness: Array.isArray(getData.listening.weakness) ? [...getData.listening.weakness] : [],
             }),
             pronunciation: ({...prev.pronunciation,
-              level_name: getData.pronunciationNameEntry,
-              score: getData.pronunciationScore
+              level_name: getData.pronunciation.level_name,
+              score: getData.pronunciation.score,
+              strength: Array.isArray(getData.pronunciation.strength) ? [...getData.pronunciation.strength] : [],
+              weakness: Array.isArray(getData.pronunciation.weakness) ? [...getData.pronunciation.weakness] : []
             }),
           }));
         } else {
@@ -445,27 +459,39 @@ const LevelCheckPreview = () => {
           dateCreated: userData.dateCreated,
           speaking: ({...prev.speaking,
             level_name: userData.speaking.level_name,
-            score: userData.speaking.score
+            score: userData.speaking.score,
+            strength: userData.speaking.strength,
+            weakness: userData.speaking.weakness,
           }),
           confidence: ({...prev.confidence,
             level_name: userData.confidence.level_name,
-            score: userData.confidence.score
+            score: userData.confidence.score,
+            strength: userData.confidence.strength,
+            weakness: userData.confidence.weakness,
           }),
           grammar: ({...prev.grammar,
             level_name: userData.grammar.level_name,
-            score: userData.grammar.score
+            score: userData.grammar.score,
+            strength: userData.grammar.strength,
+            weakness: userData.grammar.weakness,
           }),
           vocabulary: ({...prev.vocabulary,
             level_name: userData.vocabulary.level_name,
-            score: userData.vocabulary.score
+            score: userData.vocabulary.score,
+            strength: userData.vocabulary.strength,
+            weakness: userData.vocabulary.weakness,
           }),
           listening: ({...prev.listening,
             level_name: userData.listening.level_name,
-            score: userData.listening.score
+            score: userData.listening.score,
+            strength: userData.listening.strength,
+            weakness: userData.listening.weakness,
           }),
           pronunciation: ({...prev.pronunciation,
             level_name: userData.pronunciation.level_name,
-            score: userData.pronunciation.score
+            score: userData.pronunciation.score,
+            strength: userData.pronunciation.strength,
+            weakness: userData.pronunciation.weakness,
           }),
       }));
     }
@@ -583,4 +609,4 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
       </div>
   )
 }
-export {createForm, deleteForm, LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
+export {createForm, getForm, deleteForm, LevelCheckEdit, LevelCheckForm, LevelCheckPreview};
