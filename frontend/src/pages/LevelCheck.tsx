@@ -16,14 +16,14 @@ interface FormProps {
 }
 const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
   return(
-     <div className="w-full h-full max-w-[55em] mx-auto border px-3 py-6">
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="font-secondary text-lg py-3">Oral Assessment Guidelines</h1>
+     <div className="font-secondary w-full h-full max-w-[50em] mx-auto shadow-2xl px-3 py-6">
+      <div className="mt-6 flex flex-col justify-center items-center">
+        <h1 className="text-2xl font-bold py-3">Oral Assessment Form</h1>
       </div>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
+        <section className="px-3 py-6">
           <div className="p-1">
-            <label htmlFor="student_name"> Student Name:
+            <label htmlFor="student_name"><span className="font-bold text-md">Student Name:</span> 
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
                 name="student_name" 
                 id="input-student_name" 
@@ -33,7 +33,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
             </label>
           </div>
           <div className="p-1">
-            <label htmlFor="dateCreated"> Date:
+            <label className="text-md font-bold" htmlFor="dateCreated"><span className="font-bold text-md">Date</span> 
               <input 
                 type="date" 
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
@@ -44,7 +44,8 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
             </label>
           </div>
         </section>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
+        <section className="px-3 py-6">
+          <h2 className="text-lg py-2 bg-orange-500 text-white w-full text-center font-bold">Level Assessment</h2>
         <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
@@ -52,25 +53,29 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
         <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
         </section>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
-           <label className="font-bold" htmlFor ="bookRecommendation">Book Recommendation:
-            <input 
-              type="text" 
-              name="bookRecommendation" 
-              id="bookRecommendation"
-              value={inputData.bookRecommendation}
-              onChange={handleChange}
-              className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
-          </label>
-          <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
-           <label htmlFor="feedback">Overall Level
-            <textarea 
-              className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
-              name="feedback"  
-              onChange={handleChange} 
-              id="input-feeback" 
-              value={inputData.feedback}/>
-          </label>
+        <section className="px-3 py-6" id="input-feedback">
+          <h2 className="text-lg py-2 bg-orange-500 text-white w-full text-center font-bold">Final Notes</h2>
+          <div className="mt-6">
+            <label className="font-bold text-md" htmlFor ="bookRecommendation">Book Recommendation:
+              <input 
+                type="text" 
+                name="bookRecommendation" 
+                id="bookRecommendation"
+                value={inputData.bookRecommendation}
+                onChange={handleChange}
+                className="font-normal form-input font-primary text-base text-black mt-1 mb-2 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
+            </label>
+            <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
+             <label className="font-bold text-md" htmlFor="feedback">Comment:
+              <textarea 
+                className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+                name="feedback"  
+                onChange={handleChange} 
+                id="input-feeback" 
+                value={inputData.feedback}/>
+            </label>
+          </div>
+  
         </section>
         <div className="w-full flex justify-center pt-3">
          <input type="submit" className="btn-primary" value="submit"/>
@@ -106,13 +111,6 @@ const LevelCheckForm = () => {
       console.log("It' wasn't loaded well");
 
     }
-
-    // getUser.levelCheck.forEach((item: any) =>  {
-    //   if(item.id === inputData.id)
-    //   {
-    //     console.log(item);
-    //   }
-    // })
     
   }, []);
 
