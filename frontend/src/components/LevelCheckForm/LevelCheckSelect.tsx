@@ -28,14 +28,14 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     switch (level) {
       case "Pre-A1": return [0, 2];
       case "A1": return [2, 3];
-      case "A1-A2": return [3, 4];
+      case "A1 - A2": return [3, 4];
       case "A2": return [4, 5];
-      case "A2-B1": return [5, 6];
+      case "A2 - B1": return [5, 6];
       case "B1": return [6, 7];
       case "B1-B2": return [7, 8];
       case "B2": return [8, 9];
       case "C1": return [9, 9.5];
-      case "C1+": return [9.5, 10];
+      case "C1+": return [9.5, 10.5];
       default: return [0, 10];
     }
   };
