@@ -14,6 +14,45 @@ interface FormProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
+
+interface CommentProps {
+  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>,
+  className: string,
+  name: string,
+  id: string,
+  value: string
+}
+
+const Comment: React.FC<CommentProps> = ({className, name, setInputData, id, value}) => {
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const {name, value} = e.currentTarget;
+
+    if(value.length > 715)
+    {
+      setMessage("You have reached the max.  Text will overflow");
+    } else {
+      setMessage("");
+      setInputData((prev: any) => ({
+        ...prev,
+          [name]: value,
+    }));
+    }
+  }
+  return(
+    <>
+      <textarea 
+           className= {className} 
+           name={name} 
+           onChange={handleChange} 
+           id={id} 
+           value= {value}/>
+      <p className="text-red-600 text-sm">{message}</p>
+    </>
+
+  )
+}
 const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
   return(
      <div className="font-secondary w-full h-full max-w-[50em] mx-auto shadow-2xl px-3 py-6">
@@ -66,13 +105,13 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
                 className="font-normal form-input font-primary text-base text-black mt-1 mb-2 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
             </label>
             <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
-             <label className="font-bold text-md" htmlFor="feedback">Comment:
-              <textarea 
-                className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
-                name="feedback"  
-                onChange={handleChange} 
-                id="input-feeback" 
-                value={inputData.feedback}/>
+             <label htmlFor="feedback"><span className="font-bold text-md">Comment:</span> 
+             <Comment 
+                className= "block w-full h-[200px] rounded-md bg-white mt-1 px-3 py-1.5 text-base text-gray-900 outline-2 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+                name ="feedback" 
+                setInputData = {setInputData} 
+                id = "input-feedback" 
+                value= {inputData.feedback}/>
             </label>
           </div>
   
