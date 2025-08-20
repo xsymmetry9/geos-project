@@ -33,7 +33,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
             </label>
           </div>
           <div className="p-1">
-            <label className="text-md font-bold" htmlFor="dateCreated"><span className="font-bold text-md">Date</span> 
+            <label htmlFor="dateCreated"><span className="font-bold text-md">Date</span> 
               <input 
                 type="date" 
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
