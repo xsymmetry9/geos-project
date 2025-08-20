@@ -306,29 +306,6 @@ const LevelCheckPreview = () => {
     }
   }, [params.id]);
 
-  const reactToPrintContent = useCallback(() => componentRef.current, []);
-
-  // const handlePrint = useReactToPrint({
-  //   content: reactToPrintContent,
-  //   documentTitle: "Level Check Report",
-  //   removeAfterPrint: true,
-  //   pageStyle: `
-  //     @page { size: A4 landscape;}
-  //     @media print {
-  //       #navigation, #actions { display: none !important; }
-  //       html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  //     }
-  //   `,
-  //   onBeforeGetContent: () =>
-  //     new Promise<void>((resolve) => {
-  //       setIsPreparing(true);
-  //       setTimeout(() => {
-  //         setIsPreparing(false);
-  //         resolve();
-  //       }, 0);
-  //     }),
-  // });
-
   const printFromPdf = async () => {
   if (!componentRef.current) return;
 
