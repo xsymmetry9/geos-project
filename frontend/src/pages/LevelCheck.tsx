@@ -6,7 +6,6 @@ import "../styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
-import { useReactToPrint } from "react-to-print";
 
 interface FormProps {
   inputData: LevelCheckEntry,
@@ -309,32 +308,78 @@ const LevelCheckPreview = () => {
 
   const reactToPrintContent = useCallback(() => componentRef.current, []);
 
-  const handlePrint = useReactToPrint({
-    content: reactToPrintContent,
-    documentTitle: "Level Check Report",
-    removeAfterPrint: true,
-    pageStyle: `
-      @page { size: A4 landscape; margin: 10mm; }
-      @media print {
-        #navigation, #actions { display: none !important; }
-        html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      }
-    `,
-    onBeforeGetContent: () =>
-      new Promise<void>((resolve) => {
-        setIsPreparing(true);
-        setTimeout(() => {
-          setIsPreparing(false);
-          resolve();
-        }, 0);
-      }),
-  });
+  // const handlePrint = useReactToPrint({
+  //   content: reactToPrintContent,
+  //   documentTitle: "Level Check Report",
+  //   removeAfterPrint: true,
+  //   pageStyle: `
+  //     @page { size: A4 landscape;}
+  //     @media print {
+  //       #navigation, #actions { display: none !important; }
+  //       html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  //     }
+  //   `,
+  //   onBeforeGetContent: () =>
+  //     new Promise<void>((resolve) => {
+  //       setIsPreparing(true);
+  //       setTimeout(() => {
+  //         setIsPreparing(false);
+  //         resolve();
+  //       }, 0);
+  //     }),
+  // });
 
-  // useEffect(() => {
-  //   if(isPrinting && promiseResolveRef.current) {
-  //     promiseResolveRef.current();
-  //   }
-  // }, [isPrinting]);
+  const printFromPdf = async () => {
+  if (!componentRef.current) return;
+
+  const canvas = await html2canvas(componentRef.current, {
+    scale: 2,
+    backgroundColor: "#fff",
+    useCORS: true,
+  });
+  const imgData = canvas.toDataURL("image/png");
+
+  // Landscape page — this controls print orientation in the PDF
+  const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  // Use img props ONLY for sizing inside the PDF
+  const { width: imgW, height: imgH } = pdf.getImageProperties(imgData);
+  const scale = Math.min(pageW / imgW, pageH / imgH);
+  const renderW = imgW * scale;
+  const renderH = imgH * scale;
+  const x = (pageW - renderW) / 2;
+  const y = (pageH - renderH) / 2;
+
+  pdf.addImage(imgData, "PNG", x, y, renderW, renderH);
+
+  // Ask PDF viewers to open the print dialog
+  if ((pdf as any).autoPrint) pdf.autoPrint();
+
+  // Open in hidden iframe and trigger print
+  const blobUrl = pdf.output("bloburl");
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.right = "0";
+  iframe.style.bottom = "0";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.src = blobUrl;
+  document.body.appendChild(iframe);
+  iframe.onload = () => {
+    iframe.contentWindow?.focus();
+    iframe.contentWindow?.print();
+  };
+};
+
+
+  useEffect(() => {
+    if(isPreparing && promiseResolveRef.current) {
+      promiseResolveRef.current();
+    }
+  }, [isPreparing]);
 
   const handleGeneratePDF = async () => {
     if(!componentRef.current) return;
@@ -380,7 +425,7 @@ const LevelCheckPreview = () => {
           <div className="pb-12 mt-9 w-full flex justify-center gap-2">
             <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary">Edit</Link>
             <button onClick={handleGeneratePDF} className="btn-primary">Download to PDF</button>
-            <button className="btn-primary" onClick = {() => handlePrint(reactToPrintContent)}>Print</button>
+            <button className="btn-primary" onClick = {printFromPdf}>Print</button>
           </div>
         </>
       ) : (
@@ -395,7 +440,7 @@ const LevelCheckPreview = () => {
 }
 const Plot: React.FC<LevelCheckEntry>=({data}) => {
   return(
-    <div className="px-12" id="print-preview">
+    <div className="px-12 w-full" id="print-preview">
         <div className="font-primary container" id="level-check-content">
           <div className="flex w-full justify-between pt-4">
             <div className="mt-3">

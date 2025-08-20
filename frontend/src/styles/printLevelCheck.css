@@ -102,7 +102,7 @@
 
 @page {
   size: A4 landscape;
-  margin: 0;
+  margin: 8mm;
 }
 @media print {
   html, body {
@@ -115,9 +115,8 @@
 
   /* Your printable root */
   .print-component {
-    display: block;
+  
     border: none;
-    /* Don't use "size: A4" here; it's invalid on elements */
     width: auto !important;
     height: auto !important;
   }
