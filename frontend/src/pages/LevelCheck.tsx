@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
-import "../styles/print.css"
+import "../styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
@@ -286,53 +286,55 @@ const LevelCheckPreview = () => {
   const [data, setData] = useState<LevelCheckEntry>();
   const componentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<null | (() => void)>(null);
-  const [isPrinting, setIsPrinting] = useState<boolean>(false);
+  const [isPreparing, setIsPreparing] = useState<boolean>(false);
 
-  useEffect(() => {
-      let app = JSON.parse(localStorage.getItem("GEOS_app")) || '{}';
-      const levelCheckData = app.levelCheck || '[]';
+ useEffect(() => {
+    try {
+      const raw = localStorage.getItem("GEOS_app");
+      const app = JSON.parse(raw ?? "{}");
+      const levelCheckData: any[] = Array.isArray(app?.levelCheck) ? app.levelCheck : [];
 
-      const index = levelCheckData.findIndex((item: any) => item.id === params.id);
-      console.log(index);
-      if(index != -1)
-      {
-        console.log("Data found");
+      const index = levelCheckData.findIndex((item) => item.id === params.id);
+      if (index !== -1) {
         setData(levelCheckData[index]);
       } else {
         console.log("Data not found");
+        setData(null);
       }
-  },[params.id]);
+    } catch (e) {
+      console.error("Failed to read GEOS_app:", e);
+      setData(null);
+    }
+  }, [params.id]);
 
   const reactToPrintContent = useCallback(() => componentRef.current, []);
 
-  const handlePrint = async () => useReactToPrint({
-    content: useReactToPrint,
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
     documentTitle: "Level Check Report",
     removeAfterPrint: true,
-    pageStyle:`
-    @page {size: A4 landscape;}
-    @media print {
-    #navigation, #actions {display: none !important}
-    html, body {-webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    }
-    `,
-    onBeforePrint: () => 
-      new Promise<void>((resolve) => {
-        promiseResolveRef.current = resolve;
-        setIsPrinting(true);
-      }),
-      onAfterPrint: () => {
-        promiseResolveRef.current = null;
-        setIsPrinting(false);
+    pageStyle: `
+      @page { size: A4 landscape; margin: 10mm; }
+      @media print {
+        #navigation, #actions { display: none !important; }
+        html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
+    `,
+    onBeforeGetContent: () =>
+      new Promise<void>((resolve) => {
+        setIsPreparing(true);
+        setTimeout(() => {
+          setIsPreparing(false);
+          resolve();
+        }, 0);
+      }),
   });
 
-
-  useEffect(() => {
-    if(isPrinting && promiseResolveRef.current) {
-      promiseResolveRef.current();
-    }
-  }, [isPrinting]);
+  // useEffect(() => {
+  //   if(isPrinting && promiseResolveRef.current) {
+  //     promiseResolveRef.current();
+  //   }
+  // }, [isPrinting]);
 
   const handleGeneratePDF = async () => {
     if(!componentRef.current) return;
@@ -369,16 +371,16 @@ const LevelCheckPreview = () => {
     <> 
       { data ? (
         <>
-        <div className="container flex justify-center mb-3" id="navigation">
+        <div className="container flex justify-center mt-12 mb-3" id="navigation">
           <Link className="btn btn-primary" to={`/home/${params.language}`}>Home</Link>
         </div>
-          <div ref={componentRef}>
+          <div className="print-component-landscape" ref={componentRef}>
             <Plot data = {data} />
           </div>
-          <div className="w-full flex justify-center gap-2">
-            <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary mt-3">Edit</Link>
-            <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
-            <button className="btn-primary mt-3" onClick = {() => handlePrint(reactToPrintContent)}>Print</button>
+          <div className="pb-12 mt-9 w-full flex justify-center gap-2">
+            <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary">Edit</Link>
+            <button onClick={handleGeneratePDF} className="btn-primary">Download to PDF</button>
+            <button className="btn-primary" onClick = {() => handlePrint(reactToPrintContent)}>Print</button>
           </div>
         </>
       ) : (
@@ -393,7 +395,7 @@ const LevelCheckPreview = () => {
 }
 const Plot: React.FC<LevelCheckEntry>=({data}) => {
   return(
-    <div className="print-component-landscape px-12" id="print-preview">
+    <div className="px-12" id="print-preview">
         <div className="font-primary container" id="level-check-content">
           <div className="flex w-full justify-between pt-4">
             <div className="mt-3">
