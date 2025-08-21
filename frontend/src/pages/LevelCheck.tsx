@@ -628,13 +628,13 @@ const LevelCheckPreview = () => {
     <> 
       { data ? (
         <>
-        <div className="container flex justify-center mb-3" id="navigation">
+        <div className="container flex justify-center mt-12 mb-3" id="navigation">
           <Link className="btn btn-primary" to={`/profile`}>Home</Link>
         </div>
           <div className="print-component-landscape" ref={componentRef}>
             <Plot data = {data} />
           </div>
-          <div className="w-full flex justify-center gap-2">
+          <div className="w-full flex justify-center mt-6 mb-12 gap-2">
             <Link to={`/levelCheck/${studentId}/edit/${formId}`} className="btn btn-primary mt-3">Edit</Link>
             <button onClick={handleGeneratePDF} className="btn-primary mt-3">Download to PDF</button>
           </div>
@@ -654,16 +654,16 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
     <div className="print-component-landscape px-12" id="print-preview">
         <div className="font-primary container" id="level-check-content">
           <div className="flex w-full justify-between pt-4">
-            <div className="mt-3">
+            <div className="ml-[50px] mt-3">
               <p className ="ml-3 text-[14px]"><span className="font-bold">Name: </span>{data.student_name}</p>
               <p className ="ml-3 text-[14px]"><span className="font-bold">Date: </span>{safeFormatISO(data.dateCreated, "MM/dd/yyyy")}</p>
             </div>
               <h1 className="text-center text-lg font-bold mt-6">Oral Assessment Guidelines</h1>
-              <img className="" width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
+              <img className="mr-[50px]" width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
 
           </div>
           <div id="table-container">
-            <table className="w-[1026px] mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+            <table className="w-[1026px] mx-auto mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
               <colgroup>
                 <col className="w-[100px]" />
                 <col className="w-[400px]" />
@@ -694,7 +694,7 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
                 })}
               </tbody>
             </table>
-            <div className="w-[1026px] mt-3 border border-black">
+            <div className="w-[1026px] mx-auto mt-3 border border-black">
               <div className="font-bold text-white text-[15px] w-full">
                 <div className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
                   <p className="border-r border-black bg-teal-600 p-1 text-center">Comment</p>
