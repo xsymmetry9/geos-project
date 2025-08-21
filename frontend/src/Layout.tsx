@@ -7,10 +7,8 @@ const Layout = () => {
   return (
     <div className="min-h-screen bg-gray-100 grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <main className="px-4 py-6">
-        <div className="mx-auto w-full max-w-[1100px] h-full">
+      <main className="mx-auto w-full max-w-[1100px] h-full">
           <Outlet />
-        </div>
       </main>
       <Footer />
     </div>

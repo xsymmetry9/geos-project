@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
-import "../styles/print.css"
+import "../styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { safeFormatISO } from "@/utils/functions";
@@ -75,17 +75,54 @@ interface FormProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
+interface CommentProps {
+  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>,
+  className: string,
+  name: string,
+  id: string,
+  value: string
+}
 
+const Comment: React.FC<CommentProps> = ({className, name, setInputData, id, value}) => {
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const {name, value} = e.currentTarget;
+
+    if(value.length > 715)
+    {
+      setMessage("You have reached the max.  Text will overflow");
+    } else {
+      setMessage("");
+      setInputData((prev: any) => ({
+        ...prev,
+          [name]: value,
+    }));
+    }
+  }
+  return(
+    <>
+      <textarea 
+           className= {className} 
+           name={name} 
+           onChange={handleChange} 
+           id={id} 
+           value= {value}/>
+      <p className="text-red-600 text-sm">{message}</p>
+    </>
+
+  )
+}
 const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
   return(
-     <div className="w-full h-full bg-white max-w-[55em] mx-auto px-3 py-6 shadow-lg">
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="font-bold text-2xl py-3">Oral Assessment Guidelines</h1>
+     <div className="font-secondary w-full h-full max-w-[50em] mx-auto shadow-2xl px-3 py-6">
+      <div className="mt-6 flex flex-col justify-center items-center">
+        <h1 className="text-2xl font-bold py-3">Oral Assessment Form</h1>
       </div>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
+        <section className="px-3 py-6">
           <div className="p-1">
-            <label htmlFor="student_name"> Student Name:
+            <label htmlFor="student_name"><span className="font-bold text-md">Student Name:</span> 
               <input className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
                 name="student_name" 
                 id="input-student_name" 
@@ -95,7 +132,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
             </label>
           </div>
           <div className="p-1">
-            <label htmlFor="dateCreated"> Date:
+            <label htmlFor="dateCreated"><span className="font-bold text-md">Date</span> 
               <input 
                 type="date" 
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
@@ -106,7 +143,8 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
             </label>
           </div>
         </section>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green">
+        <section className="px-3 py-6">
+          <h2 className="text-lg py-2 bg-orange-500 text-white w-full text-center font-bold">Level Assessment</h2>
         <LevelCheckSelect item="speaking" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="confidence" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="grammar" inputData ={inputData} setInputData={setInputData} />
@@ -114,25 +152,29 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
         <LevelCheckSelect item="pronunciation" inputData ={inputData} setInputData={setInputData} />
         <LevelCheckSelect item="listening" inputData ={inputData} setInputData={setInputData} />
         </section>
-        <section className="px-3 py-6 border-b-6 border-double border-dark-green" id="input-feedback">
-           <label className="font-bold" htmlFor ="bookRecommendation">Book Recommendation:
-            <input 
-              type="text" 
-              name="bookRecommendation" 
-              id="bookRecommendation"
-              value={inputData.bookRecommendation}
-              onChange={handleChange}
-              className="font-normal form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
-          </label>
-          <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
-           <label htmlFor="feedback">Overall Level
-            <textarea 
-              className="block w-full h-[400px] rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
-              name="feedback"  
-              onChange={handleChange} 
-              id="input-feeback" 
-              value={inputData.feedback}/>
-          </label>
+        <section className="px-3 py-6" id="input-feedback">
+          <h2 className="text-lg py-2 bg-orange-500 text-white w-full text-center font-bold">Final Notes</h2>
+          <div className="mt-6">
+            <label className="font-bold text-md" htmlFor ="bookRecommendation">Book Recommendation:
+              <input 
+                type="text" 
+                name="bookRecommendation" 
+                id="bookRecommendation"
+                value={inputData.bookRecommendation}
+                onChange={handleChange}
+                className="font-normal form-input font-primary text-base text-black mt-1 mb-2 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
+            </label>
+            <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
+             <label htmlFor="feedback"><span className="font-bold text-md">Comment:</span> 
+             <Comment 
+                className= "block w-full h-[200px] rounded-md bg-white mt-1 px-3 py-1.5 text-base text-gray-900 outline-2 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
+                name ="feedback" 
+                setInputData = {setInputData} 
+                id = "input-feedback" 
+                value= {inputData.feedback}/>
+            </label>
+          </div>
+  
         </section>
         <div className="w-full flex justify-center pt-3">
          <input type="submit" className="btn-primary" value="submit"/>
@@ -359,6 +401,8 @@ const LevelCheckEdit = () => {
 const LevelCheckPreview = () => { 
   let params = useParams();
   const {studentId, formId} = params;
+  const promiseResolveRef = useRef<null | (() => void)>(null);
+  const [isPreparing, setIsPreparing] = useState<boolean>(false);
   let location = useLocation();
   const initData = new LevelCheckEntry();
   const [data, setData] = useState<LevelCheckEntry>(initData);
@@ -497,6 +541,57 @@ const LevelCheckPreview = () => {
     }
   },[]);
 
+  useEffect(() => {
+    if(isPreparing && promiseResolveRef.current) {
+      promiseResolveRef.current();
+    }
+  }, [isPreparing]);
+
+  const printFromPdf = async () => {
+  if (!componentRef.current) return;
+
+  const canvas = await html2canvas(componentRef.current, {
+    scale: 2,
+    backgroundColor: "#fff",
+    useCORS: true,
+  });
+  const imgData = canvas.toDataURL("image/png");
+
+  // Landscape page — this controls print orientation in the PDF
+  const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  // Use img props ONLY for sizing inside the PDF
+  const { width: imgW, height: imgH } = pdf.getImageProperties(imgData);
+  const scale = Math.min(pageW / imgW, pageH / imgH);
+  const renderW = imgW * scale;
+  const renderH = imgH * scale;
+  const x = (pageW - renderW) / 2;
+  const y = (pageH - renderH) / 2;
+
+  pdf.addImage(imgData, "PNG", x, y, renderW, renderH);
+
+  // Ask PDF viewers to open the print dialog
+  if ((pdf as any).autoPrint) pdf.autoPrint();
+
+  // Open in hidden iframe and trigger print
+  const blobUrl = pdf.output("bloburl");
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.right = "0";
+  iframe.style.bottom = "0";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.src = blobUrl;
+  document.body.appendChild(iframe);
+  iframe.onload = () => {
+    iframe.contentWindow?.focus();
+    iframe.contentWindow?.print();
+  };
+};
+
   const handleGeneratePDF = async () => {
     if(!componentRef.current) return;
 
@@ -515,9 +610,16 @@ const LevelCheckPreview = () => {
 
     const imgProps = pdf.getImageProperties(imgData);
     const imgRatio = imgProps.width / imgProps.height;
-    const imgHeight = pdfWidth / imgRatio;
+    let renderWidth = pdfWidth;
+    let renderHeight = renderWidth / imgRatio;
+    if(renderHeight > pdfHeight){
+      renderHeight = pdfHeight
+      renderWidth = renderHeight * imgRatio;
+    }
+    const offsetX = (pdfWidth - renderWidth) / 2;
+    const offsetY = (pdfHeight - renderHeight) / 2;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+    pdf.addImage(imgData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
     pdf.save(`level-check-${data.student_name}.pdf`);
   }
 
@@ -529,7 +631,7 @@ const LevelCheckPreview = () => {
         <div className="container flex justify-center mb-3" id="navigation">
           <Link className="btn btn-primary" to={`/profile`}>Home</Link>
         </div>
-          <div ref={componentRef}>
+          <div className="print-component-landscape" ref={componentRef}>
             <Plot data = {data} />
           </div>
           <div className="w-full flex justify-center gap-2">
@@ -561,21 +663,28 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
 
           </div>
           <div id="table-container">
-            <table className="w-full mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+            <table className="w-[1026px] mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+              <colgroup>
+                <col className="w-[100px]" />
+                <col className="w-[400px]" />
+                <col className="w-[400px]" />
+                <col className="w-[56px]" />
+                <col className="w-[70px]" />
+              </colgroup>
               <thead className="text-[15px]">
-                <tr>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Category</td>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Strength</td>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Weakness</td>
-                  <td className="text-center font-bold border-r border-black py-1 bg-orange-300">Score</td>
-                  <td className="text-center font-bold py-1 bg-orange-300">CEFR</td>
+                <tr className="text-white font-bold text-center h-[30px] bg-teal-600">
+                  <td className="border-r border-black">Category</td>
+                  <td className="border-r border-black">Strength</td>
+                  <td className="border-r border-black">Weakness</td>
+                  <td className="text-black border-r border-black bg-orange-300">Score</td>
+                  <td className="text-black bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"].map((item) => {
                   return(
                     <tr key={item} className="h-[72px]">
-                      <td className="border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
+                      <td className="w-[100px] border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
                       <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-t border-black px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
@@ -585,9 +694,9 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
                 })}
               </tbody>
             </table>
-            <div className="w-full mt-3 border border-black">
+            <div className="w-[1026px] mt-3 border border-black">
               <div className="font-bold text-white text-[15px] w-full">
-                <div className="grid grid-cols-[130px_1fr_125px] w-full justify-self-center border-b border-black">
+                <div className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
                   <p className="border-r border-black bg-teal-600 p-1 text-center">Comment</p>
                   <p className="border-r border-black bg-teal-600 p-1"></p>
                   <p className="p-1 bg-orange-300 text-center text-black">Level</p>

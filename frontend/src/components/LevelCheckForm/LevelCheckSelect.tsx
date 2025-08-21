@@ -30,14 +30,14 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     switch (level) {
       case "Pre-A1": return [0, 2];
       case "A1": return [2, 3];
-      case "A1-A2": return [3, 4];
+      case "A1 - A2": return [3, 4];
       case "A2": return [4, 5];
-      case "A2-B1": return [5, 6];
+      case "A2 - B1": return [5, 6];
       case "B1": return [6, 7];
       case "B1-B2": return [7, 8];
       case "B2": return [8, 9];
       case "C1": return [9, 9.5];
-      case "C1+": return [9.5, 10];
+      case "C1+": return [9.5, 10.5];
       default: return [0, 10];
     }
   };
@@ -82,27 +82,9 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     }));
   };
 
-  const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
-    if(raw === ""){
-      setScore(undefined);
-      setScoreError("Score is required");
-      return;
-    }
-
-    const inputScore = parseFloat(raw);
-
-    if(Number.isNaN(inputScore)) {
-      setScore(undefined);
-      setScoreError("Score must be a number");
-      return;
-    }
-
-    setScore(inputScore);
-    setInputData(prev => ({
-      ...prev, 
-      [item]: {...prev[item], score: inputScore}
-    }));
+  const handleScoreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const inputScore = e.target.value;
+    setScore(inputScore === "" ? undefined : parseFloat(inputScore));
   };
 
   const toggleSelection = (
@@ -175,13 +157,12 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   return (
     <section className="mt-6 min-h-[400px]">
-      <h2 className="text-lg font-semibold mb-2">{title}</h2>
-      <label htmlFor={`${item}_level`}>
+      <label htmlFor={`${item}_level`}><span className="text-md font-bold">{title}</span>
         <select
           id={`${item}_level`}
           value={level}
           onChange={handleLevelChange}
-          className="font-secondary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="font-secondary text-base text-black block w-full mt-1 mb-3 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
         >
           <option value="">Choose CEFR Level</option>
           {arrOfLevels.map((lvl) => (
@@ -193,14 +174,38 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       </label>
 
       {level && (
-        <label htmlFor={`${item}_score`}>Enter a score
-          <input
+        <label htmlFor={`${item}_score`}><span className="text-md font-bold">Enter score</span>
+          {/* <input
             type="number"
             value={score ?? ""}
             onChange={handleScoreChange}
             className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
             id={`${item}_score`}
-          />
+          /> */}
+          <select 
+            name="score" 
+            value={score !== undefined ? score.toFixed(1) : ""} 
+            id={`${item}_score`}
+            onChange={handleScoreChange}
+            className=" font-secondary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]">
+              <option 
+              className="font-secondary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+              value={""}>Choose score
+              </option>
+              {(() => {
+                const [min, max] = getScoreRange(level);
+                const options = [];
+                for (let i = Math.round(min *2); i < Math.round(max * 2); i++) {
+                  const val = (i/2).toFixed(1);
+                  options.push(
+                    <option key={val} value= {val}>
+                      {val}
+                      </option>
+                    );
+                  }
+                  return options;
+                })()}
+          </select>
           {scoreError && <p className="text-red-600 text-sm">{scoreError}</p>}
         </label>
       )}
@@ -304,13 +309,12 @@ type LevelCheckOverallProps = {
   item: string;
   data: string;
 }
-export const LevelCheckOverall = ({name, item, data, handleChange}: LevelCheckOverallProps) => {
+export const LevelCheckOverall = ({name, data, handleChange}: LevelCheckOverallProps) => {
     const arrOfLevels = levelInformation.english;
-
 
   return(
     <div className="pb-3">
-      <label className="font-bold capitalize" htmlFor="overallCEFR">{name}
+      <label className="font-bold capitalize" htmlFor="overallCEFR">{name +":"}
         <select 
           name="overallCEFR"
           id="overallCEFR"
@@ -318,6 +322,7 @@ export const LevelCheckOverall = ({name, item, data, handleChange}: LevelCheckOv
           value={data}
           className="font-secondary text-base text-black font-normal block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
         >
+          <option className="font-normal" value={""}>Select Level</option>
           {arrOfLevels.map((lvl) => (
             <option key={lvl.name} className="font-normal" value={lvl.name}>{lvl.name}</option>
           ) )}
