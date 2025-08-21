@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { CreateLevelCheckFormButton } from "./StudentPage";
 import {format} from "date-fns";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const ProfilePage = () => {
   const [error, setError] = useState("");
@@ -22,7 +23,7 @@ const ProfilePage = () => {
 
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:8000/api/profile", {
+        const result = await axios.get(`${API_BASE_URL}/api/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -69,7 +70,7 @@ const ProfilePage = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const result = await axios.delete(`http://localhost:8000/api/member/deleteStudent/${id}`, {
+      const result = await axios.delete(`${API_BASE_URL}/api/member/deleteStudent/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

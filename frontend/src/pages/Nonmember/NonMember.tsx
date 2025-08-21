@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { Outlet, useNavigate, Link, useLocation} from "react-router-dom";
 import { UserContext } from "@/components/UserContext";
 import axios from "axios";
+import API_BASE_URL from "@/api/axiosInstance";
 
 interface FormData {
   email: string;
@@ -49,7 +50,7 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", formData);
+      const res = await axios.post(`${API_BASE_URL}/api/login`, formData);
       localStorage.setItem("token", res.data.token);
       setUser(res.data.payload);
       navigate("/profile", {state: {name: res.data.payload.name, language: res.data.payload.language}});
@@ -158,7 +159,7 @@ const CreateNewAccount = () =>{
     setError("");
 
     try{
-       const res = await axios.post("http://localhost:8000/api/createTeacherProfile", formData);
+       const res = await axios.post(`${API_BASE_URL}/api/createTeacherProfile`, formData);
       if(res.data.result) {
         navigate("/login/success", {state: {from: "createAccount", message: "Account created successfully", userType: "nonmember"}});
       } else {

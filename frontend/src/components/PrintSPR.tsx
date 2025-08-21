@@ -7,6 +7,7 @@ import axios from "axios";
 
 import { PrintContent } from "./PrintStudentProgressReport";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const PrintPage = () => {
   const initialStudent = new StudentProgressReportEntry();
@@ -27,7 +28,7 @@ const PrintPage = () => {
           return;
         }
 
-        const response = await axios.get(`http://localhost:8000/api/member/getSPR/${formId}`, {
+        const response = await axios.get(`${API_BASE_URL}/api/member/getSPR/${formId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

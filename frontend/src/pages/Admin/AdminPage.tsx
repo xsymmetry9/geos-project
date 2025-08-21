@@ -1,5 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
+import API_BASE_URL from "@/api/axiosInstance";
 
 function AdminPage() {
     const [formData, setFormData] = useState({name: "", password: ""});
@@ -15,7 +16,7 @@ function AdminPage() {
         setError("");
         setSuccess("");
         try{
-            const res = await axios.post("http://localhost:8000/api/admin/login", formData);
+            const res = await axios.post(`${API_BASE_URL}/api/admin/login`, formData);
              if(res.data.success){
                 setSuccess("Login successful")
                 console.log(success);

@@ -7,6 +7,7 @@ import "../styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { safeFormatISO } from "@/utils/functions";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const createForm = async (studentId: string) => {
   try{
@@ -15,7 +16,7 @@ const createForm = async (studentId: string) => {
       console.log("token not found, you need to login again.");
       return;
     }
-    const res = await axios.post(`http://localhost:8000/api/member/createLevelCheck/${studentId}`,
+    const res = await axios.post(`${API_BASE_URL}/api/member/createLevelCheck/${studentId}`,
       {studentId: studentId},
       {headers: { Authorization: `Bearer ${token}`},
     })
@@ -36,7 +37,7 @@ const getForm = async(formId: string) => {
       return;
     }
 
-    const res = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+    const res = await axios.get(`${API_BASE_URL}/api/member/getLevelCheck/${formId}`,
       {headers: { Authorization: `Bearer ${token}`},
     });
 
@@ -55,7 +56,7 @@ const deleteForm = async (formId: string) => {
       console.log("Can't delete because token wasn't found");
       return;
     }
-    const deleted = await axios.delete(`http://localhost:8000/api/member/deleteLevelCheck/${formId}`, 
+    const deleted = await axios.delete(`${API_BASE_URL}/api/member/deleteLevelCheck/${formId}`, 
     {headers: {Authorization: `Bearer ${token}`},
     });
 
@@ -214,7 +215,7 @@ const LevelCheckForm = () => {
           return;
         }
 
-        const res = await axios.get(`http://localhost:8000/api/member/getLevelCheckForm/${formId}`,
+        const res = await axios.get(`${API_BASE_URL}/api/member/getLevelCheckForm/${formId}`,
           {headers: { Authorization: `Bearer ${token}`}});
 
         const data = res.data.data;
@@ -266,7 +267,7 @@ const LevelCheckForm = () => {
           return;
         }
 
-      const result = await axios.put("http://localhost:8000/api/member/updateLevelCheck", 
+      const result = await axios.put(`${API_BASE_URL}/api/member/updateLevelCheck`, 
         { data: inputData},
         { headers: {Authorization: `Bearer ${token}`},
       });
@@ -320,7 +321,7 @@ const LevelCheckEdit = () => {
           return;
         }
 
-      const result = await axios.put("http://localhost:8000/api/member/updateLevelCheck", 
+      const result = await axios.put(`${API_BASE_URL}/api/member/updateLevelCheck`, 
         { data: inputData},
         { headers: {Authorization: `Bearer ${token}`},
       });
@@ -353,8 +354,8 @@ const LevelCheckEdit = () => {
           console.log("Need to login again");
           return;
         }
-        
-        const result = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+
+        const result = await axios.get(`${API_BASE_URL}/api/member/getLevelCheck/${formId}`,
           {headers: { Authorization: `Bearer ${token}`}});
 
         if(result.status === 200 )
@@ -420,7 +421,7 @@ const LevelCheckPreview = () => {
             console.log("Need to login again");
           return;
           }
-          const result = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
+          const result = await axios.get(`${API_BASE_URL}/api/member/getLevelCheck/${formId}`,
             {headers: { Authorization: `Bearer ${token}`}});
 
           if(result.status === 200 )

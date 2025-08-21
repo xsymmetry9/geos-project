@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Message from "../components/PopUpMessage";
+import API_BASE_URL from "@/api/axiosInstance";
 
 type LanguageOption = {
   label: string;
@@ -36,7 +37,7 @@ const LanguagePage = () => {
 
         console.log("loaded token");
 
-        const res = await axios.post(`http://localhost:8000/api/member/createSPR/${studentId}`,
+        const res = await axios.post(`${API_BASE_URL}/api/member/createSPR/${studentId}`,
               {studentId: studentId, language: language},
               {
                 headers: { Authorization: `Bearer ${token}`},
