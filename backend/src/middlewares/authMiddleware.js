@@ -1,35 +1,26 @@
-// src/middlewares/authMiddleware.js
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config({path: `.env${process.env.NODE_ENV || development}`})
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-//Format Token
-//Authorization: Bearer <access_token>
-function verifyToken(req, res, next) {
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // const bearerHeader = JSON.parse(localStorage.getItem("token"));
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
-    if(typeof bearerHeader !== "undefined") {
-        //Split at the space
+// Format Token
+// Authorization: Bearer <access_token>
+export function verifyToken(req, res, next) {
+  const bearerHeader = req.headers['authorization'];
 
-        const bearer = bearerHeader.split(' ');
-        // Get token from array
-        const bearerToken = bearer[1];
-        //Set the token 
-        req.token = bearerToken;
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(' ');
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
 
-        try{
-            const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
-            req.data = decoded;
-            next();
-        } catch(err) {
-            res.status(403).json({message: "Invalid or expired token"})
-        } 
-    } else {
-        //Forbidden
-        res.status(403).json({message: "No token provided"});
+    try {
+      const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
+      req.data = decoded;
+      next();
+    } catch (err) {
+      res.status(403).json({ message: "Invalid or expired token" });
     }
+  } else {
+    res.status(403).json({ message: "No token provided" });
+  }
 }
-
-module.exports = {verifyToken};

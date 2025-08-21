@@ -1,63 +1,54 @@
-// ./services/adminService.js
-
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
-const bcrypt =require('bcrypt');
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
 
 dotenv.config();
 
-const verifyAdminCredentials = async (name, password) =>{
-    const admin = await prisma.admin.findUnique({ where: {name: name}})
-    if(!admin) return false;
+const prisma = new PrismaClient();
 
-    const match = password === admin.password ? true : false ;
+export const verifyAdminCredentials = async (name, password) => {
+  const admin = await prisma.admin.findUnique({ where: { name } });
+  if (!admin) return false;
 
-    return match;
-}
+  // Compare plaintext password with hashed password
+  const match = await bcrypt.compare(password, admin.password);
+  return match;
+};
 
-const getTeachersFromDb = async () =>{
-    const result = await prisma.teacher.findMany();
+export const getTeachersFromDb = async () => {
+  const result = await prisma.teacher.findMany();
+  return result;
+};
 
-    return result;
-}
+export const getTeachersByLanguage = async (language) => {
+  const result = await prisma.teacher.findMany({ where: { language } });
+  return result;
+};
 
-const getTeachersByLanguage = async (language) =>{
-    const result = await prisma.teacher.findMany({where: {language: language}});
+export const getTeacherById = async (id) => {
+  const result = await prisma.teacher.findUnique({ where: { id } });
+  return result;
+};
 
-    return result;
-}
+export const getTeacherByEmail = async (email) => {
+  const result = await prisma.teacher.findUnique({ where: { email } });
+  return result;
+};
 
-const getTeacherById =  async(id) =>{
-    const result = await prisma.teacher.findUnique({where: {id: id } });
-    return result;
-}
-const getTeacherByEmail = async (email) => {
-    const result = await prisma.teacher.findUnique({where: {email: email}});
-    return result;
-}
-const create = async (obj) => {
-    const {name, email, password, language} = obj;
+export const create = async (obj) => {
+  const { name, email, password, language } = obj;
 
-    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await prisma.teacher.create({
-        data: {
-            name: name,
-            email: email,
-            password: hashedPassword,
-            language: language
-        },
-    });
+  const result = await prisma.teacher.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      language,
+    },
+  });
 
-    return result;
-}
-
-module.exports = {
-    verifyAdminCredentials,
-    getTeachersFromDb, 
-    getTeachersByLanguage, 
-    getTeacherByEmail,
-    getTeacherById,
-    create};
+  return result;
+};

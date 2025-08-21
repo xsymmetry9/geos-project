@@ -1,11 +1,11 @@
 // app.js
-const dotenv = require("dotenv");
-dotenv.config({path: `.env.${process.env.NODE_ENV || 'development'}`});
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import session from "express-session";
+import router from "./routes/routes.js";
 
-const express = require("express");
-const cors = require("cors");
-const router = require("./routes/routes.js");
-const session = require('express-session');
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 const app = express();
 
@@ -32,4 +32,4 @@ app.use(session({
 // Routes
 app.use("/", router);
 
-module.exports = app;
+export default app;

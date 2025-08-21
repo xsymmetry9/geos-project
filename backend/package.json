@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "description": "Backend for the SPR and Level check form",
   "main": "server.js",
   "scripts": {
