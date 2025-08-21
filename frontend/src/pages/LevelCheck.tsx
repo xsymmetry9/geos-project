@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
 import { LevelCheckEntry } from "../type/LevelCheckForm";
@@ -289,6 +289,7 @@ const LevelCheckPreview = () => {
 
  useEffect(() => {
     try {
+      setIsPreparing(true);
       const raw = localStorage.getItem("GEOS_app");
       const app = JSON.parse(raw ?? "{}");
       const levelCheckData: any[] = Array.isArray(app?.levelCheck) ? app.levelCheck : [];
@@ -296,8 +297,10 @@ const LevelCheckPreview = () => {
       const index = levelCheckData.findIndex((item) => item.id === params.id);
       if (index !== -1) {
         setData(levelCheckData[index]);
+        setIsPreparing(false);
       } else {
         console.log("Data not found");
+        setIsPreparing(false);
         setData(null);
       }
     } catch (e) {
@@ -350,7 +353,6 @@ const LevelCheckPreview = () => {
     iframe.contentWindow?.print();
   };
 };
-
 
   useEffect(() => {
     if(isPreparing && promiseResolveRef.current) {
@@ -429,21 +431,28 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
 
           </div>
           <div id="table-container">
-            <table className="w-full mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+            <table className="w-[1026px] mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+              <colgroup>
+                <col className="w-[100px]" />
+                <col className="w-[400px]" />
+                <col className="w-[400px]" />
+                <col className="w-[56px]" />
+                <col className="w-[70px]" />
+              </colgroup>
               <thead className="text-[15px]">
-                <tr>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Category</td>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Strength</td>
-                  <td className="text-white text-center border-r border-black font-bold py-1 bg-teal-600">Weakness</td>
-                  <td className="text-center font-bold border-r border-black py-1 bg-orange-300">Score</td>
-                  <td className="text-center font-bold py-1 bg-orange-300">CEFR</td>
+                <tr className="text-white font-bold text-center h-[30px] bg-teal-600">
+                  <td className="border-r border-black">Category</td>
+                  <td className="border-r border-black">Strength</td>
+                  <td className="border-r border-black">Weakness</td>
+                  <td className="text-black border-r border-black bg-orange-300">Score</td>
+                  <td className="text-black bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"].map((item) => {
                   return(
                     <tr key={item} className="h-[72px]">
-                      <td className="border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
+                      <td className="w-[100px] border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
                       <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
                       <td className="border-r border-b border-t border-black px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
@@ -453,9 +462,9 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
                 })}
               </tbody>
             </table>
-            <div className="w-full mt-3 border border-black">
+            <div className="w-[1026px] mt-3 border border-black">
               <div className="font-bold text-white text-[15px] w-full">
-                <div className="grid grid-cols-[130px_1fr_125px] w-full justify-self-center border-b border-black">
+                <div className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
                   <p className="border-r border-black bg-teal-600 p-1 text-center">Comment</p>
                   <p className="border-r border-black bg-teal-600 p-1"></p>
                   <p className="p-1 bg-orange-300 text-center text-black">Level</p>
