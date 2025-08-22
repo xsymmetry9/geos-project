@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../../api/axiosInstance";
 
 function AdminHomepage(){
       const [data, setData] = useState([]);
@@ -8,7 +9,7 @@ function AdminHomepage(){
             const fetchTeachers = async () =>{
                 try{
                     //Gets all teacher from aws data
-                    const result = await axios.get(`http://localhost:8000/api/admin/teachers`, {withCredentials: true, params: {language: language} });
+                    const result = await axios.get(`${API_BASE_URL}/api/admin/teachers`, {withCredentials: true, params: {language: language} });
                     setData(result.data.data);
 
                 } catch (err)

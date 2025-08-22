@@ -9,6 +9,7 @@ import LevelInformation from "@/components/Form/components/LevelInformation";
 import Feedback from "@/components/Form/components/Feedback";
 import Button from "@/components/Form/components/Button";
 import Preview from "@/components/Form/components/Preview";
+import API_BASE_URL from "@/api/axiosInstance";
 
 type LevelCategory = keyof StudentProgressReportEntry["levels"];
 
@@ -144,7 +145,7 @@ export const EditSPRForm = () => {
           return;
         }
 
-        const result = await axios.get(`http://localhost:8000/api/member/getSPR/${studentFormID}`, {
+        const result = await axios.get(`${API_BASE_URL}/api/member/getSPR/${studentFormID}`, {
           headers: { Authorization: `Bearer ${token}`},
         });
 
@@ -237,7 +238,7 @@ export const EditSPRForm = () => {
 
           console.log("Form ID is: ", inputData.formId);
 
-          const res = await axios.put(`http://localhost:8000/api/member/updateSPR/${inputData.formId}`,
+          const res = await axios.put(`${API_BASE_URL}/api/member/updateSPR/${inputData.formId}`,
             { data: inputData },
             { headers: { Authorization: `Bearer ${token}`},
           });

@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import {format, parseISO} from "date-fns";
 import { createForm, getForm, deleteForm } from "../LevelCheck";
+import API_BASE_URL from "@/api/axiosInstance";
 
 type StudentData = {
         id: string;
@@ -116,7 +117,7 @@ const deleteSPRByFormId = (formId: string) => {
                 return "No token found";
             }
 
-            const res = await axios.delete(`http://localhost:8000/api/member/deleteForm/${formId}`, {
+            const res = await axios.delete(`${API_BASE_URL}/api/member/deleteForm/${formId}`, {
                 headers: { Authorization: `Bearer ${token}`},
             });
             if(res)
@@ -190,7 +191,7 @@ export const StudentPage = () => {
             
             const fetchAPI = async () => {
                 try {
-                    const result = await axios.get(`http://localhost:8000/api/member/getStudentById/${id}`, {
+                    const result = await axios.get(`${API_BASE_URL}/api/member/getStudentById/${id}`, {
                         headers: { Authorization: `Bearer ${token}`},
                     });
                     const loadData = result.data.data;
@@ -396,7 +397,7 @@ export const CreateStudent = () => {
                     setErrorMessage("Not authenticated");
                     return;
                 }
-                const res = await axios.post("http://localhost:8000/api/member/addStudent", formData,
+                const res = await axios.post(`${API_BASE_URL}/api/member/addStudent`, formData,
                     {
                         headers: {Authorization: `Bearer ${token}`}
                     }
@@ -498,7 +499,7 @@ export const EditStudent = () => {
                     setErrorMessage("Not authenticated");
                     return;
                 }
-                const res = await axios.put(`http://localhost:8000/api/member/updateStudent/${formData.id}`, formData,
+                const res = await axios.put(`${API_BASE_URL}/api/member/updateStudent/${formData.id}`, formData,
                     {
                         headers: {Authorization: `Bearer ${token}`}
                     }
@@ -545,7 +546,7 @@ export const EditStudent = () => {
             
             const fetchData = async () => {
                 try {
-                    const result = await axios.get(`http://localhost:8000/api/member/getStudentById/${id}`, {
+                    const result = await axios.get(`${API_BASE_URL}/api/member/getStudentById/${id}`, {
                         headers: { Authorization: `Bearer ${token}`},
                     });
                     const loadData = result.data.data;

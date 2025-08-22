@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const Loading = () =>{
     return (
@@ -16,7 +17,7 @@ const TeacherPage = () =>{
 
         const fetchTeacher = async ()=> {
             try{
-                const result = await axios.get(`http://localhost:8000/api/admin/getTeacherByEmail`, {withCredentials: true, params: {email: email} });
+                const result = await axios.get(`${API_BASE_URL}/api/admin/getTeacherByEmail`, {withCredentials: true, params: {email: email} });
                 setData(result.data.data);
             } catch (err) {
                 console.log(err);
