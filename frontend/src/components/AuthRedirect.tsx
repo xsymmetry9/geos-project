@@ -16,7 +16,7 @@ const AuthRedirect = () => {
             return;
         }
         axios
-            .get("http://localhost:8000/api/verify-token", {
+            .get(`${import.meta.env.VITE_API_URL}/api/verify-token`, {
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
