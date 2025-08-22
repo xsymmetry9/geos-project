@@ -11,7 +11,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://geos-project-f86c.onrender.com"
+  "https://geos-frontend-woad.vercel.app"
 ];
 // CORS Configuration
 const corsConfig = {
