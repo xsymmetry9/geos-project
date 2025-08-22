@@ -11,6 +11,18 @@ App can be view here.![https://main.geos-project.pages.dev/']
 - **Styling**: CSS, Tailwindcss
 - **Deployment**: Cloudfare
 
+## Setup for Frontend
+``` 
+touch .env.local
+```
+Inside the .env file create this variable.
+
+``` 
+VITE_API_URL = link 
+
+```
+
+
 ## Setup for Backend
 
 ### For development
