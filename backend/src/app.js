@@ -9,9 +9,13 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://geos-project-f86c.onrender.com"
+];
 // CORS Configuration
 const corsConfig = {
-  origin: "http://localhost:3000",
+  origin: allowedOrigins,
   optionsSuccessStatus: 200,
   credentials: true,
 };
@@ -24,7 +28,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
   }
 }));
