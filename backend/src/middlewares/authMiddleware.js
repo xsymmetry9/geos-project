@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV || 'production'}` });
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 // Format Token
 // Authorization: Bearer <access_token>
