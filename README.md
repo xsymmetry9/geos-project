@@ -25,7 +25,7 @@ Add .env file and add the following:
 
 ```
 DATABASE_URL="postgresql://username:password@localhost:5432/db_name"
-SESSION_SECRET="[Secret word]"
+JWT_SESSION="[Secret word]"
 PORT=[Port number]
 ```
 
