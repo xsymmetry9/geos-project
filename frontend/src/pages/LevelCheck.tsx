@@ -354,8 +354,8 @@ const LevelCheckEdit = () => {
           console.log("Need to login again");
           return;
         }
-
-        const result = await axios.get(`${API_BASE_URL}/api/member/getLevelCheck/${formId}`,
+        
+        const result = await axios.get(`http://localhost:8000/api/member/getLevelCheck/${formId}`,
           {headers: { Authorization: `Bearer ${token}`}});
 
         if(result.status === 200 )

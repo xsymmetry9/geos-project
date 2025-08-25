@@ -14,7 +14,8 @@ const languageOptions: LanguageOption[] = [
   {label: "日本語", value: "japanese"},  {label: "한국어", value: "korean"}
 ]
 const LanguagePage = () => {
-  let studentId = useParams().id
+  let params = useParams();
+  const {studentId} = params;
   const navigate = useNavigate();
   const [language, setLanguage] = useState("english");
   const [message, setMessage] = useState("");
@@ -25,8 +26,6 @@ const LanguagePage = () => {
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-    console.log("You clicked me");
-
     const addForm = async () => {
       try{
         const token = localStorage.getItem("token");
@@ -44,11 +43,13 @@ const LanguagePage = () => {
         });
 
         const {data} = res.data;
+        console.log(studentId);
+        console.log(params)
 
-        console.log(res);
+        console.log("the data is:", res.data.error);
 
         // setMessage(`You have created a new form.  Your id is: ${res.data.data.id}`);
-        navigate(`/spr/${studentId}/${language}/create`,{state: 
+        navigate(`/spr/${studentId}/${language}/create`, {state: 
           {
             formId: data.id,
             studentName: data.studentName,

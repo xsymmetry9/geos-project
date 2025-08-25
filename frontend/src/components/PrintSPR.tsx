@@ -4,11 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import axios from "axios";
-
 import { PrintContent } from "./PrintStudentProgressReport";
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 import API_BASE_URL from "@/api/axiosInstance";
 
+import "../styles/print.css";
 const PrintPage = () => {
   const initialStudent = new StudentProgressReportEntry();
   const [fetchData, setFetchData] = useState<StudentProgressReportEntry>(initialStudent);

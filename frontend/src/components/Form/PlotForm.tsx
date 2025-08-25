@@ -11,6 +11,7 @@ import labelText from "@/assets/other/labelText.json"
 import { StudentProgressReportEntry, Levels } from "@/type/StudentProgressReportEntry";
 import { Language } from "@/utils/common";
 import axios from "axios";
+import API_BASE_URL from "@/api/axiosInstance";
 
 type LevelCategory = keyof StudentProgressReportEntry["levels"];
 type LevelField = keyof Levels;
@@ -149,7 +150,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData, loading, s
               }
               
               console.log("Form ID is: ", inputData);
-             const res = await axios.put(`http://localhost:8000/api/member/updateSPR/${inputData.formId}`,
+             const res = await axios.put(`${API_BASE_URL}/api/member/updateSPR/${inputData.formId}`,
               {data: inputData},
               {
                 headers: { Authorization: `Bearer ${token}`},
