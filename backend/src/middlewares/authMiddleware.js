@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'production'}` });
 
 // Format Token
 // Authorization: Bearer <access_token>
@@ -14,7 +14,7 @@ export function verifyToken(req, res, next) {
     req.token = bearerToken;
 
     try {
-      const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET || 'secretkey');
+      const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
       req.data = decoded;
       next();
     } catch (err) {
