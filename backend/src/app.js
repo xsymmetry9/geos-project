@@ -24,7 +24,7 @@ const corsConfig = {
 app.use(cors(corsConfig));
 app.use(express.json());
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
