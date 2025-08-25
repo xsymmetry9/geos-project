@@ -7,6 +7,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'production'}` });
 // Authorization: Bearer <access_token>
 export function verifyToken(req, res, next) {
   const bearerHeader = req.headers['authorization'];
+  console.log("Bearer Header:", bearerHeader);
 
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(' ');
