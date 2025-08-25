@@ -2,13 +2,15 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const AuthRedirect = () => {
     const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem("token");
 
     useEffect(() =>{
-        const token = localStorage.getItem("token");
 
         if(!token) {
             setStatus( "unauthenticated");
@@ -16,7 +18,7 @@ const AuthRedirect = () => {
             return;
         }
         axios
-            .get(`${import.meta.env.VITE_API_URL}/api/verify-token`, {
+            .get(`${API_BASE_URL}/api/verify-token`, {
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
