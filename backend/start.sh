@@ -7,8 +7,5 @@ export PATH="./node_modules/.bin:$PATH"
 npx prisma generate
 npm run migrate:deploy
 
-# Sync schema to Neon (safe and idempotent)
-npx prisma db push
-
 # Start your Express app
 node src/server.js
