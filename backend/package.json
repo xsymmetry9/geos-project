@@ -5,7 +5,12 @@
   "description": "Backend for the SPR and Level check form",
   "main": "server.js",
   "scripts": {
-  "start": "./start.sh"
+    "start": "./start.sh",
+    "dev": "nodemon server.js",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "generate": "npx prisma generate",
+    "seed:admin": "node createAdmin.js",
+    "postdeploy": "npm run generate && npm run seed:admin"
   },
   "keywords": [],
   "author": "",
