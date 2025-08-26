@@ -1,8 +1,8 @@
 # Generate Prisma client code
-npx prisma generate
+npm run generate
 
 # Sync schema to Neon (safe and idempotent)
-npx prisma db push
+npm run migrate:deploy
 
 # Start your Express app
 node src/server.js
