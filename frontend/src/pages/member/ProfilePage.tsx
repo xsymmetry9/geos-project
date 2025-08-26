@@ -5,9 +5,17 @@ import { CreateLevelCheckFormButton } from "./StudentPage";
 import {format} from "date-fns";
 import API_BASE_URL from "@/api/axiosInstance";
 
+type User = {
+        id: number;
+        email: string;
+        name: string;
+        iat: number;
+        exp: number,
+        language: string,
+}
 const ProfilePage = () => {
   const [error, setError] = useState("");
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<User | null>(null);
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
@@ -28,7 +36,8 @@ const ProfilePage = () => {
         });
 
         const loadData = result.data;
-        console.log(loadData);
+        console.log(result.data.user);
+        console.log(loadData.data);
         setUser(loadData.user);
         setStudents(loadData.data);
       } catch (err) {
@@ -89,7 +98,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <h1 className="text-center capitalize font-bold text-3xl">Hi, {user.name}.</h1>
+      <h1 className="text-center capitalize font-bold text-3xl">Hi, {user?.name}.</h1>
       <table className="border-t border-gray-300 mt-6 m-auto w-full max-w-[1100px]">
         <thead>
           <tr className="border-b border-gray-300">
