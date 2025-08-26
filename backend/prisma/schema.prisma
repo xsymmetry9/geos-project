@@ -8,126 +8,112 @@ datasource db {
 }
 
 model Admin {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id       Int    @id @default(autoincrement())
+  name     String @unique
   password String
 }
 
 model Teacher {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String
-  language String
-
+  id                           Int                          @id @default(autoincrement())
+  email                        String                       @unique
+  password                     String
+  name                         String
+  language                     String
+  createdAt                    DateTime                     @default(now())
+  levelCheckEntries            LevelCheckEntry[]            @relation("TeacherEmail")
   studentProgressReportEntries StudentProgressReportEntry[] @relation("TeacherEmail")
-  levelCheckEntries LevelCheckEntry[] @relation("TeacherEmail")
-
-  students StudentTeacher[]
-  createdAt DateTime @default(now())
-
+  students                     StudentTeacher[]
 }
 
 model Student {
-  id String @id @default(uuid())
-  email String @unique
-  name String
-  nickname String
-  createdAt DateTime @default(now())
-  teachers StudentTeacher[]
-
-  levelCheckEntries LevelCheckEntry[]
+  id                         String                       @id @default(uuid())
+  email                      String                       @unique
+  name                       String
+  nickname                   String
+  createdAt                  DateTime                     @default(now())
+  levelCheckEntries          LevelCheckEntry[]
   studentProgressReportEntry StudentProgressReportEntry[]
-
+  teachers                   StudentTeacher[]
 }
 
 model StudentProgressReportEntry {
-  id String @id @default(uuid())
-  studentName String?
-  language String?
-  course String?
-  textbook String?
-  attendance Int?
-  totalLessons Int?
-  feedback String?
-  dateCreated DateTime @default(now())
-
-  vocabularyInitial String?
-  vocabularyTarget String?
-  vocabularyFinal String?
-
-  grammarInitial String?
-  grammarTarget String?
-  grammarFinal String?
-
-  listeningInitial String?
-  listeningTarget String?
-  listeningFinal String?
-
-  speakingInitial String?
-  speakingTarget String?
-  speakingFinal String?
-
+  id                   String   @id @default(uuid())
+  studentName          String?
+  language             String?
+  course               String?
+  textbook             String?
+  attendance           Int?
+  totalLessons         Int?
+  feedback             String?
+  dateCreated          DateTime @default(now())
+  vocabularyInitial    String?
+  vocabularyTarget     String?
+  vocabularyFinal      String?
+  grammarInitial       String?
+  grammarTarget        String?
+  grammarFinal         String?
+  listeningInitial     String?
+  listeningTarget      String?
+  listeningFinal       String?
+  speakingInitial      String?
+  speakingTarget       String?
+  speakingFinal        String?
   pronunciationInitial String?
-  pronunciationTarget String?
-  pronunciationFinal String?
-
-  teacherEmail String
-  teacher Teacher @relation("TeacherEmail", fields: [teacherEmail], references: [email])
-
-  studentId String
-  student Student @relation(fields: [studentId], references: [id])
-
+  pronunciationTarget  String?
+  pronunciationFinal   String?
+  teacherEmail         String
+  studentId            String
+  student              Student  @relation(fields: [studentId], references: [id])
+  teacher              Teacher  @relation("TeacherEmail", fields: [teacherEmail], references: [email])
 }
 
 model LevelCheckEntry {
-  id                        String             @id @default(uuid())
-  name                      String
-  language                  String
-  teacherName               String
-  bookRecommendation        String?
-  overallCEFR               String?
-  dateUpdated               DateTime @updatedAt @default(now())
-  createdAt                 DateTime  @default(now())
-
-  speakingNameEntry         String?
-  speakingScore             Float?
-
-  confidenceNameEntry       String?
-  confidenceScore           Float?
-
-  vocabularyNameEntry       String?
-  vocabularyScore           Float?
-
-  grammarNameEntry          String?
-  grammarScore              Float?
-
-  listeningNameEntry        String?
-  listeningScore            Float?
-
-  pronunciationNameEntry    String?  
-  pronunciationScore        Float?
-
-  feedback                  String?
-
-  teacherEmail              String
-  teacher                   Teacher            @relation("TeacherEmail", fields: [teacherEmail], references: [email])
-
-  studentId                 String
-  student                   Student            @relation(fields: [studentId], references: [id])
-
-  strengthsWeaknesses       StrengthWeakness[] 
-
+  id                     String             @id @default(uuid())
+  name                   String
+  language               String
+  teacherName            String
+  bookRecommendation     String?
+  overallCEFR            String?
+  dateUpdated            DateTime           @default(now()) @updatedAt
+  createdAt              DateTime           @default(now())
+  speakingNameEntry      String?
+  speakingScore          Float?
+  confidenceNameEntry    String?
+  confidenceScore        Float?
+  vocabularyNameEntry    String?
+  vocabularyScore        Float?
+  grammarNameEntry       String?
+  grammarScore           Float?
+  listeningNameEntry     String?
+  listeningScore         Float?
+  pronunciationNameEntry String?
+  pronunciationScore     Float?
+  feedback               String?
+  teacherEmail           String
+  studentId              String
+  student                Student            @relation(fields: [studentId], references: [id])
+  teacher                Teacher            @relation("TeacherEmail", fields: [teacherEmail], references: [email])
+  strengthsWeaknesses    StrengthWeakness[]
 }
 
 model StrengthWeakness {
-  id                 Int              @id @default(autoincrement())
-  levelCheckEntryId  String         
-  category           SkillCategory
-  type               StrengthType
-  description        String
+  id                Int             @id @default(autoincrement())
+  levelCheckEntryId String
+  category          SkillCategory
+  type              StrengthType
+  description       String
+  levelCheckEntry   LevelCheckEntry @relation(fields: [levelCheckEntryId], references: [id])
+}
 
-  levelCheckEntry    LevelCheckEntry  @relation(fields: [levelCheckEntryId], references: [id])
+model StudentTeacher {
+  id           Int      @id @default(autoincrement())
+  studentId    String
+  teacherEmail String
+  assignedAt   DateTime @default(now())
+  student      Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher      Teacher  @relation(fields: [teacherEmail], references: [email])
+
+  @@unique([studentId, teacherEmail])
 }
 
 enum SkillCategory {
@@ -142,16 +128,4 @@ enum SkillCategory {
 enum StrengthType {
   strength
   weakness
-}
-
-model StudentTeacher {
-  id Int @id @default(autoincrement())
-  studentId String
-  teacherEmail String
-  assignedAt DateTime @default(now())
-
-  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  teacher Teacher @relation(fields: [teacherEmail], references: [email])
-
-  @@unique([studentId, teacherEmail]) 
 }
