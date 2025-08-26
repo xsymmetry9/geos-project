@@ -2,32 +2,43 @@ import {useState} from "react";
 import axios from "axios";
 import API_BASE_URL from "@/api/axiosInstance";
 
-function AdminPage() {
-    const [formData, setFormData] = useState({name: "", password: ""});
-    const [error, setError]= useState("")
-    const [success, setSuccess] = useState("");
+type FormData = {
+    name: string;
+    password: string;
+}
+type Error ={
+  message: string;
+}
 
-    const handleChange = (e) =>{
+type Success ={
+  message: string;   
+} 
+function AdminPage() {
+    const [formData, setFormData] = useState<FormData>({name: "", password: ""});
+    const [error, setError]= useState<Error | null>(null);  
+    const [success, setSuccess] = useState<Success | null>(null);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setFormData((prev) => ({...prev, [e.target.name]: e.target.value}));
     };
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        setError("");
-        setSuccess("");
+        setError(null);
+        setSuccess(null);
         try{
             const res = await axios.post(`${API_BASE_URL}/api/admin/login`, formData);
              if(res.data.success){
-                setSuccess("Login successful")
+                setSuccess({message: "Login successful"});
                 console.log(success);
             } else {
-                setError("Invalid Credentials");
+                setError({message: "Invalid Credentials"});
                 console.log(error);
                 console.log(success);
             }
         } catch (err) {
             console.log(err);
-            setError("Server Error.  Please try again.")
+            setError({message: "Server Error.  Please try again."});
         }
        
     }
