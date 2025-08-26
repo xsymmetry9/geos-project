@@ -7,8 +7,6 @@ export PATH="./node_modules/.bin:$PATH"
 npx prisma generate
 npm run migrate:deploy
 
-npm run seed:admin
-
 # Sync schema to Neon (safe and idempotent)
 npx prisma db push
 
