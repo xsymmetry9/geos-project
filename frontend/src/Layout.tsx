@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
@@ -40,7 +40,8 @@ const ProfileLayout = () =>{
 
 const LayoutForNonmember = () =>{
   return (
-     <div className="grid h-screen grid-rows-[auto_90px] grid-cols-1">
+     <div className="grid h-screen grid-rows-[auto_90px] grid-cols-1 relative">
+      <Link to="/admin" className="absolute top-2 right-2 z-100 block p-4 border-2 text-center text-black bg-white hover:bg-active hover:text-white">Admin</Link>
       <div className="relative mx-auto w-full bg-gray-100max-w-[1100px]">
         <Outlet />
       </div>
