@@ -90,7 +90,7 @@ const routes: RouteObject[] = [
     children: [
       {index: true, element: <AdminAuthenticate />},
       {path: "home", element: <AdminHomepage />},
-      {path: "teacherPage/:email", element: <TeacherPage />}
+      {path: "teacher/:email", element: <TeacherPage />}
     ]
   },
 ];

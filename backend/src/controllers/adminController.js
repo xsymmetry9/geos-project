@@ -21,7 +21,7 @@ export const loginAdmin = async (req, res) => {
   try {
     const success = await verifyAdminCredentials(name, password);
 
-    if(success  === false) {
+    if(success === false) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
@@ -45,7 +45,6 @@ export const loginAdmin = async (req, res) => {
 export const getAllTeachers = async (req, res) => {
   try {
     const result = await getTeachersFromDb();
-    console.log(result);
     return res.json({ success: true, data: result });
   } catch (err) {
     return res.status(500).json({ success: false, message: "Server Error" });
@@ -63,14 +62,14 @@ export const getTeachersByLanguageOnDB = async (req, res) => {
 };
 
 export const getTeacherByEmailOnDB = async (req, res) => {
-  const { email } = req.body;
-  console.log(req);
-  try {
-    const result = await getTeacherByEmail(email);
-    return res.json({ success: true, exists: true, data: result });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: "Server Error" });
-  }
+  console.log("hello for backend");
+  return res.json({message: "success"})
+  // try {
+  //   const result = await getTeacherByEmail(email);
+  //   return res.json({ success: true, exists: true, data: result });
+  // } catch (err) {
+  //   return res.status(500).json({ success: false, message: "Server Error" });
+  // }
 };
 
 export const createTeacher = async (req, res) => {
