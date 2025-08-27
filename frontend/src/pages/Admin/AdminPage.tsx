@@ -1,105 +1,105 @@
-import {useState} from "react";
+import { useState, useEffect, createContext, useContext } from "react";
+import { Outlet } from "react-router-dom";
 import axios from "axios";
 import API_BASE_URL from "@/api/axiosInstance";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Sidebar from "@/components/Sidebar";
 
-type FormData = {
+type Teacher = {
+    id: string;
     name: string;
-    password: string;
-}
-type Error ={
-  message: string;
+    email: string;
 }
 
-type Success ={
-  message: string;   
-} 
-function AdminPage() {
-    const [formData, setFormData] = useState<FormData>({name: "", password: ""});
-    const [error, setError]= useState<Error | null>(null);  
-    const [success, setSuccess] = useState<Success | null>(null);
+type TeacherContextType = {
+    teachers: Teacher[];
+    reload: () => void;
+}
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        setFormData((prev) => ({...prev, [e.target.name]: e.target.value}));
-    };
+const TeacherContext = createContext<TeacherContextType | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault();
-        setError(null);
-        setSuccess(null);
+export function TeacherProvider({children}: {children: React.ReactNode}){
+    const [teachers, setTeachers] = useState<Teacher[]>([]);
+    const language = "english"; 
+
+    const fetchTeachers = async () =>{
         try{
-            const res = await axios.post(`${API_BASE_URL}/api/admin/login`, formData);
-             if(res.data.success){
-                setSuccess({message: "Login successful"});
-                console.log(success);
-            } else {
-                setError({message: "Invalid Credentials"});
-                console.log(error);
-                console.log(success);
-            }
-        } catch (err) {
-            console.log(err);
-            setError({message: "Server Error.  Please try again."});
+            const result = await axios.get(`${API_BASE_URL}/api/admin/teachers`, {withCredentials: true, params: {language: language} });
+            setTeachers(result.data.data);
+        } catch (err)
+        {
+            console.log("Error fetching data:" , err);
         }
-       
     }
 
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="font-secondary w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Admin
-        </h1>
+    useEffect(() =>{
+        fetchTeachers();
+    }, []);
 
-        <form onSubmit= {handleSubmit} className="space-y-6">
-          {/* Email Field */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Enter your name"
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          {/* Password Field */}
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              onChange={handleChange}
-              placeholder="Enter your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+    return(
+        <TeacherContext.Provider value={{teachers, reload: fetchTeachers}}>
+            {children}
+        </TeacherContext.Provider>
+    );
 }
 
-export default AdminPage;
+export function useTeachers(){
+    const context = useContext(TeacherContext);
+    if(!context){
+        throw new Error("useTeachers must be used within a TeacherProvider");
+    }
+    return context;
+} 
+
+
+function AdminLayout(){
+    return(
+        <TeacherProvider>
+             <div className="grid h-screen grid-rows-[70px_1fr_90px] grid-cols-1">
+            <Header />
+            <div className="grid grid-cols-[250px_1fr]">
+                <aside className="bg-white border-r shadow-sm">
+                    <Sidebar />
+                </aside>
+                <main className="bg-gray-100">
+                    <Outlet />
+                </main>
+            </div>
+            <Footer />
+        </div>
+        </TeacherProvider>
+       
+    )
+}
+
+function TeacherList() {
+    const { teachers, reload } = useTeachers();
+    return (
+        <>
+            <ul className="list-none p-4">
+                {teachers.map((teacher: Teacher) => (
+                    <li key={teacher.id} className="flex justify-between mb-2 border-b pb-1">
+                        <div>{teacher.name}</div>
+                        <div>{teacher.email}</div>
+                        <a href={`./home/teacherPage/${teacher.email}`}>View more</a>
+                    </li>
+                ))}
+            </ul>
+        </>
+    );
+}
+
+function AdminHomepage(){
+    return(
+        <>
+            <div className="h-full max-w-[1100px] mx-auto bg-white shadow">
+                <h1 className="text-3xl font-bold text-center p-6">Admin Homepage</h1>
+                <h2 className="text-xl font-semibold mb-4">Teachers:</h2>
+                <TeacherList />
+            </div>
+        </>
+  );  
+}
+
+export { AdminHomepage, AdminLayout };

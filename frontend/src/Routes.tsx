@@ -5,8 +5,8 @@ import Language from "./pages/Language";
 import {SPRForm, EditSPRForm} from "./pages/SPRForm";
 import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
-import Admin from "./pages/Admin/AdminPage";
-import AdminHomepage from "./pages/Admin/AdminHomepage";
+import {AdminLogin} from "./pages/Admin/AdminLogin";
+import  { AdminLayout, AdminHomepage } from "./pages/Admin/AdminPage";
 import TeacherPage from "./pages/Admin/TeacherPage";
 import {Login, CreateNewAccount, SignInLayout, Success, Failure} from "./pages/Nonmember/NonMember.js";
 import ProfilePage from "./pages/member/ProfilePage";
@@ -83,11 +83,11 @@ const routes: RouteObject[] = [
     ],
   },
   { path: "admin",
-    element: <Admin />
+    element: <AdminLogin />
   },
   {
-    path: "admin/home",
-    element: <Layout />,
+    path: "admin/homepage",
+    element: <AdminLayout />,
     children: [
       {index: true, element: <AdminHomepage />},
       {path: "teacherPage/:email", element: <TeacherPage />}

@@ -1,16 +1,8 @@
-#!/bin/bash
-
-set -e # Exit on error
-
-export PATH="./node_modules/.bin:$PATH"
 # Generate Prisma client code
-npx prisma generate
-npm run migrate:deploy
-
-npm run seed:admin
+npm run generate
 
 # Sync schema to Neon (safe and idempotent)
-npx prisma db push
+npm run migrate:deploy
 
 # Start your Express app
 node src/server.js
