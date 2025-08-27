@@ -24,7 +24,6 @@ const routes: RouteObject[] = [
     element: <LayoutForNonmember />,
     children: [
       { index: true, element: <AuthRedirect /> },
-      { path: "home/:language", element: <Homepage /> },
       {
         path: "login", 
         element: <SignInLayout />,
