@@ -21,7 +21,23 @@ export const loginAdmin = async (req, res) => {
   console.log(name, password);
   try {
     const success = await verifyAdminCredentials(name, password);
-    return res.json({ success });
+
+    if(success  === false) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+
+    const payload = { name };
+    jwt.sign(
+      payload, 
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }, (err, token) => {
+        if (err) {
+          return res.status(500).json({ success: false, message: "Token generation failed" });
+        }
+        return res.json({ success, token, payload });
+      }
+    );
+
   } catch (err) {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
