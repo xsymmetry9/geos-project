@@ -62,7 +62,7 @@ function AdminLayout(){
                 <aside className="bg-white border-r shadow-sm">
                     <Sidebar />
                 </aside>
-                <main className="p-6 bg-gray-100 overflow-y-auto">
+                <main className="bg-gray-100">
                     <Outlet />
                 </main>
             </div>
@@ -76,9 +76,8 @@ function AdminLayout(){
 function TeacherList() {
     const { teachers, reload } = useTeachers();
     return (
-        <div>
-            <h2 className="text-xl font-semibold mb-4">Teachers:</h2>
-            <ul>
+        <>
+            <ul className="list-none p-4">
                 {teachers.map((teacher: Teacher) => (
                     <li key={teacher.id} className="flex justify-between mb-2 border-b pb-1">
                         <div>{teacher.name}</div>
@@ -87,50 +86,19 @@ function TeacherList() {
                     </li>
                 ))}
             </ul>
-        </div>
+        </>
     );
 }
 
 function AdminHomepage(){
-      const [data, setData] = useState([]);
-      const language = "english";
-        useEffect(() =>{ 
-            const fetchTeachers = async () =>{
-                try{
-                    //Gets all teacher from aws data
-                    const result = await axios.get(`${API_BASE_URL}/api/admin/teachers`, {withCredentials: true, params: {language: language} });
-                    setData(result.data.data);
-
-                } catch (err)
-                {
-                    console.log("Error fetching data:" , err);
-                }
-            }
-            fetchTeachers();
-            console.log(data);
-        }, []);
     return(
         <>
-        <h1 className="text-3xl font-bold text-center my-4">Admin Homepage</h1>
-        <div className="p-4 max-w-2xl mx-auto bg-white shadow rounded">
-            <h2 className="text-xl font-semibold mb-4">Teachers:</h2>
-            <TeacherList />
-            {/* <ul>{data.map((teacher: Teacher) => {
-                return (
-                    <>
-                        <li key={teacher.id} className="flex justify-between mb-2 border-b pb-1">
-                            <div>{teacher.name}</div>
-                            <div>{teacher.email}</div>
-                            <a href={`./home/teacherPage/${teacher.email}`}>View more</a>
-                        </li>
-                    </>
-                )
-            })}
-
-            </ul>
-             */}
-      </div>
-    </>
+            <div className="h-full max-w-[1100px] mx-auto bg-white shadow">
+                <h1 className="text-3xl font-bold text-center p-6">Admin Homepage</h1>
+                <h2 className="text-xl font-semibold mb-4">Teachers:</h2>
+                <TeacherList />
+            </div>
+        </>
   );  
 }
 
