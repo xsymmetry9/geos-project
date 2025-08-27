@@ -174,6 +174,7 @@ export const StudentPage = () => {
     const [selectedLevelCheckID, setSelectedLevelCheckID] = useState<string | null>(null);
 
     const dropdownRef = useRef<HTMLDivElement | null>(null);
+    
     const toggleOptions = (type: string, id: string) => {
         if(type === "spr")
             return setSelectedSPRID((prev) => (prev === id ? null : id));
