@@ -3,7 +3,6 @@
 import {Layout, ProfileLayout, LayoutForNonmember} from "./Layout";
 import Language from "./pages/Language";
 import {SPRForm, EditSPRForm} from "./pages/SPRForm";
-import Homepage from "./pages/Homepage";
 import PrintPage from "./components/PrintSPR";
 import {AdminLogin} from "./pages/Admin/AdminLogin";
 import  { AdminLayout, AdminHomepage } from "./pages/Admin/AdminPage";
@@ -15,6 +14,7 @@ import AuthRedirect from "./components/AuthRedirect";
 import ForgotPassword from "./pages/Nonmember/ForgotPassword";
 import {StudentPage, CreateStudent, EditStudent} from "./pages/member/StudentPage";
 import SettingPage from "./pages/member/SettingPage";
+import AdminAuthenticate from "./pages/Admin/AdminAuthenticate";
 
 import type {RouteObject} from "react-router-dom";
 
@@ -81,14 +81,15 @@ const routes: RouteObject[] = [
       {path: "preview/:formId", element: <LevelCheckPreview />}
     ],
   },
-  { path: "admin",
+  { path: "admin/login",
     element: <AdminLogin />
   },
   {
-    path: "admin/homepage",
+    path: "admin",
     element: <AdminLayout />,
     children: [
-      {index: true, element: <AdminHomepage />},
+      {index: true, element: <AdminAuthenticate />},
+      {path: "home", element: <AdminHomepage />},
       {path: "teacherPage/:email", element: <TeacherPage />}
     ]
   },

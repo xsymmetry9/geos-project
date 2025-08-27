@@ -10,7 +10,7 @@ import {
   createTeacher,
   loginTeacher,
 } from "../controllers/adminController.js";
-import { verifyToken } from "../middlewares/authMiddleware.js";
+import { verifyAdminCredentials, verifyToken } from "../middlewares/authMiddleware.js";
 import {
   createStudentTeacherByEmail,
   readStudentById,
@@ -44,8 +44,11 @@ router.get("/api/verify-token", verifyToken, (req, res) => {
   res.json({ authenticate: true, user: req.user });
 });
 
+router.get("/api/admin/verify-admin", verifyAdminCredentials, (req, res) => {
+  res.json({ authenticate: true, user: req.data });
+});
 router.post("/api/admin/login", loginAdmin);
-router.get("/api/admin/teachers", getAllTeachers);
+router.get("/api/admin/teachers", verifyAdminCredentials, getAllTeachers);
 router.get("/api/admin/teachers/language", getTeachersByLanguageOnDB);
 router.get("/api/getTeacherByEmail", getTeacherByEmailOnDB);
 router.post("/api/login", loginTeacher);

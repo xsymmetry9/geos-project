@@ -28,13 +28,14 @@ function AdminLogin() {
         setLoading(true);
         try{
             const res = await axios.post(`${API_BASE_URL}/api/admin/login`, formData);
+            console.log(res);
              if(res.data.success){
                 setMessageBox({type: "success", message:"Login successful"});
-
+                localStorage.setItem("adminToken", res.data.token);
                 setTimeout(() => {
                   setLoading(false);
                 }, 500);
-                navigate("homepage");
+                navigate("/admin/home", {replace: true});
             } else {
                 return setMessageBox({type: "error", message:"Login failed.  Please try again."});
             }

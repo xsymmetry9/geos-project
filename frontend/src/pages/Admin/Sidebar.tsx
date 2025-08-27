@@ -12,7 +12,7 @@ const SearchInput = () => {
       <label htmlFor="search" className="sr-only">Search</label>
       <div className="flex items-center gap-2 w-full">
         <div className="w-[30px]">
-          <Search size={"small"} color="white" />
+          <Search size={24} color="white" />
         </div>
         <input 
           type="text" 
@@ -35,21 +35,21 @@ const Sidebar = () => {
 
         <button className="flex items-center gap-2 py-2 rounded-md cursor-pointer text-gray-700 hover:bg-active text-white">
             <div className="w-[30px]">
-              <User size="small" color="white"/> 
+              <User size={24} color="white"/> 
             </div>
              <span>View Students</span>
         </button>
 
         <button className="flex items-center gap-2 py-2 rounded-md cursor-pointer text-gray-700 hover:bg-active text-white">
             <div className="w-[30px]">
-                <UserPlus size="small" color="white"/>
+                <UserPlus size={24} color="white"/>
             </div>
           <span>Add Student</span>
         </button>
 
       </nav>
         <div className="flex flex-col items-center">
-            <LogoutButton />
+            <LogoutButton userType="admin"/>
         </div>
     </div>
   );
