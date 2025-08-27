@@ -1,25 +1,39 @@
 import { useEffect } from "react";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import API_BASE_URL from "@/api/axiosInstance";
 
 const AdminAuthenticate = () => {
-    const adminToken = localStorage.getItem("adminToken");
+    const adminToken: string | null = localStorage.getItem("adminToken");
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!adminToken) {
-            // Redirect to login or show an error
-            navigate("/admin/login", { replace: true });
-        }
+        const authenticate = async () => {
+            try {
+                if (!adminToken) {
+                    // Redirect to login or show an error
+                    console.log("No admin token found, redirecting to login.");
+                    navigate("/admin/login", { replace: true });
+                } else {
+                // Optionally, verify the token with the server here
+                    const response = await axios.get(`${API_BASE_URL}/api/admin/verify-admin`, {
+                        headers: { Authorization: `Bearer ${adminToken}` },
+                    });
+                    console.log("Admin token verified:", response.data);
+                    setInterval(() => {
+                        navigate("/admin/home", { replace: true });
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error("Authentication error:", error);
+                navigate("/admin/login", { replace: true });
+            }
+        };
+
+        authenticate();
     }, [adminToken]);
-    return (
-        <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="text-2xl font-bold mb-4">Admin Authentication</h1>
-            <p className="mb-8">Please authenticate to access the admin panel.</p>
-            <button className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Authenticate
-            </button>
-        </div>
-    );
+
+    return null;
 };
 
 export default AdminAuthenticate;
