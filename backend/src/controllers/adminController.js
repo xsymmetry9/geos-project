@@ -18,7 +18,6 @@ const capitalize = (str) => {
 
 export const loginAdmin = async (req, res) => {
   const { name, password } = req.body;
-  console.log(name, password);
   try {
     const success = await verifyAdminCredentials(name, password);
 
