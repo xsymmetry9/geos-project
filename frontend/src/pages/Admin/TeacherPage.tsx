@@ -3,46 +3,35 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import API_BASE_URL from "@/api/axiosInstance";
 
-const Loading = () =>{
-    return (
-        <><p>Loading ...</p></>
-    )
-}
 const TeacherPage = () =>{
-    const {email} = useParams()
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState();
+    let params = useParams();
+    const getEmail = params.email;
+    const adminToken = localStorage.getItem("adminToken");
+    
+    // useEffect(() => {
+    //     const fetchTeacher = async () => {
+    //         try {
+    //             if(!adminToken){
+    //                 console.log("No token");
+    //             }
+    //             const res = await axios.get(`${API_BASE_URL}/api/getTeacherByEmail`, {
+    //                 params: {email: getEmail},
+    //                 headers: { Authorization: `Bearer ${adminToken}`},
+    //             });
+    //             console.log(res);
 
-    useEffect(() => {
+    //         } catch(err) {
+    //             console.log(err);   
+    //         }   
 
-        const fetchTeacher = async ()=> {
-            try{
-                const result = await axios.get(`${API_BASE_URL}/api/admin/getTeacherByEmail`, {withCredentials: true, params: {email: email} });
-                setData(result.data.data);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setLoading(false);
-            }
-
-        }
-
-        fetchTeacher();
-
-    },[])
-
+    //     } 
+    //     // fetchTeacher();
+    // },[])
     return (
         <>
-            <a href="/admin/home">Go back</a>
-            {loading ? <Loading /> : (
-                <>
-                    <h1>{data.name}</h1>
-                    <p>Email: {data.email}</p>
-                    <p>Entries: </p>
-                </>
-            )}
-     
-            
+            <h1>Teacher</h1>
+            <p>{getEmail}</p>
+
         </>
     )
 }
