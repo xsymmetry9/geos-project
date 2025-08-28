@@ -31,7 +31,14 @@ export const getTeacherById = async (id) => {
 };
 
 export const getTeacherByEmail = async (email) => {
-  const result = await prisma.teacher.findUnique({ where: { email } });
+  const result = await prisma.teacher.findUnique({ 
+    where: { email },
+    include: {
+      levelCheckEntries: true,
+      studentProgressReportEntries: true,
+      students: true
+    }
+  });
   return result;
 };
 

@@ -62,14 +62,13 @@ export const getTeachersByLanguageOnDB = async (req, res) => {
 };
 
 export const getTeacherByEmailOnDB = async (req, res) => {
-  console.log("hello for backend");
-  return res.json({message: "success"})
-  // try {
-  //   const result = await getTeacherByEmail(email);
-  //   return res.json({ success: true, exists: true, data: result });
-  // } catch (err) {
-  //   return res.status(500).json({ success: false, message: "Server Error" });
-  // }
+  const email = req.query.email;
+  try {
+    const result = await getTeacherByEmail(email);
+    return res.json({ success: true, exists: true, data: result });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
 export const createTeacher = async (req, res) => {
