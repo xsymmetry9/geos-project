@@ -11,7 +11,6 @@ import {
 import PlotCards from "./PrintComponents/PlotCards";
 import { Student } from "@/type/Student";
 import labelText from "../assets/other/labelText.json";
-
 import "../styles/print.css"
 
 // ---------------------------------
