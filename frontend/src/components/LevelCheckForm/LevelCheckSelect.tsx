@@ -32,7 +32,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       case "A2": return [4, 5];
       case "A2 - B1": return [5, 6];
       case "B1": return [6, 7];
-      case "B1-B2": return [7, 8];
+      case "B1 - B2": return [7, 8];
       case "B2": return [8, 9];
       case "C1": return [9, 9.5];
       case "C1+": return [9.5, 10.5];
