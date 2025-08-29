@@ -18,18 +18,18 @@ const PrintPage = () => {
   return (
     <>
       <div className="flex items-center justify-center pb-3">
-        <Link className="btn-primary" to={`/home/${language}`}>
+        <Link className="btn-primary mt-6" to={`/home/${language}`}>
           Dashboard
         </Link>
       </div>
     <div className= "mx-auto overflow-auto">
-      <div id={`print-${language}`} className="shadow-lg print-component" ref={componentRef}>
+      <div id={`print-${language}`} className="shadow-lg border print-component" ref={componentRef}>
         <PrintContent parsedData={parsedData} />
       </div>
     </div>
-      <div className="flex justify-center pt-3 gap-3">
+      <div className="flex justify-center pt-3 gap-3 pb-6">
         <PrintControl contentRef={componentRef} className="btn btn-primary print" />
-        <SaveControl contentRef = {componentRef} className = "btn btn-primary print" />
+        <SaveControl contentRef = {componentRef} className = "btn btn-primary print" layout="p" title="spr" />
       </div>
     </>
   );
