@@ -2,10 +2,12 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, PrinterIcon, Plus, SquareX } from "lucide-react";
-import { getDataFromLocal } from "../utils/functions";
+import User from "../type/User";
+import { getDataFromLocal, deleteStudentById } from "../utils/functions";
 import ExportToExcel from "../components/ExportToExcel";
 import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
+import {parse} from "date-fns"
 
 const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
   <table className="w-full">
