@@ -6,6 +6,7 @@ import "../styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
+import SaveControl from "@/components/SaveControl";
 
 interface FormProps {
   inputData: LevelCheckEntry,
@@ -403,7 +404,7 @@ const LevelCheckPreview = () => {
           </div>
           <div className="pb-12 mt-9 w-full flex justify-center gap-2">
             <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary">Edit</Link>
-            <button onClick={handleGeneratePDF} className="btn-primary">Download to PDF</button>
+            <SaveControl contentRef={componentRef} className="btn-primary" layout="landscape" title={"level-check"}/>
             <button className="btn-primary" onClick = {printFromPdf}>Print</button>
           </div>
         </>
@@ -463,25 +464,28 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
               </tbody>
             </table>
 
-            <table className="w-[1026px] mt-3 border border-black">
-              <thead className="font-bold text-white text-[15px] w-full">
-                <tr className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
-                  <td className="border-r border-black bg-teal-600 p-1 text-center">Comment</td>
-                  <td className="border-r border-black bg-teal-600 p-1"></td>
-                  <td className="p-1 bg-orange-300 text-center text-black">Level</td>
-                </tr>
-              </thead>
-              <tbody className="text-[15px] bg-white">
-                <tr className="grid grid-cols-[1fr_125px] h-[150px]">
-                  <td className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</td>
-                  <td className="grid grid-rows-[1fr_40px_1fr] border-black bg-orange-50 text-[16px]">
-                    <p className="text-[15px] text-center self-center">{data.overallCEFR}</p>
-                    <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-black-800 font-bold self-center">Book Suggestion</p>
-                    <p className="text-[15px] self-center text-center">{data.bookRecommendation}</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <table className="w-[1026px] mt-3 border border-black border-collapse">
+  <thead className="font-bold text-white text-[15px] w-full">
+    <tr className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
+      <td className="border-r border-black bg-teal-600 p-1 text-center">Comment</td>
+      <td className="border-r border-black bg-teal-600 p-1"></td>
+      <td className="p-1 bg-orange-300 text-center text-black">Level</td>
+    </tr>
+  </thead>
+  <tbody className="text-[15px] bg-white">
+    <tr className="grid grid-cols-[1fr_125px] h-[150px]">
+      <td className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</td>
+      <td className="grid grid-rows-[1fr_40px_1fr] text-[16px]">
+        <p className="bg-orange-50 text-[15px] text-center pt-4">{data.overallCEFR}</p>
+        <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-black font-bold self-center">Book Suggestion</p>
+        <p className="bg-orange-50 text-[15px] text-center pt-4 border-b border-black">
+          {data.bookRecommendation}
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
           </div>
         </div>
       </div>
