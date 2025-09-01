@@ -536,7 +536,6 @@ export const EditStudent = () => {
         setFormData((prevFormData) => ({...prevFormData, [name]: value}));
     }
 
-        
     useEffect(() => {
             setLoading(true);
             let token = localStorage.getItem("token");
