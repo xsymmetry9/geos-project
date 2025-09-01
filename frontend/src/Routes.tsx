@@ -85,11 +85,10 @@ const routes: RouteObject[] = [
     element: <AdminLogin />
   },
   {
-    path: "admin",
+    path: "admin/",
     element: <AdminLayout />,
     children: [
-      {index: true, element: <AdminAuthenticate />},
-      {path: "home", element: <AdminHomepage />},
+      {index: true, element: <AdminHomepage />},
       {path: "teacher/:email", element: <TeacherPage />}
     ]
   },
