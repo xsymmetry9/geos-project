@@ -432,7 +432,7 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
 
           </div>
           <div id="table-container">
-            <table className="w-[1026px] mt-1 h-[420px] border border-black border-collapse table-auto" id="table-content">
+            <table className="w-[1026px] mt-1 h-[420px] border border-slate-600 border-collapse table-auto" id="table-content">
               <colgroup>
                 <col className="w-[100px]" />
                 <col className="w-[400px]" />
@@ -442,43 +442,43 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
               </colgroup>
               <thead className="text-[15px]">
                 <tr className="text-white font-bold text-center h-[30px] bg-teal-600">
-                  <td className="border-r border-black">Category</td>
-                  <td className="border-r border-black">Strength</td>
-                  <td className="border-r border-black">Weakness</td>
-                  <td className="text-black border-r border-black bg-orange-300">Score</td>
-                  <td className="text-black bg-orange-300">CEFR</td>
+                  <td className="border border-slate-600">Category</td>
+                  <td className="border border-slate-600">Strength</td>
+                  <td className="border border-slate-600">Weakness</td>
+                  <td className="border border-slate-600 text-black bg-orange-300">Score</td>
+                  <td className="border border-slate-600 text-black bg-orange-300">CEFR</td>
                 </tr>
               </thead>
               <tbody className="text-[13px]">
                 {["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"].map((item) => {
                   return(
                     <tr key={item} className="h-[72px]">
-                      <td className="w-[100px] border-r border-b border-t text-center font-bold capitalize border-black-600 px-1 bg-teal-50">{item}</td>
-                      <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-t border-black px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
-                      <td className="border-r border-b border-t border-black px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
-                      <td className="border-black px-1 border-b border-t text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
+                      <td className="border border-slate-600 w-[100px] text-center font-bold capitalize px-1 bg-teal-50">{item}</td>
+                      <td className="border border-slate-600 px-1 bg-white"><ul className="">{data[item].strength.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border border-slate-600 px-1 bg-white"><ul className="">{data[item].weakness.map((list: any, idx: number) => <li className="print-list" key={idx}>{list}</li>)}</ul></td>
+                      <td className="border border-slate-600 px-1 text-center bg-orange-50 text-[15px]">{data[item].score}</td>   
+                      <td className="border border-slate-600 px-1 text-center bg-orange-50 text-[15px]">{data[item].level_name}</td>                      
                     </tr>
                   )
                 })}
               </tbody>
             </table>
 
-          <table className="w-[1026px] mt-3 border border-black border-collapse">
+          <table className="w-[1026px] mt-3 border border-slate-600 border-collapse">
   <thead className="font-bold text-white text-[15px] w-full">
-    <tr className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center border-b border-black">
-      <td className="border-r border-black bg-teal-600 p-1 text-center">Comment</td>
-      <td className="border-r border-black bg-teal-600 p-1"></td>
-      <td className="p-1 bg-orange-300 text-center text-black">Level</td>
+    <tr className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center">
+      <td className="border border-slate-600 bg-teal-600 p-1 text-center">Comment</td>
+      <td className="border border-slate-600 bg-teal-600 p-1"></td>
+      <td className="border border-slate-600 p-1 bg-orange-300 text-center text-black">Level</td>
     </tr>
   </thead>
   <tbody className="text-[15px] bg-white">
     <tr className="grid grid-cols-[1fr_125px] h-[150px]">
-      <td className="border-r border-teal-800 flex p-2 text-[15px]">{data.feedback}</td>
-      <td className="grid grid-rows-[1fr_40px_1fr] text-[16px]">
+      <td className="border border-slate-600 flex p-2 text-[15px]">{data.feedback}</td>
+      <td className="border border-slate-600 grid grid-rows-[1fr_40px_1fr] text-[16px]">
         <p className="bg-orange-50 text-[15px] text-center pt-4">{data.overallCEFR}</p>
-        <p className="p-2 text-[13px] bg-orange-300 border-t border-b border-black font-bold self-center">Book Suggestion</p>
-        <p className="bg-orange-50 text-[15px] text-center pt-4 border-b border-black">
+        <p className="border-t border-slate-600 p-2 text-[13px] bg-orange-300 font-bold self-center">Book Suggestion</p>
+        <p className="border-t bg-orange-50 text-[15px] text-center pt-4">
           {data.bookRecommendation}
         </p>
       </td>
