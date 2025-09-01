@@ -35,7 +35,7 @@ function AdminLogin() {
                 setTimeout(() => {
                   setLoading(false);
                 }, 500);
-                navigate("/admin/home", {replace: true});
+                navigate("/admin", {replace: true});
             } else {
                 return setMessageBox({type: "error", message:"Login failed.  Please try again."});
             }
