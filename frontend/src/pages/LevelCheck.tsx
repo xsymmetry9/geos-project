@@ -78,7 +78,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
                 className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" 
                 name="dateCreated" 
                 id="input-dateCreated"
-                value={inputData.dateCreated} 
+                value={format(inputData.dateCreated, 'yyyy-MM-dd')} 
                 onChange={handleChange}/>
             </label>
           </div>
@@ -116,8 +116,9 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
           </div>
   
         </section>
-        <div className="w-full flex justify-center pt-3">
+        <div className="w-full flex justify-center pt-3 gap-3">
          <input type="submit" className="btn-primary" value="submit"/>
+         <Link to="/" className="btn-primary">Cancel</Link>
         </div>
       </form>
     </div>
@@ -157,6 +158,15 @@ const LevelCheckForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement| HTMLTextAreaElement>) => {
     const {name, value} = e.currentTarget;
+    if(name === "dateCreated") {
+      setInputData((prev) => ({
+        ...prev,
+        dateCreated: new Date(value)
+      }));
+
+      return;
+    }
+
     setInputData((prev) => ({
       ...prev,
         [name]: value
