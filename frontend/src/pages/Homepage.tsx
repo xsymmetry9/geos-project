@@ -1,21 +1,62 @@
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
-import { Archive, Pencil, PrinterIcon, Plus, SquareX } from "lucide-react";
+import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal } from "lucide-react";
 import User from "../type/User";
 import { getDataFromLocal, deleteStudentById } from "../utils/functions";
 import ExportToExcel from "../components/ExportToExcel";
 import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
-import {parse} from "date-fns"
+import { LevelCheckEntry } from "@/type/LevelCheckForm";
 
-const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
+type PlotLevelCheckProps = {
+  language: string;
+  data: LevelCheckEntry[];
+  handleDisplayDelete: (opts: { display: boolean; id: string; type: "levelCheck" }) => void;
+
+}
+const formattedDate = (dateCreated: Date) => {
+  return format(dateCreated, 'MM/dd/yyyy');
+}
+const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckProps) => {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+
+  const closeOptions = () => setSelectedId(null);
+  const toggleOption = (id: string) => {
+    setSelectedId(id)
+  }
+
+  useEffect(() => {
+    if (!selectedId) return;
+
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (menuRef.current?.contains(target)) return;
+      if (toggleRef.current?.contains(target)) return;
+      closeOptions();
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeOptions();
+    };
+
+    document.addEventListener("mousedown", onDocMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [selectedId]);
+  return (
   <table className="w-full">
     <thead>
       <tr className="bg-stone-600 text-white font-bold">
         <td className="p-3 text-center">Date</td>
         <td className="p-3 text-center">Name</td>
-        <td className="p-3 text-center">Action</td>
+        <td className="p-3 text-center"></td>
       </tr>
     </thead>
     <tbody>
@@ -24,35 +65,54 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }) => (
           className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
           key={`level-check${item.id}`}
         >
-          {/* Need to fix the time */}
-          <td className="p-3 text-center h-[30px]">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td> 
+          <td className="p-3 text-center h-[30px]">{formattedDate(item.dateCreated)}</td> 
           <td className="p-3 text-center h-[30px]">{item.student_name}</td>
-          <td className="flex gap-3 justify-center mt-4 h-[30px]">
-            <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
-              <Pencil size={20} />
-            </Link>
-            <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/preview/${item.id}`}>
-              <PrinterIcon size={20} />
-            </Link>
-            <button
-              className="text-red-600 cursor-pointer flex justify-center"
-              onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
-            >
-              <Archive size={20} />
-            </button>
+          {selectedId === item.id ? (
+              <td className="flex gap-3 justify-center mt-4 h-[30px]">
+                <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
+                  <Pencil size={20} />
+                </Link>
+                <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/preview/${item.id}`}>
+                  <PrinterIcon size={20} />
+                </Link>
+                <button
+                  className="text-red-600 cursor-pointer flex justify-center"
+                  onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
+                >
+                  <Archive size={20} />
+                </button>
           </td>
+          ) : (
+            <td>
+              <button
+                ref={selectedId === item.id ? toggleRef : undefined}
+                onClick={() => toggleOption(item.id)}
+                aria-expanded={selectedId === item.id}
+                aria-label="Show actions"
+                type="button"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full
+                           bg-stone-200 text-stone-700
+                           hover:bg-stone-700 hover:text-white
+                           transition-colors duration-150
+                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-400"
+                >             
+                <MoreHorizontal size={16} strokeWidth={2} />
+          </button>
+            </td>
+          )}
         </tr>
       ))}
     </tbody>
   </table>
-);
+  )
+};
 
 const Homepage = () => {
   const { language } = useParams();
-  const [page, setPage] = useState("spr");
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
-  const [addFormNav, setAddFormNav] = useState(false);
+  const [page, setPage] = useState<"spr" | "levelCheck">("spr");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userData, setUserData] = useState<User | null>(null);
+  const [addFormNav, setAddFormNav] = useState<boolean>(false);
   const [deletePage, setDeletePage] = useState({ display: false, id: null, type: "" });
 
   useEffect(() => {
@@ -70,18 +130,20 @@ const Homepage = () => {
   const handleDelete = () => {
     if (!deletePage.id || !userData) return;
 
-    const fetchData = JSON.parse(localStorage.getItem("GEOS_app"));
-    const result = fetchData[deletePage.type].filter(item => item.id !== deletePage.id);
+    const raw = localStorage.getItem("GEOS_app");
+    if(!raw) return;
 
-    fetchData[deletePage.type] = result;
+    const parsedData = JSON.parse(raw);
+    const result = parsedData[deletePage.type].filter(item => item.id !== deletePage.id);
 
-    localStorage.setItem("GEOS_app", JSON.stringify(fetchData));
+    parsedData[deletePage.type] = result;
+
+    localStorage.setItem("GEOS_app", JSON.stringify(parsedData));
 
     setUserData((prev) =>
       prev ? { ...prev, [deletePage.type]: prev[deletePage.type].filter((item) => item.id !== deletePage.id) } : prev
     );
-
-    
+   
     closePage();
   };
 
@@ -94,13 +156,46 @@ const Homepage = () => {
 
   if (loading) return <h1>Loading ...</h1>;
 
-  const PlotSPRTable = () => (
+  const PlotSPRTable = () => {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+
+  const closeOptions = () => setSelectedId(null);
+  const toggleOption = (id: string) => {
+    setSelectedId(id)
+  }
+
+  useEffect(() => {
+    if (!selectedId) return;
+
+    const onDocMouseDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (menuRef.current?.contains(target)) return;
+      if (toggleRef.current?.contains(target)) return;
+      closeOptions();
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeOptions();
+    };
+
+    document.addEventListener("mousedown", onDocMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [selectedId]);
+
+    return (
     <table className="w-full shadow-md">
       <thead>
         <tr className="bg-stone-600 text-white font-bold">
           <th className="p-3 text-center">Date</th>
           <th className="p-3 text-center">Name</th>
-          <th className="p-3 text-center">Action</th>
+          <th className="p-3 text-center"></th>
         </tr>
       </thead>
       <tbody>
@@ -111,25 +206,47 @@ const Homepage = () => {
           >
             <td className="p-3 text-center">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
             <td className="p-3 text-center">{item.name}</td>
-            <td className="flex gap-3 justify-center mt-4">
-              <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
-                <Pencil size={20} />
-              </Link>
-              <Link className="text-green-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
-                <PrinterIcon size={20} />
-              </Link>
-              <button
-                className="text-red-600 cursor-pointer"
-                onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
-              >
-                <Archive size={20} />
-              </button>
-            </td>
+            {selectedId === item.id ? (
+              <td className="flex gap-3 justify-center mt-4">
+                <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
+                  <Pencil size={20} />
+                </Link>
+                <Link className="text-green-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
+                  <PrinterIcon size={20} />
+                </Link>
+                <button
+                  className="text-red-600 cursor-pointer"
+                  onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
+                >
+                  <Archive size={20} />
+                </button>
+              </td>
+            ) : (
+                <td>
+                  <button
+                    ref={selectedId === item.id ? toggleRef : undefined}
+                    onClick={() => toggleOption(item.id)}
+                    aria-expanded={selectedId === item.id}
+                    aria-label="Show actions"
+                    type="button"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full
+                               bg-stone-200 text-stone-700
+                               hover:bg-stone-700 hover:text-white
+                               transition-colors duration-150
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-400"
+                    >             
+                    <MoreHorizontal size={16} strokeWidth={2} />
+                  </button>
+                </td>
+            )
+          }
+            
           </tr>
         ))}
       </tbody>
     </table>
   );
+}
 
   return (
     <div className="pb-12">
