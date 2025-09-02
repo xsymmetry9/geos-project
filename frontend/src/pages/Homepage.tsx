@@ -21,42 +21,30 @@ const formattedDate = (dateCreated: Date) => {
 const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
 
-  const closeOptions = () => setSelectedId(null);
   const toggleOption = (id: string) => {
     setSelectedId(id)
   }
 
   useEffect(() => {
-    if (!selectedId) return;
-
-    const onDocMouseDown = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (menuRef.current?.contains(target)) return;
-      if (toggleRef.current?.contains(target)) return;
-      closeOptions();
-    };
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeOptions();
-    };
-
-    document.addEventListener("mousedown", onDocMouseDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onDocMouseDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [selectedId]);
+    const handleClickOutside = (event: MouseEvent) => {
+      if(dropDownRef.current && !dropDownRef.current.contains(event.target as Node)){
+        setSelectedId(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return() => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  });
   return (
-  <table className="w-full">
+  <table className="max-w-[800px] w-full mx-auto">
     <thead>
       <tr className="bg-stone-600 text-white font-bold">
         <td className="p-3 text-center">Date</td>
         <td className="p-3 text-center">Name</td>
-        <td className="p-3 text-center"></td>
+        <td className="p-3 text-center w-[100px]"></td>
       </tr>
     </thead>
     <tbody>
@@ -67,39 +55,39 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
         >
           <td className="p-3 text-center h-[30px]">{formattedDate(item.dateCreated)}</td> 
           <td className="p-3 text-center h-[30px]">{item.student_name}</td>
-          {selectedId === item.id ? (
-              <td className="flex gap-3 justify-center mt-4 h-[30px]">
-                <Link className="text-blue-500" to={`/levelCheck/${language}/edit/${item.id}`}>
-                  <Pencil size={20} />
-                </Link>
-                <Link className="text-green-600 cursor-pointer" to={`/levelCheck/${language}/preview/${item.id}`}>
-                  <PrinterIcon size={20} />
-                </Link>
-                <button
-                  className="text-red-600 cursor-pointer flex justify-center"
-                  onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
-                >
-                  <Archive size={20} />
-                </button>
-          </td>
-          ) : (
-            <td>
-              <button
-                ref={selectedId === item.id ? toggleRef : undefined}
+          <td className="p-3 text-center h-[30px] relative">
+            <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
+               <button
                 onClick={() => toggleOption(item.id)}
-                aria-expanded={selectedId === item.id}
-                aria-label="Show actions"
+                aria-expanded= {selectedId === item.id}
+                aria-label="toggle menu"
                 type="button"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full
-                           bg-stone-200 text-stone-700
-                           hover:bg-stone-700 hover:text-white
-                           transition-colors duration-150
-                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-400"
+                className="cursor-pointer bg-none text-slate-500 hover:underline"
                 >             
                 <MoreHorizontal size={16} strokeWidth={2} />
-          </button>
-            </td>
-          )}
+              </button>
+              </div>
+                {selectedId === item.id && (
+                  <div className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
+                   >
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/edit/${item.id}`}>
+                           <Pencil size={20} />
+                           <span>Edit</span>
+                    </Link>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/preview/${item.id}`}>
+                      <PrinterIcon size={20} />
+                      <span>View</span>
+                    </Link>
+                    <button
+                      className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200"
+                      onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
+                    >
+                      <Archive size={20} />
+                      <span>Delete</span>
+                    </button>
+                    </div>
+                )}            
+              </td>
         </tr>
       ))}
     </tbody>
@@ -190,7 +178,7 @@ const Homepage = () => {
   }, [selectedId]);
 
     return (
-    <table className="w-full shadow-md">
+    <table className="w-full max-w-[800px] mx-auto">
       <thead>
         <tr className="bg-stone-600 text-white font-bold">
           <th className="p-3 text-center">Date</th>
@@ -240,7 +228,6 @@ const Homepage = () => {
                 </td>
             )
           }
-            
           </tr>
         ))}
       </tbody>
@@ -250,7 +237,7 @@ const Homepage = () => {
 
   return (
     <div className="pb-12">
-      <h2 className="font-secondary text-2xl text-center font-semibold mb-6">
+      <h2 className="font-secondary text-2xl text-center font-semibold mt-6 mb-6">
         {page === "spr" ? `Student's Progress Report` : "Level Checks"}
         </h2>
       <div className="p-b-3 flex justify-center gap-3 mb-6">
@@ -259,10 +246,10 @@ const Homepage = () => {
         <ImportFromExcel userData={userData} setUserData={setUserData} />
       </div>
 
-      <div className="flex">
+      <div className="w-full max-w-[800px] mx-auto">
         <button
           className={`cursor-pointer font-secondary font-bold p-2 w-[150px] text-center ${
-            page === "spr" ? "bg-stone-600 text-white" : "text-black bg-white border-2 border-stone-600"
+            page === "spr" ? "bg-stone-600 text-white" : "text-black bg-white outline outline-stone-600"
           }`}
           onClick={toggleLevelCheckSPR}
           name="spr"
@@ -270,8 +257,8 @@ const Homepage = () => {
           SPR
         </button>
         <button
-          className={`cursor-pointer font-secondary font-bold p-2 p-2 w-[150px] text-center border-2 ${
-            page === "levelCheck" ? "bg-stone-600 border - 2 text-white" : "text-black bg-white border-stone-600"
+          className={`cursor-pointer font-secondary font-bold p-2 w-[150px] text-center ${
+            page === "levelCheck" ? "bg-stone-600 text-white" : "text-black bg-white outline outline-stone-600"
           }`}
           onClick={toggleLevelCheckSPR}
           name="levelCheck"
