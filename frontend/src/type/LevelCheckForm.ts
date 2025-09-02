@@ -16,7 +16,7 @@ class StrengthAndWeakness {
 
 class LevelCheckEntry {
     id: string;
-    dateCreated: string;
+    dateCreated: Date;
     student_name: string;
     feedback: string;
     bookRecommendation: string;
@@ -30,7 +30,7 @@ class LevelCheckEntry {
 
     constructor(id = uuidv4()) {
       this.id = id;
-      this.dateCreated = "";
+      this.dateCreated = new Date();
       this.student_name = "";
       this.feedback = "";
       this.bookRecommendation = "";
