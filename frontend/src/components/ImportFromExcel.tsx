@@ -12,6 +12,7 @@ type ImportFromExcelProps = {
 
 const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
   const { SPR } = userData;
+  console.log(userData);
 
   const mergedArrayFilterUniqueObjects = useCallback((arr1: Student[], arr2: Student[]) => {
     const mergedArray = [...arr1, ...arr2];
