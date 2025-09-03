@@ -10,7 +10,7 @@ import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 
 type PlotLevelCheckProps = {
-  language: string;
+  language: "english" | "korean" | "japanese" |"chinese";
   data: LevelCheckEntry[];
   handleDisplayDelete: (opts: { display: boolean; id: string; type: "levelCheck" }) => void;
 
@@ -75,7 +75,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
                    >
                     <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/edit/${item.id}`}>
-                           <Pencil size={20} />
+                      <Pencil size={20} />
                            <span>Edit</span>
                     </Link>
                     <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/preview/${item.id}`}>
@@ -115,7 +115,12 @@ const Homepage = () => {
 
   const handleFormControl = () => setAddFormNav((prev) => !prev);
 
-  const handleDisplayDelete = ({ display, id, type }) => {
+  type handleDisplayDeleteProps = {
+    display: boolean,
+    id: string,
+    type: string
+  }
+  const handleDisplayDelete = ({ display, id, type }: handleDisplayDeleteProps) => {
     setDeletePage({ display, id, type });
   };
 
@@ -151,35 +156,23 @@ const Homepage = () => {
   const PlotSPRTable = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const toggleRef = useRef<HTMLButtonElement | null>(null);
+    const dropDownRef = useRef<HTMLDivElement | null>(null);
 
-  const closeOptions = () => setSelectedId(null);
   const toggleOption = (id: string) => {
     setSelectedId(id)
   }
 
   useEffect(() => {
-    if (!selectedId) return;
-
-    const onDocMouseDown = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (menuRef.current?.contains(target)) return;
-      if (toggleRef.current?.contains(target)) return;
-      closeOptions();
-    };
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeOptions();
-    };
-
-    document.addEventListener("mousedown", onDocMouseDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onDocMouseDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [selectedId]);
+    const handleClickeOutside = (event: MouseEvent) => {
+      if(dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+        setSelectedId(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickeOutside);
+    return() => {
+      document.removeEventListener("mousedown", handleClickeOutside);
+    }
+  });
 
     return (
     <table className="w-full max-w-[800px] mx-auto">
@@ -187,7 +180,7 @@ const Homepage = () => {
         <tr className="bg-stone-600 text-white font-bold">
           <th className="p-3 text-center">Date</th>
           <th className="p-3 text-center">Name</th>
-          <th className="p-3 text-center"></th>
+          <th className="p-3 text-center w-[100px]"></th>
         </tr>
       </thead>
       <tbody>
@@ -196,42 +189,43 @@ const Homepage = () => {
             key={`${item.id}-${index}`}
             className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
           >
-            <td className="p-3 text-center">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
-            <td className="p-3 text-center">{item.name}</td>
-            {selectedId === item.id ? (
-              <td className="flex gap-3 justify-center mt-4">
-                <Link className="text-blue-500" to={`/spr/${language}/edit/${item.id}`}>
-                  <Pencil size={20} />
-                </Link>
-                <Link className="text-green-600 cursor-pointer" to={`/spr/${language}/print/${item.id}`}>
-                  <PrinterIcon size={20} />
-                </Link>
-                <button
-                  className="text-red-600 cursor-pointer"
-                  onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
-                >
-                  <Archive size={20} />
-                </button>
-              </td>
-            ) : (
-                <td>
-                  <button
-                    ref={selectedId === item.id ? toggleRef : undefined}
+            <td className="p-3 text-center h-[30px]">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
+            <td className="p-3 text-center h-[30px]">{item.name}</td>
+            <td className="p-3 text-center h-[30px] relative">
+              <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
+                 <button
                     onClick={() => toggleOption(item.id)}
                     aria-expanded={selectedId === item.id}
-                    aria-label="Show actions"
+                    aria-label="Toggle Menu"
                     type="button"
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full
-                               bg-stone-200 text-stone-700
-                               hover:bg-stone-700 hover:text-white
-                               transition-colors duration-150
-                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-stone-400"
+                    className="cursor-pointer bg-none text-slate-500 hover:underline"
                     >             
                     <MoreHorizontal size={16} strokeWidth={2} />
                   </button>
-                </td>
-            )
-          }
+              </div>
+                {selectedId === item.id && (
+                  <div 
+                    ref={dropDownRef}
+                    className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/${language}/edit/${item.id}`}>
+                      <Pencil size={20} />
+                      <span>Edit</span>
+                    </Link>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/${language}/print/${item.id}`}>
+                      <PrinterIcon size={20} />
+                      <span>View</span>
+                    </Link>
+                    <button
+                      className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200"
+                      onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
+                    >
+                      <Archive size={20} />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                  )}
+            </td>
+        
           </tr>
         ))}
       </tbody>
