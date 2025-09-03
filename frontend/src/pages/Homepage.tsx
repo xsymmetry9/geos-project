@@ -56,7 +56,9 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
           <td className="p-3 text-center h-[30px]">{formattedDate(item.dateCreated)}</td> 
           <td className="p-3 text-center h-[30px]">{item.student_name}</td>
           <td className="p-3 text-center h-[30px] relative">
-            <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
+            <div
+
+              className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
                <button
                 onClick={() => toggleOption(item.id)}
                 aria-expanded= {selectedId === item.id}
@@ -68,7 +70,9 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
               </button>
               </div>
                 {selectedId === item.id && (
-                  <div className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
+                  <div
+                    ref={dropDownRef} 
+                    className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
                    >
                     <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/edit/${item.id}`}>
                            <Pencil size={20} />
