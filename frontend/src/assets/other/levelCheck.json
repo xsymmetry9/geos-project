@@ -39,10 +39,10 @@
                                 "Able to summarize points"
                             ],
                             "weakness":[
-                                "Hesitant to speak on unfamiliar topics",
+                                "Hesitant to speak about unfamiliar topics",
                                 "Can be unclear when talking about abstract ideas",
                                 "Pauses often when thinking of words",
-                                "Still struggles with some complex sentence structures",
+                                "Struggles with some complex sentence structures",
                                 "May lack fluency in spontaneous conversation",
                                 "Occasionally repeats phrases or words",
                                 "Requires time to organize thoughts",
@@ -64,7 +64,7 @@
                             "weakness": [
                                 "Sometimes too technical in language use",
                                 "Can become overly detailed or verbose",
-                                "Rarely hesitates, but may need time for complex answers",
+                                "Rarely hesitates, except on complex answers",
                                 "Minor errors in complex grammatical structures",
                                 "Overthinks certain responses or structures",
                                 "Occasionally uses overly complex phrases",
@@ -119,7 +119,7 @@
                                 "Can be unsure in unfamiliar conversations",
                                 "Hesitates with unfamiliar topics",
                                 "May retreat from complicated interactions",
-                                "Can overthink when responding to complex questions"
+                                "Overthinks at times for complex questions"
                             ]
                         },
                         "C1-C2":
@@ -128,7 +128,7 @@
                                 "Speaks confidently in a variety of situations",
                                 "Easily handles difficult conversations",
                                 "Ready to speak on unfamiliar topics",
-                                "Can maintain conversation flow even with interruptions",
+                                "Maintain conversation flow even with interruptions",
                                 "Comfortable speaking in large groups",
                                 "Adapts easily to different conversational tones",
                                 "Confident in both formal and informal speaking",
@@ -140,9 +140,9 @@
                                 "Can doubt complex expressions in public",
                                 "Can become overly focused on precision",
                                 "May overthink responses in professional settings",
-                                "May sometimes simplify thoughts too much for clarity",
+                                "May sometimes simplify thoughts too much",
                                 "Occasionally over-elaborates",
-                                "Rarely has language errors, but may struggle with less common vocabulary"
+                                "Needs to improve in nuanced, specific vocabulary"
                             ]
                         }
                     },
@@ -174,7 +174,7 @@
                         "B1-B2":
                         {
                             "strength": [
-                                "Can express opinions clearly with relevant vocabulary",
+                                "Expresses opinions clearly with relevant vocabulary",
                                 "Able to explain common concepts with some effort",
                                 "Able to recognize and use some idioms",
                                 "Can describe experiences with detail",
@@ -185,13 +185,13 @@
                             ],
                             "weakness":[
                                 "Misses more nuanced or technical words",
-                                "Can’t find the right word for complex ideas",
+                                "Has trouble finding the right word for complex ideas",
                                 "Lacks vocabulary for certain social contexts",
                                 "Can’t remember some words quickly in speech",
-                                "Still struggles with collocations",
-                                "Needs more exposure to advanced vocabulary",
+                                "Struggles with collocations",
+                                "Needs more exposure to advanced, natural vocabulary",
                                 "Can become repetitive with word choices",
-                                "May rely on basic language for professional discussions"
+                                "Relies on basic language for professional discussions"
                             ]
                         },
                         "C1-C2":
@@ -217,7 +217,7 @@
                                 "Rarely makes mistakes but may sound repetitive",
                                 "May occasionally misuse complex words",
                                 "Can be overly detailed in everyday conversation",
-                                "Sometimes lacks depth in academic or professional discussions",
+                                "Needs to be more detailed in advanced topics",
                                 "Occasionally unsure of rare vocabulary",
                                 "May use more formal expressions than needed"
                             ]
@@ -285,7 +285,7 @@
                                 "Demonstrates accuracy across all tenses",
                                 "Uses inversion for emphasis correctly",
                                 "Can express subtle differences using modal verbs",
-                                "Understands and applies reduced relative clauses",
+                                "Understands and uses advanced relative clauses",
                                 "Uses advanced linking phrases fluently",
                                 "Can apply correct word order in all contexts",
                                 "Uses varied clause structures",
@@ -293,7 +293,7 @@
                                 "Maintains grammatical accuracy at high fluency"
                             ],
                             "weakness": [
-                                "Can become overly complex in sentence construction",
+                                "Sometimes overly complex in sentence construction",
                                 "Occasionally overuses passive voice",
                                 "May misuse advanced conditionals",
                                 "Needs to refine use of rare grammatical structures",
@@ -339,7 +339,7 @@
                         {
                             "strength": [
                                 "Understands main ideas in conversations",
-                                "Can follow normal-speed speech in familiar topics",
+                                "Can follow familiar topics at a moderate speed",
                                 "Recognizes speaker intent in casual speech",
                                 "Can differentiate formal and informal tones",
                                 "Can follow simple storytelling",
@@ -385,9 +385,9 @@
                                 "May miss cultural references",
                                 "Can overanalyze meaning in some contexts",
                                 "May struggle with highly specialized jargon",
-                                "Occasionally struggles with overlapping conversations",
+                                "Occasionally struggles with simultaneous talking",
                                 "Needs adjustment time for unfamiliar dialects",
-                                "Can struggle with abstract philosophical discussions",
+                                "Struggles with abstract philosophical discussions",
                                 "May misunderstand ambiguous phrasing",
                                 "Can miss subtle variations in idioms",
                                 "Occasionally over-interprets tone shifts"
