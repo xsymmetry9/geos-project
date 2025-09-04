@@ -53,16 +53,16 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
         : `${text("date", language)}: ${format(new Date(), "yyyy年M月d日")}`}
     </p>
     <p className="capitalize">
-      {text("attendance", language)}: {attendance}{" "}
-      <span className="lowercase">{text("times", language)}</span>
+      {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : "NA"}
+      <span className="lowercase">{attendance != 0 && text("times", language)}</span>
     </p>
     <p className="capitalize">
-      {text("total_lessons", language)}: {totalLessons}{" "}
-      <span className="lowercase">{text("times", language)}</span>
+      {text("total_lessons", language)}: {totalLessons != 0 ? `${totalLessons} ` : "NA"}
+      <span className="lowercase">{attendance != 0 && text("times", language)}</span>
     </p>
     <p className="capitalize">
       {text("%_of_attendance", language)}:{" "}
-      {Math.round((attendance / totalLessons) * 100)}%
+      {attendance === "" && totalLessons === "" ? `${Math.round((attendance / totalLessons) * 100)}%` : "NA"}
     </p>
   </div>
 );
