@@ -128,7 +128,8 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   ]
     const sum = () =>
       labels.reduce((total, key) => {
-        const val = levels[key][label];
+        const val = levels[key][label] === "" ? "0" : levels[key][label];
+        console.log("sum:", val);
         return total + (val === "10+" ? 10.5 : parseFloat(val));
 
       },0);
@@ -142,7 +143,8 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
         </td>
         {labels.map((skill, idx) => (
           <td key={idx} className="text-center p-[2px]">
-            {levels[skill][label]} <span className="color-slate-600 text-[10px]">{CEFRFramework(levels[skill][label])}</span>
+            {levels[skill][label]} <span className="color-slate-600 text-[10px]">
+              {`${levels[skill][label] !== "" ? `(${CEFRFramework(levels[skill][label])})` : "-"}`}</span>
           </td>
         ))}
         <td className="text-center p-[2px]">{sum()}</td>
