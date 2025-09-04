@@ -483,12 +483,12 @@ const Plot: React.FC<LevelCheckEntry>=({data}) => {
     </tr>
   </thead>
   <tbody className="text-[15px] bg-white">
-    <tr className="grid grid-cols-[1fr_125px] h-[150px]">
+    <tr className="grid grid-cols-[1fr_125px] h-[155px]">
       <td className="border border-slate-600 flex p-2 text-[15px]">{data.feedback}</td>
-      <td className="border border-slate-600 grid grid-rows-[1fr_40px_1fr] text-[16px]">
-        <p className="bg-orange-50 text-[15px] text-center pt-4">{data.overallCEFR}</p>
-        <p className="border-t border-slate-600 p-2 text-[13px] bg-orange-300 font-bold self-center">Book Suggestion</p>
-        <p className="border-t bg-orange-50 text-[15px] text-center pt-4">
+      <td className="border border-slate-600 grid grid-rows-[1fr_60px_1fr]">
+        <p className="bg-orange-50 text-[15px] text-center pt-3 items-center">{data.overallCEFR}</p>
+        <p className="border-t border-slate-600 p-2 text-[13px] bg-orange-300 font-bold text-center items-center ">Book Suggestion</p>
+        <p className="border-t bg-orange-50 text-center pt-4 text-[11px] items-center">
           {data.bookRecommendation}
         </p>
       </td>
