@@ -9,8 +9,9 @@ import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 
+type Languages = "english" | "korean" | "japanese" |"chinese";
 type PlotLevelCheckProps = {
-  language: "english" | "korean" | "japanese" |"chinese";
+  language: Languages;
   data: LevelCheckEntry[];
   handleDisplayDelete: (opts: { display: boolean; id: string; type: "levelCheck" }) => void;
 
@@ -103,7 +104,7 @@ const Homepage = () => {
   const { language } = useParams();
   const [page, setPage] = useState<"spr" | "levelCheck">("spr");
   const [loading, setLoading] = useState<boolean>(true);
-  const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
   const [deletePage, setDeletePage] = useState({ display: false, id: null, type: "" });
 
@@ -131,14 +132,14 @@ const Homepage = () => {
     if(!raw) return;
 
     const parsedData = JSON.parse(raw);
-    const result = parsedData[deletePage.type].filter(item => item.id !== deletePage.id);
+    const result = parsedData[deletePage.type].filter((item: any) => item.id !== deletePage.id);
 
     parsedData[deletePage.type] = result;
 
     localStorage.setItem("GEOS_app", JSON.stringify(parsedData));
 
     setUserData((prev) =>
-      prev ? { ...prev, [deletePage.type]: prev[deletePage.type].filter((item) => item.id !== deletePage.id) } : prev
+      prev ? { ...prev, [deletePage.type]: prev[deletePage.type].filter((item: any) => item.id !== deletePage.id) } : prev
     );
    
     closePage();
