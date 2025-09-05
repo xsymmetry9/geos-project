@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
 import { Student } from "@/type/Student";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
+import User from "@/type/User";
 
 type UserData = {
   SPR: Student[];
@@ -10,7 +11,7 @@ type UserData = {
 }
 
 type ExportToExcelProps = {
-  userData: UserData;
+  userData: User;
 }
 
 type CategoryKey = "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation";
