@@ -24,6 +24,7 @@ const ParseLevelCheckEntry = (sheet: any) => {
     entry.bookRecommendation = row.bookRecommendation;
     entry.feedback = row.feedback;
     entry.overallCEFR = row.overallCEFR;
+    entry.dateCreated = row.dateCreated;
 
     const categories: Category[] = ["confidence", "speaking", "listening", "grammar", "pronunciation", "vocabulary"];
     categories.forEach((cat: Category) => {
