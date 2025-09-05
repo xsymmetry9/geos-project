@@ -107,7 +107,7 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
       const sprDataToExport = exportSPR(userData.SPR);
       const studentProgressReportSheet = XLSX.utils.json_to_sheet(sprDataToExport);
       autoFitColumns(studentProgressReportSheet, sprDataToExport);
-      XLSX.utils.book_append_sheet(workbook, studentProgressReportSheet, "Teacher's data");
+      XLSX.utils.book_append_sheet(workbook, studentProgressReportSheet, "spr");
     }
 
     if(haveLC){
@@ -126,7 +126,7 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
 
     const stamp = new Date().toISOString().slice(0, 10);
 
-    saveAs(data, `Teacher's backup data-${stamp}`);
+    saveAs(data, `backup data-${stamp}`);
   };
   return (
     <>
