@@ -41,6 +41,7 @@ const ParseLevelCheckEntry = (sheet: any) => {
 
 const parseSPREntry = (sheet: any) => {
   const jsonData: any[] = utils.sheet_to_json(sheet);
+  console.log(jsonData);
 
   let students: Student[] = [];
   jsonData.forEach((row) => {
@@ -84,43 +85,51 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
     const reader = new FileReader();
 
     reader.readAsArrayBuffer(file);
+    console.log("Reads the file: ", reader);
 
     reader.onload = (event) => {
       try {
         const arrayBuffer = event.target?.result;
 
+        console.log("Checks if arrayBuffer works: ", arrayBuffer)
+
         if (!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
 
         const data = new Uint8Array(arrayBuffer);
+        console.log("Creates a new data array: ", data);
         const workbook = read(data, { type: "array" });
+        console.log("Creates a workbook and read the data", workbook);
 
-        let arrOfSheetNames: string[] = [];
-        workbook.SheetNames.forEach((item) => arrOfSheetNames.push(item));
+        const sheetNames= workbook.SheetNames;
+        console.log(sheetNames);
+        // workbook.SheetNames.forEach((item) => arrOfSheetNames.push(item));
 
-        arrOfSheetNames.forEach((item) => {
-          if (item === "Teacher's data"){
-            const worksheet = workbook.Sheets[item];
+        const updatedUser = userData;
+        sheetNames.forEach((sheetName) => {
+          if (sheetName === "Teacher's data" || sheetName === "spr"){
+            const worksheet = workbook.Sheets[sheetName];
+            console.log("SPR sheet: ", worksheet);
             const parsedData = parseSPREntry(worksheet);
+            console.log("SPR parsed:", parsedData);
 
             const result = mergedArrayFilterUniqueObjects(parsedData, SPR);
-            const updatedUser = { ...userData, SPR: result };
-            editDataFromLocal(updatedUser);
-            setUserData(updatedUser);
+            console.log("Filtered: ", result);
+            updatedUser.SPR = result;
             
-          } else if (item === "Level Check"){
-            const worksheet = workbook.Sheets[item];
+          } else if (sheetName === "Level Check"){
+            const worksheet = workbook.Sheets[sheetName];
             const parsedData = ParseLevelCheckEntry(worksheet);
 
             const result = mergedArrayFilterUniqueObjects(parsedData, levelCheck);
-            const updatedUser = { ...userData, levelCheck: result };
-            editDataFromLocal(updatedUser);
-            setUserData(updatedUser);
+            updatedUser.levelCheck = result;
 
-            console.log(parsedData);
           } else {
             return;
           }
-        })
+        });
+
+        editDataFromLocal(updatedUser); // Updates localstorage
+        window.location.reload(); // reloads the page
 
       } catch (err: any) {
         alert(err.message || "An error occurred during file upload");
