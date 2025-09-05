@@ -23,6 +23,10 @@ interface CommentProps {
   value: string
 }
 
+interface PlotProps {
+  data: LevelCheckEntry
+}
+
 const Comment: React.FC<CommentProps> = ({className, name, setInputData, id, value}) => {
   const [message, setMessage] = useState("");
 
@@ -312,11 +316,11 @@ const LevelCheckPreview = () => {
       } else {
         console.log("Data not found");
         setIsPreparing(false);
-        setData(null);
+        setData(undefined);
       }
     } catch (e) {
       console.error("Failed to read GEOS_app:", e);
-      setData(null);
+      setData(undefined);
     }
   }, [params.id]);
 
@@ -399,7 +403,7 @@ const LevelCheckPreview = () => {
     const offsetY = (pdfHeight - renderHeight) / 2;
 
     pdf.addImage(imgData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
-    pdf.save(`level-check-${data.student_name}.pdf`);
+    pdf.save(`level-check-${data?.student_name}.pdf`);
   }
 
   return(
@@ -428,7 +432,7 @@ const LevelCheckPreview = () => {
     </>
   );
 }
-const Plot: React.FC<LevelCheckEntry>=({data}) => {
+const Plot: React.FC<PlotProps>=({data}) => {
   return(
     <div className="px-12 w-full" id="print-preview">
         <div className="font-primary container" id="level-check-content">
