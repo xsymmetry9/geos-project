@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal } from "lucide-react";
@@ -8,10 +8,11 @@ import ExportToExcel from "../components/ExportToExcel";
 import ImportFromExcel from "../components/ImportFromExcel";
 import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
+import { Language } from "@/utils/common";
+import { useUser } from "@/context/UserContext";
 
-type Languages = "english" | "korean" | "japanese" |"chinese";
 type PlotLevelCheckProps = {
-  language: Languages;
+  language: Language;
   data: LevelCheckEntry[];
   handleDisplayDelete: (opts: { display: boolean; id: string; type: "levelCheck" }) => void;
 
@@ -75,11 +76,11 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
                     ref={dropDownRef} 
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
                    >
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/edit/${item.id}`}>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/edit/${item.id}`}>
                       <Pencil size={20} />
                            <span>Edit</span>
                     </Link>
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/${language}/preview/${item.id}`}>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/preview/${item.id}`}>
                       <PrinterIcon size={20} />
                       <span>View</span>
                     </Link>
@@ -101,18 +102,20 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
 };
 
 const Homepage = () => {
-  const { language } = useParams();
   const [page, setPage] = useState<"spr" | "levelCheck">("spr");
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
   const [deletePage, setDeletePage] = useState({ display: false, id: null, type: "" });
+  const {user} = useUser(); // Use usecontext
+
+  console.log(user);
 
   useEffect(() => {
     const user = getDataFromLocal();
     setUserData(user);
     setLoading(false);
-  }, [language]);
+  },[]);
 
   const handleFormControl = () => setAddFormNav((prev) => !prev);
 
@@ -208,11 +211,11 @@ const Homepage = () => {
                   <div 
                     ref={dropDownRef}
                     className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/${language}/edit/${item.id}`}>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/edit/${item.id}`}>
                       <Pencil size={20} />
                       <span>Edit</span>
                     </Link>
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/${language}/print/${item.id}`}>
+                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/print/${item.id}`}>
                       <PrinterIcon size={20} />
                       <span>View</span>
                     </Link>
@@ -270,7 +273,7 @@ const Homepage = () => {
         {page === "spr" ? (
           userData?.SPR.length ? <PlotSPRTable page = {page}/> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
         ) : (
-          userData?.levelCheck.length ? <PlotLevelCheck data={userData?.levelCheck} language={language} handleDisplayDelete={handleDisplayDelete} />:
+          userData?.levelCheck.length ? <PlotLevelCheck data={userData?.levelCheck} language={userData?.language} handleDisplayDelete={handleDisplayDelete} />:
           <p className= "text-center text-gray-500 mt-3">Click add Level Check</p>
         )}
       </div>
@@ -283,14 +286,14 @@ const Homepage = () => {
           <div className="flex flex-col items-center justify-center gap-3">
             <Link
               className="cursor-pointer flex items-center w-[250px] h-12 gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded"
-              to={`/spr/${language}`}
+              to={`/spr/${userData.language}`}
             >
               <Plus size={18} />
               <span>SPR Form</span>
             </Link>
             <Link
               className="flex items-center gap-2 bg-teal-700 w-[250px] h-12 hover:bg-teal-500 text-white p-2 rounded"
-              to={`/levelCheck/${language}`}
+              to={`/levelCheck`}
             >
               <Plus size={18} />
               <span>Level Check Form</span>
