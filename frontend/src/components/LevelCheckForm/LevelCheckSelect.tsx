@@ -1,8 +1,8 @@
-import { useState, useEffect, EventHandler } from "react";
-import levelCheckData from "../../assets/other/levelCheck.json";
-import { LevelCheckEntry, StrengthAndWeakness } from "../../type/LevelCheckForm";
-import levelInformation from "../../assets/other/legend.json";
-import { formatNum } from "../PrintComponents/Legend";
+import { useState, useEffect } from "react";
+import levelCheckData from "@/assets/other/levelCheck.json";
+import { LevelCheckEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
+import levelInformation from "@/assets/other/legend.json";
+import { formatNum } from "@/components/PrintComponents/Legend";
 
 type EnglishKey = keyof Pick<
   LevelCheckEntry,

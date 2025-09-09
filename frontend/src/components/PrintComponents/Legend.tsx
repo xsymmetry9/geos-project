@@ -1,4 +1,4 @@
-import legend from "../../assets/other/legend.json";
+import legend from "@/assets/other/legend.json";
 type Number = {
     min: number,
     max: number

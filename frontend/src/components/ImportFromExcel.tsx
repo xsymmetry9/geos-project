@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { read, utils } from "xlsx";
-import { Student, Levels } from "../type/Student";
-import { LevelCheckEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
-import { editDataFromLocal, getDataFromLocal } from "../utils/functions";
+import { Student, Levels } from "@/type/Student";
+import { LevelCheckEntry} from "@/type/LevelCheckForm";
+import { editDataFromLocal } from "@/utils/functions";
 import { Upload } from "lucide-react";
 import User from "@/type/User";
 

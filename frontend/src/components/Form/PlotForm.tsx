@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import PersonalInformation from "./components/PersonalInformation";
-import Feedback from "./components/Feedback";
-import LevelInformation from "./components/LevelInformation";
-import Preview from "./components/Preview";
-import Pagination from "./components/Pagination";
-import Button from "./components/Button";
+import React, { useState } from "react";
+import PersonalInformation from "@/components/Form/components/PersonalInformation";
+import Feedback from "@/components/Form/components/Feedback";
+import LevelInformation from "@/components/Form/components/LevelInformation";
+import Preview from "@/components/Form/components/Preview";
+import Pagination from "@/components/Form/components/Pagination";
+import Button from "@/components/Form/components/Button";
 import {useUser} from "@/context/UserContext"
-import PopUpMessage from "../PopUpMessage";
+import PopUpMessage from "@/components/PopUpMessage";
 import labelText from "@/assets/other/labelText.json"
 import { Student, Levels } from "@/type/Student";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";

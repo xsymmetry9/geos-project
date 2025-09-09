@@ -1,4 +1,4 @@
-import labelText from "../../../assets/other/labelText.json";
+import labelText from "@/assets/other/labelText.json";
 import { useEffect, useState } from "react";
 
 type Language = keyof typeof labelText;

@@ -1,9 +1,9 @@
 import { useState, createContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import PlotForm from "../components/Form/PlotForm";
-import { Student } from "../type/Student";
-import { getStudentById } from "../utils/functions";
+import PlotForm from "@/components/Form/PlotForm";
+import { Student } from "@/type/Student";
+import { getStudentById } from "@/utils/functions";
 import { House } from "lucide-react";
 
 const SPRForm = () => {

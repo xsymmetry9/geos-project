@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {LevelCheckSelect, LevelCheckOverall} from "../components/LevelCheckForm/LevelCheckSelect";
-import { LevelCheckEntry } from "../type/LevelCheckForm";
-import "../styles/printLevelCheck.css"
+import {LevelCheckSelect, LevelCheckOverall} from "@/components/LevelCheckForm/LevelCheckSelect";
+import { LevelCheckEntry } from "@/type/LevelCheckForm";
+import "@/styles/printLevelCheck.css"
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";

@@ -1,5 +1,5 @@
-import { getLevelInformationByLevel } from "../utils/functions";
-import labelText from "../assets/other/labelText.json"
+import { getLevelInformationByLevel } from "@/utils/functions";
+import labelText from "@/assets/other/labelText.json"
 
 type Language = keyof typeof labelText;
 

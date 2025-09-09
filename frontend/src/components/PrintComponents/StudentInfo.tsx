@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import labelText from "../../assets/other/labelText.json";
-import {Student, Levels} from "../../type/Student";
-import Legend from "../../components/PrintComponents/Legend";
+import labelText from "@/assets/other/labelText.json";
+import {Student, Levels} from "@/type/Student";
+import Legend from "@/components/PrintComponents/Legend";
 
 type Language = keyof typeof labelText;
 type LevelKey = keyof Levels;
@@ -56,13 +56,12 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
       {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : "NA"}
       <span className="lowercase">{attendance != 0 && text("times", language)}</span>
     </p>
-    <p className="capitalize">
-      {text("total_lessons", language)}: {totalLessons != 0 ? `${totalLessons} ` : "NA"}
-      <span className="lowercase">{attendance != 0 && text("times", language)}</span>
+    <p>
+      {text("total_lessons", language)}: {totalLessons != 0 ? `${totalLessons} ${text("times", language)}` : "NA"}
     </p>
-    <p className="capitalize">
+    <p>
       {text("%_of_attendance", language)}:{" "}
-      {attendance === "" && totalLessons === "" ? `${Math.round((attendance / totalLessons) * 100)}%` : "NA"}
+      {attendance !== "" && totalLessons !== "" ? `${Math.round((attendance / totalLessons) * 100)}%` : "NA"}
     </p>
   </div>
 );

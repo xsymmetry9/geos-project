@@ -1,11 +1,13 @@
-import Language from "./pages/Language";
-import Layout from "./Layout";
-import SPRForm from "./pages/SPRForm";
-import Homepage from "./pages/Homepage";
-import PrintPage from "./components/PrintSPR";
+import Language from "@/pages/Language";
+import Layout from "@/Layout";
+import SPRForm from "@/pages/SPRForm";
+import Homepage from "@/pages/Homepage";
+import PrintPage from "@/components/PrintSPR";
 import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
-import AuthRedirect from "./components/AuthRedirect";
-
+import AuthRedirect from "@/components/AuthRedirect";
+import Levels from "@/pages/Levels";
+import { element } from "prop-types";
+import { faChildren } from "@fortawesome/free-solid-svg-icons";
 const routes = [
   {
     path: "/",
@@ -26,13 +28,20 @@ const routes = [
     ],
   },
   {
-    path: "levelCheck/",
+    path: "levelCheck",
     element: <Layout />,
     children: [{ index: true, element: <LevelCheckForm /> },
       {path: "edit/:id", element: <LevelCheckEdit />},
       {path: "preview/:id", element: <LevelCheckPreview />}
     ],
   },
+  {
+    path: "levels",
+    element: <Layout />,
+    children: [{
+      index: true, element: <Levels />
+    }]
+  }
 ];
 
 export default routes;

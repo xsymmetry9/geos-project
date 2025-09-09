@@ -1,9 +1,9 @@
 import { useRef, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getStudentById } from "../utils/functions";
-import {PrintContent} from "./PrintStudentProgressReport";
-import PrintControl from "./PrintControl";
-import SaveControl from "./SaveControl";
+import { getStudentById } from "@/utils/functions";
+import {PrintContent} from "@/components/PrintStudentProgressReport";
+import PrintControl from "@/components/PrintControl";
+import SaveControl from "@/components/SaveControl";
 import { useUser } from "@/context/UserContext";
 
 const PrintPage = () => {

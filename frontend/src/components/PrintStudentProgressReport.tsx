@@ -1,4 +1,4 @@
-import Graph from "./Graph";
+import Graph from "@/components/Graph";
 import {
   TitleSPR,
   StudentInfo,
@@ -6,11 +6,11 @@ import {
   Table,
   Comment,
   Signature,
-} from "./PrintComponents/StudentInfo";
-import PlotCards from "./PrintComponents/PlotCards";
+} from "@/components/PrintComponents/StudentInfo";
+import PlotCards from "@/components/PrintComponents/PlotCards";
 import { Student } from "@/type/Student";
-import labelText from "../assets/other/labelText.json";
-import "../styles/print.css"
+import labelText from "@/assets/other/labelText.json";
+import "@/styles/print.css"
 
 // ---------------------------------
 // Type Defintions

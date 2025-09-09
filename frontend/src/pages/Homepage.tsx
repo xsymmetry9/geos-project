@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal } from "lucide-react";
-import User from "../type/User";
-import { getDataFromLocal, deleteStudentById } from "../utils/functions";
-import ExportToExcel from "../components/ExportToExcel";
-import ImportFromExcel from "../components/ImportFromExcel";
-import { CreateNewFormBtn, CloseBtn } from "../components/CustomizedButtons";
+import User from "@/type/User";
+import { getDataFromLocal } from "@/utils/functions";
+import ExportToExcel from "@/components/ExportToExcel";
+import ImportFromExcel from "@/components/ImportFromExcel";
+import { CreateNewFormBtn, CloseBtn } from "@/components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
@@ -45,7 +45,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
     <thead>
       <tr className="bg-stone-600 text-white font-bold">
         <td className="p-3 text-center">Date</td>
-        <td className="p-3 text-center">Name</td>
+        <td className="p-3 text-center">Student Name</td>
         <td className="p-3 text-center w-[100px]"></td>
       </tr>
     </thead>
@@ -286,7 +286,7 @@ const Homepage = () => {
           <div className="flex flex-col items-center justify-center gap-3">
             <Link
               className="cursor-pointer flex items-center w-[250px] h-12 gap-2 bg-teal-700 hover:bg-teal-500 text-white p-2 rounded"
-              to={`/spr/${userData.language}`}
+              to={`/spr`}
             >
               <Plus size={18} />
               <span>SPR Form</span>
