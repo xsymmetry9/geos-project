@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import Graph from "./Graph";
 import {
   TitleSPR,
@@ -27,6 +26,7 @@ type TransformedLevel = {
 
 type PrintContentProps = {
   parsedData: Student;
+  language: Language
 }
   // Working on Transforming data
 export const processData = (data: Student["levels"]): TransformedLevel[] =>{
@@ -38,8 +38,7 @@ export const processData = (data: Student["levels"]): TransformedLevel[] =>{
     }));
   };
 
-export const PrintContent: React.FC<PrintContentProps> = ({ parsedData }) => {
-  const { language } = useParams() as {language: Language};
+export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language }) => {
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
   const transformedData = processData(levels); 

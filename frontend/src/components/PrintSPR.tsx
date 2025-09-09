@@ -4,9 +4,12 @@ import { getStudentById } from "../utils/functions";
 import {PrintContent} from "./PrintStudentProgressReport";
 import PrintControl from "./PrintControl";
 import SaveControl from "./SaveControl";
+import { useUser } from "@/context/UserContext";
 
 const PrintPage = () => {
-  const { id, language } = useParams<{id: string; language: string}>(); //Gets id and language through link
+  const {user} = useUser();
+  const language = user?.language;
+  const { id } = useParams<{id: string;}>(); //Gets id and language through link
   const componentRef = useRef<HTMLDivElement>(null); //Save reference to print
   const parsedData = useMemo(()=> {
     if (!id) return null;
@@ -18,13 +21,13 @@ const PrintPage = () => {
   return (
     <>
       <div className="flex items-center justify-center pb-3">
-        <Link className="btn-primary mt-6" to={`/home/${language}`}>
+        <Link className="btn-primary mt-6" to={`/home`}>
           Dashboard
         </Link>
       </div>
     <div className= "mx-auto overflow-auto">
       <div id={`print-${language}`} className="shadow-lg border print-component" ref={componentRef}>
-        <PrintContent parsedData={parsedData} />
+        <PrintContent parsedData={parsedData} language = {language}/>
       </div>
     </div>
       <div className="flex justify-center pt-3 gap-3 pb-6">
