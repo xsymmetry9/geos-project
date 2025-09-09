@@ -19,7 +19,7 @@ const PopUpMessage: React.FC<PopUpMessageProps> = ({ setDisplayPopupMessage }) =
       <div className="flex flex-col justify-center items-center gap-3 h-full">
         <CircleCheckBig size={48} className="text-green-600"/>
         <p className="text-secondary text-center">Saved successfully!</p>
-        <Link className="btn-primary w-[300px]" to={`/home/${language}`}>
+        <Link className="btn-primary w-[300px]" to={`/home`}>
           link to dashboard
         </Link>
       </div>
