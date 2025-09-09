@@ -206,7 +206,7 @@ const LevelCheckForm = () => {
 const LevelCheckEdit = () => {
 
   const initForm = new LevelCheckEntry();
-  let {id, language} = useParams();
+  let {id} = useParams();
   let [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
@@ -234,7 +234,7 @@ const LevelCheckEdit = () => {
 
     localStorage.setItem("GEOS_app", JSON.stringify(getUser));
 
-    navigate(`/levelCheck/${language}/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
+    navigate(`/levelCheck/preview/${inputData.id}`, {replace: true, state: {data: inputData}});
     }
  
   useEffect(() => {
@@ -301,12 +301,15 @@ const LevelCheckPreview = () => {
   const componentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<null | (() => void)>(null);
   const [isPreparing, setIsPreparing] = useState<boolean>(false);
+  const [language, setLanguage] = useState(""); //Future use
 
  useEffect(() => {
     try {
       setIsPreparing(true);
       const raw = localStorage.getItem("GEOS_app");
       const app = JSON.parse(raw ?? "{}");
+
+      setLanguage(app.language); // Future Use
       const levelCheckData: any[] = Array.isArray(app?.levelCheck) ? app.levelCheck : [];
 
       const index = levelCheckData.findIndex((item) => item.id === params.id);
@@ -375,49 +378,18 @@ const LevelCheckPreview = () => {
     }
   }, [isPreparing]);
 
-  const handleGeneratePDF = async () => {
-    if(!componentRef.current) return;
-
-    const canvas = await html2canvas(componentRef.current, {
-      allowTaint: true,
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("landscape","mm", "a4");
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    const imgProps = pdf.getImageProperties(imgData);
-    const imgRatio = imgProps.width / imgProps.height;
-    let renderWidth = pdfWidth;
-    let renderHeight = renderWidth / imgRatio;
-    if(renderHeight > pdfHeight){
-      renderHeight = pdfHeight
-      renderWidth = renderHeight * imgRatio;
-    }
-    const offsetX = (pdfWidth - renderWidth) / 2;
-    const offsetY = (pdfHeight - renderHeight) / 2;
-
-    pdf.addImage(imgData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
-    pdf.save(`level-check-${data?.student_name}.pdf`);
-  }
-
   return(
     <> 
       { data ? (
         <>
         <div className="container flex justify-center mt-12 mb-3" id="navigation">
-          <Link className="btn btn-primary" to={`/home/${params.language}`}>Home</Link>
+          <Link className="btn btn-primary" to={`/home`}>Home</Link>
         </div>
           <div className="print-component-landscape" ref={componentRef}>
             <Plot data = {data} />
           </div>
           <div className="pb-12 mt-9 w-full flex justify-center gap-2">
-            <Link to={`/levelCheck/${params.language}/edit/${params.id}`} className="btn btn-primary">Edit</Link>
+            <Link to={`/levelCheck/edit/${params.id}`} className="btn btn-primary">Edit</Link>
             <SaveControl contentRef={componentRef} className="btn-primary" layout="landscape" title={"level-check"}/>
             <button className="btn-primary" onClick = {printFromPdf}>Print</button>
           </div>
@@ -486,7 +458,7 @@ const Plot: React.FC<PlotProps>=({data}) => {
               </tr>
             </thead>
             <tbody className="text-[15px] bg-white">
-              <tr className="grid grid-cols-[1fr_125px] h-[155px]">
+              <tr className="grid grid-cols-[1fr_125px] h-[155px] border-black">
                 <td className="border-t border-black flex p-2 text-[15px]">{data.feedback}</td>
                 <td className="border-t border-l border-black grid grid-rows-[1fr_60px_1fr]">
                   <p className="bg-orange-50 text-[15px] text-center pt-3 items-center">{data.overallCEFR}</p>

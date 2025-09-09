@@ -5,18 +5,21 @@ import PlotForm from "../components/Form/PlotForm";
 import { Student } from "../type/Student";
 import { getStudentById } from "../utils/functions";
 import { House } from "lucide-react";
+import { useUser } from "@/context/UserContext";
 
 export const LanguageContext = createContext<string>("english");
 
 const SPRForm = () => {
-  const { language ="english", id } = useParams<{language?: string; id?: string}>();
+  const {user}= useUser();
+  const language = user?.language ?? "english";
+  const { id } = useParams<{ id?: string}>();
 
   const initialStudent = !id? new Student(uuidv4()) : getStudentById(id);
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
   return (
     <LanguageContext.Provider value={language}>
       <div className="font-secondary w-full flex justify-center p-2">
-        <Link className="btn-primary flex gap-1 justify-center" to={`/home/${language}`}>
+        <Link className="btn-primary flex gap-1 justify-center" to={`/home`}>
         <House />
           Home
         </Link>
