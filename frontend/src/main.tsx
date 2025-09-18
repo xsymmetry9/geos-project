@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
-import React, { StrictMode } from "react";
+import { UserProvider } from "@/context/UserContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./Routes";
 
-const Routes = createBrowserRouter(routes,
+const router = createBrowserRouter(routes,
   {
     future: {
       v7_fetcherPersist: true,
@@ -18,11 +18,14 @@ const container = document.getElementById("app");
 if (!container) throw new Error("No element with ID 'app' found");
 createRoot(container).render(
   // <StrictMode>
+  <UserProvider>
     <RouterProvider
-      router={Routes}
+      router={router}
       future={{
         v7_startTransition: true,
       }}
     />
+  </UserProvider>
+
   // </StrictMode>,
 );

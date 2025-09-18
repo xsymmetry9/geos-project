@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import geosImg from "/logo.jpg";
 import { Menu, X } from "lucide-react"; // `lucide-react` for modern icons
 
@@ -10,11 +11,13 @@ const Header = () => {
       <div className="max-w-[1100px] w-full mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="flex items-center">
-          <img className="w-20 h-auto" src={geosImg} alt="Geos logo" />
+          <img className="w-20 h-auto" src={geosImg} alt="GEOS-logo" />
         </a>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
+          <Link to={"/"}>Home</Link>
+          <Link to={"/levels"}>Levels</Link>
           <a
             href="/language"
             className="hover:text-blue-600 transition duration-200"
@@ -36,12 +39,13 @@ const Header = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white px-4 pb-4">
-          <a
-            href="/language"
+          <Link to={"/"}className="block py-2 text-gray-700 font-medium hover:text-blue-600 transition duration-200">Home</Link>
+          <Link
+            to={"/language"}
             className="block py-2 text-gray-700 font-medium hover:text-blue-600 transition duration-200"
           >
             Language
-          </a>
+          </Link>
         </div>
       )}
     </header>

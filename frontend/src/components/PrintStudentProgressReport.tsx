@@ -1,5 +1,4 @@
-import { useParams } from "react-router-dom";
-import Graph from "./Graph";
+import Graph from "@/components/Graph";
 import {
   TitleSPR,
   StudentInfo,
@@ -7,12 +6,11 @@ import {
   Table,
   Comment,
   Signature,
-} from "./PrintComponents/StudentInfo";
-import PlotCards from "./PrintComponents/PlotCards";
+} from "@/components/PrintComponents/StudentInfo";
+import PlotCards from "@/components/PrintComponents/PlotCards";
 import { Student } from "@/type/Student";
-import labelText from "../assets/other/labelText.json";
-
-import "../styles/print.css"
+import labelText from "@/assets/other/labelText.json";
+import "@/styles/print.css"
 
 // ---------------------------------
 // Type Defintions
@@ -28,6 +26,7 @@ type TransformedLevel = {
 
 type PrintContentProps = {
   parsedData: Student;
+  language: Language
 }
   // Working on Transforming data
 export const processData = (data: Student["levels"]): TransformedLevel[] =>{
@@ -39,8 +38,7 @@ export const processData = (data: Student["levels"]): TransformedLevel[] =>{
     }));
   };
 
-export const PrintContent: React.FC<PrintContentProps> = ({ parsedData }) => {
-  const { language } = useParams() as {language: Language};
+export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language }) => {
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
   const transformedData = processData(levels); 

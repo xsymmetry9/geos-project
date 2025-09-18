@@ -2,22 +2,26 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
 import { Student } from "@/type/Student";
+import { LevelCheckEntry } from "@/type/LevelCheckForm";
+import User from "@/type/User";
 
 type UserData = {
   SPR: Student[];
+  levelCheck: LevelCheckEntry[];
 }
 
 type ExportToExcelProps = {
-  userData: UserData;
+  userData: User;
 }
 
-const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
-  const handleExport = () => {
-    if (!userData?.SPR?.length) {
-      alert("No data available to export.");
-      return;
-    }
-    const dataToExport = userData.SPR.map((item) => ({
+type CategoryKey = "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation";
+
+const CATEGORY_KEYS: CategoryKey[] = [
+  "speaking", "confidence", "grammar", "vocabulary", "listening", "pronunciation"
+];
+
+const exportSPR = (spr: any) => {
+  const data = spr.map((item: any) => ({
       id: item.id,
       Name: item.name,
       Date: item.dateCreated,
@@ -43,11 +47,76 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
       Feedback: item.feedback,
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    return data;
+}
+
+const arr = (a?: string[]) => (Array.isArray(a) ? a : []);
+const joinArr = (a?: string[]) => arr(a).join("; ");
+
+const exportLevelCheck = (levelCheck: LevelCheckEntry[]) => {
+  return levelCheck.map((entry: any) => {
+    const base = {
+    id: entry.id,
+    student_name: entry.student_name,
+    feedback: entry.feedback,
+    dateCreated: entry.dateCreated,
+    bookRecommendation: entry.bookRecommendation,
+    overallCEFR: entry.overallCEFR
+  } as Record<string, string | number>;
+
+  CATEGORY_KEYS.forEach((k) => {
+    const sec = (entry as any)[k] ?? {};
+    base[`${k}_score`] = sec.score ?? "";
+    base[`${k}_level`] = sec.level_name ?? "";
+    base[`${k}_strengths`] = joinArr(sec.strength);
+    base[`${k}_weakness`] = joinArr(sec.weakness);
+  });
+
+  return base;
+});
+}
+
+const autoFitColumns = (worksheet: XLSX.WorkSheet, data: any[]) => {
+  if(!data || data.length === 0) return;
+
+  const objectMaxLength: number[] = [];
+
+  data.forEach((row) => {
+    Object.values(row).forEach((val, colIdx) => {
+      const strVal = val ? String(val) : "";
+      objectMaxLength[colIdx] = Math.max(objectMaxLength[colIdx] || 10, strVal.length);
+    });
+  });
+
+  worksheet["!cols"] = objectMaxLength.map((w) => ({ wch: w + 2 })); // +2 for padding
+}
+
+const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
+  const handleExport = () => {
+
+    const haveSPR = userData.SPR.length > 0;
+    const haveLC = userData.levelCheck.length > 0;
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Teacher's data");
 
+    if (!haveSPR && !haveLC) {
+      alert("No data available to export.");
+      return;
+    }
+    if(haveSPR)
+    {
+      const sprDataToExport = exportSPR(userData.SPR);
+      const studentProgressReportSheet = XLSX.utils.json_to_sheet(sprDataToExport);
+      autoFitColumns(studentProgressReportSheet, sprDataToExport);
+      XLSX.utils.book_append_sheet(workbook, studentProgressReportSheet, "spr");
+    }
+
+    if(haveLC){
+      const levelCheckDataToExport = exportLevelCheck(userData.levelCheck);
+      const levelCheckReportSheet = XLSX.utils.json_to_sheet(levelCheckDataToExport);
+      autoFitColumns(levelCheckReportSheet, levelCheckDataToExport);  
+      XLSX.utils.book_append_sheet(workbook, levelCheckReportSheet, "Level Check")
+    }
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
@@ -56,7 +125,9 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
-    saveAs(data, "Teacher's backup data");
+    const stamp = new Date().toISOString().slice(0, 10);
+
+    saveAs(data, `backup data-${stamp}`);
   };
   return (
     <>

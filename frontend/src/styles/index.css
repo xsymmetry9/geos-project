@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./print.css";
 
 @theme{
     --font-primary: Merriweather, serif;
@@ -108,4 +107,3 @@
     background-color: rgba(173, 216, 230, 0.3);
     color: black;
   }
-  

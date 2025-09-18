@@ -1,22 +1,50 @@
 import {v4 as uuidv4} from 'uuid';
 
-class LevelCheck {
+class StrengthAndWeakness {
+  score: number;
+  level_name: string;
+  strength: string[];
+  weakness: string[];
+
+  constructor(score = 0, level_name = "", strength: string[] = [], weakness: string[] = []){
+    this.level_name = level_name;
+    this.score = score;
+    this.strength = strength;
+    this.weakness =  weakness;
+  }
+}
+
+class LevelCheckEntry {
     id: string;
     dateCreated: Date;
-    name: string;
+    student_name: string;
     feedback: string;
-    language_proficiency_level: string;
-    textbook: string;
-    constructor(id = uuidv4(), dateCreated = new Date()) {
+    bookRecommendation: string;
+    overallCEFR: string;
+    speaking: StrengthAndWeakness;
+    confidence: StrengthAndWeakness;
+    grammar: StrengthAndWeakness;
+    vocabulary: StrengthAndWeakness;
+    listening: StrengthAndWeakness;
+    pronunciation: StrengthAndWeakness;
+
+    constructor(id = uuidv4()) {
       this.id = id;
-      this.dateCreated = dateCreated;
-      this.name = "";
+      this.dateCreated = new Date();
+      this.student_name = "";
       this.feedback = "";
-      this.language_proficiency_level = "";
-      this.textbook = "";
+      this.bookRecommendation = "";
+      this.overallCEFR = "";
+      this.speaking = new StrengthAndWeakness();
+      this.confidence = new StrengthAndWeakness();
+      this.grammar = new StrengthAndWeakness();
+      this.vocabulary = new StrengthAndWeakness();
+      this.listening = new StrengthAndWeakness();
+      this.pronunciation = new StrengthAndWeakness();
 
     }
   }
 
-  export default LevelCheck;
+  export {LevelCheckEntry, StrengthAndWeakness};
   
+

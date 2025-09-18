@@ -1,5 +1,5 @@
-import { getLevelInformationByLevel } from "../utils/functions";
-import labelText from "../assets/other/labelText.json"
+import { getLevelInformationByLevel } from "@/utils/functions";
+import labelText from "@/assets/other/labelText.json"
 
 type Language = keyof typeof labelText;
 
@@ -9,6 +9,7 @@ interface RenderLevelInformationProps {
   language: Language;
 }
 const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ category, studentLevel, language }) => {
+  console.log(studentLevel === "");
   const studentInfo = getLevelInformationByLevel({
     level: studentLevel,
     cat: category,
@@ -16,7 +17,7 @@ const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ categor
   })
   return (
     <>
-      <p>{studentInfo}</p>
+      <p>{studentLevel !== "" ? studentInfo : ""}</p>
     </>
   );
 };
