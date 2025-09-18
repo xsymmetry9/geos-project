@@ -39,7 +39,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
         </label>
         <select
           id="lang"
-          className="border rounded px-2 py-1"
+          className="border rounded px-2 py-1 capitalize"
           value={language}
           onChange={(e) => setLanguage(e.target.value as Language)}
         >
@@ -54,9 +54,9 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
       <table className="p-2 my-6 border border-slate-600 border-collapse w-full text-sm shadow" role="table">
         <thead>
           <tr>
-            <th className="p-2 capitalize text-center border border-slate-600">Levels</th>
+            <th className="sticky p-2 top-0 bg-white z-10 border border-slate-600">Levels</th>
             {categories.map((cat) => (
-              <th key={cat} className="p-2 capitalize text-center border border-slate-600">
+              <th key={cat} className="sticky p-2 top-0 bg-white bg-transparent z-10 border border-slate-600">
                 {cat}
               </th>
             ))}
