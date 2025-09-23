@@ -109,7 +109,7 @@ const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handl
                 className="font-normal form-input font-primary text-base text-black mt-1 mb-2 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]" />
             </label>
             <LevelCheckOverall name="overall level" item="overallLevel" data={inputData.overallCEFR} handleChange={handleChange}/>
-             <label htmlFor="feedback"><span className="font-bold text-md">Comment:</span> 
+             <label htmlFor="feedback"><span className="font-bold text-md">Note:</span> 
              <Comment 
                 className= "block w-full h-[200px] rounded-md bg-white mt-1 px-3 py-1.5 text-base text-gray-900 outline-2 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6" 
                 name ="feedback" 
@@ -452,7 +452,7 @@ const Plot: React.FC<PlotProps>=({data}) => {
           <table className="w-[1026px] mt-3 border border-black border-collapse table-auto">
             <thead className="font-bold text-white text-[15px] w-full">
               <tr className="grid grid-cols-[100px_1fr_125px] w-full justify-self-center">
-                <td className="border-r border-black bg-teal-600 p-1 text-center">Comment</td>
+                <td className="border-r border-black bg-teal-600 p-1 text-center">Note</td>
                 <td className="border-r border-black bg-teal-600 p-1"></td>
                 <td className="p-1 bg-orange-300 text-center text-black">Level</td>
               </tr>
