@@ -107,6 +107,7 @@ const CEFRFramework = (str) => {
 
 }
 export const Table: React.FC<TableProps> = ({ levels, language }) => {
+  console.log("language:", language);
   const headers: (SPRStringKey | "")[] = [
     "",
     "vocabulary",
@@ -159,7 +160,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
   return (
     <>
       <table className="table-fixed text-[12px] table-levels w-full mt-1 m-auto border-collapse">
-        {language === "english" && <Legend />}
+        <Legend language={language} />
         <thead className="border-l border-r border-slate-500">
           <tr>
             {headers.map((item, index) => (
