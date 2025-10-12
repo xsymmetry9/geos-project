@@ -364,7 +364,7 @@ const LevelCheckPreview = () => {
   iframe.style.bottom = "0";
   iframe.style.width = "0";
   iframe.style.height = "0";
-  iframe.src = String(blobUrl);
+  iframe.src = blobUrl;
   document.body.appendChild(iframe);
   iframe.onload = () => {
     iframe.contentWindow?.focus();
@@ -404,8 +404,6 @@ const LevelCheckPreview = () => {
     </>
   );
 }
-type CategoryKey = "speaking" | "confidence" | "grammar" | "vocabulary" | "pronunciation" | "listening";
-
 const Plot: React.FC<PlotProps>=({data}) => {
   return(
     <div className="px-12 w-full" id="print-preview">
@@ -438,7 +436,7 @@ const Plot: React.FC<PlotProps>=({data}) => {
                 </tr>
               </thead>
               <tbody className="text-[13px]">
-                {(["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"] as CategoryKey[]).map((item: CategoryKey) => {
+                {["speaking", "confidence", "grammar", "vocabulary", "pronunciation","listening"].map((item) => {
                   return(
                     <tr key={item} className="h-[72px]">
                       <td className="border-b border-r border-black w-[100px] text-center font-bold capitalize px-1 bg-teal-50">{item}</td>
