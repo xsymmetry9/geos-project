@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import levelCheckData from "@/assets/other/levelCheck.json";
+import React, { useState, useEffect } from "react";
+import levelCheckData from "@/assets/other/english/levelCheck.json";
 import { LevelCheckEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
 import levelInformation from "@/assets/other/legend.json";
 import { formatNum } from "@/components/PrintComponents/Legend";
@@ -48,12 +48,12 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const currentBand = score !== undefined ? mapScoreToBand(score) : level;
 
-  const predefinedStrengths = currentBand && levelCheckData.english[item]?.[currentBand]?.strength
-    ? levelCheckData.english[item][currentBand].strength
+  const predefinedStrengths = currentBand && levelCheckData[item]?.[currentBand]?.strength
+    ? levelCheckData[item][currentBand].strength
     : [];
 
-  const predefinedWeaknesses = currentBand && levelCheckData.english[item]?.[currentBand]?.weakness
-    ? levelCheckData.english[item][currentBand].weakness
+  const predefinedWeaknesses = currentBand && levelCheckData[item]?.[currentBand]?.weakness
+    ? levelCheckData[item][currentBand].weakness
     : [];
 
   const allStrengths = [...predefinedStrengths, ...selectedStrengths.filter(s => !predefinedStrengths.includes(s))];
@@ -133,7 +133,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   useEffect(() => {
     const current = inputData[item];
-    setLevel(current.level_name || "");
+    setLevel((current.level_name || "") as "A1-A2" | "B1-B2" | "C1-C2" | "");
     setScore(current.score);
     setSelectedStrengths(current.strength || []);
     setSelectedWeaknesses(current.weakness || []);
@@ -312,10 +312,11 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     </section>
   );
 };
-type LevelCheckOverallProps = {
+ type LevelCheckOverallProps = {
   name: string;
   item: string;
   data: string;
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 export const LevelCheckOverall = ({name, data, handleChange}: LevelCheckOverallProps) => {
     const arrOfLevels = levelInformation.english;
