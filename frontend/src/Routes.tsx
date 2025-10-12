@@ -6,8 +6,7 @@ import PrintPage from "@/components/PrintSPR";
 import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
 import AuthRedirect from "@/components/AuthRedirect";
 import Levels from "@/pages/Levels";
-import { element } from "prop-types";
-import { faChildren } from "@fortawesome/free-solid-svg-icons";
+
 const routes = [
   {
     path: "/",
