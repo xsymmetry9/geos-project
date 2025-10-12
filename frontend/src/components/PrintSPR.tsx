@@ -1,23 +1,35 @@
-import { useRef, useMemo } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "@/utils/functions";
 import {PrintContent} from "@/components/PrintStudentProgressReport";
 import PrintControl from "@/components/PrintControl";
 import SaveControl from "@/components/SaveControl";
 import { useUser } from "@/context/UserContext";
+import { Student } from "@/type/Student";
 
 const PrintPage = () => {
+  const params = useParams();
+  const [parsedData, setParsedData] = useState<Student | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    if (params.id) {
+      const studentData = getStudentById(params.id);
+      setParsedData(studentData);
+    } else {
+      setParsedData(null);
+    }
+    setLoading(false);
+  }, [params.id]);
+
   const {user} = useUser();
-  const language = user?.language;
-  const { id } = useParams<{id: string;}>(); //Gets id and language through link
+  const language = user?.language || "english" ;
   const componentRef = useRef<HTMLDivElement>(null); //Save reference to print
-  const parsedData = useMemo(()=> {
-    if (!id) return null;
-    return getStudentById(id); //Gets data from localstorage by id
-  }, [id]);
 
   if(!parsedData) return <div>Loading ...</div>
 
+  
   return (
     <>
       <div className="flex items-center justify-center pb-3">
