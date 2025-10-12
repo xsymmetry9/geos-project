@@ -41,32 +41,35 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
     }
   });
   return (
-  <table className="max-w-[800px] w-full mx-auto">
+    <table className="max-w-[900px] w-full mx-auto">
+      <colgroup>
+        <col style={{width: '33.3333%'}} />
+        <col style={{width: '33.3333%'}} />
+        <col style={{width: '33.3333%'}} />
+      </colgroup>
     <thead>
-      <tr className="bg-stone-600 text-white font-bold">
-        <td className="p-3 text-center">Date</td>
-        <td className="p-3 text-center">Student Name</td>
-        <td className="p-3 text-center w-[100px]"></td>
+        <tr className="bg-teal-700 text-white font-semibold">
+        <th className="p-3 text-center text-sm uppercase tracking-wide">Date</th>
+          <th className="p-3 text-left text-sm uppercase tracking-wide">NAME</th>
+        <th className="p-3 text-center w-[80px] text-sm uppercase tracking-wide">Actions</th>
       </tr>
     </thead>
     <tbody>
       {data.map((item: any) => (
         <tr
-          className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
+          className="border-b border-gray-200 odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition-colors duration-150"
           key={`level-check${item.id}`}
         >
-          <td className="p-3 text-center h-[30px]">{formattedDate(item.dateCreated)}</td> 
-          <td className="p-3 text-center h-[30px]">{item.student_name}</td>
-          <td className="p-3 text-center h-[30px] relative">
-            <div
-
-              className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
+          <td className="p-3 text-center h-[40px] text-sm">{formattedDate(item.dateCreated)}</td> 
+          <td className="p-3 text-left h-[40px] pl-6 font-medium text-sm">{item.student_name}</td>
+          <td className="p-3 text-center h-[36px] relative">
+            <div className="inline-block">
                <button
                 onClick={() => toggleOption(item.id)}
                 aria-expanded= {selectedId === item.id}
                 aria-label="toggle menu"
                 type="button"
-                className="cursor-pointer bg-none text-slate-500 hover:underline"
+                className="cursor-pointer bg-white text-slate-600 hover:bg-slate-100 rounded-full p-1 border border-transparent hover:border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
                 >             
                 <MoreHorizontal size={16} strokeWidth={2} />
               </button>
@@ -74,22 +77,22 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
                 {selectedId === item.id && (
                   <div
                     ref={dropDownRef} 
-                    className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]"
+                    className="z-30 flex flex-col w-[150px] p-1 bg-white border border-gray-200 mt-2 rounded absolute top-10 right-0 shadow-md"
                    >
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/edit/${item.id}`}>
-                      <Pencil size={20} />
-                           <span>Edit</span>
+                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/levelCheck/edit/${item.id}`}>
+                      <Pencil size={18} />
+                      <span className="text-sm">Edit</span>
                     </Link>
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/levelCheck/preview/${item.id}`}>
-                      <PrinterIcon size={20} />
-                      <span>View</span>
+                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/levelCheck/preview/${item.id}`}>
+                      <PrinterIcon size={18} />
+                      <span className="text-sm">View</span>
                     </Link>
                     <button
-                      className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200"
+                      className="flex items-center gap-2 p-2 hover:bg-slate-50 text-left w-full"
                       onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "levelCheck" })}
                     >
-                      <Archive size={20} />
-                      <span>Delete</span>
+                      <Archive size={18} />
+                      <span className="text-sm">Delete</span>
                     </button>
                     </div>
                 )}            
@@ -179,30 +182,35 @@ const Homepage = () => {
   });
 
     return (
-    <table className="w-full max-w-[800px] mx-auto">
+    <table className="w-full max-w-[900px] mx-auto">
+      <colgroup>
+        <col style={{width: '33.3333%'}} />
+        <col style={{width: '33.3333%'}} />
+        <col style={{width: '33.3333%'}} />
+      </colgroup>
       <thead>
-        <tr className="bg-stone-600 text-white font-bold">
-          <th className="p-3 text-center">Date</th>
-          <th className="p-3 text-center">Name</th>
-          <th className="p-3 text-center w-[100px]"></th>
+        <tr className="bg-slate-800 text-white font-semibold">
+          <th className="p-3 text-center text-sm uppercase tracking-wide">date</th>
+          <th className="p-3 text-left text-sm uppercase tracking-wide">name</th>
+          <th className="p-3 text-center w-[80px] text-sm uppercase tracking-wide">actions</th>
         </tr>
       </thead>
       <tbody>
         {userData?.SPR.map((item, index) => (
           <tr
             key={`${item.id}-${index}`}
-            className="border-b-3 border-stone-300 odd:bg-stone-100 even:bg-white hover:bg-gray-300"
+            className="border-b border-gray-200 odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition-colors duration-150"
           >
-            <td className="p-3 text-center h-[30px]">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
-            <td className="p-3 text-center h-[30px]">{item.name}</td>
-            <td className="p-3 text-center h-[30px] relative">
-              <div className="w-[30px] h-[30px] flex justify-center items-center hover:bg-gray-100 hover:rounded-full">
+            <td className="p-3 text-center h-[40px] text-sm">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
+            <td className="p-3 text-left h-[40px] pl-6 font-medium text-sm">{item.name}</td>
+            <td className="p-3 text-center h-[40px] relative">
+              <div className="inline-block">
                  <button
                     onClick={() => toggleOption(item.id)}
                     aria-expanded={selectedId === item.id}
                     aria-label="Toggle Menu"
                     type="button"
-                    className="cursor-pointer bg-none text-slate-500 hover:underline"
+                    className="cursor-pointer bg-white text-slate-600 hover:bg-slate-100 rounded-full p-1 border border-transparent hover:border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
                     >             
                     <MoreHorizontal size={16} strokeWidth={2} />
                   </button>
@@ -210,21 +218,21 @@ const Homepage = () => {
                 {selectedId === item.id && (
                   <div 
                     ref={dropDownRef}
-                    className="z-10 flex flex-col gap-2 w-[120px] p-2 bg-gray-100 border border-gray-300 mt-2 rounded gap-4 absolute top-0 right-[90px]">
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/edit/${item.id}`}>
-                      <Pencil size={20} />
-                      <span>Edit</span>
+                    className="z-40 flex flex-col w-[160px] p-1 bg-white border border-gray-200 mt-2 rounded absolute top-10 right-0 shadow-lg">
+                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/spr/edit/${item.id}`}>
+                      <Pencil size={18} />
+                      <span className="text-sm">Edit</span>
                     </Link>
-                    <Link className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200" to={`/spr/print/${item.id}`}>
-                      <PrinterIcon size={20} />
-                      <span>View</span>
+                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/spr/print/${item.id}`}>
+                      <PrinterIcon size={18} />
+                      <span className="text-sm">View</span>
                     </Link>
                     <button
-                      className="pointer-cursor flex p-2 gap-2 items-center hover:bg-gray-200"
+                      className="flex items-center gap-2 p-2 hover:bg-slate-50 text-left w-full"
                       onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
                     >
-                      <Archive size={20} />
-                      <span>Delete</span>
+                      <Archive size={18} />
+                      <span className="text-sm">Delete</span>
                     </button>
                   </div>
                   )}
