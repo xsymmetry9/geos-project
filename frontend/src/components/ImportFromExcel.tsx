@@ -10,7 +10,7 @@ type Category = "confidence" | "speaking" | "listening" | "grammar" | "pronuncia
 
 type ImportFromExcelProps = {
   userData: User;
-  setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+  setUserData: React.Dispatch<React.SetStateAction<User>>;
 };
 
 const ParseLevelCheckEntry = (sheet: any) => {

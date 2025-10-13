@@ -1,6 +1,7 @@
 import { useUser } from "@/context/UserContext";
 import { useState, useEffect } from "react";
 import { Language, Aspect } from "@/utils/common";
+import PlotTableLevelChecks  from "@/components/PlotTableLevelChecks";
 
 type LevelItem = { level: string; description: string };
 type LevelInfo = Partial<Record<Aspect, LevelItem[]>>;
@@ -22,6 +23,7 @@ const categories: Aspect[] = [
 const languageOptions = ["english", "chinese", "japanese", "korean"] as Language[];
 
 const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
+  const [menu, setMenu] = useState<"levels" | "spr">("levels");
   // Max rows across all categories
   const maxLen = Math.max(0, ...categories.map((c) => levelInfo?.[c]?.length ?? 0));
 
@@ -33,7 +35,8 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
 
   return (
     <>
-      <div id="language-nav" className="flex items-center gap-2 my-2">
+    <div className="flex gap-4 items-center">
+       <div id="language-nav" className="flex items-center gap-2 my-2">
         <label htmlFor="lang" className="text-sm font-medium">
           Language:
         </label>
@@ -50,43 +53,87 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
           ))}
         </select>
       </div>
+      <div id="" className="flex items-center gap-2 my-2">
+          <label htmlFor="menu-nav" className="text-sm font-medium">
+            Menu: 
+          </label>
+          <select 
+            id="menu-nav"
+            className="border rounded px-2 py-1"
+            onChange={(e) => {
+              setMenu(e.target.value as "levels" | "spr");
+            }}
+          >
+            <option value="levels">Level Checks</option>
+            <option value="spr">Student Progress Reports</option>
+          </select>
+      </div>
 
-      <table className="p-2 my-6 border border-slate-600 border-collapse w-full text-sm shadow" role="table">
+    </div>
+     
+      {menu === "spr" && (
+        <>
+           <table className="p-0 my-6 w-full text-sm shadow-sm" role="table">
         <thead>
           <tr>
-            <th className="sticky p-2 top-0 bg-white z-10 border border-slate-600">Levels</th>
-            {categories.map((cat) => (
-              <th key={cat} className="sticky p-2 top-0 bg-white bg-transparent z-10 border border-slate-600">
-                {cat}
-              </th>
-            ))}
+            {/* define header and data colors per column (Levels + categories) */}
+            {(() => {
+              // single header color and two alternating data colors
+              const headerClass = "bg-teal-700 text-white";
+              const dataClasses = ["bg-teal-50", "bg-white"]; // alternate across columns
+
+              return (
+                <>
+                  <th className={`sticky top-0 p-3 z-10 uppercase ${headerClass}`}>Levels</th>
+                  {categories.map((cat, i) => {
+                    return (
+                      <th key={cat} className={`sticky top-0 p-3 z-10 uppercase ${headerClass}`}> {cat} </th>
+                    );
+                  })}
+                </>
+              );
+            })()}
           </tr>
         </thead>
         <tbody>
           {Array.from({ length: maxLen }).map((_, idx) => (
             <tr key={levelLabels[idx] ?? idx}>
-              <td className="p-2 text-center border border-slate-600">
-                {levelLabels[idx] ?? idx + 1}
-              </td>
-              {categories.map((cat) => {
-                const cell = levelInfo?.[cat]?.[idx];
+              {(() => {
+                const dataClasses = ["bg-teal-50", "bg-white"]; // alternate
+
                 return (
-                  <td key={`${cat}-${idx}`} className="border border-slate-600 p-2 align-top">
-                    {cell?.description ?? "—"}
-                  </td>
+                  <>
+                    <td className={`p-3 text-center ${dataClasses[0]}`}>{levelLabels[idx] ?? idx + 1}</td>
+                    {categories.map((cat, i) => {
+                      const cell = levelInfo?.[cat]?.[idx];
+                      const color = dataClasses[(i + 1) % dataClasses.length];
+                      return (
+                        <td key={`${cat}-${idx}`} className={`p-3 align-top ${color}`}>
+                          {cell?.description ?? "—"}
+                        </td>
+                      );
+                    })}
+                  </>
                 );
-              })}
+              })()}
             </tr>
           ))}
           {maxLen === 0 && (
             <tr>
-              <td className="p-2 text-center border border-slate-600" colSpan={1 + categories.length}>
+              <td className="p-3 text-center" colSpan={1 + categories.length}>
                 No levels found for this language.
               </td>
             </tr>
           )}
         </tbody>
       </table>
+        </>
+      )}
+      {menu === "levels" && (
+        <PlotTableLevelChecks language={language}/>
+      )}
+      {/* color-coded columns, no borders for table */}
+   
     </>
   );
 };
