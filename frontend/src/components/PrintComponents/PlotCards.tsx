@@ -1,5 +1,5 @@
-import RenderLevel from "../RenderLevel";
-import labelText from "../../assets/other/labelText.json";
+import RenderLevel from "@/components/RenderLevel";
+import labelText from "@/assets/other/labelText.json";
 import { Student } from "@/type/Student";
 
 type Language = keyof typeof labelText;

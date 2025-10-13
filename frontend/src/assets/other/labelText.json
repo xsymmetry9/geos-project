@@ -29,6 +29,18 @@
       "total_lessons": "total lessons",
       "times": "times",
       "%_of_attendance": "% of attendance",
+      "legends": {
+        "entry": "Entry",
+        "Pre-A1": "Pre-A1",
+        "beginner": "Beginner",
+        "high-beginner": "High Beginner",
+        "low-intermediate": "Low Intermediate",
+        "intermediate": "Intermediate",
+        "intermeidiate-plus": "Intermediate Plus",
+        "upper-intermediate": "Upper Intermediate",
+        "advanced": "Advanced",
+        "proficient": "Proficient"
+      },
       "caption": {
         "low_beginner": "low beginner",
         "low_intermediate": "low intermediate",
@@ -80,6 +92,18 @@
       "total_lessons": "總課堂數",
       "times": "次",
       "%_of_attendance": "出勤率",
+      "legends": {
+        "entry": "入門",
+        "Pre-A1": "Pre-A1",
+        "beginner": "初級",
+        "high-beginner": "高初級",
+        "low-intermediate": "中低級",
+        "intermediate": "中級",
+        "intermeidiate-plus": "中高級",
+        "upper-intermediate": "高中級",
+        "advanced": "高級",
+        "proficient": "精通"
+      },
       "caption": {
         "low_beginner": "初級",
         "low_intermediate": "中低級",
@@ -131,6 +155,18 @@
       "total_lessons": "총 수업 수",
       "times": "횟수",
       "%_of_attendance": "출석률",
+      "legends": {
+        "entry": "입문",
+        "Pre-A1": "Pre-A1",
+        "beginner": "초급",
+        "high-beginner": "고초급",
+        "low-intermediate": "중하급",
+        "intermediate": "중급",
+        "intermeidiate-plus": "중상급",
+        "upper-intermediate": "고중급",
+        "advanced": "고급",
+        "proficient": "능숙"
+      },
       "caption": {
         "low_beginner": "초급",
         "low_intermediate": "중하급",
@@ -153,7 +189,10 @@
     }
   },
   "japanese": {
-    "save": "save",
+    "save": "保存",
+    "nextPage": "次へ",
+    "backPage": "前へ",
+    "printPage": "印刷",
     "form": {
       "title": "個人情報",
       "input_name": "名前",
@@ -165,14 +204,11 @@
     },
     "SPR": {
       "title": "学生進捗レポート",
-        "nextPage": "次へ",
-      "backPage": "前へ",
-      "printPage": "印刷",
       "student_information": " 学生情報",
       "student_level": " 学生のレベル",
       "student_feedback": "学生のフィードバック",
       "student_name": "学生名",
-      "class_information": "cクラス情報 ",
+      "class_information": "クラス情報 ",
       "student_evaluation": " 学生評価",
       "teacher_feedback": "教師のフィードバック",
       "course": "コース",
@@ -182,6 +218,18 @@
       "total_lessons": "合計授業数",
       "times": "回数",
       "%_of_attendance": "出席率",
+      "legends": {
+        "entry": "入門",
+        "Pre-A1": "Pre-A1",
+        "beginner": "初級",
+        "high-beginner": "高初級",
+        "low-intermediate": "中低級",
+        "intermediate": "中級",
+        "intermeidiate-plus": "中上級",
+        "upper-intermediate": "高上級",
+        "advanced": "上級",
+        "proficient": "熟練"
+      },
       "caption": {
         "low_beginner": "初級",
         "low_intermediate": "初中級",

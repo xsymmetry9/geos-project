@@ -1,11 +1,11 @@
-import Language from "./pages/Language";
-import Layout from "./Layout";
-import SPRForm from "./pages/SPRForm";
-import Homepage from "./pages/Homepage";
-import PrintPage from "./components/PrintSPR";
-import LevelCheckForm from "./pages/LevelCheckForm";
-import Test from "./pages/Test";
-import AuthRedirect from "./components/AuthRedirect";
+import Language from "@/pages/Language";
+import Layout from "@/Layout";
+import SPRForm from "@/pages/SPRForm";
+import Homepage from "@/pages/Homepage";
+import PrintPage from "@/components/PrintSPR";
+import {LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
+import AuthRedirect from "@/components/AuthRedirect";
+import Levels from "@/pages/Levels";
 
 const routes = [
   {
@@ -14,11 +14,11 @@ const routes = [
     children: [
       { index: true, element: <AuthRedirect /> },
       { path: "language", element: <Language />},
-      { path: "home/:language", element: <Homepage /> },
+      { path: "home", element: <Homepage /> },
     ],
   },
   {
-    path: "spr/:language",
+    path: "spr/",
     element: <Layout />,
     children: [
       { index: true, element: <SPRForm /> },
@@ -27,14 +27,20 @@ const routes = [
     ],
   },
   {
-    path: "levelCheck/:language",
+    path: "levelCheck",
     element: <Layout />,
-    children: [{ index: true, element: <LevelCheckForm /> }],
+    children: [{ index: true, element: <LevelCheckForm /> },
+      {path: "edit/:id", element: <LevelCheckEdit />},
+      {path: "preview/:id", element: <LevelCheckPreview />}
+    ],
   },
   {
-    path: "test",
-    element: <Test />,
-  },
+    path: "levels",
+    element: <Layout />,
+    children: [{
+      index: true, element: <Levels />
+    }]
+  }
 ];
 
 export default routes;

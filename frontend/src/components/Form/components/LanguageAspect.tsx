@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { SquareX, Info } from "lucide-react";
-import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "../../../utils/functions";
-import labelText from "../../../assets/other/labelText.json";
-import {Levels, Student} from "../../../type/Student";
+import { getAllLevelsInformationByAspect, getLevelInformationByLevel } from "@/utils/functions";
+import labelText from "@/assets/other/labelText.json";
+import {Levels, Student} from "@/type/Student";
 
 type Language = keyof typeof labelText;
 type LevelKey = keyof Levels;

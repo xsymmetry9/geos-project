@@ -27,7 +27,7 @@ class Student {
     listening: Levels;
   };
 
-  constructor(id: string, dateCreated = new Date()) {
+  constructor(id:string, dateCreated = new Date()) {
     this.id = id;
     this.dateCreated = dateCreated;
     this.name = "";
