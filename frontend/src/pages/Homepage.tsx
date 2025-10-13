@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal } from "lucide-react";
 import User from "@/type/User";
@@ -109,10 +109,8 @@ const Homepage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
-  const [deletePage, setDeletePage] = useState({ display: false, id: null, type: "" });
+  const [deletePage, setDeletePage] = useState<{ display: boolean; id: string | null; type: string }>({ display: false, id: null, type: "" });
   const {user} = useUser(); // Use usecontext
-
-  console.log(user);
 
   useEffect(() => {
     const user = getDataFromLocal();
@@ -135,27 +133,35 @@ const Homepage = () => {
     if (!deletePage.id || !userData) return;
 
     const raw = localStorage.getItem("GEOS_app");
-    if(!raw) return;
+    if (!raw) return;
 
     const parsedData = JSON.parse(raw);
-    const result = parsedData[deletePage.type].filter((item: any) => item.id !== deletePage.id);
+    const existing = Array.isArray(parsedData[deletePage.type]) ? parsedData[deletePage.type] : [];
+    const result = existing.filter((item: any) => item.id !== deletePage.id);
 
     parsedData[deletePage.type] = result;
 
     localStorage.setItem("GEOS_app", JSON.stringify(parsedData));
 
-    setUserData((prev) =>
-      prev ? { ...prev, [deletePage.type]: prev[deletePage.type].filter((item: any) => item.id !== deletePage.id) } : prev
-    );
-   
+    setUserData((prev) => {
+      if (!prev) return prev;
+      if (deletePage.type === "SPR") {
+        return { ...prev, SPR: result } as User;
+      }
+      if (deletePage.type === "levelCheck") {
+        return { ...prev, levelCheck: result } as User;
+      }
+      return prev;
+    });
+
     closePage();
   };
 
   const closePage = () => setDeletePage({ display: false, id: null, type: "" });
 
-  const toggleLevelCheckSPR = (e) => {
-    const { name } = e.currentTarget;
-    setPage(name);
+  const toggleLevelCheckSPR = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const name = (e.currentTarget as HTMLButtonElement).name;
+    setPage(name as "spr" | "levelCheck");
   };
 
   if (loading) return <h1>Loading ...</h1>;
@@ -189,7 +195,7 @@ const Homepage = () => {
         <col style={{width: '33.3333%'}} />
       </colgroup>
       <thead>
-        <tr className="bg-slate-800 text-white font-semibold">
+        <tr className="bg-dark-green text-white font-semibold">
           <th className="p-3 text-center text-sm uppercase tracking-wide">date</th>
           <th className="p-3 text-left text-sm uppercase tracking-wide">name</th>
           <th className="p-3 text-center w-[80px] text-sm uppercase tracking-wide">actions</th>
@@ -279,7 +285,7 @@ const Homepage = () => {
 
       <div className="">
         {page === "spr" ? (
-          userData?.SPR.length ? <PlotSPRTable page = {page}/> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
+          userData?.SPR.length ? <PlotSPRTable /> : <p className="text-center text-gray-500 mt-3">Click add SPR</p>
         ) : (
           userData?.levelCheck.length ? <PlotLevelCheck data={userData?.levelCheck} language={userData?.language} handleDisplayDelete={handleDisplayDelete} />:
           <p className= "text-center text-gray-500 mt-3">Click add Level Check</p>
