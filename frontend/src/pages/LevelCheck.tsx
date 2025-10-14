@@ -7,6 +7,7 @@ import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
 import SaveControl from "@/components/SaveControl";
+import { useUser } from "@/context/UserContext";
 
 interface FormProps {
   inputData: LevelCheckEntry,
@@ -58,6 +59,8 @@ const Comment: React.FC<CommentProps> = ({className, name, setInputData, id, val
   )
 }
 const Form: React.FC<FormProps> = ({inputData, setInputData, handleChange, handleSubmit}) => {
+    const {user} = useUser();
+    const language = user?.language;
   return(
      <div className="font-secondary w-full h-full max-w-[50em] mx-auto shadow-2xl px-3 py-6">
       <div className="mt-6 flex flex-col justify-center items-center">
