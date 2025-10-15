@@ -388,39 +388,37 @@
                 "A1-A2":
                 {
                     "strength": [
-                        "Can pronounce most words clearly",
-                        "Can adjust pronunciation for clarity",
-                        "Understands and applies word stress patterns",
-                        "Can use rising and falling intonation correctly",
-                        "Can use linking sounds in sentences",
-                        "Understands rhythm and timing in speech",
-                        "Can be understood easily by most listeners",
-                        "Can self-correct mispronunciations"
+                        "Can pronounce common words clearly",
+                        "Can stress important words in simple sentences",
+                        "Can pronounce basic vowel sounds correctly",
+                        "Recognizes and imitates basic intonation",
+                        "Can differentiate common sounds (e.g., \"b\" vs. \"p\")",
+                        "Can repeat words with good accuracy",
+                        "Can copy teacher’s pronunciation with effort",
+                        "Tries to self-correct mispronunciations"
                     ],
                     "weakness": [
-                        "Occasionally struggles with very heavy accents",
-                        "May miss cultural references",
-                        "Can overanalyze meaning in some contexts",
-                        "May struggle with highly specialized jargon",
-                        "Occasionally struggles with overlapping conversations",
-                        "Needs adjustment time for unfamiliar dialects",
-                        "Can struggle with abstract philosophical discussions",
-                        "May misunderstand ambiguous phrasing",
-                        "Can miss subtle variations in idioms",
-                        "Occasionally over-interprets tone shifts"
+                        "Struggles with unfamiliar sounds",
+                        "Misplaces word stress",
+                        "Struggles with consonant clusters",
+                        "More intonation required",
+                        "May mispronounce long words",
+                        "Speaks too slowly or hesitantly",
+                        "Struggles with connected speech",
+                        "May have difficulty with final consonants"
                     ]
                 },
                 "B1-B2":
                 {
                     "strength": [
                         "Can pronounce common words clearly",
-                        "Can stress important words in simple sentences",
-                        "Can pronounce basic vowel sounds correctly",
-                        "Recognizes and imitates basic intonation",
-                        "Can differentiate common sounds (e.g., 'b' vs. 'p')",
-                        "Can repeat words with good accuracy",
-                        "Can copy teacher’s pronunciation with effort",
-                        "Tries to self-correct mispronunciations"
+                        "Can adjust pronunciation for clarity",
+                        "Understands and applies word stress patterns",
+                        "Can use rising and falling intonation correctly",  
+                        "Can use linking sounds in sentences",
+                        "Understands rhythm and timing in speech",
+                        "Can be understood easily by most listeners",
+                        "Can self-correct mispronunciations"
                     ],
                     "weakness":[
                        "Occasionally mispronounces longer words",
