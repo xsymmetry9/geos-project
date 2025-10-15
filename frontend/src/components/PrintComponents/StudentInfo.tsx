@@ -14,7 +14,17 @@ type SPRStringKey =  {
 const text = (phrase: SPRStringKey, language: Language): string => labelText[language]["SPR"][phrase];
 
 export const TitleSPR: React.FC<{ language: Language }> = ({ language }) => {
-  return <h1>{text("title", language)}</h1>;
+  const fontStyle = () => {
+    if(language === "english") { 
+    return "text-xl font-bold";
+  } else if(language === "chinese") {
+    return "text-xl font-bold print-chinese";
+  } else {
+    return "text-xl font-bold";
+  }
+  }
+
+  return <h1 className={fontStyle()}>{text("title", language)}</h1>;  
 };
 
 interface StudentInfoProps {
@@ -24,13 +34,24 @@ interface StudentInfoProps {
   language: Language;
 }
 export const StudentInfo: React.FC<StudentInfoProps> = ({ name, course, textbook, language }) => {
+  const fontStyle = () => {
+    if(language === "english") {
+      return "text-sm/5";
+    } else if(language === "chinese") {
+      return "text-sm";
+    } else if(language === "japanese") {
+      return "font-bold text-sm";
+    } else {  
+      return "text-sm/5";
+    }     
+  }
   return (
-    <div id= "personal-info" className="ml-[3rem]">
+    <div id= "personal-info" className={`ml-[3rem] ${fontStyle()}`}>
       <p className="capitalize">
         {text("student_name", language)}: <strong>{name}</strong>
       </p>
-      <p className="capitalize">{`${text("course", language)}: ${course}`}</p>
-      <p className="capitalize">{`${text("textbook", language)}: ${textbook}`}</p>
+      <p className={`capitalize ${fontStyle()}`}>{`${text("course", language)}: ${course}`}</p>
+      <p className={`capitalize ${fontStyle()}`}>{`${text("textbook", language)}: ${textbook}`}</p>
     </div>
   );
 };
@@ -41,30 +62,39 @@ interface AttendanceInfoProps {
   language: Language;
 }
 
-export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
-  attendance,
-  totalLessons,
-  language,
-}) => (
+export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({ attendance, totalLessons, language }) => {
+    const fontStyle = () => {
+      if(language === "english") {
+        return "text-sm/5";
+      } else if(language === "chinese") {
+        return "text-sm/5";
+      } else if(language === "japanese") {
+        return "font-bold text-sm";
+      } else {  
+        return "text-sm/5";
+      }
+  }
+  return (
   <div id="student-info" className="justify-self-end mr-[3rem]">
-    <p className="capitalize">
+    <p className={`capitalize ${fontStyle()}`}>
       {language !== "chinese"
         ? `${text("date", language)}: ${format(new Date(), "MM/dd/yyyy")}`
         : `${text("date", language)}: ${format(new Date(), "yyyy年M月d日")}`}
     </p>
-    <p className="capitalize">
+    <p className={`capitalize ${fontStyle()}`}>
       {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : "NA"}
       <span className="lowercase">{attendance != 0 && text("times", language)}</span>
     </p>
-    <p>
+    <p className={`capitalize ${fontStyle()}`}>
       {text("total_lessons", language)}: {totalLessons != 0 ? `${totalLessons} ${text("times", language)}` : "NA"}
     </p>
-    <p>
+    <p className={`capitalize ${fontStyle()}`}>
       {text("%_of_attendance", language)}:{" "}
       {attendance !== "" && totalLessons !== "" ? `${Math.round((attendance / totalLessons) * 100)}%` : "NA"}
     </p>
   </div>
 );
+}
 
 interface TableProps {
   levels: Student["levels"];
@@ -107,7 +137,6 @@ const CEFRFramework = (str) => {
 
 }
 export const Table: React.FC<TableProps> = ({ levels, language }) => {
-  console.log("language:", language);
   const headers: (SPRStringKey | "")[] = [
     "",
     "vocabulary",
@@ -161,10 +190,10 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
     <>
       <table className="table-fixed text-[12px] table-levels w-full mt-1 m-auto border-collapse">
         <Legend language={language} />
-        <thead className="border-l border-r border-slate-500">
+        <thead className="border-l border-r border-t border-slate-500">
           <tr>
             {headers.map((item, index) => (
-              <th key={index} className="bg-[rgb(0,161,173)] text-white font-normal py-[2px] capitalize">
+              <th key={index} className="bg-[rgba(0,161,174,.7)] text-slate-800 h-[24px] capitalize">
                 {item === "" ? "" : text(item, language)}
               </th>
             ))}
@@ -183,11 +212,31 @@ interface CommentProps {
   language: Language;
 }
 export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
+  const fontStyleTitleComment = () => {
+    if(language === "english") {
+      return "capitalize font-bold text-sm";
+    } else if(language === "chinese") {
+      return "font-bold text-sm";
+    } else if(language === "japanese") {
+      return "font-semi-bold text-sm";
+    } 
+  }
+  const fontStyleComment = () => {
+    if(language === "english") {
+      return "text-sm";
+    } else if(language === "chinese") {
+      return "text-sm";
+    } else {
+      return "text-sm";
+    }
+  } 
   return (
     <div id="feedback" className="border border-slate-700 h-[240px]">
-      <p className= "bg-[rgb(0,161,173)] pl-2 py-[2px] text-white font-bold capitalize">{text("comment", language)}</p>
-      <div className="px-2 py-1">
-        <p>{comment}</p>
+      <div className="bg-[rgba(0,161,174,.7)] h-[24px]">
+        <p className= {`ml-2 text-slate-800 ${fontStyleTitleComment()}`}>{text("comment", language)}</p>
+      </div>
+      <div className="px-2 py-1 h-[210px] overflow-hidden">
+        <p className={`${fontStyleComment()}`}>{comment}</p>
       </div>
     </div>
   );
@@ -196,7 +245,7 @@ export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
 export const Signature: React.FC<{language: Language}> = ({ language }) => {
   return (
     <div className="mt-3 signature-section">
-      <p className="capitalize">{text("signature", language)}</p>
+      <p className="capitalize text-xs/6">{text("signature", language)}</p>
       <div className="h-6 w-full border-b-1 border-slate-700" id="line"></div>
     </div>
   );

@@ -38,7 +38,7 @@ const PrintPage = () => {
         </Link>
       </div>
     <div className= "mx-auto overflow-auto">
-      <div id={`print-${language}`} className="shadow-lg border print-component" ref={componentRef}>
+      <div className="shadow-lg border print-component" ref={componentRef}>
         <PrintContent parsedData={parsedData} language = {language}/>
       </div>
     </div>

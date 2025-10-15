@@ -9,6 +9,24 @@
     --color-active: rgb(9, 197, 235);
 }
 
+/* global font and smoothing */
+:root {
+  --font-primary: Merriweather, serif;
+  --font-secondary: Poppins, sans-serif;
+  --font-cjk: "Noto Serif TC", "Noto Sans TC", "Noto Sans CJK TC", serif;
+}
+
+html, body {
+  font-family: var(--font-secondary), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Example usage: apply CJK font for elements that need traditional Chinese rendering */
+.cjk, .print-chinese {
+  font-family: var(--font-cjk);
+}
+
 .btn{
   cursor: pointer;
   font-family: var(--font-secondary);

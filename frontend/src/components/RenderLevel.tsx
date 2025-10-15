@@ -9,7 +9,16 @@ interface RenderLevelInformationProps {
   language: Language;
 }
 const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ category, studentLevel, language }) => {
-  console.log(studentLevel === "");
+  
+  const fontSize = () => {
+    if(language === "english") {
+      return "text-sm/5";
+    } else if(language === "chinese") {
+      return "text-sm/5";
+    } else {
+      return "text-xs/5";
+    }
+  }
   const studentInfo = getLevelInformationByLevel({
     level: studentLevel,
     cat: category,
@@ -17,7 +26,7 @@ const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ categor
   })
   return (
     <>
-      <p>{studentLevel !== "" ? studentInfo : ""}</p>
+      <p className={`ml-2 ${fontSize()}`}>{studentLevel !== "" ? studentInfo : ""}</p>
     </>
   );
 };

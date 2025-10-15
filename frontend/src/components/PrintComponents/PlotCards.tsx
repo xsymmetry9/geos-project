@@ -26,18 +26,27 @@ const PlotCards: React.FC<PlotCardsProps> = ({ levels, language }) => {
 
   const categories = Object.keys(finalValue) as Array<keyof typeof finalValue>;
 
+  const fontSizeTitle = () => {
+    if(language === "english") {
+      return "capitalize font-bold text-sm";
+    } else if(language === "chinese") {
+      return "font-bold text-sm";
+    } 
+    return "font-bold text-sm";
+  }   
+
   return (
     <>
       <div id="info-card" className="grid grid-col-1 gap-3">
         {categories.map((item) => {
           return(
             <div key={item} className="border border-slate-700">
-              <div id="info-card-title" key={`${item}-title`}>
-                <p className="bg-[rgb(0,161,173,1)] pl-2 py-[2px] text-white font-bold capitalize">
+              <div id="info-card-title" className="bg-[rgba(0,161,174,.7)] h-[24px]" key={`${item}-title`}>
+                <p className={`ml-2 text-slate-800 ${fontSizeTitle()}`}>
                   {text(item as SPRStringKey, language)}
                 </p>
               </div>
-              <div key={`${item}-description`} className="px-2 py-1">
+              <div key={`${item}-description`} className="p-[2px]">
               <RenderLevel
                 category={item}
                 studentLevel={finalValue[item]}

@@ -43,8 +43,19 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
 
   const transformedData = processData(levels); 
 
+  const fontLanguage = () => {
+    if(language === "english") {
+      return "font-primary";
+    } else if(language === "chinese") {
+      return "print-chinese";
+    } else {
+      return "";
+    }
+  }
+
+  // Main Return
   return (
-    <>
+    <div className={`${fontLanguage()}`}>
       <div className="title-container">
         <div className="container">
           <img width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
@@ -64,6 +75,6 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
         </div>
         <PlotCards levels={levels} language={language} />
       </div>
-    </>
+    </div>
   );
 };

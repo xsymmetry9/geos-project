@@ -64,21 +64,14 @@
 #print-chinese h3 {font-size: var(--print-chinese-font-size-2);}
 #print-chinese p {font-size: var(--print-chinese-font-size-1)}
 #print-chinese #info-card #info-card-title p{
-  padding: 4px;
   font-weight: 400;
   /* font-size: 14px; */
 } 
 
 #print-korean h1 { font-size: var(--print-size-4); }
-  #print-korean h2 {
-    font-size: 1.1rem;
-  }
-  #print-korean h3 {
-    font-size: 1.1rem;
-  }
-  #print-korean p {
-    font-size: 0.9rem;
-  }
+#print-korean h2 { font-size: 1.1rem; }
+#print-korean h3 { font-size: 1.1rem; }
+#print-korean p { font-size: 0.8rem; }
 
 #print-japanese h1 { font-size: var(--print-japanese-size-4)}
 #print-japanese h2 {
