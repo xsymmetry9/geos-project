@@ -38,10 +38,10 @@ export const StudentInfo: React.FC<StudentInfoProps> = ({ name, course, textbook
     if(language === "english") {
       return "text-sm/5";
     } else if(language === "chinese") {
-      return "text-sm";
+      return "text-sm/5";
     } else if(language === "japanese") {
-      return "font-bold text-sm";
-    } else {  
+      return "text-sm/5";
+    } else {
       return "text-sm/5";
     }     
   }
@@ -69,7 +69,7 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({ attendance, tota
       } else if(language === "chinese") {
         return "text-sm/5";
       } else if(language === "japanese") {
-        return "font-bold text-sm";
+        return "text-sm/5";
       } else {  
         return "text-sm/5";
       }
@@ -214,26 +214,30 @@ interface CommentProps {
 export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
   const fontStyleTitleComment = () => {
     if(language === "english") {
-      return "capitalize font-bold text-sm";
+      return "capitalize text-[14.6667px]";
     } else if(language === "chinese") {
-      return "font-bold text-sm";
+      return "text-[14.6667px]";
     } else if(language === "japanese") {
-      return "font-semi-bold text-sm";
-    } 
+      return "text-[13.5px]";
+    } else {
+      return "text-sm";
+    }
   }
   const fontStyleComment = () => {
     if(language === "english") {
-      return "text-sm";
+      return "text-[14.6667px]";
     } else if(language === "chinese") {
-      return "text-sm";
-    } else {
-      return "text-sm";
+      return "text-[14.6667px]";
+    } else if(language === "japanese") {
+      return "text-sm/5";
+    } else if(language === "korean") {
+      return "text-sm/5 print-korean";
     }
   } 
   return (
     <div id="feedback" className="border border-slate-700 h-[240px]">
       <div className="bg-[rgba(0,161,174,.7)] h-[24px]">
-        <p className= {`ml-2 text-slate-800 ${fontStyleTitleComment()}`}>{text("comment", language)}</p>
+        <p className= {`ml-2 font-bold text-slate-800 ${fontStyleTitleComment()}`}>{text("comment", language)}</p>
       </div>
       <div className="px-2 py-1 h-[210px] overflow-hidden">
         <p className={`${fontStyleComment()}`}>{comment}</p>

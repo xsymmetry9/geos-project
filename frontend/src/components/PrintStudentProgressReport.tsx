@@ -44,14 +44,19 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
   const transformedData = processData(levels); 
 
   const fontLanguage = () => {
-    if(language === "english") {
-      return "font-primary";
-    } else if(language === "chinese") {
-      return "print-chinese";
-    } else {
-      return "";
+    switch (language) {
+      case "english":
+        return "font-primary";
+      case "chinese":
+        return "print-chinese";
+      case "korean":
+        return "kor print-korean";
+      case "japanese":
+        return "jp print-japanese";
+      default:
+        return "";
     }
-  }
+  };
 
   // Main Return
   return (

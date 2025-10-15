@@ -14,9 +14,11 @@ const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ categor
     if(language === "english") {
       return "text-sm/5";
     } else if(language === "chinese") {
+      return "text-[14.6667px]/5";
+    } else if(language === "japanese") {
       return "text-sm/5";
-    } else {
-      return "text-xs/5";
+    } else if(language === "korean") {
+      return "text-[12.5px]/5";
     }
   }
   const studentInfo = getLevelInformationByLevel({

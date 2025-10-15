@@ -14,6 +14,8 @@
   --font-primary: Merriweather, serif;
   --font-secondary: Poppins, sans-serif;
   --font-cjk: "Noto Serif TC", "Noto Sans TC", "Noto Sans CJK TC", serif;
+  --font-korean: "Noto Serif KR", "Noto Sans KR", "Noto Sans CJK KR", serif;
+  --font-japanese: "Noto Serif JP", "Noto Sans JP", "Noto Sans CJK JP", serif;
 }
 
 html, body {
@@ -26,6 +28,14 @@ html, body {
 .cjk, .print-chinese {
   font-family: var(--font-cjk);
 }
+
+.kor, .print-korean {
+  font-family: var(--font-korean), "Noto Sans CJK KR", serif;
+}
+
+.jp, .print-japanese {
+  font-family: var(--font-japanese), "Noto Sans CJK JP", serif;
+}   
 
 .btn{
   cursor: pointer;
