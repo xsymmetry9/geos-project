@@ -27,7 +27,7 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
   return (
     <div className="static preview-section">
       <div className="p-3" id="class-information">
-        <h2 className="text-2xl font-bold text-center bg-dark-green capitalize text-white mb-6">{labelText[language].SPR["student_information"]}</h2>
+        <h2 className="text-xl font-bold text-center bg-dark-green capitalize text-white p-1 mb-6">{labelText[language].SPR["student_information"]}</h2>
         <p className="text-size-sm" >
           <strong className="capitalize">{labelText[language].form["input_name"]}:</strong> {name.length != 0 ? name : "No name"}
         </p>
@@ -49,7 +49,7 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
         </p>
       </div>
       <div className="p-3" id="student-evaluation">
-        <h2 className="bg-dark-green text-2xl font-bold text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
+        <h2 className="bg-dark-green text-xl p-1 font-bold text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
         <table className="table-fixed border-collapse w-full mx-auto">
           <thead>
             <tr className="bg-orange-700 text-white font-secondary text-sm">
@@ -74,10 +74,10 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
           </tbody>
         </table>
       </div>
-      <div className="preview-container pb-3">
-        <h2 className="bg-dark-green text-white my-6 text-2xl font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
-        <div className="text-sm w-full border border-green-600 min-h-40 p-2">
-          <p>{feedback || "No comment"}</p>
+      <div className="p-3">
+        <h2 className="bg-dark-green text-white my-6 p-1 text-xl font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
+        <div className="w-full border border-green-600 min-h-40 p-2">
+          <p className="text-sm wrap-break-word">{feedback || "No comment"}</p>
         </div>
       </div>
     </div>
