@@ -49,8 +49,6 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
         case "textbook":
         case "course":
           return {...prevError, [name]: value.trim() === ""};
-        case "feedback":
-          return {...prevError, feedback: value.trim() === "" || value.length > 475}
         case "attendance":
           const att = Number(value);
           return {...prevError, attendance: isNaN(att) || att <= 0};
@@ -103,7 +101,8 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
       key={"feedback"}
       inputData={inputData}
       inputError = {inputError}
-      handleInputData={handleInputData}
+      setInputError={setInputError}
+      setInputData={setInputData} 
       language={language}
     />,
     <Preview key={"preview"} inputData={inputData} language={language} />,

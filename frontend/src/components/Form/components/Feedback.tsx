@@ -1,4 +1,6 @@
 import labelText from "@/assets/other/labelText.json";
+import { Student } from "@/type/Student";
+import { set } from "date-fns";
 import { useEffect, useState } from "react";
 
 type Language = keyof typeof labelText;
@@ -14,12 +16,21 @@ interface InputError {
 interface FeedbackProps {
   inputData: InputData;
   inputError: InputError;
-  handleInputData: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  setInputData: React.Dispatch<React.SetStateAction<Student>>;
+  setInputError: React.Dispatch<React.SetStateAction<InputError>>;
   language: Language;
 }
 
-const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, handleInputData, language }) => {
+const maxFeedbackLength = {
+  english: 425,
+  chinese: 209,
+  japanese: 240,
+  korean: 300,
+}
+
+const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, setInputError, setInputData, language }) => {
   const { feedback } = inputData;
+  const {warning, setWarning} = useState("");
   const [count, setCount] = useState<number>(0);
 
   const placeholderContent = {
@@ -29,17 +40,29 @@ const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, handleInputD
     chinese: "評論在此處輸入",
   };
 
-  useEffect(()=>{
+    useEffect(()=>{
     setCount(feedback.length); //includes spaces
   }, [feedback])
 
+  const handleInputData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setInputData((prev) => ({ ...prev, [name]: value }));
+
+    if(value.trim() === "") {
+      setInputError((prevError) => ({...prevError, feedback: true})); 
+      setWarning("Please fill up this section");
+    } else if(value.length >= maxFeedbackLength[language]) {
+      setInputError((prevError) => ({...prevError, feedback: true})); 
+      setWarning(`Too many characters (max ${maxFeedbackLength[language]})`);
+    } 
+      setInputError((prevError) => ({...prevError, feedback: false})); 
+      setWarning("");
+  };
+
   return (
-    <div>
+    <>
       <h2 className="bg-[#00646c] text-xl text-white p-2 font-secondary font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
-      <p className="font-secondary text-gray-700 capitalize mt-2">
-        <label htmlFor="">{placeholderContent[language]}</label>
-      </p>
-      <div className="grid grid-cols-1 mb-6" id="feedback">
+      <div className="grid grid-cols-1 py-6" id="feedback">
         <textarea
           className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6"
           rows={5}
@@ -49,12 +72,15 @@ const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, handleInputD
           onChange={handleInputData}
           placeholder={placeholderContent[language]}
         ></textarea>
-        {feedback.trim() === ("") && inputError.feedback && <p className="text-red-600 text-sm">Please fill up this section</p>}
-        {feedback.length > 475 && inputError.feedback && (<p className="text-red-600 text-sm">Too many characters (max 475)</p>)}
-     
-
+        <div className="flex items-center justify-between mt-1">
+          <div>
+            {inputError.feedback && <p className="text-sm text-red-600">{warning}</p>}
+          </div>
+          <p className="text-right text-sm text-gray-500">{count}/{maxFeedbackLength[language]}</p>
+        </div>
+        
       </div>
-    </div>
+    </>
   );
 };
 
