@@ -171,10 +171,7 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
           {text(label, language)}
         </td>
         {labels.map((skill, idx) => (
-          <td key={idx} className="text-center p-[2px]">
-            {levels[skill][label]} <span className="color-slate-600 text-[10px]">
-              {`${levels[skill][label] !== "" ? `(${CEFRFramework(levels[skill][label])})` : "-"}`}</span>
-          </td>
+          <td key={idx} className="text-center p-[2px]">{levels[skill][label]}</td>
         ))}
         <td className="text-center p-[2px]">{sum()}</td>
         <td className="text-center p-[2px]">{avg()}</td>
