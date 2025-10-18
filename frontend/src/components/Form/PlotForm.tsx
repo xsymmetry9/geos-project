@@ -148,7 +148,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
           <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
         )}
       <Pagination page={page} language={language} setPage={setPage}/>
-      <div className="w-full static max-w-lg m-auto">
+      <div className="w-full static max-w-lg m-auto font-secondary">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
           <div className="flex gap-2 justify-center" id="buttons">
