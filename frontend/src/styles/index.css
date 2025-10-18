@@ -68,7 +68,7 @@ html, body {
   .pagination-container {
     --height: 80px;
     --width: 100%;
-    --square_width: calc($width/4);
+    --square_width: calc(var(--width/4));
     padding-bottom: 12px;
     display: flex;
     flex-wrap: nowrap;
@@ -81,13 +81,17 @@ html, body {
     font-size: 0.8rem;
     text-shadow: 0.5px 1px rgba(0, 0, 0, 0.7);
     position: relative;
-    .square {
-      height: var(--height);
-      width: calc(25%);
-      p {
-        text-align: center;
-      }
-    }
+  }
+
+  .pagination-container .square {
+    height: var(--height);
+    width: calc(25%);
+  }
+
+  .pagination-container p {
+    text-align: center;
+   
+  }
     .circle::after,
     .circle::before {
       content: "";
@@ -107,7 +111,6 @@ html, body {
     .active {
       background-color: rgba(65, 56, 56, 0.1);
     }
-  }
   .square {
     position: inherit;
     display: flex;
