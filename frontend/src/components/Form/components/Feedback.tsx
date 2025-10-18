@@ -30,7 +30,7 @@ const maxFeedbackLength = {
 
 const Feedback: React.FC<FeedbackProps> = ({ inputData, inputError, setInputError, setInputData, language }) => {
   const { feedback } = inputData;
-  const {warning, setWarning} = useState("");
+  const [warning, setWarning] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
   const placeholderContent = {
