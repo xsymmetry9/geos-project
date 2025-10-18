@@ -12,6 +12,18 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
   const { name, textbook, course, attendance, totalLessons, levels, feedback } =
     inputData;
 
+  const fontStyle = () => {
+    if(language === "english"){
+      return "font-primary";
+    } else if(language === "korean"){
+      return "font-korean";
+    } else if(language === "chinese") {
+      return "font-cjk";
+    } else if(language === "japanese") {
+      return "font-japanese";
+    }
+  }
+
   const titles: Record<Language, string[]> = {
     english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
     chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
@@ -25,9 +37,9 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div className="static preview-section">
+    <div id="preview-section" className={`${fontStyle()}`}>
       <div className="p-3" id="class-information">
-        <h2 className="text-xl font-bold text-center bg-dark-green capitalize text-white p-1 mb-6">{labelText[language].SPR["student_information"]}</h2>
+        <h2 className="text-2xl text-center bg-dark-green capitalize text-white p-1 mb-6">{labelText[language].SPR["student_information"]}</h2>
         <p className="text-size-sm" >
           <strong className="capitalize">{labelText[language].form["input_name"]}:</strong> {name.length != 0 ? name : "No name"}
         </p>
@@ -49,10 +61,10 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
         </p>
       </div>
       <div className="p-3" id="student-evaluation">
-        <h2 className="bg-dark-green text-xl p-1 font-bold text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
+        <h2 className="bg-dark-green text-2xl p-1 text-center capitalize text-white mb-6">{labelText[language].SPR["student_evaluation"]}</h2>
         <table className="table-fixed border-collapse w-full mx-auto">
           <thead>
-            <tr className="bg-orange-700 text-white font-secondary text-sm">
+            <tr className="bg-orange-700 text-white text-sm">
               <th className="px-2 py-1"></th>
               <th className="px-2 py-1">{titleLanguage[language][0]}</th>
               <th className="px-2 py-1">{titleLanguage[language][1]}</th>
@@ -64,10 +76,10 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
               const key = item as keyof Student["levels"];
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
-                  <td className="font-secondary text-sm capitalize px-2 py-1">{titles[language][index]}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].initial}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].target}</td>
-                  <td className="font-secondary text-sm text-center px-2 py-1">{levels[key].final}</td>
+                  <td className="text-sm capitalize px-2 py-1">{titles[language][index]}</td>
+                  <td className="text-sm text-center px-2 py-1">{levels[key].initial}</td>
+                  <td className="text-sm text-center px-2 py-1">{levels[key].target}</td>
+                  <td className="text-sm text-center px-2 py-1">{levels[key].final}</td>
                 </tr>
               );
             })}
@@ -75,9 +87,9 @@ const Preview: React.FC<PreviewProps> = ({inputData, language }) => {
         </table>
       </div>
       <div className="p-3">
-        <h2 className="bg-dark-green text-white my-6 p-1 text-xl font-bold capitalize text-center">{labelText[language].SPR["student_feedback"]}</h2>
-        <div className="w-full border border-green-600 min-h-40 p-2">
-          <p className="text-sm wrap-break-word">{feedback || "No comment"}</p>
+        <h2 className={`bg-dark-green text-white ${fontStyle()} my-6 p-1 text-2xl capitalize text-center`}>{labelText[language].SPR["student_feedback"]}</h2>
+        <div className="flex border border-green-600 border-collapse p-2">
+          <p className="text-sm/6 wrap-anywhere">{feedback || "No comment"}</p>
         </div>
       </div>
     </div>
