@@ -158,7 +158,6 @@ export const Table: React.FC<TableProps> = ({ levels, language }) => {
     const sum = () =>
       labels.reduce((total, key) => {
         const val = levels[key][label] === "" ? "0" : levels[key][label];
-        console.log("sum:", val);
         return total + (val === "10+" ? 10.5 : parseFloat(val));
 
       },0);
