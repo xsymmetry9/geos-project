@@ -1,3 +1,4 @@
+import React from "react";
 import { Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,6 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
+import type { Chart } from "chart.js";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -30,12 +33,37 @@ interface TransformedLevel {
 interface GraphProps {
   userData: TransformedLevel[];
   language: Language;
+  onReady?: () => void;
 }
 const text = (phrase: SPRStringKey, language: Language) => labelText[language]["SPR"][phrase];
 
-const Graph: React.FC<GraphProps> = ({ userData, language }) => {
+const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
+  const readyOnce = React.useRef(false);
+
+  const readyPlugin = React.useMemo(() => ({
+    id: "ready-once",
+    afterLayout: (chart: Chart) => {
+      const canvas = chart.canvas as HTMLCanvasElement;
+      if(!readyOnce.current && canvas.width > 0 && canvas.height > 0){
+      console.log("[Graph] afterLayout size:", canvas.width, canvas.height);
+
+      }
+    },
+    afterRender: (chart: Chart) => {
+      const canvas = chart.canvas as HTMLCanvasElement;
+      if(!readyOnce.current && canvas.width > 0 && canvas.height > 0){
+        readyOnce.current = true;
+        console.log("[Graph] afterRender size:", canvas.width, canvas.height);
+
+        onReady?.();
+      }
+    }
+  }),[onReady])
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false,
     plugins: {
       layout: {
         padding: 0,
@@ -150,7 +178,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language }) => {
   return (
     <>
       <div className="graph-container">
-        <Radar data={graphData} options={options} />
+        <Radar data={graphData} options={options} plugins={[readyPlugin]}/>
       </div>
     </>
   );
