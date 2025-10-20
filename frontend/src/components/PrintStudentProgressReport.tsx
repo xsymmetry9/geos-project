@@ -26,7 +26,8 @@ type TransformedLevel = {
 
 type PrintContentProps = {
   parsedData: Student;
-  language: Language
+  language: Language;
+  onGraphReady?: ()=> void;
 }
   // Working on Transforming data
 export const processData = (data: Student["levels"]): TransformedLevel[] =>{
@@ -38,7 +39,7 @@ export const processData = (data: Student["levels"]): TransformedLevel[] =>{
     }));
   };
 
-export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language }) => {
+export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language, onGraphReady }) => {
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
   const transformedData = processData(levels); 
@@ -74,8 +75,8 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
       <Table levels={levels} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
         <div className="grid grid-cols-1 gap-">
-          <Graph userData={transformedData} language={language} />
-          <Comment comment={feedback} language={language} />
+          <Graph userData={transformedData} language={language} onReady={onGraphReady}/>
+          <Comment comment={feedback} language={language}/>
           <Signature language={language} />
         </div>
         <PlotCards levels={levels} language={language} />
