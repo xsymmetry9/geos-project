@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
-import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal } from "lucide-react";
+import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal, Search } from "lucide-react";
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import ExportToExcel from "@/components/ExportToExcel";
@@ -10,6 +10,7 @@ import { CreateNewFormBtn, CloseBtn } from "@/components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
+import PrintButton from "@/components/PrintButton";
 
 type PlotLevelCheckProps = {
   language: Language;
@@ -169,7 +170,7 @@ const Homepage = () => {
   const PlotSPRTable = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    const dropDownRef = useRef<HTMLDivElement | null>(null);
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleOption = (id: string) => {
     setSelectedId(id)
@@ -197,7 +198,7 @@ const Homepage = () => {
       <thead>
         <tr className="bg-dark-green text-white font-semibold">
           <th className="p-3 text-center text-sm uppercase tracking-wide">date</th>
-          <th className="p-3 text-left text-sm uppercase tracking-wide">name</th>
+          <th className="p-3 text-center text-sm uppercase tracking-wide">name</th>
           <th className="p-3 text-center w-[80px] text-sm uppercase tracking-wide">actions</th>
         </tr>
       </thead>
@@ -208,7 +209,7 @@ const Homepage = () => {
             className="border-b border-gray-200 odd:bg-white even:bg-slate-50 hover:bg-slate-100 transition-colors duration-150"
           >
             <td className="p-3 text-center h-[40px] text-sm">{format(new Date(item.dateCreated), "MM/dd/yyyy")}</td>
-            <td className="p-3 text-left h-[40px] pl-6 font-medium text-sm">{item.name}</td>
+            <td className="p-3 text-center h-[40px] pl-6 font-medium text-sm">{item.name}</td>
             <td className="p-3 text-center h-[40px] relative">
               <div className="inline-block">
                  <button
@@ -229,12 +230,18 @@ const Homepage = () => {
                       <Pencil size={18} />
                       <span className="text-sm">Edit</span>
                     </Link>
-                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/spr/print/${item.id}`}>
-                      <PrinterIcon size={18} />
+                    <Link className="flex items-center gap-2 p-2 hover:bg-slate-50" to={`/spr/view/${item.id}`}>
+                      <Search size={18} />
                       <span className="text-sm">View</span>
                     </Link>
+                    <PrintButton
+                      className="cursor-pointer flex items-center gap-2 p-2 hover:bg-slate-50 w-full text-left"
+                      docID={item.id}
+                      language={user?.language}
+                      setSelectedId = {setSelectedId}
+                    />                    
                     <button
-                      className="flex items-center gap-2 p-2 hover:bg-slate-50 text-left w-full"
+                      className="cursor-pointer flex items-center gap-2 p-2 hover:bg-slate-50 text-left w-full"
                       onClick={() => handleDisplayDelete({ display: true, id: item.id, type: "SPR" })}
                     >
                       <Archive size={18} />
