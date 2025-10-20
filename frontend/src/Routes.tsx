@@ -23,6 +23,7 @@ const routes = [
     children: [
       { index: true, element: <SPRForm /> },
       { path: "print/:id", element: <PrintPage /> },
+      { path: "view/:id", element: <PrintPage />},
       { path: "edit/:id", element: <SPRForm /> },
     ],
   },
