@@ -11,9 +11,10 @@ const getPageLabels = (language: LanguageKey): ButtonLabels => {
   const labels = labelTextJson[language] as any; //by pass any
   return {
     nextPage: labels.nextPage,
-    backPage: labels.backPage, 
-    printPage: labels.printPage};
-}
+    backPage: labels.backPage,
+    printPage: labels.printPage,
+  };
+};
 
 interface ButtonProps {
   page: number;
@@ -22,7 +23,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ page, handler, language }) => {
-  const {nextPage, backPage, printPage} = getPageLabels(language);
+  const { nextPage, backPage, printPage } = getPageLabels(language);
   return (
     <>
       {page === 0 ? (
@@ -32,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({ page, handler, language }) => {
             type="button"
             onClick={handler}
             name="next"
-            value= {nextPage}
+            value={nextPage}
           />
         </>
       ) : page != 3 ? (

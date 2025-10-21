@@ -5,16 +5,16 @@ import LevelInformation from "@/components/Form/components/LevelInformation";
 import Preview from "@/components/Form/components/Preview";
 import Pagination from "@/components/Form/components/Pagination";
 import Button from "@/components/Form/components/Button";
-import {useUser} from "@/context/UserContext"
+import { useUser } from "@/context/UserContext";
 import PopUpMessage from "@/components/PopUpMessage";
-import labelText from "@/assets/other/labelText.json"
+import labelText from "@/assets/other/labelText.json";
 import { Student, Levels } from "@/type/Student";
 import { getDataFromLocal, editDataFromLocal } from "@/utils/functions";
 
 type LevelCategory = keyof Student["levels"];
 type LevelField = keyof Levels;
 
-interface PlotFormProps{
+interface PlotFormProps {
   inputData: Student;
   setInputData: React.Dispatch<React.SetStateAction<Student>>;
 }
@@ -28,13 +28,15 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     course: inputData.course == "" ? true : false,
     attendance: inputData.attendance == 0 ? true : false,
     totalLessons: inputData.totalLessons == 0 ? true : false,
-    feedback: inputData.feedback == "" ? true : false
+    feedback: inputData.feedback == "" ? true : false,
   });
 
-  const {user} = useUser();
+  const { user } = useUser();
   const language = user?.language ?? "english";
 
-  const handleInputData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) : void => {
+  const handleInputData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = e.target;
 
     // Update input data (convert numbers where necessary)
@@ -48,14 +50,14 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
         case "name":
         case "textbook":
         case "course":
-          return {...prevError, [name]: value.trim() === ""};
+          return { ...prevError, [name]: value.trim() === "" };
         case "attendance":
           const att = Number(value);
-          return {...prevError, attendance: isNaN(att) || att <= 0};
+          return { ...prevError, attendance: isNaN(att) || att <= 0 };
         case "totalLessons":
           const total = Number(value);
           return {
-            ...prevError, 
+            ...prevError,
             totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
           };
         default:
@@ -85,14 +87,14 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     <PersonalInformation
       key={"personal-information"}
       inputData={inputData}
-      inputError = {inputError}
+      inputError={inputError}
       handleInputData={handleInputData}
       language={language}
     />,
     <LevelInformation
       key={"level-information"}
       inputData={inputData}
-      inputError = {inputError}
+      inputError={inputError}
       setInputData={setInputData}
       handleLevelInputData={handleLevelInputData}
       language={language}
@@ -100,9 +102,9 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     <Feedback
       key={"feedback"}
       inputData={inputData}
-      inputError = {inputError}
+      inputError={inputError}
       setInputError={setInputError}
-      setInputData={setInputData} 
+      setInputData={setInputData}
       language={language}
     />,
     <Preview key={"preview"} inputData={inputData} language={language} />,
@@ -128,14 +130,14 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     try {
       const savedData = getDataFromLocal();
       const existingStudentIndex = savedData.SPR.findIndex(
-        (student) => student.id === inputData.id,
+        (student) => student.id === inputData.id
       );
       if (existingStudentIndex === -1) {
         savedData.SPR.push(inputData);
       } else {
         savedData.SPR[existingStudentIndex] = inputData;
       }
-      editDataFromLocal(savedData); 
+      editDataFromLocal(savedData);
     } catch (err) {
       alert(err);
     }
@@ -143,27 +145,20 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     setDisplayPopupMessage(true);
   };
   return (
-    <div className="w-full max-w-[55rem] relative bg-white p-3 mx-auto">
-        {displayPopupMessage && (
-          <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />
-        )}
-      <Pagination page={page} language={language} setPage={setPage}/>
-      <div className="w-full static max-w-lg m-auto font-secondary">
+    <div className="relative mx-auto w-full max-w-[55rem] bg-white p-3">
+      {displayPopupMessage && <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />}
+      <Pagination page={page} language={language} setPage={setPage} />
+      <div className="font-secondary static m-auto w-full max-w-lg">
         <form onSubmit={handleSubmit}>
           {arrOfPages[page]}
-          <div className="flex gap-2 justify-center" id="buttons">
-            <Button
-              page={page}
-              handler={changePage}
-              language={language}
-            />
+          <div className="flex justify-center gap-2" id="buttons">
+            <Button page={page} handler={changePage} language={language} />
             {page == 3 && (
               <input className="btn btn-primary" type="submit" value={labelText[language].save} />
             )}
-          </div>  
+          </div>
         </form>
-    
-    </div>
+      </div>
     </div>
   );
 };

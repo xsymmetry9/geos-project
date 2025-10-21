@@ -8,27 +8,24 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md">
-      <div className="max-w-[1100px] w-full mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-4 py-3">
         {/* Logo */}
         <a href="/" className="flex items-center">
-          <img className="w-20 h-auto" src={geosImg} alt="GEOS-logo" />
+          <img className="h-auto w-20" src={geosImg} alt="GEOS-logo" />
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
+        <nav className="hidden space-x-6 font-medium text-gray-700 md:flex">
           <Link to={"/"}>Home</Link>
           <Link to={"/levels"}>Levels</Link>
-          <a
-            href="/language"
-            className="hover:text-blue-600 transition duration-200"
-          >
+          <a href="/language" className="transition duration-200 hover:text-blue-600">
             Language
           </a>
         </nav>
 
         {/* Mobile Burger Icon */}
         <button
-          className="md:hidden text-gray-700"
+          className="text-gray-700 md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -38,11 +35,16 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white px-4 pb-4">
-          <Link to={"/"}className="block py-2 text-gray-700 font-medium hover:text-blue-600 transition duration-200">Home</Link>
+        <div className="bg-white px-4 pb-4 md:hidden">
+          <Link
+            to={"/"}
+            className="block py-2 font-medium text-gray-700 transition duration-200 hover:text-blue-600"
+          >
+            Home
+          </Link>
           <Link
             to={"/language"}
-            className="block py-2 text-gray-700 font-medium hover:text-blue-600 transition duration-200"
+            className="block py-2 font-medium text-gray-700 transition duration-200 hover:text-blue-600"
           >
             Language
           </Link>

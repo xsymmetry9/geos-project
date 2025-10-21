@@ -3,7 +3,7 @@ import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
 
 const LanguagePage = () => {
-  const {setLanguage} = useUser();;
+  const { setLanguage } = useUser();
   const navigate = useNavigate();
 
   const handleLanguageSelect = (language: Language) => {
@@ -12,11 +12,9 @@ const LanguagePage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center gap-4 max-w-sm w-full">
-        <h1 className="text-2xl font-bold text-center font-secondary">
-          GEOS App
-        </h1>
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl bg-white p-6 shadow-lg">
+        <h1 className="font-secondary text-center text-2xl font-bold">GEOS App</h1>
         <button className="btn-primary w-full" onClick={() => handleLanguageSelect("english")}>
           English
         </button>

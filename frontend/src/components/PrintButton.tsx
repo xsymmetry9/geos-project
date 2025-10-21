@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import  { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import { PrinterIcon } from "lucide-react";
 import { getStudentById } from "@/utils/functions";
 import { Language } from "@/utils/common";
@@ -7,13 +7,11 @@ import { PrintContent } from "@/components/PrintStudentProgressReport";
 import { Student } from "@/type/Student";
 import { set } from "date-fns";
 
-
 type PrintButtonProps = {
-  className?: string; 
+  className?: string;
   docID: string;
   language: Language;
   setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
-      
 };
 
 const pageStyle = `
@@ -59,89 +57,94 @@ const pageStyle = `
   }
 `;
 
-const PrintButton: React.FC<PrintButtonProps> = ({ className = "", docID, language, setSelectedId }) => {
-  const [student, setStudent] = useState<Student|null>();
+const PrintButton: React.FC<PrintButtonProps> = ({
+  className = "",
+  docID,
+  language,
+  setSelectedId,
+}) => {
+  const [student, setStudent] = useState<Student | null>();
   const [mounted, setMounted] = useState(false); // off-screen mount
   const [graphReady, setGraphReady] = useState(false); // signaled graph is ready
   const contentRef = useRef<HTMLDivElement>(null);
-  const promiseResolveRef = useRef<(() => void | null)>(null);
+  const promiseResolveRef = useRef<() => void | null>(null);
 
-  // Load data when docID changes 
+  // Load data when docID changes
   useEffect(() => {
-   const s = getStudentById(docID) || null;
-   setStudent(s);
-   setGraphReady(false);
+    const s = getStudentById(docID) || null;
+    setStudent(s);
+    setGraphReady(false);
+  }, [docID]);
 
-  },[docID]);
+  const waitForGraphReady = useCallback(
+    (timeoutMs = 5000) => {
+      if (graphReady) return Promise.resolve();
 
-  const waitForGraphReady = useCallback((timeoutMs = 5000) => {
-    if (graphReady) return Promise.resolve();
-
-    return new Promise<void>((resolve) => {
-      const timeout = setTimeout(() => {
-        console.warn("Graph readiness wait timed out after 5 seconds.");
+      return new Promise<void>((resolve) => {
+        const timeout = setTimeout(() => {
+          console.warn("Graph readiness wait timed out after 5 seconds.");
+          resolve();
+        }, timeoutMs);
+        promiseResolveRef.current = resolve;
+        clearTimeout(timeout);
         resolve();
-      }, timeoutMs);
-      promiseResolveRef.current = resolve; 
-      clearTimeout(timeout);
-      resolve();
-    });
+      });
+    },
+    [graphReady]
+  );
 
-  }, [graphReady]);
-
-  const handlePrint = useReactToPrint({ 
+  const handlePrint = useReactToPrint({
     contentRef,
     documentTitle: `${student?.name ?? "SPR"}-${docID}`,
     onBeforeGetContent: async () => {
       setMounted(true);
       await new Promise<void>((r) => requestAnimationFrame(() => r()));
- 
+
       await waitForGraphReady(5000);
 
       await new Promise<void>((r) => queueMicrotask(r));
-  },
-  onAfterPrint() {
-    setSelectedId(null);
-    setMounted(false);
-    setGraphReady(false);
-    promiseResolveRef.current = null;
-  },
+    },
+    onAfterPrint() {
+      setSelectedId(null);
+      setMounted(false);
+      setGraphReady(false);
+      promiseResolveRef.current = null;
+    },
   });
 
   const handleGraphReady = React.useCallback(() => {
-    if(!graphReady) {
+    if (!graphReady) {
       setGraphReady(true);
       promiseResolveRef.current?.();
       promiseResolveRef.current = null;
     }
-  }, [graphReady])
+  }, [graphReady]);
 
   const disabled = !student;
 
   return (
     <>
-      <button 
+      <button
         type="button"
-        className = {`${className} ${disabled ? "opacity-50 cursor-not-allowed" : "" }`} 
-        onClick={handlePrint} 
-        disabled= {disabled}>
-
+        className={`${className} ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
+        onClick={handlePrint}
+        disabled={disabled}
+      >
         <PrinterIcon size={18} />
         <span className="text-sm">Print</span>
       </button>
- 
-          <div 
-            ref ={contentRef} 
-            className="print-sandbox">
-              {
-                student && (
-                  <div className="print-component">
-                    <PrintContent parsedData={student} language={language} onGraphReady={handleGraphReady}/>
-                  </div>
-              )}
+
+      <div ref={contentRef} className="print-sandbox">
+        {student && (
+          <div className="print-component">
+            <PrintContent
+              parsedData={student}
+              language={language}
+              onGraphReady={handleGraphReady}
+            />
           </div>
-
-
+        )}
+      </div>
     </>
   );
 };

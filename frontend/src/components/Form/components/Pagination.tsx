@@ -16,12 +16,14 @@ const Pagination: React.FC<PaginationProps> = ({ page, language, setPage }) => {
   };
 
   return (
-    <div className="w-full max-w-lg m-auto">
+    <div className="m-auto w-full max-w-lg">
       <div className="pagination-container">
         {title[language].map((item, index) => (
-          <button key={index} 
+          <button
+            key={index}
             onClick={() => setPage(index)}
-            className={`cursor-pointer square ${page === index && "active"}`}>
+            className={`square cursor-pointer ${page === index && "active"}`}
+          >
             <div className={"circle"}>{index}</div>
             <p>{item}</p>
           </button>

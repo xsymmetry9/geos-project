@@ -1,5 +1,5 @@
 import { getLevelInformationByLevel } from "@/utils/functions";
-import labelText from "@/assets/other/labelText.json"
+import labelText from "@/assets/other/labelText.json";
 
 type Language = keyof typeof labelText;
 
@@ -8,24 +8,27 @@ interface RenderLevelInformationProps {
   studentLevel: string | number;
   language: Language;
 }
-const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({ category, studentLevel, language }) => {
-  
+const RenderLevelInformation: React.FC<RenderLevelInformationProps> = ({
+  category,
+  studentLevel,
+  language,
+}) => {
   const fontSize = () => {
-    if(language === "english") {
+    if (language === "english") {
       return "text-sm/5";
-    } else if(language === "chinese") {
+    } else if (language === "chinese") {
       return "text-[14.6667px]/5";
-    } else if(language === "japanese") {
+    } else if (language === "japanese") {
       return "text-sm/5";
-    } else if(language === "korean") {
+    } else if (language === "korean") {
       return "text-[12.5px]/5";
     }
-  }
+  };
   const studentInfo = getLevelInformationByLevel({
     level: studentLevel,
     cat: category,
-    lang: language
-  })
+    lang: language,
+  });
   return (
     <>
       <p className={`ml-2 ${fontSize()}`}>{studentLevel !== "" ? studentInfo : ""}</p>

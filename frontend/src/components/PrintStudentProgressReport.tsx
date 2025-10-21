@@ -10,7 +10,7 @@ import {
 import PlotCards from "@/components/PrintComponents/PlotCards";
 import { Student } from "@/type/Student";
 import labelText from "@/assets/other/labelText.json";
-import "@/styles/print.css"
+import "@/styles/print.css";
 
 // ---------------------------------
 // Type Defintions
@@ -22,27 +22,31 @@ type TransformedLevel = {
   initial: number;
   target: number;
   final: number;
-}
+};
 
 type PrintContentProps = {
   parsedData: Student;
   language: Language;
-  onGraphReady?: ()=> void;
-}
-  // Working on Transforming data
-export const processData = (data: Student["levels"]): TransformedLevel[] =>{
-    return Object.entries(data).map(([category, level]) =>({
-      category,
-      initial: level.initial === "10+" ? 10 : parseFloat(level.initial),
-      target: level.target === "10+" ? 10 : parseFloat(level.target),
-      final: level.final === "10+" ? 10 : parseFloat(level.final)
-    }));
-  };
+  onGraphReady?: () => void;
+};
+// Working on Transforming data
+export const processData = (data: Student["levels"]): TransformedLevel[] => {
+  return Object.entries(data).map(([category, level]) => ({
+    category,
+    initial: level.initial === "10+" ? 10 : parseFloat(level.initial),
+    target: level.target === "10+" ? 10 : parseFloat(level.target),
+    final: level.final === "10+" ? 10 : parseFloat(level.final),
+  }));
+};
 
-export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language, onGraphReady }) => {
+export const PrintContent: React.FC<PrintContentProps> = ({
+  parsedData,
+  language,
+  onGraphReady,
+}) => {
   const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
 
-  const transformedData = processData(levels); 
+  const transformedData = processData(levels);
 
   const fontLanguage = () => {
     switch (language) {
@@ -64,7 +68,7 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
     <div className={`${fontLanguage()}`}>
       <div className="title-container">
         <div className="container">
-          <img width={120} height={60} src={"/logo.jpg"} alt = {"Company Logo"} />
+          <img width={120} height={60} src={"/logo.jpg"} alt={"Company Logo"} />
           <TitleSPR language={language} />
         </div>
       </div>
@@ -74,9 +78,9 @@ export const PrintContent: React.FC<PrintContentProps> = ({ parsedData, language
       </div>
       <Table levels={levels} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
-        <div className="grid grid-cols-1 gap-">
-          <Graph userData={transformedData} language={language} onReady={onGraphReady}/>
-          <Comment comment={feedback} language={language}/>
+        <div className="gap- grid grid-cols-1">
+          <Graph userData={transformedData} language={language} onReady={onGraphReady} />
+          <Comment comment={feedback} language={language} />
           <Signature language={language} />
         </div>
         <PlotCards levels={levels} language={language} />

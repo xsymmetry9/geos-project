@@ -1,12 +1,18 @@
 import React, { useCallback } from "react";
 import { read, utils } from "xlsx";
 import { Student, Levels } from "@/type/Student";
-import { LevelCheckEntry} from "@/type/LevelCheckForm";
+import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { editDataFromLocal } from "@/utils/functions";
 import { Upload } from "lucide-react";
 import User from "@/type/User";
 
-type Category = "confidence" | "speaking" | "listening" | "grammar" | "pronunciation" | "vocabulary";
+type Category =
+  | "confidence"
+  | "speaking"
+  | "listening"
+  | "grammar"
+  | "pronunciation"
+  | "vocabulary";
 
 type ImportFromExcelProps = {
   userData: User;
@@ -26,19 +32,26 @@ const ParseLevelCheckEntry = (sheet: any) => {
     entry.overallCEFR = row.overallCEFR;
     entry.dateCreated = row.dateCreated;
 
-    const categories: Category[] = ["confidence", "speaking", "listening", "grammar", "pronunciation", "vocabulary"];
+    const categories: Category[] = [
+      "confidence",
+      "speaking",
+      "listening",
+      "grammar",
+      "pronunciation",
+      "vocabulary",
+    ];
     categories.forEach((cat: Category) => {
       const category = entry[cat];
       category.level_name = row[`${cat}_level`];
       category.score = row[`${cat}_score`];
-      row[`${cat}_strengths`].split("; ").forEach((item: any) =>category.strength.push(item));
+      row[`${cat}_strengths`].split("; ").forEach((item: any) => category.strength.push(item));
       row[`${cat}_weakness`].split("; ").forEach((item: any) => category.weakness.push(item));
-    })
+    });
     entries.push(entry);
   });
 
   return entries;
-}
+};
 
 const parseSPREntry = (sheet: any) => {
   const jsonData: any[] = utils.sheet_to_json(sheet);
@@ -55,16 +68,36 @@ const parseSPREntry = (sheet: any) => {
     student.totalLessons = Number(row.TotalLessons || 0);
     student.feedback = row.Feedback || "No feedback";
     student.levels = {
-      vocabulary: new Levels(String(row.Vocabulary_initial), String(row.Vocabulary_target), String(row.Vocabulary_final)),
-      pronunciation: new Levels(String(row.Pronunciation_initial), String(row.Pronunciation_target), String(row.Pronunciation_final)),
-      grammar: new Levels(String(row.Grammar_initial), String(row.Grammar_target), String(row.Grammar_final)),
-      listening: new Levels(String(row.Listening_initial), String(row.Listening_target), String(row.Listening_final)),
-      conversation: new Levels(String(row.Conversation_initial), String(row.Conversation_target), String(row.Conversation_final)),
+      vocabulary: new Levels(
+        String(row.Vocabulary_initial),
+        String(row.Vocabulary_target),
+        String(row.Vocabulary_final)
+      ),
+      pronunciation: new Levels(
+        String(row.Pronunciation_initial),
+        String(row.Pronunciation_target),
+        String(row.Pronunciation_final)
+      ),
+      grammar: new Levels(
+        String(row.Grammar_initial),
+        String(row.Grammar_target),
+        String(row.Grammar_final)
+      ),
+      listening: new Levels(
+        String(row.Listening_initial),
+        String(row.Listening_target),
+        String(row.Listening_final)
+      ),
+      conversation: new Levels(
+        String(row.Conversation_initial),
+        String(row.Conversation_target),
+        String(row.Conversation_final)
+      ),
     };
     students.push(student);
-  })
+  });
   return students;
-}
+};
 
 const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
   const { SPR, levelCheck } = userData;
@@ -92,7 +125,7 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
       try {
         const arrayBuffer = event.target?.result;
 
-        console.log("Checks if arrayBuffer works: ", arrayBuffer)
+        console.log("Checks if arrayBuffer works: ", arrayBuffer);
 
         if (!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
 
@@ -101,13 +134,13 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
         const workbook = read(data, { type: "array" });
         console.log("Creates a workbook and read the data", workbook);
 
-        const sheetNames= workbook.SheetNames;
+        const sheetNames = workbook.SheetNames;
         console.log(sheetNames);
         // workbook.SheetNames.forEach((item) => arrOfSheetNames.push(item));
 
         const updatedUser = userData;
         sheetNames.forEach((sheetName) => {
-          if (sheetName === "Teacher's data" || sheetName === "spr"){
+          if (sheetName === "Teacher's data" || sheetName === "spr") {
             const worksheet = workbook.Sheets[sheetName];
             console.log("SPR sheet: ", worksheet);
             const parsedData = parseSPREntry(worksheet);
@@ -116,14 +149,12 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
             const result = mergedArrayFilterUniqueObjects(parsedData, SPR);
             console.log("Filtered: ", result);
             updatedUser.SPR = result;
-            
-          } else if (sheetName === "Level Check"){
+          } else if (sheetName === "Level Check") {
             const worksheet = workbook.Sheets[sheetName];
             const parsedData = ParseLevelCheckEntry(worksheet);
 
             const result = mergedArrayFilterUniqueObjects(parsedData, levelCheck);
             updatedUser.levelCheck = result;
-
           } else {
             return;
           }
@@ -131,7 +162,6 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
 
         editDataFromLocal(updatedUser); // Updates localstorage
         window.location.reload(); // reloads the page
-
       } catch (err: any) {
         alert(err.message || "An error occurred during file upload");
       }

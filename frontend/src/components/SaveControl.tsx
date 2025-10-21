@@ -8,11 +8,11 @@ type SaveControlProps = {
   className: string;
   layout: "p" | "portrait" | "landscape" | "l";
   title: string;
-}
+};
 
 const formattedDate = format(new Date(), "MM-dd-yyyy");
 
-const SaveControl = ({contentRef, className, layout, title}: SaveControlProps) => {
+const SaveControl = ({ contentRef, className, layout, title }: SaveControlProps) => {
   const [isBundling, setIsBundling] = useState<boolean>(false);
 
   //   const handleGeneratePDF = async () => {
@@ -45,15 +45,15 @@ const SaveControl = ({contentRef, className, layout, title}: SaveControlProps) =
   //   pdf.addImage(imgData, "PNG", offsetX, offsetY, renderWidth, renderHeight);
   //   pdf.save(`level-check-${data.student_name}.pdf`);
   // }
-  const handleSaveControl = async () =>{
+  const handleSaveControl = async () => {
     setIsBundling(true);
-    try{
-      if(!contentRef.current) return;
+    try {
+      if (!contentRef.current) return;
       const canvas = await html2canvas(contentRef.current, {
-      allowTaint: true,
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
+        allowTaint: true,
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
       });
 
       const imgData = canvas.toDataURL("image/png");
@@ -69,17 +69,18 @@ const SaveControl = ({contentRef, className, layout, title}: SaveControlProps) =
 
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, height);
       pdf.save(`${title}-${formattedDate}.pdf`);
-    } catch (error)
-    {
+    } catch (error) {
       console.log(error);
-    }
-    finally {
+    } finally {
       setIsBundling(false);
-    }  }
+    }
+  };
 
-  return(
-    <button className={`${className}`} onClick={handleSaveControl} disabled={isBundling}>Save</button>
-  )
-}
+  return (
+    <button className={`${className}`} onClick={handleSaveControl} disabled={isBundling}>
+      Save
+    </button>
+  );
+};
 
-export default SaveControl
+export default SaveControl;

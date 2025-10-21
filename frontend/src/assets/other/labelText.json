@@ -1,8 +1,8 @@
 {
   "english": {
     "save": "save",
-    "nextPage": "Next", 
-    "backPage": "Back", 
+    "nextPage": "Next",
+    "backPage": "Back",
     "printPage": "Print",
     "form": {
       "title": "Personal Information",
@@ -64,8 +64,8 @@
   },
   "chinese": {
     "save": "儲存",
-    "nextPage": "下一個", 
-    "backPage": "上一個", 
+    "nextPage": "下一個",
+    "backPage": "上一個",
     "printPage": "列印",
     "form": {
       "title": "個人信息",
@@ -126,8 +126,8 @@
     }
   },
   "korean": {
-    "save":"save",
-    "nextPage": "다음", 
+    "save": "save",
+    "nextPage": "다음",
     "backPage": "이전",
     "printPage": "인쇄",
     "form": {
@@ -249,6 +249,6 @@
       "average": "平均",
       "comment": "コメント",
       "signature": "署名"
-     }
+    }
   }
 }

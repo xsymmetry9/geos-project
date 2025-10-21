@@ -1,462 +1,436 @@
-
 {
-    "speaking":
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Clear in basic conversations",
-                        "Can introduce themselves",
-                        "Can respond to simple questions",
-                        "Uses common phrases",
-                        "Can ask for basic help",
-                        "Can describe familiar objects",
-                        "Can express likes and dislikes",   
-                        "Can talk about familiar topics"
-                    ],
-                    "weakness": [
-                        "Hesitation when speaking",
-                        "Long thinking time before speaking",
-                        "Needs help to complete responses",
-                        "Overuses simple expressions",
-                        "Often asks for clarification",
-                        "Avoids talking about unfamiliar topics",
-                        "Has difficulty forming longer sentences",
-                        "Struggles with vocabulary recall"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Can engage in longer conversations",
-                        "Uses a wider range of vocabulary",
-                        "Can explain basic concepts clearly",
-                        "Responds with more detail",
-                        "Can handle unexpected questions with effort",
-                        "Can describe personal experiences well",
-                        "Can engage in debates or arguments",
-                        "Able to summarize points"
-                    ],
-                    "weakness":[
-                        "Hesitant to speak about unfamiliar topics",
-                        "Can be unclear when talking about abstract ideas",
-                        "Pauses often when thinking of words",
-                        "Struggles with some complex sentence structures",
-                        "May lack fluency in spontaneous conversation",
-                        "Occasionally repeats phrases or words",
-                        "Requires time to organize thoughts",
-                        "May rely on simple language in complex contexts"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Uses varied and complex sentence structures",
-                        "Expresses ideas clearly in spontaneous situations",
-                        "Comfortable discussing a wide range of topics",
-                        "Demonstrates clear organization of thoughts",
-                        "Can express abstract ideas effectively",
-                        "Adapts speaking style for different audiences",
-                        "Can speak in formal and informal settings",
-                        "Comfortable with idiomatic expressions"
-                    ],
-                    "weakness": [
-                        "Sometimes too technical in language use",
-                        "Can become overly detailed or verbose",
-                        "Rarely hesitates, except on complex answers",
-                        "Minor errors in complex grammatical structures",
-                        "Overthinks certain responses or structures",
-                        "Occasionally uses overly complex phrases",
-                        "May become less clear when speaking quickly",
-                        "Occasionally over-elaborates or digresses"
-                    ]
-                }
-            },
-    "confidence":
-        
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Enjoys learning new vocabulary",
-                        "Comfortable asking for help",
-                        "Willing to make mistakes",
-                        "Confident in familiar topics",
-                        "Can express simple opinions",
-                        "Shows initiative in speaking",
-                        "Confident answering basic questions",
-                        "Eager to try new language structures"
-                    ],
-                    "weakness": [
-                        "Feels nervous in new situations",
-                        "Hesitant to speak in front of others",
-                        "Doubts abilities in unfamiliar conversations",
-                        "Uncertain in complex or abstract discussions",
-                        "Needs encouragement to speak more",
-                        "Reluctant to speak without full understanding",
-                        "Avoids challenging conversations",
-                        "Reluctant to initiate conversations"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Can engage in conversation on familiar topics",
-                        "Can express opinions clearly",
-                        "Comfortable explaining ideas with clarity",
-                        "Ready to ask questions when unsure",
-                        "Able to handle unexpected questions with effort",
-                        "Confident using basic structures",
-                        "Asks for clarification when necessary",
-                        "Expresses ideas even if unsure about vocabulary"
-                    ],
-                    "weakness":[
-                        "Needs reassurance before speaking",
-                        "Often becomes self-conscious", 
-                        "Still doubts accuracy when speaking complexly",
-                        "Can be reluctant to speak in high-pressure situations",
-                        "Can be unsure in unfamiliar conversations",
-                        "Hesitates with unfamiliar topics",
-                        "May retreat from complicated interactions",
-                        "Overthinks at times for complex questions"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Speaks confidently in a variety of situations",
-                        "Easily handles difficult conversations",
-                        "Ready to speak on unfamiliar topics",
-                        "Maintain conversation flow even with interruptions",
-                        "Comfortable speaking in large groups",
-                        "Adapts easily to different conversational tones",
-                        "Confident in both formal and informal speaking",
-                        "Comfortable with challenging speaking tasks"
-                    ],
-                    "weakness": [
-                        "May be overly cautious with unknown topics",
-                        "Can appear overly formal in casual settings",
-                        "Can doubt complex expressions in public",
-                        "Can become overly focused on precision",
-                        "May overthink responses in professional settings",
-                        "May sometimes simplify thoughts too much",
-                        "Occasionally over-elaborates",
-                        "Needs to improve in nuanced, specific vocabulary"
-                    ]
-                }
-            },
-    "vocabulary":
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Knows basic vocabulary for everyday situations",
-                        "Uses common nouns, verbs, and adjectives",
-                        "Can identify familiar objects or topics",
-                        "Can describe familiar people and places",
-                        "Able to talk about basic routines",
-                        "Can ask simple questions",
-                        "Recognizes basic expressions and idioms",
-                        "Has a solid grasp of basic everyday vocabulary"
-                    ],
-                    "weakness": [
-                        "Limited word range for expressing ideas",
-                        "Needs help finding the right words",
-                        "Struggles with recalling words quickly",
-                        "Has difficulty with synonyms",
-                        "Often repeats the same words",
-                        "Can’t express abstract ideas or emotions well",
-                        "Limited ability to describe unfamiliar topics",
-                        "Needs more precise vocabulary for conversation"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Expresses opinions clearly with relevant vocabulary",
-                        "Able to explain common concepts with some effort",
-                        "Able to recognize and use some idioms",
-                        "Can describe experiences with detail",
-                        "Uses adjectives and adverbs to add detail",
-                        "Can discuss most familiar topics comfortably",
-                        "Able to talk about unfamiliar topics with support",
-                        "Can talk about personal experiences or plans"
-                    ],
-                    "weakness":[
-                        "Misses more nuanced or technical words",
-                        "Has trouble finding the right word for complex ideas",
-                        "Lacks vocabulary for certain social contexts",
-                        "Can’t remember some words quickly in speech",
-                        "Struggles with collocations",
-                        "Needs more exposure to advanced, natural vocabulary",
-                        "Can become repetitive with word choices",
-                        "Relies on basic language for professional discussions"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Has a wide range of vocabulary for complex topics",
-                        "Able to express subtle ideas and opinions",
-                        "Comfortable using idiomatic expressions",
-                        "Can adapt vocabulary based on context",
-                        "Able to use advanced adjectives and adverbs",
-                        "Can describe abstract ideas fluently",
-                        "Can express opinions with precision",
-                        "Uses collocations naturally",
-                        "Uses academic language",
-                        "Can discuss a wide range of topics easily"
-                    ],
-                    "weakness": [
-                        "Occasionally uses words incorrectly in context",
-                        "Can overcomplicate expressions",
-                        "Needs to work on mastering specialized vocabulary",
-                        "Struggles with some advanced technical terms",
-                        "Rarely makes mistakes but may sound repetitive",
-                        "May occasionally misuse complex words",
-                        "Can be overly detailed in everyday conversation",
-                        "Needs to be more detailed in advanced topics",
-                        "Occasionally unsure of rare vocabulary",
-                        "May use more formal expressions than needed"
-                    ]
-                }
-            },
-    "grammar":
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Can form simple sentences",
-                        "Uses the present tense correctly",
-                        "Can use basic question forms",
-                        "Can describe routines with basic structures",
-                        "Can use basic adjectives",
-                        "Able to form questions",
-                        "Can use 'to be' and basic verbs",
-                        "Can talk about basic actions",
-                        "Can use simple modals (can, should)"
-                    ],
-                    "weakness": [
-                        "Struggles with word order",
-                        "Makes mistakes with verb forms",
-                        "Struggles with prepositions and articles",
-                        "Often omits auxiliary verbs",
-                        "Struggles with plural forms",
-                        "Needs help with conjunctions",
-                        "Confuses present and past tenses",
-                        "Needs to practice subject-verb agreement",
-                        "Struggles with using different tenses together"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Uses a variety of tenses correctly",
-                        "Forms compound and complex sentences well",
-                        "Can use passive voice appropriately",
-                        "Uses reported speech correctly",
-                        "Understands and applies conditionals",
-                        "Can use gerunds and infinitives appropriately",
-                        "Uses comparative and superlative forms accurately",
-                        "Can form polite requests and indirect questions",
-                        "Uses connectors effectively for logical flow",
-                        "Can modify sentences using participle clauses"
-                    ],
-                    "weakness":[
-                        "Occasionally mixes verb tenses",
-                        "Struggles with advanced conditionals",
-                        "Makes errors with subject-verb agreement",
-                        "Sometimes struggles with grammar accuracy",
-                        "Occasionally misuses relative clauses",
-                        "Needs practice with phrasal verbs",
-                        "Struggles with advanced articles (a, an, the)",
-                        "Sometimes overuses simple sentence structures",
-                        "Occasionally forgets prepositions in phrases",
-                        "Has trouble with formal vs. informal grammar"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Uses advanced sentence structures effectively",
-                        "Demonstrates accuracy across all tenses",
-                        "Uses inversion for emphasis correctly",
-                        "Can express subtle differences using modal verbs",
-                        "Understands and uses advanced relative clauses",
-                        "Uses advanced linking phrases fluently",
-                        "Can apply correct word order in all contexts",
-                        "Uses varied clause structures",
-                        "Can shift between formal and informal speech",
-                        "Maintains grammatical accuracy at high fluency"
-                    ],
-                    "weakness": [
-                        "Sometimes overly complex in sentence construction",
-                        "Occasionally overuses passive voice",
-                        "May misuse advanced conditionals",
-                        "Needs to refine use of rare grammatical structures",
-                        "May occasionally misuse formal register",
-                        "Overuses complex structures in casual speech",
-                        "May struggle with nuanced idiomatic grammar",
-                        "Can overthink grammar choices",
-                        "Sometimes self-corrects mid-sentence",
-                        "Occasionally hesitant with obscure grammar rules"
-                    ]
-                }
-            },
-    "listening":
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Understands common phrases and expressions",
-                        "Can follow slow, clear speech",
-                        "Recognizes familiar words in context",
-                        "Understands basic greetings and questions",
-                        "Can follow classroom instructions",
-                        "Understands short, simple sentences",
-                        "Can identify key words in speech",
-                        "Can understand simple requests",
-                        "Understands basic yes/no questions"
-                    ],
-                    "weakness": [
-                        "Needs repetition to understand spoken English",
-                        "Struggles with fast or natural speech",
-                        "Misses details in longer conversations",
-                        "Has trouble with different accents",
-                        "Needs visual support for better comprehension",
-                        "Cannot always grasp full meaning",
-                        "Has difficulty with contractions and reductions",
-                        "Needs more time to process spoken language",
-                        "Struggles with unfamiliar vocabulary"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Understands main ideas in conversations",
-                        "Can follow familiar topics at a moderate speed",
-                        "Recognizes speaker intent in casual speech",
-                        "Can differentiate formal and informal tones",
-                        "Can follow simple storytelling",
-                        "Understands explanations with some effort",
-                        "Can pick up main ideas even in longer talks",
-                        "Can handle listening tasks in real-life situations",
-                        "Understands announcements and instructions"
-                    ],
-                    "weakness":[
-                        "Struggles with implied meaning",
-                        "Needs more exposure to idiomatic expressions",
-                        "May misunderstand complex discussions",
-                        "Has difficulty with strong regional accents",
-                        "Struggles with fast-paced discussions",
-                        "Needs clarification in technical topics",
-                        "May miss subtle shifts in conversation topics",
-                        "Occasionally struggles with humor and sarcasm",
-                        "May struggle with rapid speech and slang"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Can understand fast, native-level speech",
-                        "Recognizes subtle changes in speaker tone",
-                        "Understands implied meanings and nuance",
-                        "Easily follows news, lectures, and discussions",
-                        "Can grasp humor, sarcasm, and irony",
-                        "Understands debates and panel discussions",
-                        "Processes complex academic or professional content",
-                        "Can follow conversations even with background noise",
-                        "Comfortable with both formal and informal speech",	
-                        "Recognizes emotional cues in tone and intonation"
-                    ],
-                    "weakness": [
-                        "Occasionally struggles with very heavy accents",
-                        "May miss cultural references",
-                        "Can overanalyze meaning in some contexts",
-                        "May struggle with highly specialized jargon",
-                        "Occasionally struggles with simultaneous talking",
-                        "Needs adjustment time for unfamiliar dialects",
-                        "Struggles with abstract philosophical discussions",
-                        "May misunderstand ambiguous phrasing",
-                        "Can miss subtle variations in idioms",
-                        "Occasionally over-interprets tone shifts"
-                    ]
-                }
-            },
-    "pronunciation":
-            {
-                "A1-A2":
-                {
-                    "strength": [
-                        "Can pronounce common words clearly",
-                        "Can stress important words in simple sentences",
-                        "Can pronounce basic vowel sounds correctly",
-                        "Recognizes and imitates basic intonation",
-                        "Can differentiate common sounds (e.g., \"b\" vs. \"p\")",
-                        "Can repeat words with good accuracy",
-                        "Can copy teacher’s pronunciation with effort",
-                        "Tries to self-correct mispronunciations"
-                    ],
-                    "weakness": [
-                        "Struggles with unfamiliar sounds",
-                        "Misplaces word stress",
-                        "Struggles with consonant clusters",
-                        "More intonation required",
-                        "May mispronounce long words",
-                        "Speaks too slowly or hesitantly",
-                        "Struggles with connected speech",
-                        "May have difficulty with final consonants"
-                    ]
-                },
-                "B1-B2":
-                {
-                    "strength": [
-                        "Can pronounce common words clearly",
-                        "Can adjust pronunciation for clarity",
-                        "Understands and applies word stress patterns",
-                        "Can use rising and falling intonation correctly",  
-                        "Can use linking sounds in sentences",
-                        "Understands rhythm and timing in speech",
-                        "Can be understood easily by most listeners",
-                        "Can self-correct mispronunciations"
-                    ],
-                    "weakness":[
-                       "Occasionally mispronounces longer words",
-                        "May not stress words naturally in sentences",
-                        "Sometimes speaks too quickly or unclearly",
-                        "Struggles with contractions in fast speech",
-                        "Occasionally drops word endings",
-                        "May sound unnatural in connected speech",
-                        "Needs more fluency in fast conversations",
-                        "May still struggle with regional accents"
-                    ]
-                },
-                "C1-C2":
-                {
-                    "strength": [
-                        "Speaks with near-native pronunciation",
-                        "Uses stress and intonation effectively",
-                        "Pronounces complex words clearly",
-                        "Can shift pronunciation based on formality",
-                        "Understands subtle pronunciation differences",
-                        "Uses contractions and reductions naturally",
-                        "Adjusts pronunciation for clarity in discussions",
-                        "Can imitate native-like rhythm and flow",
-                        "Comfortable with various English accents",
-                        "Speaks fluently and naturally in all situations"
-                    ],
-                    "weakness": [
-                        "Occasionally mimics an unnatural accent",
-                        "May overemphasize certain syllables",
-                        "Occasionally struggles with rare phonemes",
-                        "May slightly over-articulate some words",
-                        "Can misinterpret nuances in rapid speech",
-                        "Rarely struggles, but may hesitate with foreign terms",
-                        "Occasionally overcorrects self",
-                        "Can get too focused on pronunciation perfection",
-                        "May need time to adjust to unfamiliar dialects",
-                        "Can occasionally misplace stress in technical terms"
-                    ]
-                }
-            }
+  "speaking": {
+    "A1-A2": {
+      "strength": [
+        "Clear in basic conversations",
+        "Can introduce themselves",
+        "Can respond to simple questions",
+        "Uses common phrases",
+        "Can ask for basic help",
+        "Can describe familiar objects",
+        "Can express likes and dislikes",
+        "Can talk about familiar topics"
+      ],
+      "weakness": [
+        "Hesitation when speaking",
+        "Long thinking time before speaking",
+        "Needs help to complete responses",
+        "Overuses simple expressions",
+        "Often asks for clarification",
+        "Avoids talking about unfamiliar topics",
+        "Has difficulty forming longer sentences",
+        "Struggles with vocabulary recall"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Can engage in longer conversations",
+        "Uses a wider range of vocabulary",
+        "Can explain basic concepts clearly",
+        "Responds with more detail",
+        "Can handle unexpected questions with effort",
+        "Can describe personal experiences well",
+        "Can engage in debates or arguments",
+        "Able to summarize points"
+      ],
+      "weakness": [
+        "Hesitant to speak about unfamiliar topics",
+        "Can be unclear when talking about abstract ideas",
+        "Pauses often when thinking of words",
+        "Struggles with some complex sentence structures",
+        "May lack fluency in spontaneous conversation",
+        "Occasionally repeats phrases or words",
+        "Requires time to organize thoughts",
+        "May rely on simple language in complex contexts"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Uses varied and complex sentence structures",
+        "Expresses ideas clearly in spontaneous situations",
+        "Comfortable discussing a wide range of topics",
+        "Demonstrates clear organization of thoughts",
+        "Can express abstract ideas effectively",
+        "Adapts speaking style for different audiences",
+        "Can speak in formal and informal settings",
+        "Comfortable with idiomatic expressions"
+      ],
+      "weakness": [
+        "Sometimes too technical in language use",
+        "Can become overly detailed or verbose",
+        "Rarely hesitates, except on complex answers",
+        "Minor errors in complex grammatical structures",
+        "Overthinks certain responses or structures",
+        "Occasionally uses overly complex phrases",
+        "May become less clear when speaking quickly",
+        "Occasionally over-elaborates or digresses"
+      ]
+    }
+  },
+  "confidence": {
+    "A1-A2": {
+      "strength": [
+        "Enjoys learning new vocabulary",
+        "Comfortable asking for help",
+        "Willing to make mistakes",
+        "Confident in familiar topics",
+        "Can express simple opinions",
+        "Shows initiative in speaking",
+        "Confident answering basic questions",
+        "Eager to try new language structures"
+      ],
+      "weakness": [
+        "Feels nervous in new situations",
+        "Hesitant to speak in front of others",
+        "Doubts abilities in unfamiliar conversations",
+        "Uncertain in complex or abstract discussions",
+        "Needs encouragement to speak more",
+        "Reluctant to speak without full understanding",
+        "Avoids challenging conversations",
+        "Reluctant to initiate conversations"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Can engage in conversation on familiar topics",
+        "Can express opinions clearly",
+        "Comfortable explaining ideas with clarity",
+        "Ready to ask questions when unsure",
+        "Able to handle unexpected questions with effort",
+        "Confident using basic structures",
+        "Asks for clarification when necessary",
+        "Expresses ideas even if unsure about vocabulary"
+      ],
+      "weakness": [
+        "Needs reassurance before speaking",
+        "Often becomes self-conscious",
+        "Still doubts accuracy when speaking complexly",
+        "Can be reluctant to speak in high-pressure situations",
+        "Can be unsure in unfamiliar conversations",
+        "Hesitates with unfamiliar topics",
+        "May retreat from complicated interactions",
+        "Overthinks at times for complex questions"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Speaks confidently in a variety of situations",
+        "Easily handles difficult conversations",
+        "Ready to speak on unfamiliar topics",
+        "Maintain conversation flow even with interruptions",
+        "Comfortable speaking in large groups",
+        "Adapts easily to different conversational tones",
+        "Confident in both formal and informal speaking",
+        "Comfortable with challenging speaking tasks"
+      ],
+      "weakness": [
+        "May be overly cautious with unknown topics",
+        "Can appear overly formal in casual settings",
+        "Can doubt complex expressions in public",
+        "Can become overly focused on precision",
+        "May overthink responses in professional settings",
+        "May sometimes simplify thoughts too much",
+        "Occasionally over-elaborates",
+        "Needs to improve in nuanced, specific vocabulary"
+      ]
+    }
+  },
+  "vocabulary": {
+    "A1-A2": {
+      "strength": [
+        "Knows basic vocabulary for everyday situations",
+        "Uses common nouns, verbs, and adjectives",
+        "Can identify familiar objects or topics",
+        "Can describe familiar people and places",
+        "Able to talk about basic routines",
+        "Can ask simple questions",
+        "Recognizes basic expressions and idioms",
+        "Has a solid grasp of basic everyday vocabulary"
+      ],
+      "weakness": [
+        "Limited word range for expressing ideas",
+        "Needs help finding the right words",
+        "Struggles with recalling words quickly",
+        "Has difficulty with synonyms",
+        "Often repeats the same words",
+        "Can’t express abstract ideas or emotions well",
+        "Limited ability to describe unfamiliar topics",
+        "Needs more precise vocabulary for conversation"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Expresses opinions clearly with relevant vocabulary",
+        "Able to explain common concepts with some effort",
+        "Able to recognize and use some idioms",
+        "Can describe experiences with detail",
+        "Uses adjectives and adverbs to add detail",
+        "Can discuss most familiar topics comfortably",
+        "Able to talk about unfamiliar topics with support",
+        "Can talk about personal experiences or plans"
+      ],
+      "weakness": [
+        "Misses more nuanced or technical words",
+        "Has trouble finding the right word for complex ideas",
+        "Lacks vocabulary for certain social contexts",
+        "Can’t remember some words quickly in speech",
+        "Struggles with collocations",
+        "Needs more exposure to advanced, natural vocabulary",
+        "Can become repetitive with word choices",
+        "Relies on basic language for professional discussions"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Has a wide range of vocabulary for complex topics",
+        "Able to express subtle ideas and opinions",
+        "Comfortable using idiomatic expressions",
+        "Can adapt vocabulary based on context",
+        "Able to use advanced adjectives and adverbs",
+        "Can describe abstract ideas fluently",
+        "Can express opinions with precision",
+        "Uses collocations naturally",
+        "Uses academic language",
+        "Can discuss a wide range of topics easily"
+      ],
+      "weakness": [
+        "Occasionally uses words incorrectly in context",
+        "Can overcomplicate expressions",
+        "Needs to work on mastering specialized vocabulary",
+        "Struggles with some advanced technical terms",
+        "Rarely makes mistakes but may sound repetitive",
+        "May occasionally misuse complex words",
+        "Can be overly detailed in everyday conversation",
+        "Needs to be more detailed in advanced topics",
+        "Occasionally unsure of rare vocabulary",
+        "May use more formal expressions than needed"
+      ]
+    }
+  },
+  "grammar": {
+    "A1-A2": {
+      "strength": [
+        "Can form simple sentences",
+        "Uses the present tense correctly",
+        "Can use basic question forms",
+        "Can describe routines with basic structures",
+        "Can use basic adjectives",
+        "Able to form questions",
+        "Can use 'to be' and basic verbs",
+        "Can talk about basic actions",
+        "Can use simple modals (can, should)"
+      ],
+      "weakness": [
+        "Struggles with word order",
+        "Makes mistakes with verb forms",
+        "Struggles with prepositions and articles",
+        "Often omits auxiliary verbs",
+        "Struggles with plural forms",
+        "Needs help with conjunctions",
+        "Confuses present and past tenses",
+        "Needs to practice subject-verb agreement",
+        "Struggles with using different tenses together"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Uses a variety of tenses correctly",
+        "Forms compound and complex sentences well",
+        "Can use passive voice appropriately",
+        "Uses reported speech correctly",
+        "Understands and applies conditionals",
+        "Can use gerunds and infinitives appropriately",
+        "Uses comparative and superlative forms accurately",
+        "Can form polite requests and indirect questions",
+        "Uses connectors effectively for logical flow",
+        "Can modify sentences using participle clauses"
+      ],
+      "weakness": [
+        "Occasionally mixes verb tenses",
+        "Struggles with advanced conditionals",
+        "Makes errors with subject-verb agreement",
+        "Sometimes struggles with grammar accuracy",
+        "Occasionally misuses relative clauses",
+        "Needs practice with phrasal verbs",
+        "Struggles with advanced articles (a, an, the)",
+        "Sometimes overuses simple sentence structures",
+        "Occasionally forgets prepositions in phrases",
+        "Has trouble with formal vs. informal grammar"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Uses advanced sentence structures effectively",
+        "Demonstrates accuracy across all tenses",
+        "Uses inversion for emphasis correctly",
+        "Can express subtle differences using modal verbs",
+        "Understands and uses advanced relative clauses",
+        "Uses advanced linking phrases fluently",
+        "Can apply correct word order in all contexts",
+        "Uses varied clause structures",
+        "Can shift between formal and informal speech",
+        "Maintains grammatical accuracy at high fluency"
+      ],
+      "weakness": [
+        "Sometimes overly complex in sentence construction",
+        "Occasionally overuses passive voice",
+        "May misuse advanced conditionals",
+        "Needs to refine use of rare grammatical structures",
+        "May occasionally misuse formal register",
+        "Overuses complex structures in casual speech",
+        "May struggle with nuanced idiomatic grammar",
+        "Can overthink grammar choices",
+        "Sometimes self-corrects mid-sentence",
+        "Occasionally hesitant with obscure grammar rules"
+      ]
+    }
+  },
+  "listening": {
+    "A1-A2": {
+      "strength": [
+        "Understands common phrases and expressions",
+        "Can follow slow, clear speech",
+        "Recognizes familiar words in context",
+        "Understands basic greetings and questions",
+        "Can follow classroom instructions",
+        "Understands short, simple sentences",
+        "Can identify key words in speech",
+        "Can understand simple requests",
+        "Understands basic yes/no questions"
+      ],
+      "weakness": [
+        "Needs repetition to understand spoken English",
+        "Struggles with fast or natural speech",
+        "Misses details in longer conversations",
+        "Has trouble with different accents",
+        "Needs visual support for better comprehension",
+        "Cannot always grasp full meaning",
+        "Has difficulty with contractions and reductions",
+        "Needs more time to process spoken language",
+        "Struggles with unfamiliar vocabulary"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Understands main ideas in conversations",
+        "Can follow familiar topics at a moderate speed",
+        "Recognizes speaker intent in casual speech",
+        "Can differentiate formal and informal tones",
+        "Can follow simple storytelling",
+        "Understands explanations with some effort",
+        "Can pick up main ideas even in longer talks",
+        "Can handle listening tasks in real-life situations",
+        "Understands announcements and instructions"
+      ],
+      "weakness": [
+        "Struggles with implied meaning",
+        "Needs more exposure to idiomatic expressions",
+        "May misunderstand complex discussions",
+        "Has difficulty with strong regional accents",
+        "Struggles with fast-paced discussions",
+        "Needs clarification in technical topics",
+        "May miss subtle shifts in conversation topics",
+        "Occasionally struggles with humor and sarcasm",
+        "May struggle with rapid speech and slang"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Can understand fast, native-level speech",
+        "Recognizes subtle changes in speaker tone",
+        "Understands implied meanings and nuance",
+        "Easily follows news, lectures, and discussions",
+        "Can grasp humor, sarcasm, and irony",
+        "Understands debates and panel discussions",
+        "Processes complex academic or professional content",
+        "Can follow conversations even with background noise",
+        "Comfortable with both formal and informal speech",
+        "Recognizes emotional cues in tone and intonation"
+      ],
+      "weakness": [
+        "Occasionally struggles with very heavy accents",
+        "May miss cultural references",
+        "Can overanalyze meaning in some contexts",
+        "May struggle with highly specialized jargon",
+        "Occasionally struggles with simultaneous talking",
+        "Needs adjustment time for unfamiliar dialects",
+        "Struggles with abstract philosophical discussions",
+        "May misunderstand ambiguous phrasing",
+        "Can miss subtle variations in idioms",
+        "Occasionally over-interprets tone shifts"
+      ]
+    }
+  },
+  "pronunciation": {
+    "A1-A2": {
+      "strength": [
+        "Can pronounce common words clearly",
+        "Can stress important words in simple sentences",
+        "Can pronounce basic vowel sounds correctly",
+        "Recognizes and imitates basic intonation",
+        "Can differentiate common sounds (e.g., \"b\" vs. \"p\")",
+        "Can repeat words with good accuracy",
+        "Can copy teacher’s pronunciation with effort",
+        "Tries to self-correct mispronunciations"
+      ],
+      "weakness": [
+        "Struggles with unfamiliar sounds",
+        "Misplaces word stress",
+        "Struggles with consonant clusters",
+        "More intonation required",
+        "May mispronounce long words",
+        "Speaks too slowly or hesitantly",
+        "Struggles with connected speech",
+        "May have difficulty with final consonants"
+      ]
+    },
+    "B1-B2": {
+      "strength": [
+        "Can pronounce common words clearly",
+        "Can adjust pronunciation for clarity",
+        "Understands and applies word stress patterns",
+        "Can use rising and falling intonation correctly",
+        "Can use linking sounds in sentences",
+        "Understands rhythm and timing in speech",
+        "Can be understood easily by most listeners",
+        "Can self-correct mispronunciations"
+      ],
+      "weakness": [
+        "Occasionally mispronounces longer words",
+        "May not stress words naturally in sentences",
+        "Sometimes speaks too quickly or unclearly",
+        "Struggles with contractions in fast speech",
+        "Occasionally drops word endings",
+        "May sound unnatural in connected speech",
+        "Needs more fluency in fast conversations",
+        "May still struggle with regional accents"
+      ]
+    },
+    "C1-C2": {
+      "strength": [
+        "Speaks with near-native pronunciation",
+        "Uses stress and intonation effectively",
+        "Pronounces complex words clearly",
+        "Can shift pronunciation based on formality",
+        "Understands subtle pronunciation differences",
+        "Uses contractions and reductions naturally",
+        "Adjusts pronunciation for clarity in discussions",
+        "Can imitate native-like rhythm and flow",
+        "Comfortable with various English accents",
+        "Speaks fluently and naturally in all situations"
+      ],
+      "weakness": [
+        "Occasionally mimics an unnatural accent",
+        "May overemphasize certain syllables",
+        "Occasionally struggles with rare phonemes",
+        "May slightly over-articulate some words",
+        "Can misinterpret nuances in rapid speech",
+        "Rarely struggles, but may hesitate with foreign terms",
+        "Occasionally overcorrects self",
+        "Can get too focused on pronunciation perfection",
+        "May need time to adjust to unfamiliar dialects",
+        "Can occasionally misplace stress in technical terms"
+      ]
+    }
+  }
 }

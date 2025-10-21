@@ -27,7 +27,7 @@ class Student {
     listening: Levels;
   };
 
-  constructor(id:string, dateCreated = new Date()) {
+  constructor(id: string, dateCreated = new Date()) {
     this.id = id;
     this.dateCreated = dateCreated;
     this.name = "";
@@ -41,7 +41,7 @@ class Student {
       pronunciation: new Levels(),
       grammar: new Levels(),
       conversation: new Levels(),
-      listening: new Levels()
+      listening: new Levels(),
     };
   }
 }

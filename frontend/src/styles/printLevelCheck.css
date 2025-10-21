@@ -1,10 +1,10 @@
-:root{
+:root {
   --font-primary: Merriweather, serif;
   --font-secondary: Poppins, sans-serif;
   --background-color-dark: rgba(0, 161, 173, 1);
   --background-light: rgba(0, 161, 173, 0.2);
   --font-color-light: #fff;
-  --border-color: rgb(0,0,0);
+  --border-color: rgb(0, 0, 0);
   --margin-spacing: 35px;
   --print-spacing-1: 0.3rem;
 
@@ -33,20 +33,20 @@
   font-family: var(--font-primary);
 }
 #print-english h1,
-#print-english h2{
+#print-english h2 {
   text-transform: capitalize;
 }
 
-#print-english h1{
+#print-english h1 {
   font-size: var(--print-font-size-4);
 }
-#print-english h2{
+#print-english h2 {
   font-size: var(--print-font-size-2);
 }
-#print-english h3{
+#print-english h3 {
   font-size: var(--print-font-size-3);
 }
-#print-english p{
+#print-english p {
   font-size: var(--print-font-size-1);
 }
 
@@ -57,46 +57,56 @@
   font-weight: 400;
 }
 
-#print-chinese h1{
+#print-chinese h1 {
   font-size: var(--print-font-size-4);
 }
-#print-chinese h2{ font-size: var(--print-chinese-font-size-3);}
-#print-chinese h3 {font-size: var(--print-chinese-font-size-2);}
-#print-chinese p {font-size: var(--print-chinese-font-size-1)}
-#print-chinese #info-card #info-card-title p{
+#print-chinese h2 {
+  font-size: var(--print-chinese-font-size-3);
+}
+#print-chinese h3 {
+  font-size: var(--print-chinese-font-size-2);
+}
+#print-chinese p {
+  font-size: var(--print-chinese-font-size-1);
+}
+#print-chinese #info-card #info-card-title p {
   padding: 4px;
   font-weight: 400;
   /* font-size: 14px; */
-} 
+}
 
-#print-korean h1 { font-size: var(--print-size-4); }
-  #print-korean h2 {
-    font-size: 1.1rem;
-  }
-  #print-korean h3 {
-    font-size: 1.1rem;
-  }
-  #print-korean p {
-    font-size: 0.9rem;
-  }
+#print-korean h1 {
+  font-size: var(--print-size-4);
+}
+#print-korean h2 {
+  font-size: 1.1rem;
+}
+#print-korean h3 {
+  font-size: 1.1rem;
+}
+#print-korean p {
+  font-size: 0.9rem;
+}
 
-#print-japanese h1 { font-size: var(--print-japanese-size-4)}
+#print-japanese h1 {
+  font-size: var(--print-japanese-size-4);
+}
 #print-japanese h2 {
-    font-size: var(--print-japanese-size-3);
-  }
+  font-size: var(--print-japanese-size-3);
+}
 #print-japanese h3 {
-    font-size: var(--print-japanese-font-size-2);
-  }
+  font-size: var(--print-japanese-font-size-2);
+}
 #print-japanese p {
-    font-size: var(--print-japanese-font-size-1);
-  }
+  font-size: var(--print-japanese-font-size-1);
+}
 
 .print-component-landscape {
   width: 297mm;
   height: 210mm;
   padding: 0;
   margin: 0 auto;
-  box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
 
@@ -105,25 +115,27 @@
   margin: 8mm;
 }
 @media print {
-  html, body {
+  html,
+  body {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     height: 100% !important;
     overflow: visible !important;
   }
-  header, footer { display: none !important; }
+  header,
+  footer {
+    display: none !important;
+  }
 
   /* Your printable root */
   .print-component {
-  
     border: none;
     width: auto !important;
     height: auto !important;
   }
 }
 
-.print-list::before{
+.print-list::before {
   content: "•";
   padding: 8px;
-
 }

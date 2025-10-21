@@ -1,10 +1,10 @@
-:root{
+:root {
   --font-primary: Merriweather, serif;
   --font-secondary: Poppins, sans-serif;
   --background-color-dark: rgba(0, 161, 173, 1);
   --background-light: rgba(0, 161, 173, 0.2);
   --font-color-light: #fff;
-  --border-color: rgb(0,0,0);
+  --border-color: rgb(0, 0, 0);
   --margin-spacing: 35px;
   --print-spacing-1: 0.3rem;
 
@@ -33,20 +33,20 @@
   font-family: var(--font-primary);
 }
 #print-english h1,
-#print-english h2{
+#print-english h2 {
   text-transform: capitalize;
 }
 
-#print-english h1{
+#print-english h1 {
   font-size: var(--print-font-size-4);
 }
-#print-english h2{
+#print-english h2 {
   font-size: var(--print-font-size-2);
 }
-#print-english h3{
+#print-english h3 {
   font-size: var(--print-font-size-3);
 }
-#print-english p{
+#print-english p {
   font-size: var(--print-font-size-1);
 }
 
@@ -57,48 +57,64 @@
   font-weight: 400;
 }
 
-#print-chinese h1{
+#print-chinese h1 {
   font-size: var(--print-font-size-4);
 }
-#print-chinese h2{ font-size: var(--print-chinese-font-size-3);}
-#print-chinese h3 {font-size: var(--print-chinese-font-size-2);}
-#print-chinese p {font-size: var(--print-chinese-font-size-1)}
-#print-chinese #info-card #info-card-title p{
+#print-chinese h2 {
+  font-size: var(--print-chinese-font-size-3);
+}
+#print-chinese h3 {
+  font-size: var(--print-chinese-font-size-2);
+}
+#print-chinese p {
+  font-size: var(--print-chinese-font-size-1);
+}
+#print-chinese #info-card #info-card-title p {
   font-weight: 400;
   /* font-size: 14px; */
-} 
+}
 
-#print-korean h1 { font-size: var(--print-size-4); }
-#print-korean h2 { font-size: 1.1rem; }
-#print-korean h3 { font-size: 1.1rem; }
-#print-korean p { font-size: 0.8rem; }
+#print-korean h1 {
+  font-size: var(--print-size-4);
+}
+#print-korean h2 {
+  font-size: 1.1rem;
+}
+#print-korean h3 {
+  font-size: 1.1rem;
+}
+#print-korean p {
+  font-size: 0.8rem;
+}
 
-#print-japanese h1 { font-size: var(--print-japanese-size-4)}
+#print-japanese h1 {
+  font-size: var(--print-japanese-size-4);
+}
 #print-japanese h2 {
-    font-size: var(--print-japanese-size-3);
-  }
+  font-size: var(--print-japanese-size-3);
+}
 #print-japanese h3 {
-    font-size: var(--print-japanese-font-size-2);
-  }
+  font-size: var(--print-japanese-font-size-2);
+}
 #print-japanese p {
-    font-size: var(--print-japanese-font-size-1);
-  }
+  font-size: var(--print-japanese-font-size-1);
+}
 
-.print-sandbox{
-  position:fixed;
+.print-sandbox {
+  position: fixed;
   left: -10000px;
-  top:0;
-  width:800px;
+  top: 0;
+  width: 800px;
   opacity: 0;
   pointer-events: none;
   z-index: -1;
 }
 
-.graph-container{
+.graph-container {
   width: 359px;
   height: auto;
 }
-.print-component{
+.print-component {
   width: 210mm; /* A4 width */
   height: 297mm;
   margin: 0 auto;
@@ -117,7 +133,7 @@
 }
 
 @media print {
-  *{
+  * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -127,15 +143,17 @@
     margin: 0;
   }
 
-  html, body{
+  html,
+  body {
     height: auto !important;
     overflow: visible !important;
   }
-  header, footer{
+  header,
+  footer {
     display: none;
   }
 
-  .print-sandbox{
+  .print-sandbox {
     position: static;
     left: auto;
     top: auto;
@@ -143,23 +161,23 @@
     opacity: 1;
     pointer-events: auto;
     z-index: auto;
-  } 
-  .print-component{
+  }
+  .print-component {
     display: static;
     width: 210mm;
     height: 297mm;
     margin: 0 auto;
-    border: none;  
+    border: none;
     box-shadow: none;
     page-break-inside: avoid;
   }
 }
 
-.title-container{
+.title-container {
   width: 100%;
   padding-bottom: 12px;
 }
-.title-container > .container{
+.title-container > .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -173,7 +191,7 @@
   padding-bottom: 4px;
 }
 
-.personalInformation{
+.personalInformation {
   font-size: 20px;
 }
 
@@ -183,8 +201,7 @@
   aspect-ratio: 1/1;
 }
 
-.print-list::before{
+.print-list::before {
   content: "•";
   padding: 8px;
-
 }

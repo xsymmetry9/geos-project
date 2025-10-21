@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getStudentById } from "@/utils/functions";
-import {PrintContent} from "@/components/PrintStudentProgressReport";
+import { PrintContent } from "@/components/PrintStudentProgressReport";
 import PrintControl from "@/components/PrintControl";
 import SaveControl from "@/components/SaveControl";
 import { useUser } from "@/context/UserContext";
@@ -23,13 +23,12 @@ const PrintPage = () => {
     setLoading(false);
   }, [params.id]);
 
-  const {user} = useUser();
-  const language = user?.language || "english" ;
+  const { user } = useUser();
+  const language = user?.language || "english";
   const componentRef = useRef<HTMLDivElement>(null); //Save reference to print
 
-  if(!parsedData) return <div>Loading ...</div>
+  if (!parsedData) return <div>Loading ...</div>;
 
-  
   return (
     <>
       <div className="flex items-center justify-center pb-3">
@@ -37,14 +36,19 @@ const PrintPage = () => {
           Dashboard
         </Link>
       </div>
-    <div className= "mx-auto overflow-auto">
-      <div className="shadow-lg border print-component" ref={componentRef}>
-        <PrintContent parsedData={parsedData} language = {language}/>
+      <div className="mx-auto overflow-auto">
+        <div className="print-component border shadow-lg" ref={componentRef}>
+          <PrintContent parsedData={parsedData} language={language} />
+        </div>
       </div>
-    </div>
-      <div className="flex justify-center pt-3 gap-3 pb-6">
+      <div className="flex justify-center gap-3 pt-3 pb-6">
         <PrintControl contentRef={componentRef} className="btn btn-primary print" />
-        <SaveControl contentRef = {componentRef} className = "btn btn-primary print" layout="p" title="spr" />
+        <SaveControl
+          contentRef={componentRef}
+          className="btn btn-primary print"
+          layout="p"
+          title="spr"
+        />
       </div>
     </>
   );

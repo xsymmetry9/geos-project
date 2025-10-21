@@ -9,7 +9,7 @@ import pluginTs from "@typescript-eslint/eslint-plugin";
 export default [
   {
     ignores: ["node_modules/", "dist/", "build/**/*"],
-    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],  // Include TS & TSX here
+    files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"], // Include TS & TSX here
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",

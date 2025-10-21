@@ -18,10 +18,10 @@ import labelText from "../assets/other/labelText.json";
 
 type Language = keyof typeof labelText;
 
-type SPR = typeof labelText["english"]["SPR"];
+type SPR = (typeof labelText)["english"]["SPR"];
 type SPRStringKey = {
-  [K in keyof SPR]: SPR[K] extends string ? K : never
-}[keyof SPR]
+  [K in keyof SPR]: SPR[K] extends string ? K : never;
+}[keyof SPR];
 
 interface TransformedLevel {
   category: string;
@@ -40,25 +40,27 @@ const text = (phrase: SPRStringKey, language: Language) => labelText[language]["
 const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
   const readyOnce = React.useRef(false);
 
-  const readyPlugin = React.useMemo(() => ({
-    id: "ready-once",
-    afterLayout: (chart: Chart) => {
-      const canvas = chart.canvas as HTMLCanvasElement;
-      if(!readyOnce.current && canvas.width > 0 && canvas.height > 0){
-      console.log("[Graph] afterLayout size:", canvas.width, canvas.height);
+  const readyPlugin = React.useMemo(
+    () => ({
+      id: "ready-once",
+      afterLayout: (chart: Chart) => {
+        const canvas = chart.canvas as HTMLCanvasElement;
+        if (!readyOnce.current && canvas.width > 0 && canvas.height > 0) {
+          console.log("[Graph] afterLayout size:", canvas.width, canvas.height);
+        }
+      },
+      afterRender: (chart: Chart) => {
+        const canvas = chart.canvas as HTMLCanvasElement;
+        if (!readyOnce.current && canvas.width > 0 && canvas.height > 0) {
+          readyOnce.current = true;
+          console.log("[Graph] afterRender size:", canvas.width, canvas.height);
 
-      }
-    },
-    afterRender: (chart: Chart) => {
-      const canvas = chart.canvas as HTMLCanvasElement;
-      if(!readyOnce.current && canvas.width > 0 && canvas.height > 0){
-        readyOnce.current = true;
-        console.log("[Graph] afterRender size:", canvas.width, canvas.height);
-
-        onReady?.();
-      }
-    }
-  }),[onReady])
+          onReady?.();
+        }
+      },
+    }),
+    [onReady]
+  );
 
   const options = {
     responsive: true,
@@ -76,18 +78,17 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
         },
         labels: {
           usePointStyle: true,
-          pointStyle: 'circle' as const,
+          pointStyle: "circle" as const,
           font: { size: 13 },
           color: "black",
           padding: 24,
         },
       },
-      elements:{
+      elements: {
         line: {
           backgroundColor: "blue",
-        }
-      }
-
+        },
+      },
     },
 
     scales: {
@@ -121,7 +122,6 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
       text("pronunciation", language),
       text("conversation", language),
       text("listening", language),
-
     ],
     datasets: [
       {
@@ -138,7 +138,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
         borderWidth: 1.8,
         pointRadius: 1.8,
         pointBorderColor: "blue",
-        pointBackgroundColor: "lightblue"
+        pointBackgroundColor: "lightblue",
       },
       {
         label: text("final", language),
@@ -154,7 +154,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
         borderWidth: 1.8,
         pointRadius: 1.8,
         pointBorderColor: "green",
-        pointBackgroundColor: "lightgreen"
+        pointBackgroundColor: "lightgreen",
       },
       {
         label: text("target", language),
@@ -170,7 +170,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
         borderWidth: 1.8,
         pointRadius: 1.8,
         pointBorderColor: "red",
-        pointBackgroundColor: "rgb(238, 112, 112)"
+        pointBackgroundColor: "rgb(238, 112, 112)",
       },
     ],
   };
@@ -178,7 +178,7 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
   return (
     <>
       <div className="graph-container">
-        <Radar data={graphData} options={options} plugins={[readyPlugin]}/>
+        <Radar data={graphData} options={options} plugins={[readyPlugin]} />
       </div>
     </>
   );

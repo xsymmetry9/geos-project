@@ -26,17 +26,28 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const getScoreRange = (level: string): [number, number] => {
     switch (level) {
-      case "Pre-A1": return [0, 2];
-      case "A1": return [2, 3];
-      case "A1 - A2": return [3, 4];
-      case "A2": return [4, 5];
-      case "A2 - B1": return [5, 6];
-      case "B1": return [6, 7];
-      case "B1 - B2": return [7, 8];
-      case "B2": return [8, 9];
-      case "C1": return [9, 9.5];
-      case "C1+": return [9.5, 10.5];
-      default: return [0, 10];
+      case "Pre-A1":
+        return [0, 2];
+      case "A1":
+        return [2, 3];
+      case "A1 - A2":
+        return [3, 4];
+      case "A2":
+        return [4, 5];
+      case "A2 - B1":
+        return [5, 6];
+      case "B1":
+        return [6, 7];
+      case "B1 - B2":
+        return [7, 8];
+      case "B2":
+        return [8, 9];
+      case "C1":
+        return [9, 9.5];
+      case "C1+":
+        return [9.5, 10.5];
+      default:
+        return [0, 10];
     }
   };
 
@@ -48,16 +59,24 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const currentBand = score !== undefined ? mapScoreToBand(score) : level;
 
-  const predefinedStrengths = currentBand && levelCheckData[item]?.[currentBand]?.strength
-    ? levelCheckData[item][currentBand].strength
-    : [];
+  const predefinedStrengths =
+    currentBand && levelCheckData[item]?.[currentBand]?.strength
+      ? levelCheckData[item][currentBand].strength
+      : [];
 
-  const predefinedWeaknesses = currentBand && levelCheckData[item]?.[currentBand]?.weakness
-    ? levelCheckData[item][currentBand].weakness
-    : [];
+  const predefinedWeaknesses =
+    currentBand && levelCheckData[item]?.[currentBand]?.weakness
+      ? levelCheckData[item][currentBand].weakness
+      : [];
 
-  const allStrengths = [...predefinedStrengths, ...selectedStrengths.filter(s => !predefinedStrengths.includes(s))];
-  const allWeaknesses = [...predefinedWeaknesses, ...selectedWeaknesses.filter(w => !predefinedWeaknesses.includes(w))];
+  const allStrengths = [
+    ...predefinedStrengths,
+    ...selectedStrengths.filter((s) => !predefinedStrengths.includes(s)),
+  ];
+  const allWeaknesses = [
+    ...predefinedWeaknesses,
+    ...selectedWeaknesses.filter((w) => !predefinedWeaknesses.includes(w)),
+  ];
   const maxStrengthsReached = selectedStrengths.length >= 3;
   const maxWeaknessesReached = selectedWeaknesses.length >= 3;
 
@@ -70,7 +89,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     setScoreError("");
     setSelectedStrengths([]);
     setSelectedWeaknesses([]);
-    setInputData(prev => ({
+    setInputData((prev) => ({
       ...prev,
       [item]: {
         ...prev[item],
@@ -78,7 +97,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         score: undefined,
         strength: [],
         weakness: [],
-      }
+      },
     }));
   };
 
@@ -91,7 +110,9 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     if (score !== undefined && level) {
       const [min, max] = getScoreRange(level);
       if (score < min || score > max) {
-        setScoreError(`Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`);
+        setScoreError(
+          `Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`
+        );
       } else {
         setScoreError("");
       }
@@ -107,8 +128,8 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       prev.includes(value)
         ? prev.filter((item) => item !== value)
         : prev.length < 3
-        ? [...prev, value]
-        : prev
+          ? [...prev, value]
+          : prev
     );
   };
 
@@ -151,9 +172,9 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         level_name: level,
         score: score,
         strength: selectedStrengths,
-        weakness: selectedWeaknesses
+        weakness: selectedWeaknesses,
       };
-      setInputData(prev => ({
+      setInputData((prev) => ({
         ...prev,
         [item]: updated,
       }));
@@ -165,12 +186,13 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   return (
     <section className="mt-6 min-h-[400px]">
-      <label htmlFor={`${item}_level`}><span className="text-md font-bold">{title}</span>
+      <label htmlFor={`${item}_level`}>
+        <span className="text-md font-bold">{title}</span>
         <select
           id={`${item}_level`}
           value={level}
           onChange={handleLevelChange}
-          className="font-secondary text-base text-black block w-full mt-1 mb-3 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="font-secondary mt-1 mb-3 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
         >
           <option value="">Choose CEFR Level</option>
           {arrOfLevels.map((lvl) => (
@@ -182,7 +204,8 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       </label>
 
       {level && (
-        <label htmlFor={`${item}_score`}><span className="text-md font-bold">Enter score</span>
+        <label htmlFor={`${item}_score`}>
+          <span className="text-md font-bold">Enter score</span>
           {/* <input
             type="number"
             value={score ?? ""}
@@ -190,31 +213,34 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
             className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
             id={`${item}_score`}
           /> */}
-          <select 
-            name="score" 
-            value={score !== undefined ? score.toFixed(1) : ""} 
+          <select
+            name="score"
+            value={score !== undefined ? score.toFixed(1) : ""}
             id={`${item}_score`}
             onChange={handleScoreChange}
-            className=" font-secondary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]">
-              <option 
-              className="font-secondary text-base text-black block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
-              value={""}>Choose score
-              </option>
-              {(() => {
-                const [min, max] = getScoreRange(level);
-                const options = [];
-                for (let i = Math.round(min *2); i < Math.round(max * 2); i++) {
-                  const val = (i/2).toFixed(1);
-                  options.push(
-                    <option key={val} value= {val}>
-                      {val}
-                      </option>
-                    );
-                  }
-                  return options;
-                })()}
+            className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+          >
+            <option
+              className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              value={""}
+            >
+              Choose score
+            </option>
+            {(() => {
+              const [min, max] = getScoreRange(level);
+              const options = [];
+              for (let i = Math.round(min * 2); i < Math.round(max * 2); i++) {
+                const val = (i / 2).toFixed(1);
+                options.push(
+                  <option key={val} value={val}>
+                    {val}
+                  </option>
+                );
+              }
+              return options;
+            })()}
           </select>
-          {scoreError && <p className="text-red-600 text-sm">{scoreError}</p>}
+          {scoreError && <p className="text-sm text-red-600">{scoreError}</p>}
         </label>
       )}
 
@@ -224,7 +250,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
             {/* Strengths */}
             <div className="mt-6">
               <p className="font-semibold">Select 2–3 strengths:</p>
-              <div className="flex gap-2 mt-2">
+              <div className="mt-2 flex gap-2">
                 <input
                   type="text"
                   placeholder="Add custom strength"
@@ -233,13 +259,27 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   onKeyDown={(e) =>
                     e.key === "Enter" &&
                     (e.preventDefault(),
-                    handleCustomAdd(customStrengthInput, setCustomStrengthInput, selectedStrengths, setSelectedStrengths, predefinedStrengths))
+                    handleCustomAdd(
+                      customStrengthInput,
+                      setCustomStrengthInput,
+                      selectedStrengths,
+                      setSelectedStrengths,
+                      predefinedStrengths
+                    ))
                   }
-                  className="form-input font-secondary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+                  className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
                 />
                 <button
                   type="button"
-                  onClick={() => handleCustomAdd(customStrengthInput, setCustomStrengthInput, selectedStrengths, setSelectedStrengths, predefinedStrengths)}
+                  onClick={() =>
+                    handleCustomAdd(
+                      customStrengthInput,
+                      setCustomStrengthInput,
+                      selectedStrengths,
+                      setSelectedStrengths,
+                      predefinedStrengths
+                    )
+                  }
                   className="btn-primary disabled:opacity-50"
                   disabled={maxStrengthsReached || !customStrengthInput.trim()}
                 >
@@ -248,7 +288,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
               </div>
               <div className="p-2">
                 {allStrengths.map((str, idx) => (
-                  <label key={idx} className="flex items-center gap-2 mt-1">
+                  <label key={idx} className="mt-1 flex items-center gap-2">
                     <input
                       type="checkbox"
                       checked={selectedStrengths.includes(str)}
@@ -267,7 +307,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
             {/* Weaknesses */}
             <div className="mt-6">
               <p className="font-semibold">Select 2–3 weaknesses:</p>
-              <div className="flex gap-2 mt-2">
+              <div className="mt-2 flex gap-2">
                 <input
                   type="text"
                   placeholder="Add custom weakness"
@@ -276,13 +316,27 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   onKeyDown={(e) =>
                     e.key === "Enter" &&
                     (e.preventDefault(),
-                    handleCustomAdd(customWeaknessInput, setCustomWeaknessInput, selectedWeaknesses, setSelectedWeaknesses, predefinedWeaknesses))
+                    handleCustomAdd(
+                      customWeaknessInput,
+                      setCustomWeaknessInput,
+                      selectedWeaknesses,
+                      setSelectedWeaknesses,
+                      predefinedWeaknesses
+                    ))
                   }
-                  className="form-input font-secondary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+                  className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
                 />
                 <button
                   type="button"
-                  onClick={() => handleCustomAdd(customWeaknessInput, setCustomWeaknessInput, selectedWeaknesses, setSelectedWeaknesses, predefinedWeaknesses)}
+                  onClick={() =>
+                    handleCustomAdd(
+                      customWeaknessInput,
+                      setCustomWeaknessInput,
+                      selectedWeaknesses,
+                      setSelectedWeaknesses,
+                      predefinedWeaknesses
+                    )
+                  }
                   className="btn-primary disabled:opacity-50"
                   disabled={maxWeaknessesReached || !customWeaknessInput.trim()}
                 >
@@ -291,11 +345,13 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
               </div>
               <div className="p-2">
                 {allWeaknesses.map((wk, idx) => (
-                  <label key={idx} className="flex items-center gap-2 mt-1">
+                  <label key={idx} className="mt-1 flex items-center gap-2">
                     <input
                       type="checkbox"
                       checked={selectedWeaknesses.includes(wk)}
-                      onChange={() => toggleSelection(wk, selectedWeaknesses, setSelectedWeaknesses)}
+                      onChange={() =>
+                        toggleSelection(wk, selectedWeaknesses, setSelectedWeaknesses)
+                      }
                       disabled={!selectedWeaknesses.includes(wk) && maxWeaknessesReached}
                     />
                     {wk}
@@ -312,33 +368,38 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     </section>
   );
 };
- type LevelCheckOverallProps = {
+type LevelCheckOverallProps = {
   name: string;
   item: string;
   data: string;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-}
-export const LevelCheckOverall = ({name, data, handleChange}: LevelCheckOverallProps) => {
-    const arrOfLevels = levelInformation.english;
+  handleChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
+};
+export const LevelCheckOverall = ({ name, data, handleChange }: LevelCheckOverallProps) => {
+  const arrOfLevels = levelInformation.english;
 
-  return(
+  return (
     <div className="pb-3">
-      <label className="font-bold capitalize" htmlFor="overallCEFR">{name +":"}
-        <select 
+      <label className="font-bold capitalize" htmlFor="overallCEFR">
+        {name + ":"}
+        <select
           name="overallCEFR"
           id="overallCEFR"
           onChange={handleChange}
           value={data}
-          className="font-secondary text-base text-black font-normal block w-full mt-1 px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
+          className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base font-normal text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
         >
-          <option className="font-normal" value={""}>Select Level</option>
+          <option className="font-normal" value={""}>
+            Select Level
+          </option>
           {arrOfLevels.map((lvl) => (
-            <option key={lvl.name} className="font-normal" value={lvl.name}>{lvl.name}</option>
-          ) )}
+            <option key={lvl.name} className="font-normal" value={lvl.name}>
+              {lvl.name}
+            </option>
+          ))}
         </select>
       </label>
-    
     </div>
-  )
-}
-
+  );
+};

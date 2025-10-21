@@ -7,15 +7,15 @@ import { getStudentById } from "@/utils/functions";
 import { House } from "lucide-react";
 
 const SPRForm = () => {
-  const { id } = useParams<{ id?: string}>();
+  const { id } = useParams<{ id?: string }>();
 
-  const initialStudent = !id? new Student(uuidv4()) : getStudentById(id);
+  const initialStudent = !id ? new Student(uuidv4()) : getStudentById(id);
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
   return (
     <>
-      <div className="font-secondary w-full flex justify-center p-2">
-        <Link className="btn-primary flex gap-1 justify-center" to={`/home`}>
-        <House />
+      <div className="font-secondary flex w-full justify-center p-2">
+        <Link className="btn-primary flex justify-center gap-1" to={`/home`}>
+          <House />
           Home
         </Link>
       </div>

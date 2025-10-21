@@ -1,10 +1,10 @@
 const appName = "GEOS_app";
 import User from "@/type/User";
-import {Student} from "@/type/Student";
+import { Student } from "@/type/Student";
 import levelData from "@/assets/other/levelInformation.json";
 
 type LanguageKey = "english" | "chinese" | "korean" | "japanese";
-type Aspect = "vocabulary" | "grammar" | "listening" | "conversation" | "pronunciation"
+type Aspect = "vocabulary" | "grammar" | "listening" | "conversation" | "pronunciation";
 
 interface LevelDetail {
   level: string;
@@ -66,29 +66,30 @@ export function deleteStudentById(obj) {
   return updatedList;
 }
 
-
 export function getLevelInformationByLevel(params: {
-  lang: LanguageKey,
-  cat: Aspect,
+  lang: LanguageKey;
+  cat: Aspect;
   level: string;
 }): string {
-  const {lang, cat, level} = params;
+  const { lang, cat, level } = params;
   // if (!level) return {id: null, description: "Choose a level"}
 
-  if(level === "select_score") return "Choose a score";
+  if (level === "select_score") return "Choose a score";
 
   const aspectData = (levelData as any)[lang]?.[cat] as LevelDetail[] | undefined;
 
-  if(!aspectData) return "Invalide category";
+  if (!aspectData) return "Invalide category";
 
   const result = aspectData.find((item) => item.level == level);
 
   return result?.description ?? "Select a score";
-
 }
 
-export function getAllLevelsInformationByAspect(params: {lang: LanguageKey; name: Aspect}): LevelDetail[]{
-  const {lang, name} = params;
+export function getAllLevelsInformationByAspect(params: {
+  lang: LanguageKey;
+  name: Aspect;
+}): LevelDetail[] {
+  const { lang, name } = params;
   const data = (levelData as any)[lang]?.[name] as LevelDetail[] | undefined;
 
   return data ?? []; // returns an array
