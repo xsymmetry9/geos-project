@@ -16,6 +16,7 @@ class StrengthAndWeakness {
 
 class LevelCheckEntry {
   id: string;
+  language: string
   dateCreated: Date;
   student_name: string;
   feedback: string;
@@ -35,6 +36,7 @@ class LevelCheckEntry {
     this.feedback = "";
     this.bookRecommendation = "";
     this.overallCEFR = "";
+    this.language = "";
     this.speaking = new StrengthAndWeakness();
     this.confidence = new StrengthAndWeakness();
     this.grammar = new StrengthAndWeakness();
