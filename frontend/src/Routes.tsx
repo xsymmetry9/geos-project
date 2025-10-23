@@ -6,6 +6,7 @@ import PrintPage from "@/components/PrintSPR";
 import { LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
 import AuthRedirect from "@/components/AuthRedirect";
 import Levels from "@/pages/Levels";
+import LevelCheckPage from "./pages/LevelCheckPage";
 
 const routes = [
   {
@@ -31,7 +32,8 @@ const routes = [
     path: "levelCheck",
     element: <Layout />,
     children: [
-      { index: true, element: <LevelCheckForm /> },
+      { index: true, element: <LevelCheckPage /> },
+      { path: "new", element: <LevelCheckForm /> },
       { path: "edit/:id", element: <LevelCheckEdit /> },
       { path: "preview/:id", element: <LevelCheckPreview /> },
     ],
