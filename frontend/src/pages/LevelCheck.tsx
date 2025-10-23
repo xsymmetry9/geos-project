@@ -55,7 +55,7 @@ const Comment: React.FC<CommentProps> = ({ className, name, setInputData, id, va
 };
 const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, handleSubmit }) => {
   const { user } = useUser();
-  const language = user?.language;
+  console.log(inputData.language);
   return (
     <div className="font-secondary mx-auto h-full w-full max-w-[50em] px-3 py-6 shadow-2xl">
       <div className="mt-6 flex flex-col items-center justify-center">
@@ -149,9 +149,12 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
     </div>
   );
 };
-const LevelCheckForm = () => {
-  const initiateForm = new LevelCheckEntry();
-  const [inputData, setInputData] = useState<LevelCheckEntry>(initiateForm);
+type LevelCheckFormProps = {
+  inputData?: LevelCheckEntry;
+  setInputData?: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
+};
+const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
+  // const initiateForm = new LevelCheckEntry();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
