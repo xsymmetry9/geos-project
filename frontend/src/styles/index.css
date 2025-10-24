@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./print.css";
 
 @theme {
   --font-primary: Merriweather, serif;

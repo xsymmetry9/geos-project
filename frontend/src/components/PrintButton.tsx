@@ -4,67 +4,25 @@ import { PrinterIcon } from "lucide-react";
 import { getStudentById } from "@/utils/functions";
 import { Language } from "@/utils/common";
 import { PrintContent } from "@/components/PrintStudentProgressReport";
+import {LevelCheckPreview} from "@/pages/LevelCheck"
 import { Student } from "@/type/Student";
-import { set } from "date-fns";
 
 type PrintButtonProps = {
   className?: string;
   docID: string;
   language: Language;
+  docType: "SPR" | "levelCheckReport";
   setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
 };
-
-const pageStyle = `
-  @page { size: A4 portrait; margin: 0; }
-
-  @media print {
-    html, body { height: auto !important; overflow: visible !important; }
-
-    /* Make ONLY the print sandbox visible during print */
-    body > *:not(.print-sandbox) { display: none !important; }
-
-    /* Bring sandbox on-screen for printing */
-    .print-sandbox {
-      position: static !important;
-      left: auto !important;
-      top: auto !important;
-      width: auto !important;
-      opacity: 1 !important;
-      pointer-events: auto !important;
-      z-index: auto !important;
-    }
-
-    /* Portrait page box (A4) */
-    .print-root {
-      width: 210mm !important;
-      min-height: 297mm !important;
-      margin: 0 auto !important;
-      padding: 8mm !important;
-      box-sizing: border-box !important;
-      background: #fff !important;
-      border: none !important;
-      box-shadow: none !important;
-      page-break-inside: avoid !important;
-    }
-
-    /* Keep charts/images inside page width */
-    .print-root img,
-    .print-root canvas,
-    .print-root svg {
-      max-width: 100% !important;
-      height: auto !important;
-    }
-  }
-`;
 
 const PrintButton: React.FC<PrintButtonProps> = ({
   className = "",
   docID,
   language,
+  docType,
   setSelectedId,
 }) => {
-  const [student, setStudent] = useState<Student | null>();
-  const [mounted, setMounted] = useState(false); // off-screen mount
+  const [data, setData] = useState(null);
   const [graphReady, setGraphReady] = useState(false); // signaled graph is ready
   const contentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<() => void | null>(null);
@@ -72,13 +30,14 @@ const PrintButton: React.FC<PrintButtonProps> = ({
   // Load data when docID changes
   useEffect(() => {
     const s = getStudentById(docID) || null;
-    setStudent(s);
+    setData(s);
     setGraphReady(false);
   }, [docID]);
 
   const waitForGraphReady = useCallback(
     (timeoutMs = 5000) => {
       if (graphReady) return Promise.resolve();
+      console.log("Waiting for graph readiness...");
 
       return new Promise<void>((resolve) => {
         const timeout = setTimeout(() => {
@@ -94,10 +53,10 @@ const PrintButton: React.FC<PrintButtonProps> = ({
   );
 
   const handlePrint = useReactToPrint({
-    contentRef,
-    documentTitle: `${student?.name ?? "SPR"}-${docID}`,
+    content: () => contentRef.current,
+    documentTitle: `${data?.name ?? "SPR"}-${docID}`,
     onBeforeGetContent: async () => {
-      setMounted(true);
+      
       await new Promise<void>((r) => requestAnimationFrame(() => r()));
 
       await waitForGraphReady(5000);
@@ -106,7 +65,6 @@ const PrintButton: React.FC<PrintButtonProps> = ({
     },
     onAfterPrint() {
       setSelectedId(null);
-      setMounted(false);
       setGraphReady(false);
       promiseResolveRef.current = null;
     },
@@ -120,8 +78,23 @@ const PrintButton: React.FC<PrintButtonProps> = ({
     }
   }, [graphReady]);
 
-  const disabled = !student;
+  const disabled = !data;
 
+  const Content = ({docType}) => {
+    if(docType === "SPR"){
+      return <PrintContent
+              parsedData={data}
+              language={language}
+              onGraphReady={handleGraphReady}
+            />
+    } else if(docType === "levelCheckReport"){
+      return <LevelCheckPreview
+              data={data}
+              language={language} />
+    }  else {
+      return <div>Unsupported document type</div>
+    }     
+  };
   return (
     <>
       <button
@@ -135,13 +108,9 @@ const PrintButton: React.FC<PrintButtonProps> = ({
       </button>
 
       <div ref={contentRef} className="print-sandbox">
-        {student && (
-          <div className="print-component">
-            <PrintContent
-              parsedData={student}
-              language={language}
-              onGraphReady={handleGraphReady}
-            />
+        {data && (
+          <div className="">
+            <Content docType="SPR" />
           </div>
         )}
       </div>

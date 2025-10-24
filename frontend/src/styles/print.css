@@ -115,13 +115,13 @@
   height: auto;
 }
 .print-component {
-  width: 210mm; /* A4 width */
-  height: 297mm;
-  margin: 0 auto;
-  padding: 8mm;
   box-sizing: border-box;
+  width: 210mm;              /* A4 portrait width */
+  min-height: 297mm;         /* at least 1 page tall */
+  margin: 0 auto;
+  padding: 8mm;              /* included in width via border-box */
   background: #fff;
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 2px rgba(0,0,0,.1);
 }
 .print-component-landscape {
   width: 297mm;
@@ -131,18 +131,11 @@
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
-
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-
   html,
   body {
     height: auto !important;
@@ -170,6 +163,10 @@
     border: none;
     box-shadow: none;
     page-break-inside: avoid;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 0;
   }
 }
 
