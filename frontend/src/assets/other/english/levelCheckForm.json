@@ -1,0 +1,44 @@
+{
+    "form": {
+        "fields": {
+            "name": "student name",
+            "date": "date",
+            "level_title": "level assessment",
+            "category": {
+                "speaking": "speaking",
+                "confidence": "confidence",
+                "grammar": "grammar",
+                "vocabulary": "vocabulary",
+                "pronunciation": "pronunciation",
+                "listening": "listening"  
+            },
+            "final_notes": "final notes",
+            "book_recommendation": "book recommendation",
+            "overall_level": "overall level",
+            "note": "note"
+        },
+        "submit": "submit",
+        "reset": "cancel"
+    },
+    "print": {
+        "title": "oral assessment guidelines",
+        "name": "name",
+        "date": "date",
+        "category_title": "category",
+        "category": {
+            "speaking": "speaking",
+            "confidence": "confidence",
+            "grammar": "grammar",
+            "vocabulary": "vocabulary",
+            "pronunciation": "pronunciation",
+            "listening": "listening"   
+        },
+        "strength": "strength",
+        "weakness": "weakness",
+        "notes": "notes",
+        "level": "level",
+        "book_suggestion": "book suggestion",
+        "score": "score",
+        "CEFR": "CEFR"
+    }
+}

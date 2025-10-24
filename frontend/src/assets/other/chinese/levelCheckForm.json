@@ -1,0 +1,44 @@
+{
+    "form": {
+        "fields": {
+            "name": "學生姓名",
+            "date": "日期",
+            "level_title": "等級評估",
+            "category": {
+                "pronunciation": "發音",
+                "vocabulary": "詞彙",
+                "listening": "聽力",
+                "grammar": "文法",
+                "speaking": "口說",
+                "accuracy": "準確性"
+            },
+            "final_notes": "最終備註",
+            "book_recommendation": "書籍推薦",
+            "overall_level": "整體等級",
+            "note": "備註"
+        },
+        "submit": "提交",
+        "reset": "取消"
+    },
+    "print": {
+        "title": "口語評估指引",
+        "name": "姓名",
+        "date": "日期",
+        "category_title": "類別",
+        "category": {
+            "pronunciation": "發音",
+            "vocabulary": "詞彙",
+            "listening": "聽力",
+            "grammar": "文法",
+            "speaking": "口說",
+            "accuracy": "準確性"
+        },
+        "strength": "優點",
+        "weakness": "缺點",
+        "notes": "備註",
+        "level": "等級",
+        "book_suggestion": "書籍建議",
+        "score": "分數",
+        "CEFR": "CEFR"
+    }
+}
