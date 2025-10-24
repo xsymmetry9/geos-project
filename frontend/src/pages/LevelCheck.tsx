@@ -414,7 +414,7 @@ const LevelCheckPreview = () => {
             </Link>
           </div>
           <div className="print-component-landscape" ref={componentRef}>
-            <Plot data={data} />
+            <LevelCheckPlot data={data} />
           </div>
           <div className="mt-9 flex w-full justify-center gap-2 pb-12">
             <Link to={`/levelCheck/edit/${params.id}`} className="btn btn-primary">
@@ -439,7 +439,7 @@ const LevelCheckPreview = () => {
     </>
   );
 };
-const Plot: React.FC<PlotProps> = ({ data }) => {
+const LevelCheckPlot: React.FC<PlotProps> = ({ data }) => {
   return (
     <div className="w-full px-12" id="print-preview">
       <div className="font-primary container" id="level-check-content">
@@ -556,4 +556,4 @@ const Plot: React.FC<PlotProps> = ({ data }) => {
     </div>
   );
 };
-export { LevelCheckEdit, LevelCheckForm, LevelCheckPreview };
+export { LevelCheckEdit, LevelCheckForm, LevelCheckPreview, LevelCheckPlot };
