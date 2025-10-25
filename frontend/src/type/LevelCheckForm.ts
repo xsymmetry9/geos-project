@@ -46,4 +46,60 @@ class LevelCheckEntry {
   }
 }
 
-export { LevelCheckEntry, StrengthAndWeakness };
+class EntryForm {
+   id: string;
+  language: string;
+  dateCreated: Date;
+  student_name: string;
+  feedback: string;
+  bookRecommendation: string;
+  overallCEFR: string;
+  constructor(id = uuidv4()) {
+    this.id = id;
+    this.dateCreated = new Date();
+    this.student_name = "";
+    this.feedback = "";
+    this.bookRecommendation = "";
+    this.overallCEFR = "";
+    this.language = "";
+  }
+}
+
+class CjkEntry extends EntryForm {
+  pronunciation: StrengthAndWeakness;
+  vocabulary: StrengthAndWeakness;
+  listening: StrengthAndWeakness;
+  grammar: StrengthAndWeakness;
+  speaking: StrengthAndWeakness;
+  accuracy: StrengthAndWeakness;
+
+  constructor(id = uuidv4()) {
+    super(id);
+    this.pronunciation = new StrengthAndWeakness();
+    this.vocabulary = new StrengthAndWeakness();
+    this.listening = new StrengthAndWeakness();
+    this.grammar = new StrengthAndWeakness();
+    this.speaking = new StrengthAndWeakness();
+    this.accuracy = new StrengthAndWeakness();
+  }
+}
+
+class EnglishEntry extends EntryForm {
+  speaking: StrengthAndWeakness;
+  confidence: StrengthAndWeakness;
+  grammar: StrengthAndWeakness;
+  vocabulary: StrengthAndWeakness;
+  listening: StrengthAndWeakness;
+  pronunciation: StrengthAndWeakness;
+  constructor(id = uuidv4()) {
+    super(id);
+    this.speaking = new StrengthAndWeakness();
+    this.confidence = new StrengthAndWeakness();
+    this.grammar = new StrengthAndWeakness();
+    this.vocabulary = new StrengthAndWeakness();
+    this.listening = new StrengthAndWeakness();
+    this.pronunciation = new StrengthAndWeakness();
+  }
+
+}
+export { LevelCheckEntry, StrengthAndWeakness, CjkEntry, EnglishEntry };
