@@ -1,9 +1,10 @@
 {
     "form": {
-        "fields": {
+        
+            "title":"구술 평가 가이드라인",
             "name": "학생 이름",
             "date": "날짜",
-            "level_title": "레벨 평가",
+            "levelTitle": "레벨 평가",
             "category": {
                 "pronunciation": "발음",
                 "vocabulary": "어휘",
@@ -12,11 +13,10 @@
                 "speaking": "말하기",
                 "accuracy": "정확성"    
             },
-            "final_notes": "최종 노트",
-            "book_recommendation": "도서 추천",
-            "overall_level": "전체 레벨",
-            "note": "노트"
-        },
+            "finalNotes": "최종 노트",
+            "bookRecommendation": "도서 추천",
+            "overallLevel": "전체 레벨",
+            "note": "노트",
         "submit": "제출",
         "reset": "취소"
     },
@@ -24,7 +24,7 @@
         "title": "구술 평가 가이드라인",
         "name": "이름",
         "date": "날짜",
-        "category_title": "카테고리",
+        "categoryTitle": "카테고리",
         "category": {
             "pronunciation": "발음",
             "vocabulary": "어휘",
@@ -37,7 +37,7 @@
         "weakness": "약점", 
         "notes": "노트",
         "level": "레벨",
-        "book_suggestion": "도서 제안",
+        "bookSuggestion": "도서 제안",
         "score": "점수",
         "CEFR": "CEFR"
     }

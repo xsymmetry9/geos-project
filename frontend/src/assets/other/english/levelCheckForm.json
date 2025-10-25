@@ -1,9 +1,9 @@
 {
     "form": {
-        "fields": {
+            "title":"oral assessment form",
             "name": "student name",
             "date": "date",
-            "level_title": "level assessment",
+            "levelTitle": "level assessment",
             "category": {
                 "speaking": "speaking",
                 "confidence": "confidence",
@@ -12,11 +12,11 @@
                 "pronunciation": "pronunciation",
                 "listening": "listening"  
             },
-            "final_notes": "final notes",
-            "book_recommendation": "book recommendation",
-            "overall_level": "overall level",
-            "note": "note"
-        },
+            "finalNotes": "final notes",
+            "bookRecommendation": "book recommendation",
+            "overallLevel": "overall level",
+            "note": "note",
+      
         "submit": "submit",
         "reset": "cancel"
     },
@@ -24,7 +24,7 @@
         "title": "oral assessment guidelines",
         "name": "name",
         "date": "date",
-        "category_title": "category",
+        "categoryTitle": "category",
         "category": {
             "speaking": "speaking",
             "confidence": "confidence",
@@ -37,7 +37,7 @@
         "weakness": "weakness",
         "notes": "notes",
         "level": "level",
-        "book_suggestion": "book suggestion",
+        "bookSuggestion": "book suggestion",
         "score": "score",
         "CEFR": "CEFR"
     }

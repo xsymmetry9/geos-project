@@ -1,9 +1,10 @@
 {
     "form": {
-        "fields": {
+      
+            "title":"口頭試験ガイドライン",
             "name": "生徒の名前",
             "date": "日付",
-            "level_title": "レベル評価",
+            "levelTitle": "レベル評価",
             "category": {
                 "pronunciation": "発音",
                 "vocabulary": "語彙",
@@ -12,11 +13,11 @@
                 "speaking": "スピーキング",
                 "accuracy": "正確さ"
             },
-            "final_notes": "最終メモ",
-            "book_recommendation": "書籍のおすすめ",
-            "overall_level": "総合レベル",
-            "note": "メモ"
-        },
+            "finalNotes": "最終メモ",
+            "bookRecommendation": "書籍のおすすめ",
+            "overallLevel": "総合レベル",
+            "note": "メモ",
+      
         "submit": "送信",
         "reset": "キャンセル"
     },
@@ -24,7 +25,7 @@
         "title": "口頭試験ガイドライン",
         "name": "名前",
         "date": "日付",
-        "category_title": "カテゴリー",
+        "categoryTitle": "カテゴリー",
         "category": {
             "pronunciation": "発音",
             "vocabulary": "語彙",
@@ -37,7 +38,7 @@
         "weakness": "弱み", 
         "notes": "メモ",
         "level": "レベル",
-        "book_suggestion": "書籍の提案",
+        "bookSuggestion": "書籍の提案",
         "score": "スコア",
         "CEFR": "CEFR"
     }
