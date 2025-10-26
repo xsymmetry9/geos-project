@@ -4,6 +4,7 @@ import levelInformation from "@/assets/other/legend.json";
 import { formatNum } from "@/components/PrintComponents/Legend";
 import { levelCheckFormTranslation } from "@/utils/translation";
 import { tLevelCheckData } from "@/utils/tLevelCheckData";
+import { T } from "react-router/dist/development/fog-of-war-D4x86-Xc";
 
 type EnglishKey = keyof Pick<
   EnglishEntry,
@@ -25,7 +26,6 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
 
-  console.log(levelCheckData);
   const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
   const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
@@ -191,6 +191,17 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         [item]: updated,
       }));
     }
+
+    if(level && score !== undefined && !scoreError) {
+      const updated: StrengthAndWeakness = {
+      level_name: level,
+      score,
+      strength: selectedStrengths,
+      weakness: selectedWeaknesses
+      };
+
+      setInputData((prev) => ({...prev, [item]: updated}));
+    }
   }, [level, score, selectedStrengths, selectedWeaknesses, scoreError]);
 
   const arrOfLevels = levelInformation.english;
@@ -216,7 +227,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
       {level && (
         <label htmlFor={`${item}_score`}>
-          <span className="text-md font-bold">Enter score</span>
+          <span className="text-md font-bold">{text.instructionScore}</span>
           {/* <input
             type="number"
             value={score ?? ""}
@@ -260,11 +271,11 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           <>
             {/* Strengths */}
             <div className="mt-6">
-              <p className="font-semibold">Select 2–3 strengths:</p>
+              <p className="font-semibold">{`${text.levelInstructionStrength}`}</p>
               <div className="mt-2 flex gap-2">
                 <input
                   type="text"
-                  placeholder="Add custom strength"
+                  placeholder={text.addCustomStrength}
                   value={customStrengthInput}
                   onChange={(e) => setCustomStrengthInput(e.target.value)}
                   onKeyDown={(e) =>
@@ -310,18 +321,15 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   </label>
                 ))}
               </div>
-              {selectedStrengths.length < 2 && (
-                <p className="text-sm text-red-600">Select at least 2 strengths.</p>
-              )}
             </div>
 
             {/* Weaknesses */}
             <div className="mt-6">
-              <p className="font-semibold">Select 2–3 weaknesses:</p>
+              <p className="font-semibold">{text.levelInstructionWeakness} </p>
               <div className="mt-2 flex gap-2">
                 <input
                   type="text"
-                  placeholder="Add custom weakness"
+                  placeholder={text.addCustomWeakness}
                   value={customWeaknessInput}
                   onChange={(e) => setCustomWeaknessInput(e.target.value)}
                   onKeyDown={(e) =>
@@ -369,9 +377,6 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   </label>
                 ))}
               </div>
-              {selectedWeaknesses.length < 2 && (
-                <p className="text-sm text-red-600">Select at least 2 weaknesses.</p>
-              )}
             </div>
           </>
         )}

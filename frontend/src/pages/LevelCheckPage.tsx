@@ -6,8 +6,8 @@ import { Language } from "@/utils/common";
 import { CjkEntry, EnglishEntry } from "@/type/LevelCheckForm";
 
 const LevelCheckPage = () => {
-  const [inputData, setInputData] = useState<EnglishEntry | CjkEntry | null>(new EnglishEntry());
-  const [language, setLanguage] = useState<Language>("english");
+  const [inputData, setInputData] = useState<EnglishEntry | CjkEntry >(new EnglishEntry());
+  const [language, setLanguage] = useState<Language | "">("");
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {value} = e.target;
@@ -31,13 +31,14 @@ const LevelCheckPage = () => {
       <aside className="h-full w-full max-w-[600px] overflow-y-auto bg-white max-[600px]:block min-[600px]:border-r-2 min-[600px]:border-slate-300">
         <div className="flex flex-col gap-2 p-4">
           <select className="border-2 border-slate-600 rounded p-1" name="language" onChange={handleLanguageChange} id="language" value={language}>
+            <option value = "">Enter Language</option>
             <option value="english">English</option>
             <option value="chinese">Chinese</option>
             <option value="korean">Korean</option>
             <option value="japanese">Japanese</option>
           </select>
         </div>
-        {inputData !== null && <LevelCheckForm inputData={inputData} setInputData={setInputData} />}
+        {language !== "" && <LevelCheckForm inputData={inputData} setInputData={setInputData} />}
       </aside>
 
       <section className="relative hidden min-[600px]:block">

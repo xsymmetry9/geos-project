@@ -90,7 +90,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
             </label>
           </div>
         </section>
-        {/* <section className="px-3 py-6">
+        <section className="px-3 py-6">
           <h2 className="w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
             Level Assessment
           </h2>
@@ -100,7 +100,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           <LevelCheckSelect item="vocabulary" inputData={inputData} setInputData={setInputData} />
           <LevelCheckSelect item="pronunciation" inputData={inputData} setInputData={setInputData} />
           <LevelCheckSelect item="listening" inputData={inputData} setInputData={setInputData} />
-        </section> */}
+        </section>
         <section className="px-3 py-6" id="input-feedback">
           <h2 className="w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
             Final Notes

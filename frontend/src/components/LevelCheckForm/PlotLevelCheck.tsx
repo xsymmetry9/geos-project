@@ -44,10 +44,24 @@ const PlotLevelCheck: React.FC<PlotProps> = ({ data }) => {
               {categories.map((item) => (
                 <tr key={item} className="h-[72px]">
                   <td className="w-[100px] border-r border-b border-black bg-teal-50 px-1 text-center font-bold capitalize">{text.category[item]}</td>
-                  <td className="border-r border-b border-black bg-white px-1"><ul className=""></ul></td>
-                  <td className="border-r border-b border-black bg-white px-1"><ul className=""></ul></td>
-                  <td className="border-r border-b border-black bg-orange-50 px-1 text-center text-[15px]"></td>
-                  <td className="border-b border-black bg-orange-50 px-1 text-center text-[15px]"></td>
+                  <td className="border-r border-b border-black bg-white px-1">
+                    <ul className="">
+                      {data[item].strength.map((list: any, idx: number) => (
+                        <li className="print-list" key={idx}>{list}</li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td className="border-r border-b border-black bg-white px-1">
+                    <ul className="">
+                      {data[item].weakness.map((list: any, idx: number) => (
+                        <li className="print-list" key={idx}>{list}</li>
+                      ))}
+                    </ul>
+                    </td>
+                  <td className="border-r border-b border-black bg-orange-50 px-1 text-center text-[15px]">
+                    {data[item].score}
+                  </td>
+                  <td className="border-b border-black bg-orange-50 px-1 text-center text-[15px]">{data[item].level_name}</td>
                 </tr>
               ))}
             </tbody>
