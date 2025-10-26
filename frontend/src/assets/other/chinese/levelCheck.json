@@ -1,5 +1,5 @@
 {
-  "speaking": {
+  "pronunciation": {
     "A1-A2": {
       "strength": [
         "能在基本對話中清楚表達",
@@ -67,7 +67,7 @@
       ]
     }
   },
-  "confidence": {
+  "vocabulary": {
     "A1-A2": {
       "strength": [
         "喜歡學習新詞彙",
@@ -135,7 +135,7 @@
       ]
     }
   },
-  "vocabulary": {
+  "listening": {
     "A1-A2": {
       "strength": [
         "掌握日常情境所需的基本詞彙",
@@ -285,7 +285,7 @@
       ]
     }
   },
-  "listening": {
+  "speaking": {
     "A1-A2": {
       "strength": [
         "Understands common phrases and expressions",
@@ -361,7 +361,7 @@
       ]
     }
   },
-  "pronunciation": {
+  "accuracy": {
     "A1-A2": {
       "strength": [
         "Can pronounce most words clearly",

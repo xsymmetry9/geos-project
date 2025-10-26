@@ -1,5 +1,5 @@
 {
-  "speaking": {
+  "pronunciation": {
     "A1-A2": {
       "strength": [
         "기본적인 대화에서 명확하게 의사소통할 수 있다",
@@ -67,7 +67,7 @@
       ]
     }
   },
-  "confidence": {
+  "vocabulary": {
     "A1-A2": {
       "strength": [
         "새로운 어휘 학습을 즐긴다",
@@ -135,7 +135,7 @@
       ]
     }
   },
-  "vocabulary": {
+  "listening": {
     "A1-A2": {
       "strength": [
         "일상 상황에 필요한 기본 어휘를 알고 있다",
@@ -285,7 +285,7 @@
       ]
     }
   },
-  "listening": {
+  "speaking": {
     "A1-A2": {
       "strength": [
         "일반적인 구절과 표현을 이해한다",
@@ -361,7 +361,7 @@
       ]
     }
   },
-  "pronunciation": {
+  "accuracy": {
     "A1-A2": {
       "strength": [
         "대부분의 단어를 명확하게 발음할 수 있다",

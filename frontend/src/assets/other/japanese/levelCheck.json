@@ -1,5 +1,5 @@
 {
-  "speaking": {
+  "pronunciation": {
     "A1-A2": {
       "strength": [
         "基本的な会話で明確に伝えられる",
@@ -67,7 +67,7 @@
       ]
     }
   },
-  "confidence": {
+  "vocabulary": {
     "A1-A2": {
       "strength": [
         "新しい語彙を学ぶことを楽しむ",
@@ -135,7 +135,7 @@
       ]
     }
   },
-  "vocabulary": {
+  "listening": {
     "A1-A2": {
       "strength": [
         "日常的な場面で必要な基本語彙を知っている",
@@ -285,7 +285,7 @@
       ]
     }
   },
-  "listening": {
+  "speaking": {
     "A1-A2": {
       "strength": [
         "一般的なフレーズや表現を理解できる",
@@ -361,7 +361,7 @@
       ]
     }
   },
-  "pronunciation": {
+  "accuracy": {
     "A1-A2": {
       "strength": [
         "ほとんどの単語を明瞭に発音できる",
