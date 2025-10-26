@@ -2,208 +2,204 @@
   "pronunciation": {
     "A1-A2": {
       "strength": [
-        "能在基本對話中清楚表達",
-        "能自我介紹",
-        "能回應簡單問題",
-        "會使用常見片語",
-        "能請求基本協助",
-        "能描述熟悉的物品",
-        "能表達喜好與不喜好",
-        "能就熟悉主題進行對談"
+        "能清楚發出常見的英文字母與基本音節",
+        "能模仿簡短單字與簡單句子的語調",
+        "能以慢速但清晰的方式說話",
+        "能分辨並再現常見母音與子音",
+        "在熟悉的字詞中能維持正確重音",
+        "能透過練習改善發音準確度",
+        "能聽從指導修正明顯錯誤",
+        "在短句中能保持基本節奏"
       ],
       "weakness": [
-        "說話時有遲疑",
-        "說話前思考時間較長",
-        "需要協助完成回應",
-        "過度使用簡單表達",
-        "經常要求澄清",
-        "避免談論不熟悉的主題",
-        "難以構成較長句子",
-        "詞彙提取有困難"
+        "部分音素發音不清或混淆",
+        "重音與語調控制不穩定",
+        "在連音或弱讀上有困難",
+        "說話速度過慢且不自然",
+        "句尾語調常未上揚或下降不當",
+        "需要教師示範以糾正發音",
+        "在新字詞上難以模仿正確音調",
+        "有時發音受母語影響明顯"
       ]
     },
     "B1-B2": {
       "strength": [
-        "能參與較長的對話",
-        "使用更廣泛的詞彙",
-        "能清楚說明基本概念",
-        "能以更多細節回應",
-        "能努力應對意外問題",
-        "能良好描述個人經驗",
-        "能參與辯論或討論",
-        "能總結要點"
+        "整體發音清晰可理解",
+        "重音與語調多數情況下正確",
+        "能控制語速以配合情境",
+        "能聽辨並模仿較複雜的音節",
+        "口音不影響理解",
+        "能維持自然語流",
+        "在朗讀或演說時語調自然",
+        "能自行修正部分發音錯誤"
       ],
       "weakness": [
-        "對不熟悉的主題猶豫發言",
-        "談抽象概念時可能不夠清楚",
-        "思索用詞時常有停頓",
-        "對某些複雜句構感到吃力",
-        "即興對話可能缺乏流暢性",
-        "偶爾會重複用語或詞彙",
-        "整理思路需要時間",
-        "在複雜語境中可能依賴簡單語言"
+        "偶爾混淆長短母音或連音",
+        "重音位置有時偏差",
+        "語調變化仍略顯僵硬",
+        "在快速對話中清晰度下降",
+        "部分單字重音不準確",
+        "受母語影響仍明顯",
+        "在強弱重音的對比上不穩定",
+        "句中語氣表達仍需自然化"
       ]
     },
     "C1-C2": {
       "strength": [
-        "使用多樣且複雜的句型",
-        "能在即興情況下清楚表達想法",
-        "能自如討論各種主題",
-        "思路組織清晰",
-        "能有效表達抽象概念",
-        "會根據聽眾調整說話風格",
-        "能在正式與非正式場合說話",
-        "熟悉慣用語的使用"
+        "發音接近母語者，清晰自然",
+        "能靈活運用語調傳達情感與語氣",
+        "重音與節奏掌握得宜",
+        "能根據語境調整語音風格",
+        "連音與弱讀運用自然",
+        "語速流暢且節奏穩定",
+        "能辨識並再現多樣口音",
+        "語音表現具自信與專業度"
       ],
       "weakness": [
-        "有時用語偏向專業或技術性",
-        "可能變得過於詳盡或冗長",
-        "很少遲疑，除非面對複雜問題",
-        "在複雜語法結構上有小錯誤",
-        "對某些回應或結構思考過度",
-        "偶爾使用過於複雜的表達",
-        "快速說話時可能變得不夠清晰",
-        "偶爾會過度闡述或離題"
+        "偶爾在專業詞彙上發音不準確",
+        "可能過度模仿母語腔調",
+        "在高壓情境中語調略顯緊張",
+        "少數字詞重音仍不穩定",
+        "長篇表達時語調變化略單一",
+        "可能忽略語氣細節差異",
+        "語音表現偶爾偏正式而不自然",
+        "需要加強細微音節的準確性"
       ]
     }
   },
   "vocabulary": {
     "A1-A2": {
       "strength": [
-        "喜歡學習新詞彙",
-        "願意尋求幫助",
-        "願意犯錯並從中學習",
-        "在熟悉主題上有自信",
-        "能表達簡單的意見",
-        "在口語上主動",
-        "能自信地回答基本問題",
-        "樂於嘗試新的語言結構"
+        "能運用基本詞彙表達熟悉主題",
+        "能理解並使用常見日常字詞",
+        "能準確描述簡單事物與活動",
+        "能根據提示回想單字",
+        "能使用常見動詞與名詞組合",
+        "能在課堂活動中主動使用新字",
+        "能辨識常見反義詞與同義詞",
+        "能用簡單形容詞補充想法"
       ],
       "weakness": [
-        "在新情境中感到緊張",
-        "在他人面前說話時會猶豫",
-        "對不熟悉的對話懷疑自己的能力",
-        "在複雜或抽象的討論中感到不確定",
-        "需要鼓勵才能多說話",
-        "若未完全理解則不願意發言",
-        "避免挑戰性的對話",
-        "不太主動開始對話"
+        "詞彙範圍有限，表達受限",
+        "對抽象概念缺乏適當字彙",
+        "需依賴教師提示記憶單字",
+        "重複使用相同字詞",
+        "對搭配詞的理解不足",
+        "在情境中難以靈活運用新詞",
+        "拼字與詞形變化不穩定",
+        "不熟悉的主題難以延伸表達"
       ]
     },
     "B1-B2": {
       "strength": [
-        "能在熟悉主題上參與對話",
-        "能清楚表達觀點",
-        "能清晰地說明想法",
-        "不確定時會主動提問",
-        "能努力應對意外問題",
-        "自信使用基本結構",
-        "必要時會請求澄清",
-        "即使詞彙不確定也會表達想法"
+        "能使用較廣泛的詞彙表達想法",
+        "能準確選用詞語傳達情感或意見",
+        "能使用適當的搭配詞（collocation）",
+        "能靈活替換同義字以避免重複",
+        "能正確使用部分慣用語",
+        "能以詞彙豐富描述經驗或觀點",
+        "能辨識語域差異並調整用字",
+        "能在不同主題中使用相關詞彙"
       ],
       "weakness": [
-        "說話前需要得到肯定",
-        "常常變得自我意識強",
-        "在複雜表達時仍然懷疑準確性",
-        "在高壓情境中可能不願說話",
-        "在不熟悉的對話中可能不確定",
-        "對不熟悉的主題會猶豫",
-        "可能在複雜互動中退縮",
-        "對複雜問題有時會過度思考"
+        "在高階主題上詞彙仍有限",
+        "專業用語使用不夠精確",
+        "抽象詞彙使用時偶有誤用",
+        "部分表達仍依賴簡單詞",
+        "搭配詞運用不夠自然",
+        "字詞選擇偶爾顯得口語化",
+        "在長篇表達中出現詞彙重複",
+        "需要擴展更具深度的詞彙量"
       ]
     },
     "C1-C2": {
       "strength": [
-        "在各種情境中都能自信地說話",
-        "能輕鬆處理困難的對話",
-        "對不熟悉的主題也願意發言",
-        "即使被打斷也能維持對話流暢",
-        "在大團體中說話也感到自在",
-        "能輕鬆適應不同的語氣",
-        "在正式與非正式場合皆具自信",
-        "面對挑戰性的口語任務也感到自在"
+        "詞彙範圍廣，能涵蓋多種主題",
+        "能精確選用詞語傳達細微差異",
+        "能自然運用搭配詞與慣用語",
+        "能靈活轉換正式與非正式語域",
+        "能使用具象徵或抽象意涵的詞彙",
+        "能清楚掌握語氣與語用層次",
+        "能使用學術與專業詞彙表達意見",
+        "能自信處理高階字詞的語義差異"
       ],
       "weakness": [
-        "對未知主題可能過於謹慎",
-        "在非正式場合可能顯得過於正式",
-        "在公開場合可能懷疑複雜表達的準確性",
-        "可能過度追求精確性",
-        "在專業場合可能對回應過度思考",
-        "有時會過度簡化想法",
-        "偶爾會過度闡述",
-        "需要在細緻且專門的詞彙上改進"
+        "在特定領域詞彙仍需深化",
+        "偶爾使用過於正式的用字",
+        "部分複合詞使用不夠自然",
+        "在高階搭配詞上仍有不穩定性",
+        "可能過度使用抽象詞而影響清晰度",
+        "在臨場表達時需更多靈活性",
+        "少數詞彙語感仍受母語影響",
+        "需加強對地道慣用語的掌握"
       ]
     }
   },
   "listening": {
     "A1-A2": {
       "strength": [
-        "掌握日常情境所需的基本詞彙",
-        "使用常見的名詞、動詞與形容詞",
-        "能辨識熟悉的物品或主題",
-        "能描述熟悉的人與地方",
-        "能談論基本的日常活動",
-        "能提出簡單的問題",
-        "能辨識基本表達與慣用語",
-        "對基本日常詞彙有堅實掌握"
+        "能理解簡單的問候與指令",
+        "能聽懂熟悉主題的關鍵字",
+        "能辨識基本語調與語氣變化",
+        "能理解教師的清楚說明",
+        "能依指示完成簡單任務",
+        "能從語境推測部分意思",
+        "能理解慢速且重複的語音內容",
+        "能聽懂熟悉話題的簡短對話"
       ],
       "weakness": [
-        "表達想法的詞彙範圍有限",
-        "尋找合適詞彙時需要幫助",
-        "快速回想詞彙有困難",
-        "對同義詞的運用有困難",
-        "經常重複使用相同的詞",
-        "不擅長表達抽象想法或情感",
-        "描述不熟悉主題的能力有限",
-        "需要更精確的對話詞彙"
+        "需要多次重聽才能理解細節",
+        "難以理解不熟悉主題的內容",
+        "在連音或快速語速下理解困難",
+        "無法區分相似音的單字",
+        "需依賴非語言提示（表情、手勢）",
+        "對不同口音的理解能力有限",
+        "遇到新詞時容易中斷理解",
+        "無法持續專注於長句或段落"
       ]
     },
     "B1-B2": {
       "strength": [
-        "使用相關詞彙能清楚表達意見",
-        "能在一定努力下解釋常見概念",
-        "能辨識並使用部分慣用語",
-        "能詳細描述經驗",
-        "使用形容詞與副詞增加細節",
-        "能自在地討論大多數熟悉的主題",
-        "在支持下能談論不熟悉的主題",
-        "能談論個人經驗或計畫"
+        "能理解大部分日常對話",
+        "能抓取主要訊息與重點",
+        "能根據語氣推測說話者意圖",
+        "能理解較長的句子與段落",
+        "能聽懂多數熟悉主題的細節",
+        "能分辨句中語氣變化與情緒",
+        "能在自然語速下理解核心內容",
+        "能跟上不同說話者之間的互動"
       ],
       "weakness": [
-        "可能缺乏更微妙或專業的用詞",
-        "在複雜想法上難以找到合適詞彙",
-        "在特定社交情境下缺乏合適詞彙",
-        "口語中有時無法迅速想起某些詞",
-        "在搭配詞（collocation）上有困難",
-        "需要更多接觸自然且高階的詞彙",
-        "詞彙選擇上可能變得重複",
-        "在專業討論中可能依賴基本詞彙"
+        "在背景噪音中理解力下降",
+        "遇到陌生話題時理解困難",
+        "需依賴關鍵字而非整體理解",
+        "快速對話中的細節容易遺漏",
+        "對俚語與慣用語理解有限",
+        "口音差異仍造成理解困難",
+        "在抽象主題上理解不夠精準",
+        "需要更多高階聽力練習"
       ]
     },
     "C1-C2": {
       "strength": [
-        "在複雜主題上擁有廣泛詞彙",
-        "能表達微妙的想法與觀點",
-        "能自在使用慣用語",
-        "能根據語境調整詞彙",
-        "能使用高階的形容詞與副詞",
-        "能流暢描述抽象概念",
-        "能精確表達意見",
-        "自然使用搭配詞",
-        "能使用學術性語言",
-        "能輕鬆討論各種主題"
+        "能理解各種口音與語速的英語",
+        "能準確抓住說話者意圖與情緒",
+        "能理解隱含意義與語用細節",
+        "能跟上多方對話與辯論",
+        "能聽懂各種主題的廣播與影片",
+        "能整合不同來源的聽力資訊",
+        "能辨識語氣變化與文化暗示",
+        "能在無提示下完整理解內容"
       ],
       "weakness": [
-        "偶爾在語境中使用錯誤詞彙",
-        "可能會使表達過於複雜",
-        "需加強專門詞彙的掌握",
-        "在某些高階專業術語上會有困難",
-        "極少出錯，但有時聽起來重複",
-        "偶爾錯用複雜詞彙",
-        "在日常對話中可能過於詳細",
-        "在高階主題上需要更具體的表達",
-        "對罕見詞彙偶有不確定",
-        "有時可能使用過於正式的表達"
+        "在非常專業的主題上理解有限",
+        "對非標準口音仍需適應",
+        "在長篇資訊中偶爾分心",
+        "有時忽略細微語用差異",
+        "在不熟悉文化內容中需更多背景知識",
+        "對幽默與諷刺語氣理解不夠穩定",
+        "偶爾誤解多義詞的上下文意思",
+        "需持續提升專業聽力的精準度"
       ]
     }
   },
@@ -288,150 +284,100 @@
   "speaking": {
     "A1-A2": {
       "strength": [
-        "Understands common phrases and expressions",
-        "Can follow slow, clear speech",
-        "Recognizes familiar words in context",
-        "Understands basic greetings and questions",
-        "Can follow classroom instructions",
-        "Understands short, simple sentences",
-        "Can identify key words in speech",
-        "Can understand simple requests",
-        "Understands basic yes/no questions"
+        "能用簡短的句子回答熟悉話題（如家庭、興趣、日常活動）",
+        "願意開口表達基本想法，即使語言有限",
+        "能模仿簡單的發音與語調",
+        "能理解並回應簡單問題或指令",
+        "可透過重複與比手勢維持基本溝通"
       ],
       "weakness": [
-        "Needs repetition to understand spoken English",
-        "Struggles with fast or natural speech",
-        "Misses details in longer conversations",
-        "Has trouble with different accents",
-        "Needs visual support for better comprehension",
-        "Cannot always grasp full meaning",
-        "Has difficulty with contractions and reductions",
-        "Needs more time to process spoken language",
-        "Struggles with unfamiliar vocabulary"
+        "句子結構簡單，表達內容有限",
+        "常需要教師引導或翻譯才能完成對話",
+        "發音與重音影響理解度",
+        "缺乏連貫性，對話中常出現停頓或中斷",
+        "聽不懂時缺乏適當的溝通策略（如請對方重說）"
       ]
     },
     "B1-B2": {
       "strength": [
-        "Understands main ideas in conversations",
-        "Can follow familiar topics at a moderate speed",
-        "Recognizes speaker intent in casual speech",
-        "Can differentiate formal and informal tones",
-        "Can follow simple storytelling",
-        "Understands explanations with some effort",
-        "Can pick up main ideas even in longer talks",
-        "Can handle listening tasks in real-life situations",
-        "Understands announcements and instructions"
+        "能流暢地表達熟悉主題並說明原因或意見",
+        "可使用連接詞與過渡語（如 however, in addition）維持連貫性",
+        "發音自然，語調清晰",
+        "能即時回應問題並展開對話",
+        "表達中能使用一些慣用語或比喻"
       ],
       "weakness": [
-        "Struggles with implied meaning",
-        "Needs more exposure to idiomatic expressions",
-        "May misunderstand complex discussions",
-        "Has difficulty with strong regional accents",
-        "Struggles with fast-paced discussions",
-        "Needs clarification in technical topics",
-        "May miss subtle shifts in conversation topics",
-        "Occasionally struggles with humor and sarcasm",
-        "May struggle with rapid speech and slang"
+        "在複雜主題上仍會出現停頓或語言搜尋",
+        "語速、語調不夠穩定，有時影響聽感",
+        "部分用詞不自然或表達不夠精確",
+        "錯誤偶爾影響流暢度（特別是時態或句型）",
+        "在正式語境下表達仍略顯不自然"
       ]
     },
     "C1-C2": {
       "strength": [
-        "Can understand fast, native-level speech",
-        "Recognizes subtle changes in speaker tone",
-        "Understands implied meanings and nuance",
-        "Easily follows news, lectures, and discussions",
-        "Can grasp humor, sarcasm, and irony",
-        "Understands debates and panel discussions",
-        "Processes complex academic or professional content",
-        "Can follow conversations even with background noise",
-        "Comfortable with both formal and informal speech",
-        "Recognizes emotional cues in tone and intonation"
+        "能自信、自然地表達複雜想法與觀點",
+        "語音語調接近母語者，節奏與重音自然",
+        "能靈活調整語言風格以配合情境或聽眾",
+        "使用多樣句型與高層次詞彙維持流暢度",
+        "能即時回應、辯論或重述他人意見"
       ],
       "weakness": [
-        "Occasionally struggles with very heavy accents",
-        "May miss cultural references",
-        "Can overanalyze meaning in some contexts",
-        "May struggle with highly specialized jargon",
-        "Occasionally struggles with simultaneous talking",
-        "Needs adjustment time for unfamiliar dialects",
-        "Struggles with abstract philosophical discussions",
-        "May misunderstand ambiguous phrasing",
-        "Can miss subtle variations in idioms",
-        "Occasionally over-interprets tone shifts"
-      ]
+        "偶爾在抽象主題上需要時間組織語言",
+        "有時過度關注準確性而影響自然表達",
+        "少數非母語口音或語調仍存在",
+        "在長篇討論中可能出現語速或語氣不均",
+        "對文化性話題或幽默語言仍需更多掌握"
+      ]  
     }
   },
   "accuracy": {
     "A1-A2": {
       "strength": [
-        "Can pronounce most words clearly",
-        "Can adjust pronunciation for clarity",
-        "Understands and applies word stress patterns",
-        "Can use rising and falling intonation correctly",
-        "Can use linking sounds in sentences",
-        "Understands rhythm and timing in speech",
-        "Can be understood easily by most listeners",
-        "Can self-correct mispronunciations"
+        "能使用基本句型（如主詞 + 動詞 + 受詞）表達簡單想法",
+        "可運用常見詞彙（例如日常生活用語）進行溝通",
+        "了解簡單的時態（現在式、過去式）",
+        "拼字與發音大致正確",
+        "願意嘗試用英文表達自己"
       ],
       "weakness": [
-        "Occasionally struggles with very heavy accents",
-        "May miss cultural references",
-        "Can overanalyze meaning in some contexts",
-        "May struggle with highly specialized jargon",
-        "Occasionally struggles with overlapping conversations",
-        "Needs adjustment time for unfamiliar dialects",
-        "Can struggle with abstract philosophical discussions",
-        "May misunderstand ambiguous phrasing",
-        "Can miss subtle variations in idioms",
-        "Occasionally over-interprets tone shifts"
+        "文法錯誤頻繁，特別是動詞時態與主詞一致",
+        "缺乏連接詞（如 and, but, because）導致句子短而簡單",
+        "用字重複，詞彙量有限",
+        "句型結構單一，難以擴展句子",
+        "理解及應用語法規則需要大量提示"
       ]
     },
     "B1-B2": {
       "strength": [
-        "Can pronounce common words clearly",
-        "Can stress important words in simple sentences",
-        "Can pronounce basic vowel sounds correctly",
-        "Recognizes and imitates basic intonation",
-        "Can differentiate common sounds (e.g., 'b' vs. 'p')",
-        "Can repeat words with good accuracy",
-        "Can copy teacher’s pronunciation with effort",
-        "Tries to self-correct mispronunciations"
+        "能正確使用多數基本語法（時態、比較級、介系詞等）",
+        "句子結構多樣化，能連接想法與細節",
+        "能自我修正錯誤，溝通順暢",
+        "使用正確詞彙描述抽象概念或意見",
+        "發音及重音清晰，易於理解"
       ],
       "weakness": [
-        "Occasionally mispronounces longer words",
-        "May not stress words naturally in sentences",
-        "Sometimes speaks too quickly or unclearly",
-        "Struggles with contractions in fast speech",
-        "Occasionally drops word endings",
-        "May sound unnatural in connected speech",
-        "Needs more fluency in fast conversations",
-        "May still struggle with regional accents"
+        "偶爾語法錯誤仍會影響自然度（如冠詞、介系詞）",
+        "用詞不夠精準或稍顯口語化",
+        "難以掌握複雜句型（如條件句、被動語態）",
+        "長篇口語或書寫中可能出現一致性問題",
+        "缺乏語氣或語調上的自然流暢度"
       ]
     },
     "C1-C2": {
       "strength": [
-        "Speaks with near-native pronunciation",
-        "Uses stress and intonation effectively",
-        "Pronounces complex words clearly",
-        "Can shift pronunciation based on formality",
-        "Understands subtle pronunciation differences",
-        "Uses contractions and reductions naturally",
-        "Adjusts pronunciation for clarity in discussions",
-        "Can imitate native-like rhythm and flow",
-        "Comfortable with various English accents",
-        "Speaks fluently and naturally in all situations"
+        "幾乎能無錯誤地運用各種語法結構",
+        "用詞精準且具彈性，能根據語境調整語氣",
+        "能自然使用慣用語與搭配詞（collocations）",
+        "句型流暢、層次分明，邏輯清晰",
+        "能在正式與非正式語域間自如切換"
       ],
       "weakness": [
-        "Occasionally mimics an unnatural accent",
-        "May overemphasize certain syllables",
-        "Occasionally struggles with rare phonemes",
-        "May slightly over-articulate some words",
-        "Can misinterpret nuances in rapid speech",
-        "Rarely struggles, but may hesitate with foreign terms",
-        "Occasionally overcorrects self",
-        "Can get too focused on pronunciation perfection",
-        "May need time to adjust to unfamiliar dialects",
-        "Can occasionally misplace stress in technical terms"
+        "偶爾在非常複雜的句型中出現小錯誤",
+        "偶爾誤用母語直譯結構或文化語意",
+        "對極細微語法差異仍需注意",
+        "在非熟悉主題中，流暢度略降",
+        "有時過度追求準確而影響自然表達"
       ]
     }
   }

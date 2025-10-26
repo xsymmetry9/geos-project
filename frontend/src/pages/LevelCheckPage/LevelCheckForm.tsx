@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 interface FormProps {
   inputData: EnglishEntry | CjkEntry | null;
-  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
+  setInputData: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry | null>>;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
@@ -84,17 +84,19 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
             </label>
           </div>
         </section>
-        {/* <section className="px-3 py-6">
-          <h2 className="w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
-            Level Assessment
+        <section className="px-3 py-6">
+          <h2 className="capitalize w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
+            {text.levelTitle}
           </h2>
-          <LevelCheckSelect item="speaking" inputData={inputData} setInputData={setInputData} />
-          <LevelCheckSelect item="confidence" inputData={inputData} setInputData={setInputData} />
-          <LevelCheckSelect item="grammar" inputData={inputData} setInputData={setInputData} />
-          <LevelCheckSelect item="vocabulary" inputData={inputData} setInputData={setInputData} />
-          <LevelCheckSelect item="pronunciation" inputData={inputData} setInputData={setInputData} />
-          <LevelCheckSelect item="listening" inputData={inputData} setInputData={setInputData} />
-        </section> */}
+          {Object.keys(text.category).map((item) => (
+            <LevelCheckSelect 
+                key={item} 
+                item={item} 
+                inputData={inputData} 
+                setInputData={setInputData} />
+          ))
+          }
+        </section>
         <section className="px-3 py-6" id="input-feedback">
           <h2 className="capitalize w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
             {text.finalNotes}

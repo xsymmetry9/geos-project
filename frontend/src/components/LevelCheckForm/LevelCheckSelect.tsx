@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import levelCheckData from "@/assets/other/english/levelCheck.json";
-import { LevelCheckEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
+import { EnglishEntry, CjkEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
 import levelInformation from "@/assets/other/legend.json";
 import { formatNum } from "@/components/PrintComponents/Legend";
+import { levelCheckFormTranslation } from "@/utils/translation";
 
 type EnglishKey = keyof Pick<
-  LevelCheckEntry,
+  EnglishEntry,
   "speaking" | "confidence" | "grammar" | "vocabulary" | "listening" | "pronunciation"
 >;
 
+type CjkKey = keyof Pick<
+  CjkEntry,
+  "pronunciation" | "vocabulary" | "listening" | "grammar" | "speaking" | "accuracy"
+>;
+
 type Props = {
-  item: EnglishKey;
-  inputData: LevelCheckEntry;
-  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
+  item: EnglishKey | CjkKey;
+  inputData: EnglishEntry | CjkEntry;
+  setInputData: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
 };
 
 export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
@@ -23,6 +29,8 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
   const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
   const [customWeaknessInput, setCustomWeaknessInput] = useState<string>("");
+
+  const text = levelCheckFormTranslation(inputData.language);
 
   const getScoreRange = (level: string): [number, number] => {
     switch (level) {
@@ -182,12 +190,11 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   }, [level, score, selectedStrengths, selectedWeaknesses, scoreError]);
 
   const arrOfLevels = levelInformation.english;
-  const title = item.charAt(0).toUpperCase() + item.slice(1);
 
   return (
     <section className="mt-6 min-h-[400px]">
       <label htmlFor={`${item}_level`}>
-        <span className="text-md font-bold">{title}</span>
+        <span className="capitalize text-md font-bold">{text.category[item]}</span>
         <select
           id={`${item}_level`}
           value={level}
