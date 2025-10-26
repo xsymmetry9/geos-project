@@ -51,7 +51,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
     if(inputData === null) return <p>Loading...</p>;
     const text = levelCheckFormTranslation(inputData.language);
   return (
-    <div className="font-secondary mx-auto h-full w-full max-w-[50em] px-3 py-6 shadow-2xl">
+    <div className="font-secondary mx-auto h-full w-full max-w-[50em] px-3 py-6">
       <div className="mt-6 flex flex-col items-center justify-center">
         <h1 className="capitalize py-3 text-2xl font-bold">{text.title}</h1>
       </div>

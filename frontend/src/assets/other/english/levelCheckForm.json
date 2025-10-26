@@ -12,6 +12,11 @@
                 "pronunciation": "pronunciation",
                 "listening": "listening"  
             },
+            "instructionScore": "Enter assessment level using (0-10 scale)",
+            "levelInstructionStrength": "Select up to 3 strengths",
+            "levelInstructionWeakness": "Select up to 3 weaknesses",
+            "addCustomStrength": "Add a custom strength",
+            "addCustomWeakness": "Add a custom weakness",
             "finalNotes": "final notes",
             "bookRecommendation": "book recommendation",
             "overallLevel": "overall level",

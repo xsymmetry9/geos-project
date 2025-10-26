@@ -13,6 +13,11 @@
                 "speaking": "スピーキング",
                 "accuracy": "正確さ"
             },
+            "instructionScore": "輸入評估等級（0–10）",
+            "levelInstructionStrength": "長所を最大3つまで選択できます",
+            "levelInstructionWeakness": "短所を最大3つまで選択できます",
+            "addCustomStrength": "カスタムの長所を追加",
+            "addCustomWeakness": "カスタムの短所を追加",
             "finalNotes": "最終メモ",
             "bookRecommendation": "書籍のおすすめ",
             "overallLevel": "総合レベル",

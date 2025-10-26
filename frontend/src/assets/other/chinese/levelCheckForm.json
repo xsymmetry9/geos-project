@@ -12,6 +12,11 @@
                 "speaking": "口說",
                 "accuracy": "準確性"
             },
+            "levelInstructionStrength": "可選最多 3 項優點",
+            "levelInstructionWeakness": "可選最多 3 項弱點",
+            "instructionScore": "輸入評估等級（0–10）",
+            "addCustomStrength": "新增自訂優點",
+            "addCustomWeakness": "新增自訂弱點",
             "finalNotes": "最終備註",
             "bookRecommendation": "書籍推薦",
             "overallLevel": "整體等級",

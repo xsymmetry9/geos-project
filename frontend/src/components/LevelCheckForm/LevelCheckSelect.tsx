@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import levelCheckData from "@/assets/other/english/levelCheck.json";
+import React, { useState, useEffect, useMemo } from "react";
 import { EnglishEntry, CjkEntry, StrengthAndWeakness } from "@/type/LevelCheckForm";
 import levelInformation from "@/assets/other/legend.json";
 import { formatNum } from "@/components/PrintComponents/Legend";
 import { levelCheckFormTranslation } from "@/utils/translation";
+import { tLevelCheckData } from "@/utils/tLevelCheckData";
 
 type EnglishKey = keyof Pick<
   EnglishEntry,
@@ -22,6 +22,10 @@ type Props = {
 };
 
 export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
+
+  const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
+
+  console.log(levelCheckData);
   const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
   const [score, setScore] = useState<number>();
   const [scoreError, setScoreError] = useState<string>("");
