@@ -196,6 +196,9 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if(error !== "") return;
+    if(inputData === undefined) return setError("Submit failed: inputData is undefined.");
+
     const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
     if (!getUser) return;
 
@@ -208,8 +211,10 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
     }
 
     localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-    navigate(`preview/${inputData.id}`, { replace: true, state: { data: inputData } });
+    navigate(`/levelCheck/preview/${inputData.id}`, { replace: true, state: { data: inputData } });
   };
+
+  if(inputData === null || inputData === undefined) return;
 
   return (
     <>
