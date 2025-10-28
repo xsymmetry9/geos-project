@@ -11,6 +11,7 @@ import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
 import PrintButton from "@/components/PrintButton";
+import { data } from "react-router";
 
 type PlotLevelCheckProps = {
   language: Language;
@@ -243,7 +244,8 @@ const Homepage = () => {
                   >
                     <Link
                       className="flex items-center gap-2 p-2 hover:bg-slate-50"
-                      to={`/spr/edit/${item.id}`}
+                      to={{
+                        pathname:`/spr/edit/${item.id}`}}                      
                     >
                       <Pencil size={18} />
                       <span className="text-sm">Edit</span>
