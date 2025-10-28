@@ -17,13 +17,11 @@ const LevelCheckPage = () => {
       const initForm = new EnglishEntry();
       initForm.language = "english";
       setInputData(initForm);
-    } else if( value === "chinese" || value === "korean" || value === "japanese") {
+    } else {
       const initForm = new CjkEntry();
       initForm.language = value;
       setInputData(initForm);
-    } else {
-      setInputData(null);
-    }
+    } 
   };
 
   return (
