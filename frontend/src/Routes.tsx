@@ -3,10 +3,11 @@ import Layout from "@/Layout";
 import SPRForm from "@/pages/SPRForm";
 import Homepage from "@/pages/Homepage";
 import PrintPage from "@/components/PrintSPR";
-import { LevelCheckEdit, LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
+import { LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
 import AuthRedirect from "@/components/AuthRedirect";
 import Levels from "@/pages/Levels";
 import LevelCheckPage from "./pages/LevelCheckPage";
+import EditPage from "./pages/LevelCheckPage/editPage";
 
 const routes = [
   {
@@ -34,7 +35,7 @@ const routes = [
     children: [
       { index: true, element: <LevelCheckPage /> },
       { path: "new", element: <LevelCheckForm /> },
-      { path: "edit/:id", element: <LevelCheckEdit /> },
+      { path: "edit/:id", element: <EditPage /> },
       { path: "preview/:id", element: <LevelCheckPreview /> },
     ],
   },
