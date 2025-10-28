@@ -12,9 +12,11 @@
                 "speaking": "口說",
                 "accuracy": "準確性"
             },
+            "dropdownLevelInstruction": "選擇 CEFR 等級",
             "levelInstructionStrength": "可選最多 3 項優點",
             "levelInstructionWeakness": "可選最多 3 項弱點",
-            "instructionScore": "輸入評估等級（0–10）",
+            "instructionScore": "輸入評估等級",
+            "placeholderScore": "選擇分數",
             "addCustomStrength": "新增自訂優點",
             "addCustomWeakness": "新增自訂弱點",
             "finalNotes": "最終備註",

@@ -12,7 +12,9 @@
                 "pronunciation": "pronunciation",
                 "listening": "listening"  
             },
-            "instructionScore": "Enter assessment level using (0-10 scale)",
+            "dropdownLevelInstruction": "Choose a CEFR level",
+            "instructionScore": "Enter assessment level",
+            "placeholderScore": "Choose a score",
             "levelInstructionStrength": "Select up to 3 strengths",
             "levelInstructionWeakness": "Select up to 3 weaknesses",
             "addCustomStrength": "Add a custom strength",
