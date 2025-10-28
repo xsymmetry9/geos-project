@@ -4,7 +4,6 @@ import levelInformation from "@/assets/other/legend.json";
 import { formatNum } from "@/components/PrintComponents/Legend";
 import { levelCheckFormTranslation } from "@/utils/translation";
 import { tLevelCheckData } from "@/utils/tLevelCheckData";
-import { T } from "react-router/dist/development/fog-of-war-D4x86-Xc";
 
 type EnglishKey = keyof Pick<
   EnglishEntry,
@@ -22,22 +21,8 @@ type Props = {
   setInputData: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
 };
 
-export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
-
-  const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
-
-  const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
-  const [score, setScore] = useState<number>();
-  const [scoreError, setScoreError] = useState<string>("");
-  const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
-  const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
-  const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
-  const [customWeaknessInput, setCustomWeaknessInput] = useState<string>("");
-
-  const text = levelCheckFormTranslation(inputData.language);
-
-  const getScoreRange = (level: string): [number, number] => {
-    switch (level) {
+const scoreRange = (level: string) : [number, number] => {
+   switch (level) {
       case "Pre-A1":
         return [0, 2];
       case "A1":
@@ -60,16 +45,37 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         return [9.5, 10.5];
       default:
         return [0, 10];
-    }
-  };
+   }
+}
 
-  const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
+const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
     if (score >= 0 && score <= 5) return "A1-A2";
     if (score > 5 && score < 9) return "B1-B2";
     return "C1-C2";
   };
 
-  const currentBand = score !== undefined ? mapScoreToBand(score) : level;
+const cjkScoreToBand = (score: number): "0" | "A1-A2" | "B1-B2" | "C1-C2" => {
+  if(score >= 0 && score < 1 ) return "0";
+  if(score >= 1 && score < 3) return "A1-A2";
+  if(score >= 3 && score < 5) return "B1-B2";
+  return "C1-C2";
+}
+
+export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
+
+  const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
+
+  const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
+  const [score, setScore] = useState<number| "">();
+  const [scoreError, setScoreError] = useState<string>("");
+  const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
+  const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
+  const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
+  const [customWeaknessInput, setCustomWeaknessInput] = useState<string>("");
+
+  const text = levelCheckFormTranslation(inputData.language);
+
+  const currentBand = score !== undefined && score !== "" ? mapScoreToBand(score) : level;
 
   const predefinedStrengths =
     currentBand && levelCheckData[item]?.[currentBand]?.strength
@@ -119,8 +125,8 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   };
 
   useEffect(() => {
-    if (score !== undefined && level) {
-      const [min, max] = getScoreRange(level);
+    if (score !== undefined && score !== "" && level) {
+      const [min, max] = scoreRange(level);
       if (score < min || score > max) {
         setScoreError(
           `Score for ${level} must be between ${min.toFixed(1)} and ${max.toFixed(1)}.`
@@ -216,7 +222,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           onChange={handleLevelChange}
           className="font-secondary mt-1 mb-3 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
         >
-          <option value="">Choose CEFR Level</option>
+          <option value="">{text.dropdownLevelInstruction}</option>
           {arrOfLevels.map((lvl) => (
             <option key={lvl.name} value={lvl.name}>
               {`${lvl.name}: ${formatNum(lvl.score)} `}
@@ -237,7 +243,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           /> */}
           <select
             name="score"
-            value={score !== undefined ? score.toFixed(1) : ""}
+            value={score !== undefined && score !== "" ? score.toFixed(1) : ""}
             id={`${item}_score`}
             onChange={handleScoreChange}
             className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
@@ -246,10 +252,10 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
               className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
               value={""}
             >
-              Choose score
+              {text.placeholderScore}
             </option>
             {(() => {
-              const [min, max] = getScoreRange(level);
+              const [min, max] = scoreRange(level);
               const options = [];
               for (let i = Math.round(min * 2); i < Math.round(max * 2); i++) {
                 const val = (i / 2).toFixed(1);
