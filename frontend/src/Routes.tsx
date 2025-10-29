@@ -7,7 +7,8 @@ import { LevelCheckForm, LevelCheckPreview } from "./pages/LevelCheck";
 import AuthRedirect from "@/components/AuthRedirect";
 import Levels from "@/pages/Levels";
 import LevelCheckPage from "./pages/LevelCheckPage";
-import EditPage from "./pages/LevelCheckPage/editPage";
+import UpdatePage from "./pages/LevelCheckPage/UpdatePage";
+import PreviewPage from "./pages/LevelCheckPage/PreviewPage";
 
 const routes = [
   {
@@ -35,8 +36,8 @@ const routes = [
     children: [
       { index: true, element: <LevelCheckPage /> },
       { path: "new", element: <LevelCheckForm /> },
-      { path: "edit/:id", element: <EditPage /> },
-      { path: "preview/:id", element: <LevelCheckPreview /> },
+      { path: "edit/:id", element: <UpdatePage /> },
+      { path: "preview/:id", element: <PreviewPage /> },
     ],
   },
   {
