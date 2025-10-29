@@ -22,7 +22,7 @@ type ImportFromExcelProps = {
 const ParseLevelCheckEntry = (sheet: any) => {
   const jsonData: any[] = utils.sheet_to_json(sheet);
 
-  let entries: LevelCheckEntry[] = [];
+  const entries: LevelCheckEntry[] = [];
   jsonData.forEach((row) => {
     const entry = new LevelCheckEntry();
     entry.id = row.id;
@@ -57,7 +57,7 @@ const parseSPREntry = (sheet: any) => {
   const jsonData: any[] = utils.sheet_to_json(sheet);
   console.log(jsonData);
 
-  let students: Student[] = [];
+  const students: Student[] = [];
   jsonData.forEach((row) => {
     const student = new Student(row.id);
     student.dateCreated = row.Date || "";
