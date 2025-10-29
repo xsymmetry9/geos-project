@@ -285,7 +285,7 @@ const Homepage = () => {
   return (
     <div className="pb-12">
       <h2 className="font-secondary mt-6 mb-6 text-center text-2xl font-semibold">
-        {page === "spr" ? `Student's Progress Report` : "Level Checks"}
+        {page === "spr" ? "Student's Progress Report" : "Level Checks"}
       </h2>
       <div className="p-b-3 mb-6 flex justify-center gap-3">
         <CreateNewFormBtn handleControl={handleFormControl} />
@@ -344,14 +344,14 @@ const Homepage = () => {
           <div className="flex flex-col items-center justify-center gap-3">
             <Link
               className="flex h-12 w-[250px] cursor-pointer items-center gap-2 rounded bg-teal-700 p-2 text-white hover:bg-teal-500"
-              to={`/spr`}
+              to={"/spr"}
             >
               <Plus size={18} />
               <span>SPR Form</span>
             </Link>
             <Link
               className="flex h-12 w-[250px] items-center gap-2 rounded bg-teal-700 p-2 text-white hover:bg-teal-500"
-              to={`/levelCheck`}
+              to={"/levelCheck"}
             >
               <Plus size={18} />
               <span>Level Check Form</span>

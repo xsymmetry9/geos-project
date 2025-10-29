@@ -16,7 +16,7 @@ class StrengthAndWeakness {
 
 class LevelCheckEntry {
   id: string;
-  language: string
+  language: string;
   dateCreated: Date;
   student_name: string;
   feedback: string;
@@ -47,7 +47,7 @@ class LevelCheckEntry {
 }
 
 class EntryForm {
-   id: string;
+  id: string;
   language: string;
   dateCreated: Date;
   student_name: string;

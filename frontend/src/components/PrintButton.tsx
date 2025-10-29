@@ -4,7 +4,7 @@ import { PrinterIcon } from "lucide-react";
 import { getStudentById } from "@/utils/functions";
 import { Language } from "@/utils/common";
 import { PrintContent } from "@/components/PrintStudentProgressReport";
-import {LevelCheckPreview} from "@/pages/LevelCheck"
+import {LevelCheckPreview} from "@/pages/LevelCheck";
 import { Student } from "@/type/Student";
 
 type PrintButtonProps = {
@@ -83,16 +83,16 @@ const PrintButton: React.FC<PrintButtonProps> = ({
   const Content = ({docType}) => {
     if(docType === "SPR"){
       return <PrintContent
-              parsedData={data}
-              language={language}
-              onGraphReady={handleGraphReady}
-            />
+        parsedData={data}
+        language={language}
+        onGraphReady={handleGraphReady}
+      />;
     } else if(docType === "levelCheckReport"){
       return <LevelCheckPreview
-              data={data}
-              language={language} />
+        data={data}
+        language={language} />;
     }  else {
-      return <div>Unsupported document type</div>
+      return <div>Unsupported document type</div>;
     }     
   };
   return (

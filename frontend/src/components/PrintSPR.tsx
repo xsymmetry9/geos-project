@@ -32,7 +32,7 @@ const PrintPage = () => {
   return (
     <>
       <div className="flex items-center justify-center pb-3">
-        <Link className="btn-primary mt-6" to={`/home`}>
+        <Link className="btn-primary mt-6" to={"/home"}>
           Dashboard
         </Link>
       </div>

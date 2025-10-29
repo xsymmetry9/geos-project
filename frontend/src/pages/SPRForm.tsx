@@ -14,7 +14,7 @@ const SPRForm = () => {
   return (
     <>
       <div className="font-secondary flex w-full justify-center p-2">
-        <Link className="btn-primary flex justify-center gap-1" to={`/home`}>
+        <Link className="btn-primary flex justify-center gap-1" to={"/home"}>
           <House />
           Home
         </Link>

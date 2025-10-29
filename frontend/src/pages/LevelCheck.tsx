@@ -228,10 +228,10 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
 
 const LevelCheckEdit = () => {
   const initForm = new LevelCheckEntry();
-  let { id } = useParams();
-  let [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
+  const { id } = useParams();
+  const [inputData, setInputData] = useState<LevelCheckEntry>(initForm);
   const [loading, setLoading] = useState(false);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -321,7 +321,7 @@ const LevelCheckEdit = () => {
 };
 
 const LevelCheckPreview = () => {
-  let params = useParams();
+  const params = useParams();
   const [data, setData] = useState<LevelCheckEntry>();
   const componentRef = useRef<HTMLDivElement>(null);
   const promiseResolveRef = useRef<null | (() => void)>(null);
@@ -408,7 +408,7 @@ const LevelCheckPreview = () => {
       {data ? (
         <>
           <div className="container mt-12 mb-3 flex justify-center" id="navigation">
-            <Link className="btn btn-primary" to={`/home`}>
+            <Link className="btn btn-primary" to={"/home"}>
               Home
             </Link>
           </div>

@@ -50,16 +50,16 @@ export const PrintContent: React.FC<PrintContentProps> = ({
 
   const fontLanguage = () => {
     switch (language) {
-      case "english":
-        return "font-primary";
-      case "chinese":
-        return "print-chinese";
-      case "korean":
-        return "kor print-korean";
-      case "japanese":
-        return "jp print-japanese";
-      default:
-        return "";
+    case "english":
+      return "font-primary";
+    case "chinese":
+      return "print-chinese";
+    case "korean":
+      return "kor print-korean";
+    case "japanese":
+      return "jp print-japanese";
+    default:
+      return "";
     }
   };
 

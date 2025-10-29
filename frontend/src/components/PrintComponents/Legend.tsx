@@ -7,14 +7,14 @@ type Number = {
 
 const textSize = (language: Language): string => {
   switch (language) {
-    case "chinese":
-      return "text-[11.5px]";
-    case "japanese":
-      return "text-[11.5px]";
-    case "korean":
-      return "text-[11.5px]";
-    default:
-      return "text-[9.5px]";
+  case "chinese":
+    return "text-[11.5px]";
+  case "japanese":
+    return "text-[11.5px]";
+  case "korean":
+    return "text-[11.5px]";
+  default:
+    return "text-[9.5px]";
   }
 };
 export const formatNum = ({ min, max }: Number): string => {

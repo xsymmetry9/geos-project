@@ -48,8 +48,8 @@ const Comment: React.FC<CommentProps> = ({ className, name, setInputData, id, va
   );
 };
 const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, handleSubmit }) => {
-    if(inputData === null) return <p>Loading...</p>;
-    const text = levelCheckFormTranslation(inputData.language);
+  if(inputData === null) return <p>Loading...</p>;
+  const text = levelCheckFormTranslation(inputData.language);
 
   return (
     <div className="font-secondary mx-auto h-full w-full max-w-[50em] px-3 py-6">
@@ -91,10 +91,10 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </h2>
           {Object.keys(text.category).map((item) => (
             <LevelCheckSelect 
-                key={item} 
-                item={item as any} 
-                inputData={inputData} 
-                setInputData={setInputData} />
+              key={item} 
+              item={item as any} 
+              inputData={inputData} 
+              setInputData={setInputData} />
           ))
           }
         </section>

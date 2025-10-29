@@ -47,21 +47,21 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
 
     setInputError((prevError) => {
       switch (name) {
-        case "name":
-        case "textbook":
-        case "course":
-          return { ...prevError, [name]: value.trim() === "" };
-        case "attendance":
-          const att = Number(value);
-          return { ...prevError, attendance: isNaN(att) || att <= 0 };
-        case "totalLessons":
-          const total = Number(value);
-          return {
-            ...prevError,
-            totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
-          };
-        default:
-          return prevError;
+      case "name":
+      case "textbook":
+      case "course":
+        return { ...prevError, [name]: value.trim() === "" };
+      case "attendance":
+        const att = Number(value);
+        return { ...prevError, attendance: isNaN(att) || att <= 0 };
+      case "totalLessons":
+        const total = Number(value);
+        return {
+          ...prevError,
+          totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
+        };
+      default:
+        return prevError;
       }
     });
   };

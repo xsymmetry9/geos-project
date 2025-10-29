@@ -57,7 +57,7 @@ const PlotLevelCheck: React.FC<PlotProps> = ({ data }) => {
                         <li className="print-list" key={idx}>{list}</li>
                       ))}
                     </ul>
-                    </td>
+                  </td>
                   <td className="border-r border-b border-black bg-orange-50 px-1 text-center text-[15px]">
                     {data[item].score}
                   </td>
