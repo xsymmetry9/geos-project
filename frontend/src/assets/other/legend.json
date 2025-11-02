@@ -13,39 +13,31 @@
   ],
 
   "korean": [
-    { "name": "Pre-A1", "score": { "min": 0, "max": 2 }, "description": "입문" },
-    { "name": "A1", "score": { "min": 2, "max": 3 }, "description": "초급 전" },
-    { "name": "A1 - A2", "score": { "min": 3, "max": 4 }, "description": "초급" },
-    { "name": "A2", "score": { "min": 4, "max": 5 }, "description": "초중급" },
-    { "name": "A2 - B1", "score": { "min": 5, "max": 6 }, "description": "중급 하" },
-    { "name": "B1", "score": { "min": 6, "max": 7 }, "description": "중급" },
-    { "name": "B1 - B2", "score": { "min": 7, "max": 8 }, "description": "중급 상" },
-    { "name": "B2", "score": { "min": 8, "max": 9 }, "description": "고급 전" },
-    { "name": "C1", "score": { "min": 9, "max": 9.5 }, "description": "고급" },
-    { "name": "C1+", "score": { "min": 9.5, "max": 10 }, "description": "최고급" }
+    { "name": "Pre-A1", "score": { "min": 0, "max": 1 }, "description": "입문" },
+    { "name": "A1", "score": { "min": 1, "max": 2 }, "description": "초급 전" },
+    { "name": "A2", "score": { "min": 2, "max": 3 }, "description": "초중급" },
+    { "name": "B1", "score": { "min": 3, "max": 4 }, "description": "중급" },
+    { "name": "B2", "score": { "min": 4, "max": 5 }, "description": "고급 전" },
+    { "name": "C1", "score": { "min": 5, "max": 6 }, "description": "고급" },
+    { "name": "C2", "score": { "min": 6, "max": 7 }, "description": "고급" }
   ],
   "japanese": [
-    { "name": "Pre-A1", "score": { "min": 0, "max": 2 }, "description": "入門" },
-    { "name": "A1", "score": { "min": 2, "max": 3 }, "description": "初級前" },
-    { "name": "A1 - A2", "score": { "min": 3, "max": 4 }, "description": "初級" },
-    { "name": "A2", "score": { "min": 4, "max": 5 }, "description": "初中級" },
-    { "name": "A2 - B1", "score": { "min": 5, "max": 6 }, "description": "中級下" },
-    { "name": "B1", "score": { "min": 6, "max": 7 }, "description": "中級" },
-    { "name": "B1 - B2", "score": { "min": 7, "max": 8 }, "description": "中級上" },
-    { "name": "B2", "score": { "min": 8, "max": 9 }, "description": "上級前" },
-    { "name": "C1", "score": { "min": 9, "max": 9.5 }, "description": "上級" },
-    { "name": "C1+", "score": { "min": 9.5, "max": 10 }, "description": "最上級" }
+    { "name": "Pre-A1", "score": { "min": 0, "max": 1 }, "description": "入門" },
+    { "name": "A1",     "score": { "min": 1, "max": 2 }, "description": "初級前" },
+    { "name": "A2",     "score": { "min": 2, "max": 3 }, "description": "初中級" },
+    { "name": "B1",     "score": { "min": 3, "max": 4 }, "description": "中級" },
+    { "name": "B2",     "score": { "min": 4, "max": 5 }, "description": "上級前" },
+    { "name": "C1",     "score": { "min": 5, "max": 6 }, "description": "上級" },
+    { "name": "C2",     "score": { "min": 6, "max": 7 }, "description": "上級" }
   ],
-  "chinese": [
-    { "name": "Pre-A1", "score": { "min": 0, "max": 2 }, "description": "入門" },
-    { "name": "A1", "score": { "min": 2, "max": 3 }, "description": "初級前" },
-    { "name": "A1 - A2", "score": { "min": 3, "max": 4 }, "description": "初級" },
-    { "name": "A2", "score": { "min": 4, "max": 5 }, "description": "初中級" },
-    { "name": "A2 - B1", "score": { "min": 5, "max": 6 }, "description": "中級下" },
-    { "name": "B1", "score": { "min": 6, "max": 7 }, "description": "中級" },
-    { "name": "B1 - B2", "score": { "min": 7, "max": 8 }, "description": "中級上" },
-    { "name": "B2", "score": { "min": 8, "max": 9 }, "description": "高級前" },
-    { "name": "C1", "score": { "min": 9, "max": 9.5 }, "description": "高級" },
-    { "name": "C1+", "score": { "min": 9.5, "max": 10 }, "description": "最高級" }
-  ]
+
+ "chinese": [
+    { "name": "Pre-A1", "score": { "min": 0, "max": 1 }, "description": "入門" },
+    { "name": "A1",     "score": { "min": 1, "max": 2 }, "description": "初級前" },
+    { "name": "A2",     "score": { "min": 2, "max": 3 }, "description": "初中級" },
+    { "name": "B1",     "score": { "min": 3, "max": 4 }, "description": "中級" },
+    { "name": "B2",     "score": { "min": 4, "max": 5 }, "description": "高級前" },
+    { "name": "C1",     "score": { "min": 5, "max": 6 }, "description": "高級" },
+    { "name": "C2",     "score": { "min": 6, "max": 7 }, "description": "高級" }
+  ]  
 }
