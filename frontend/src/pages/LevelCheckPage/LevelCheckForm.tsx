@@ -147,7 +147,6 @@ type LevelCheckFormProps = {
   setInputData?: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
 };
 const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
-  // const initiateForm = new LevelCheckEntry();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -218,12 +217,14 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
 
   return (
     <>
-      <Form
-        inputData={inputData}
-        setInputData={setInputData}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+      {inputData != null && (
+        <Form
+          inputData={inputData}
+          setInputData={setInputData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
       />
+      )}
     </>
   );
 };
