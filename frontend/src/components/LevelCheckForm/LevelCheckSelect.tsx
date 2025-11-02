@@ -210,7 +210,15 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     }
   }, [level, score, selectedStrengths, selectedWeaknesses, scoreError]);
 
-  const arrOfLevels = levelInformation.english;
+  const arrOfLevels = () => {
+    if(inputData.language === "english"){
+      return levelInformation.english;
+    } else if(inputData.language === "japanese" || inputData.language === "korean" || inputData.language === "chinese") {
+      return levelInformation[inputData.language]
+    } else {
+      return null;
+    }
+  }
 
   return (
     <section className="mt-6 min-h-[400px]">
@@ -223,7 +231,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
           className="font-secondary mt-1 mb-3 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
         >
           <option value="">{text.dropdownLevelInstruction}</option>
-          {arrOfLevels.map((lvl) => (
+          {arrOfLevels() !== null && arrOfLevels().map((lvl) => (
             <option key={lvl.name} value={lvl.name}>
               {`${lvl.name}: ${formatNum(lvl.score)} `}
             </option>
