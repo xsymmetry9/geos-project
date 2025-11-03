@@ -223,7 +223,7 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
           setInputData={setInputData}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-      />
+        />
       )}
     </>
   );
