@@ -214,11 +214,11 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
     if(inputData.language === "english"){
       return levelInformation.english;
     } else if(inputData.language === "japanese" || inputData.language === "korean" || inputData.language === "chinese") {
-      return levelInformation[inputData.language]
+      return levelInformation[inputData.language];
     } else {
       return null;
     }
-  }
+  };
 
   return (
     <section className="mt-6 min-h-[400px]">
