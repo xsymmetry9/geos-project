@@ -1,11 +1,12 @@
 // src/pages/LevelCheckPage/CreateLevelCheckForm.tsx
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LevelCheckForm from "@/pages/LevelCheckPage/LevelCheckForm";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
 import { Language } from "@/utils/common";
 import { CjkEntry, EnglishEntry } from "@/type/LevelCheckForm";
-import { Printer, Eye, Save, Download } from "lucide-react";
+import { Printer, Eye, Download, Save } from "lucide-react";
+import SaveControl from "@/components/SaveControl";
 
 type DropdownLanguageProps = {
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -41,6 +42,9 @@ const LevelCheckPage = () => {
   const [view, setView] = useState<"form" | "view">("form");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [error, setError] = useState("");
+
+  const componentRef = useRef<HTMLDivElement>(null);
+  const promiseResolveRef = useRef<null | (() => void)>(null);
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
@@ -115,12 +119,14 @@ const LevelCheckPage = () => {
                 className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
                 <Save /><span>Save</span>
             </button>
+     
               {view != "form" && (
                 <>
-                                <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
-                  <Download />
-                  <span>Extract</span>
-                </button>
+                  <SaveControl 
+                    contentRef= {componentRef} 
+                    className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                    layout = {"landscape"}
+                    title ={inputData.student_name}/>
                 <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
                   <Printer />
                   <span>Print</span>
@@ -164,7 +170,11 @@ const LevelCheckPage = () => {
             </button>
             {view === "view" && (
               <>
-                <button className="rounded-xl border px-3 py-2">Extract</button>
+                <SaveControl 
+                    contentRef= {componentRef} 
+                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                    layout = {"landscape"}
+                    title ={inputData.student_name}/>
                 <button onClick={() => { handlePrint(); setIsMenuOpen(false); }} className="rounded-xl border px-3 py-2">
                   Print
                 </button>
@@ -193,7 +203,7 @@ const LevelCheckPage = () => {
 
         {/* READ-ONLY VIEW */}
         <section id="levelCheckPage" className={`relative ${view !== "view" ? "hidden" : "block"} `}>
-            <div className="print-component-landscape">
+            <div className="print-component-landscape" ref={componentRef}>
               {language !== "" && inputData && <PlotLevelCheck data={inputData} />}
             </div>
         </section>
