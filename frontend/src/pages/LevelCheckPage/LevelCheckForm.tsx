@@ -6,6 +6,7 @@ import "@/styles/printLevelCheck.css";
 import { levelCheckFormTranslation } from "@/utils/translation";
 
 import { format } from "date-fns";
+import { CjkLevelCheckSelect } from "@/components/LevelCheckForm/CjkLevelCheckSelect";
 
 interface FormProps {
   inputData: EnglishEntry | CjkEntry | null;
@@ -48,7 +49,7 @@ const Comment: React.FC<CommentProps> = ({ className, name, setInputData, id, va
   );
 };
 const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, handleSubmit }) => {
-  if(inputData === null) return <p>Loading...</p>;
+  if (inputData === null) return <p>Loading...</p>;
   const text = levelCheckFormTranslation(inputData.language);
 
   return (
@@ -89,13 +90,28 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           <h2 className="capitalize w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
             {text.levelTitle}
           </h2>
-          {Object.keys(text.category).map((item) => (
-            <LevelCheckSelect 
-              key={item} 
-              item={item as any} 
-              inputData={inputData} 
-              setInputData={setInputData} />
-          ))
+          {inputData.language === "english" ? (
+            <>
+              {Object.keys(text.category).map((item) => (
+                <LevelCheckSelect
+                  key={item}
+                  item={item as any}
+                  inputData={inputData}
+                  setInputData={setInputData} />
+              ))
+              }
+            </>
+          ) : (
+            <>
+              {Object.keys(text.category).map((item) => (
+                <CjkLevelCheckSelect
+                  key={item}
+                  item={item as any}
+                  inputData={inputData}
+                  setInputData={setInputData} />
+              ))}
+            </>
+          )
           }
         </section>
         <section className="px-3 py-6" id="input-feedback">
@@ -146,7 +162,7 @@ type LevelCheckFormProps = {
   inputData?: EnglishEntry | CjkEntry;
   setInputData?: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
 };
-const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
+const LevelCheckForm = ({ inputData, setInputData }: LevelCheckFormProps) => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -195,8 +211,8 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(error !== "") return;
-    if(inputData === undefined) return setError("Submit failed: inputData is undefined.");
+    if (error !== "") return;
+    if (inputData === undefined) return setError("Submit failed: inputData is undefined.");
 
     const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
     if (!getUser) return;
@@ -213,7 +229,7 @@ const LevelCheckForm = ({inputData, setInputData}: LevelCheckFormProps) => {
     navigate(`/levelCheck/preview/${inputData.id}`, { replace: true, state: { data: inputData } });
   };
 
-  if(inputData === null || inputData === undefined) return;
+  if (inputData === null || inputData === undefined) return;
 
   return (
     <>
