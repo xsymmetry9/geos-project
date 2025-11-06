@@ -2,7 +2,7 @@ import { useState } from "react";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
-
+import { Download } from "lucide-react";
 type SaveControlProps = {
   contentRef: React.RefObject<HTMLDivElement>;
   className: string;
@@ -78,7 +78,7 @@ const SaveControl = ({ contentRef, className, layout, title }: SaveControlProps)
 
   return (
     <button className={`${className}`} onClick={handleSaveControl} disabled={isBundling}>
-      Save
+      <Download size={24}/><span>Extract</span>
     </button>
   );
 };
