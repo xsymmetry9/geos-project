@@ -5,7 +5,7 @@ import LevelCheckForm from "@/pages/LevelCheckPage/LevelCheckForm";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
 import { Language } from "@/utils/common";
 import { CjkEntry, EnglishEntry } from "@/type/LevelCheckForm";
-import { Printer, Eye, Download, Save } from "lucide-react";
+import { Eye, Save } from "lucide-react";
 import SaveControl from "@/components/SaveControl";
 import PrintControl from "@/components/PrintControl";
 
