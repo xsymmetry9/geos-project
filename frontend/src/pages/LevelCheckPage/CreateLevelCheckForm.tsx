@@ -7,6 +7,7 @@ import { Language } from "@/utils/common";
 import { CjkEntry, EnglishEntry } from "@/type/LevelCheckForm";
 import { Printer, Eye, Download, Save } from "lucide-react";
 import SaveControl from "@/components/SaveControl";
+import PrintControl from "@/components/PrintControl";
 
 type DropdownLanguageProps = {
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -95,7 +96,7 @@ const LevelCheckPage = () => {
   };
 
   return (
-    <div className="min-h-0 w-full bg-slate-50 grid grid-rows-[auto_1fr]">
+    <div className="w-full bg-slate-50 grid grid-rows-[auto_1fr]">
       {/* Top navigation bar */}
       <aside className="bg-white border-b sticky top-0 z-20">
         <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
@@ -127,10 +128,11 @@ const LevelCheckPage = () => {
                   className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
                   layout={"landscape"}
                   title={inputData.student_name} />
-                <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
-                  <Printer />
-                  <span>Print</span>
-                </button>
+                <PrintControl
+                  contentRef={componentRef}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  layout={"landscape"}
+                />
               </>
             )}
 
@@ -175,9 +177,11 @@ const LevelCheckPage = () => {
                   className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
                   layout={"landscape"}
                   title={inputData.student_name} />
-                <button onClick={() => { handlePrint(); setIsMenuOpen(false); }} className="rounded-xl border px-3 py-2">
-                  Print
-                </button>
+                <PrintControl
+                  contentRef={componentRef}
+                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                  layout={"landscape"}
+                  title={inputData.student_name} />
               </>
             )}
 
@@ -188,11 +192,11 @@ const LevelCheckPage = () => {
       {/* Content */}
       <div className="mx-auto w-full max-w-[1100px] px-4 py-6">
         {/* FORM VIEW */}
-        <section id="levelCheckForm" className={`${view !== "form" ? "hidden" : "block"} h-full min-h-0 flex flex-col overflow-hidden`}>
+        <section id="levelCheckForm" className={`${view !== "form" ? "hidden" : "block"}`}>
           {language === "" ? (
-            <div className="mx-auto max-w-[700px]">
-              <h1 className="text-center mt-4 text-2xl font-bold pb-4">Level Check Form</h1>
-              <div className="flex justify-center">
+            <div className="h-screen flex flex-col items-center mx-auto max-w-[700px]">
+              <h1 className="mt-4 text-2xl font-bold pb-4">Level Check Form</h1>
+              <div className="mx-auto">
                 <DropdownLanguage id={"language"} className={"w-[200px] text-sm border-2 border-slate-600 rounded p-1"} value={language} handleChange={handleLanguageChange} />
               </div>
             </div>
