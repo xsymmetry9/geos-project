@@ -77,8 +77,8 @@ const SaveControl = ({ contentRef, className, layout, title }: SaveControlProps)
   };
 
   return (
-    <button className={`${className}`} onClick={handleSaveControl} disabled={isBundling}>
-      <Download size={24}/><span>Extract</span>
+    <button className={`flex gap-2 justify-center items-center ${className}`} onClick={handleSaveControl} disabled={isBundling}>
+      <Download size={24} /><span>Extract</span>
     </button>
   );
 };

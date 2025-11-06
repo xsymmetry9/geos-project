@@ -1,3 +1,4 @@
+import { Printer } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import "@/styles/print.css";
@@ -5,20 +6,22 @@ import "@/styles/print.css";
 type PrintControlProps = {
   contentRef: React.RefObject<HTMLDivElement>;
   className: string;
+  layout: "portrait" | "landscape";
 };
-const PrintControl = ({ contentRef, className }: PrintControlProps) => {
+const PrintControl = ({ contentRef, className, layout }: PrintControlProps) => {
   const handlePrint = async () => {
     if (!contentRef.current) return;
 
     const canvas = await html2canvas(contentRef.current, {
       scale: 2,
+      allowTaint: true,
       backgroundColor: "#fff",
       useCORS: true,
     });
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const pdf = new jsPDF({ orientation: `${layout}`, unit: "mm", format: "a4" });
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
 
@@ -48,8 +51,9 @@ const PrintControl = ({ contentRef, className }: PrintControlProps) => {
     };
   };
   return (
-    <button className={className} onClick={handlePrint}>
-      Print
+    <button className={`flex gap-2 items-center justify-center${className}`} onClick={handlePrint}>
+      <Printer size={24} />
+      <span>Print</span>
     </button>
   );
 };
