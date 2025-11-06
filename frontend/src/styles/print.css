@@ -29,9 +29,11 @@
   --print-japanese-font-size-5: 24px;
   --print-japanese-font-size-6: 26px;
 }
+
 #print-english {
   font-family: var(--font-primary);
 }
+
 #print-english h1,
 #print-english h2 {
   text-transform: capitalize;
@@ -40,12 +42,15 @@
 #print-english h1 {
   font-size: var(--print-font-size-4);
 }
+
 #print-english h2 {
   font-size: var(--print-font-size-2);
 }
+
 #print-english h3 {
   font-size: var(--print-font-size-3);
 }
+
 #print-english p {
   font-size: var(--print-font-size-1);
 }
@@ -60,15 +65,19 @@
 #print-chinese h1 {
   font-size: var(--print-font-size-4);
 }
+
 #print-chinese h2 {
   font-size: var(--print-chinese-font-size-3);
 }
+
 #print-chinese h3 {
   font-size: var(--print-chinese-font-size-2);
 }
+
 #print-chinese p {
   font-size: var(--print-chinese-font-size-1);
 }
+
 #print-chinese #info-card #info-card-title p {
   font-weight: 400;
   /* font-size: 14px; */
@@ -77,12 +86,15 @@
 #print-korean h1 {
   font-size: var(--print-size-4);
 }
+
 #print-korean h2 {
   font-size: 1.1rem;
 }
+
 #print-korean h3 {
   font-size: 1.1rem;
 }
+
 #print-korean p {
   font-size: 0.8rem;
 }
@@ -90,12 +102,15 @@
 #print-japanese h1 {
   font-size: var(--print-japanese-size-4);
 }
+
 #print-japanese h2 {
   font-size: var(--print-japanese-size-3);
 }
+
 #print-japanese h3 {
   font-size: var(--print-japanese-font-size-2);
 }
+
 #print-japanese p {
   font-size: var(--print-japanese-font-size-1);
 }
@@ -114,15 +129,20 @@
   width: 359px;
   height: auto;
 }
+
 .print-component {
   box-sizing: border-box;
-  width: 210mm;              /* A4 portrait width */
-  min-height: 297mm;         /* at least 1 page tall */
+  width: 210mm;
+  /* A4 portrait width */
+  min-height: 297mm;
+  /* at least 1 page tall */
   margin: 0 auto;
-  padding: 8mm;              /* included in width via border-box */
+  padding: 8mm;
+  /* included in width via border-box */
   background: #fff;
-  box-shadow: 1px 1px 2px rgba(0,0,0,.1);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .1);
 }
+
 .print-component-landscape {
   width: 297mm;
   height: 210mm;
@@ -131,16 +151,27 @@
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
+
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
+
+  ,
+  img,
+  canvas,
+  svg {
+    -web-print-color-adjust: exact !important;
+  }
+
   html,
   body {
     height: auto !important;
     overflow: visible !important;
   }
+
   header,
   footer {
     display: none;
@@ -155,6 +186,7 @@
     pointer-events: auto;
     z-index: auto;
   }
+
   .print-component {
     display: static;
     width: 210mm;
@@ -164,6 +196,7 @@
     box-shadow: none;
     page-break-inside: avoid;
   }
+
   @page {
     size: A4 portrait;
     margin: 0;
@@ -174,7 +207,8 @@
   width: 100%;
   padding-bottom: 12px;
 }
-.title-container > .container {
+
+.title-container>.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
