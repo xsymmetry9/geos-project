@@ -36,7 +36,12 @@ const PrintControl = ({ contentRef, className, layout }: PrintControlProps) => {
 
     if ((pdf as any).autoPrint) pdf.autoPrint();
 
-    const blobUrl = pdf.output("bloburl");
+    const blob = pdf.output("blob");
+
+    const blobUrl = URL.createObjectURL(blob);
+
+    window.open(blobUrl, "_blank", "noopener,noreferrer");
+
     const iframe = document.createElement("iframe");
     iframe.style.position = "fixed";
     iframe.style.right = "0";
