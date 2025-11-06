@@ -20,31 +20,30 @@ type Props = {
   inputData: EnglishEntry | CjkEntry;
   setInputData: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
 };
-
-const scoreRange = (level: string) : [number, number] => {
+const scoreRange = (level: string): [number, number] => {
   switch (level) {
-  case "Pre-A1":
-    return [0, 2];
-  case "A1":
-    return [2, 3];
-  case "A1 - A2":
-    return [3, 4];
-  case "A2":
-    return [4, 5];
-  case "A2 - B1":
-    return [5, 6];
-  case "B1":
-    return [6, 7];
-  case "B1 - B2":
-    return [7, 8];
-  case "B2":
-    return [8, 9];
-  case "C1":
-    return [9, 9.5];
-  case "C1+":
-    return [9.5, 10.5];
-  default:
-    return [0, 10];
+    case "Pre-A1":
+      return [0, 2];
+    case "A1":
+      return [2, 3];
+    case "A1 - A2":
+      return [3, 4];
+    case "A2":
+      return [4, 5];
+    case "A2 - B1":
+      return [5, 6];
+    case "B1":
+      return [6, 7];
+    case "B1 - B2":
+      return [7, 8];
+    case "B2":
+      return [8, 9];
+    case "C1":
+      return [9, 9.5];
+    case "C1+":
+      return [9.5, 10.5];
+    default:
+      return [0, 10];
   }
 };
 
@@ -55,9 +54,9 @@ const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
 };
 
 const cjkScoreToBand = (score: number): "0" | "A1-A2" | "B1-B2" | "C1-C2" => {
-  if(score >= 0 && score < 1 ) return "0";
-  if(score >= 1 && score < 3) return "A1-A2";
-  if(score >= 3 && score < 5) return "B1-B2";
+  if (score >= 0 && score < 1) return "0";
+  if (score >= 1 && score < 3) return "A1-A2";
+  if (score >= 3 && score < 5) return "B1-B2";
   return "C1-C2";
 };
 
@@ -66,7 +65,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
 
   const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
-  const [score, setScore] = useState<number| "">();
+  const [score, setScore] = useState<number | "">();
   const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
@@ -198,7 +197,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
       }));
     }
 
-    if(level && score !== undefined && !scoreError) {
+    if (level && score !== undefined && !scoreError) {
       const updated: StrengthAndWeakness = {
         level_name: level,
         score,
@@ -206,14 +205,14 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         weakness: selectedWeaknesses
       };
 
-      setInputData((prev) => ({...prev, [item]: updated}));
+      setInputData((prev) => ({ ...prev, [item]: updated }));
     }
   }, [level, score, selectedStrengths, selectedWeaknesses, scoreError]);
 
   const arrOfLevels = () => {
-    if(inputData.language === "english"){
+    if (inputData.language === "english") {
       return levelInformation.english;
-    } else if(inputData.language === "japanese" || inputData.language === "korean" || inputData.language === "chinese") {
+    } else if (inputData.language === "japanese" || inputData.language === "korean" || inputData.language === "chinese") {
       return levelInformation[inputData.language];
     } else {
       return null;
@@ -295,13 +294,13 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   onKeyDown={(e) =>
                     e.key === "Enter" &&
                     (e.preventDefault(),
-                    handleCustomAdd(
-                      customStrengthInput,
-                      setCustomStrengthInput,
-                      selectedStrengths,
-                      setSelectedStrengths,
-                      predefinedStrengths
-                    ))
+                      handleCustomAdd(
+                        customStrengthInput,
+                        setCustomStrengthInput,
+                        selectedStrengths,
+                        setSelectedStrengths,
+                        predefinedStrengths
+                      ))
                   }
                   className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
                 />
@@ -349,13 +348,13 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
                   onKeyDown={(e) =>
                     e.key === "Enter" &&
                     (e.preventDefault(),
-                    handleCustomAdd(
-                      customWeaknessInput,
-                      setCustomWeaknessInput,
-                      selectedWeaknesses,
-                      setSelectedWeaknesses,
-                      predefinedWeaknesses
-                    ))
+                      handleCustomAdd(
+                        customWeaknessInput,
+                        setCustomWeaknessInput,
+                        selectedWeaknesses,
+                        setSelectedWeaknesses,
+                        predefinedWeaknesses
+                      ))
                   }
                   className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
                 />
