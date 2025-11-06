@@ -42,7 +42,7 @@ const PrintPage = () => {
         </div>
       </div>
       <div className="flex justify-center gap-3 pt-3 pb-6">
-        <PrintControl contentRef={componentRef} className="btn btn-primary print" />
+        <PrintControl contentRef={componentRef} className="btn btn-primary print" layout="portrait" />
         <SaveControl
           contentRef={componentRef}
           className="btn btn-primary print"
