@@ -34,7 +34,7 @@ const routes = [
     element: <Layout />,
     children: [
       { index: true, element: <CreateLevelCheckForm /> },
-      { path: "new", element: <CreateLevelCheckForm /> },
+      { path: "create", element: <CreateLevelCheckForm /> },
       { path: "edit/:id", element: <UpdatePage /> },
       { path: "preview/:id", element: <PreviewPage /> },
     ],
