@@ -27,12 +27,13 @@ C1 - C2 => 5 6 7
 Hence, English format is different from CJK.  
 
 ## Changes - Nov 5th, 2025
-1. Change layout for level check form
-- Add a select language at the top right with other buttons
-- Add a button that changes from form view to preview
-- Add a save button at the top and remove the "submit button at the bottom"
-- Add a extract and print button
-2. Add a mobile version 
-- Add a burger button that opens and closes the menu action bar
-- Change columns for strenght and weakness.  If window is small, the strength and weakness should be in the same column
-3. Add Icons for buttons
+### 1. Change layout for level check form
+(x) Add a select language at the top right with save, print and preview buttons
+(x) Add a button that changes from form view to preview
+() Add a save button at the top and remove the "submit button at the bottom"
+() Add a extract and print button
+### 2. Add a mobile version 
+(x) Add a burger button that opens and closes the menu action bar
+() Change columns for strength and weakness.  If window is small, the strength and weakness should be in the same column
+### 3. Add Icons for buttons
+(x) Add icon before buttons for print, save, download, and view
