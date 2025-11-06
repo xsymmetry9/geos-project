@@ -11,19 +11,19 @@ import SaveControl from "@/components/SaveControl";
 type DropdownLanguageProps = {
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   value: Language | "";
-id: string;
-className: string;
+  id: string;
+  className: string;
 }
-const DropdownLanguage: React.FC<DropdownLanguageProps> = ({id, className, handleChange, value}) => {
-  return(
+const DropdownLanguage: React.FC<DropdownLanguageProps> = ({ id, className, handleChange, value }) => {
+  return (
     <>
-      <label className="hidden" htmlFor= {id} aria-hidden="true">Select a language</label>
-      <select className= {className}
-      name= {id}
+      <label className="hidden" htmlFor={id} aria-hidden="true">Select a language</label>
+      <select className={className}
+        name={id}
         onChange={handleChange}
-      id={id} 
-      value={value}>
-        <option value = "">Select a Language</option>
+        id={id}
+        value={value}>
+        <option value="">Select a Language</option>
         <option value="english">en</option>
         <option value="chinese">ch</option>
         <option value="korean">kr</option>
@@ -70,9 +70,9 @@ const LevelCheckPage = () => {
 
   const handleSave = () => {
 
-    if(error !== "") return;
+    if (error !== "") return;
 
-    if(inputData === undefined) return setError("Submit failed: inputData is undefined.");
+    if (inputData === undefined) return setError("Submit failed: inputData is undefined.");
 
     console.log(inputData);
 
@@ -95,9 +95,9 @@ const LevelCheckPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-slate-50 grid grid-rows-[auto_1fr]">
+    <div className="min-h-0 w-full bg-slate-50 grid grid-rows-[auto_1fr]">
       {/* Top navigation bar */}
-        <aside className="bg-white border-b">
+      <aside className="bg-white border-b sticky top-0 z-20">
         <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
           {/* Left: actions */}
           <div className="flex flex-row items-center gap-2" id="nav-levelCheckForm">
@@ -113,35 +113,35 @@ const LevelCheckPage = () => {
 
             <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-blue-600 px-3 py-1.5 text-slate-50" onClick={toggleView}>
               <Eye /><span>{view === "view" ? "View" : "Form"}</span></button>
-              <button 
-                type="button"
-                onClick={handleSave}
-                className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
-                <Save /><span>Save</span>
+            <button
+              type="button"
+              onClick={handleSave}
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
+              <Save /><span>Save</span>
             </button>
-     
-              {view != "form" && (
-                <>
-                  <SaveControl 
-                    contentRef= {componentRef} 
-                    className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
-                    layout = {"landscape"}
-                    title ={inputData.student_name}/>
+
+            {view != "form" && (
+              <>
+                <SaveControl
+                  contentRef={componentRef}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  layout={"landscape"}
+                  title={inputData.student_name} />
                 <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
                   <Printer />
                   <span>Print</span>
                 </button>
-                </>
-              )}
-      
-   
+              </>
+            )}
+
+
           </div>
 
           {/* Right Action */}
-          <DropdownLanguage 
-            id={"language"} 
-            className={"md:block hidden w-[200px] text-sm border-2 border-slate-600 rounded p-1"} 
-            value ={language} 
+          <DropdownLanguage
+            id={"language"}
+            className={"md:block hidden w-[200px] text-sm border-2 border-slate-600 rounded p-1"}
+            value={language}
             handleChange={handleLanguageChange} />
         </div>
       </aside>
@@ -170,17 +170,17 @@ const LevelCheckPage = () => {
             </button>
             {view === "view" && (
               <>
-                <SaveControl 
-                    contentRef= {componentRef} 
-                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
-                    layout = {"landscape"}
-                    title ={inputData.student_name}/>
+                <SaveControl
+                  contentRef={componentRef}
+                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                  layout={"landscape"}
+                  title={inputData.student_name} />
                 <button onClick={() => { handlePrint(); setIsMenuOpen(false); }} className="rounded-xl border px-3 py-2">
                   Print
                 </button>
               </>
-            ) }
-       
+            )}
+
           </div>
         </div>
       )}
@@ -197,15 +197,15 @@ const LevelCheckPage = () => {
               </div>
             </div>
           ) : (
-              <LevelCheckForm inputData={inputData} setInputData={setInputData} />
+            <LevelCheckForm inputData={inputData} setInputData={setInputData} />
           )}
         </section>
 
         {/* READ-ONLY VIEW */}
         <section id="levelCheckPage" className={`relative ${view !== "view" ? "hidden" : "block"} `}>
-            <div className="print-component-landscape" ref={componentRef}>
-              {language !== "" && inputData && <PlotLevelCheck data={inputData} />}
-            </div>
+          <div className="print-component-landscape" ref={componentRef}>
+            {language !== "" && inputData && <PlotLevelCheck data={inputData} />}
+          </div>
         </section>
       </div>
     </div>
