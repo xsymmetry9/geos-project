@@ -11,7 +11,6 @@ import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
 import PrintButton from "@/components/PrintButton";
-import { data } from "react-router";
 
 type PlotLevelCheckProps = {
   language: Language;
@@ -245,7 +244,8 @@ const Homepage = () => {
                     <Link
                       className="flex items-center gap-2 p-2 hover:bg-slate-50"
                       to={{
-                        pathname:`/spr/edit/${item.id}`}}                      
+                        pathname: `/spr/edit/${item.id}`
+                      }}
                     >
                       <Pencil size={18} />
                       <span className="text-sm">Edit</span>
@@ -295,22 +295,20 @@ const Homepage = () => {
 
       <div className="mx-auto w-full max-w-[800px]">
         <button
-          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${
-            page === "spr"
-              ? "bg-stone-600 text-white"
-              : "bg-white text-black outline outline-stone-600"
-          }`}
+          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${page === "spr"
+            ? "bg-stone-600 text-white"
+            : "bg-white text-black outline outline-stone-600"
+            }`}
           onClick={toggleLevelCheckSPR}
           name="spr"
         >
           SPR
         </button>
         <button
-          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${
-            page === "levelCheck"
-              ? "bg-stone-600 text-white"
-              : "bg-white text-black outline outline-stone-600"
-          }`}
+          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${page === "levelCheck"
+            ? "bg-stone-600 text-white"
+            : "bg-white text-black outline outline-stone-600"
+            }`}
           onClick={toggleLevelCheckSPR}
           name="levelCheck"
         >
@@ -351,7 +349,7 @@ const Homepage = () => {
             </Link>
             <Link
               className="flex h-12 w-[250px] items-center gap-2 rounded bg-teal-700 p-2 text-white hover:bg-teal-500"
-              to={"/levelCheck"}
+              to={"/levelCheck/create"}
             >
               <Plus size={18} />
               <span>Level Check Form</span>
