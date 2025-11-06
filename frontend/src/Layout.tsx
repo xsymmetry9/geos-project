@@ -5,9 +5,9 @@ import Footer from "@/components/Footer";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
+    <div className="relative min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <main className="min-h-0 min-w-0 overflow-y-auto">
+      <main className="min-h-0 min-w-0">
         <Outlet />
       </main>
       <Footer />
