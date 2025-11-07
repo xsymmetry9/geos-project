@@ -41,22 +41,9 @@ const PrintControl = ({ contentRef, className, layout }: PrintControlProps) => {
     const blobUrl = URL.createObjectURL(blob);
 
     window.open(blobUrl, "_blank", "noopener,noreferrer");
-
-    // const iframe = document.createElement("iframe");
-    // iframe.style.position = "fixed";
-    // iframe.style.right = "0";
-    // iframe.style.bottom = "0";
-    // iframe.style.width = "0";
-    // iframe.style.height = "0";
-    // iframe.src = blobUrl.toString();
-    // document.body.appendChild(iframe);
-    // iframe.onload = () => {
-    //   iframe.contentWindow?.focus();
-    //   iframe.contentWindow?.print();
-    // };
   };
   return (
-    <button className={`flex gap-2 items-center justify-center${className}`} onClick={handlePrint}>
+    <button className={`flex gap-2 items-center justify-center ${className}`} onClick={handlePrint}>
       <Printer size={24} />
       <span>Print</span>
     </button>
