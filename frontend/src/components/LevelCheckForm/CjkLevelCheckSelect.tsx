@@ -19,29 +19,30 @@ type Props = {
 const scoreRange = (level: string): [number, number] => {
     switch (level) {
         case "Pre-A1":
-            return 0;
+            return [0, 0];
         case "A1":
-            return [1, 2];
+            return [0, 1];
         case "A2":
-            return [2, 3];
+            return [1, 2];
         case "B1":
-            return [3, 4];
+            return [2, 3];
         case "B2":
-            return [5, 6];
+            return [3, 4];
         case "C1":
-            return [6, 7];
+            return [5, 6];
         case "C2":
-            return 7;
+            return [6, 7];
         default:
             return [0, 7];
     }
 };
 
-const cjkScoreToBand = (score: number): "0" | "A1-A2" | "B1-B2" | "C1-C2" => {
+const cjkScoreToBand = (score: number): "0" | "A1-A2" | "B1-B2" | "C1-C2" | null => {
     if (score >= 0 && score < 1) return "0";
     if (score >= 1 && score < 3) return "A1-A2";
     if (score >= 3 && score < 5) return "B1-B2";
-    return "C1-C2";
+    if(score >= 5 && score <= 7) return "C1-C2";
+    return null;
 };
 
 export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
