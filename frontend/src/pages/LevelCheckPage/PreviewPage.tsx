@@ -8,8 +8,6 @@ import {
 } from "./shared";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
 import { useParams } from "react-router-dom";
-import html2canvas from "html2canvas-pro";
-import jsPDF from "jspdf";
 import SaveControl from "@/components/SaveControl";
 import PrintControl from "@/components/PrintControl";
 
