@@ -34,10 +34,10 @@ Hence, English format is different from CJK.
 (x) Add a extract and print button
 ### 2. Add a mobile version 
 (x) Add a burger button that opens and closes the menu action bar
-() Change columns for strength and weakness.  If window is small, the strength and weakness should be in the same column
+(x) Change columns for strength and weakness.  If window is small, the strength and weakness should be in the same column
 ### 3. Add Icons for buttons
 (x) Add icon before buttons for print, save, download, and view
 
-## Future Changes
-() Change layout for preview
-() Add edit button - Goes back to edit page
+## Future Changes 11/10/2025
+(x) Change layout for preview 
+(x) Add edit button - Goes back to edit page
