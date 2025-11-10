@@ -180,8 +180,7 @@ const LevelCheckPage = () => {
                 <PrintControl
                   contentRef={componentRef}
                   className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
-                  layout={"landscape"}
-                  title={inputData.student_name} />
+                  layout={"landscape"} />
               </>
             )}
 
