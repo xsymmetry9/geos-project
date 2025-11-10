@@ -19,20 +19,7 @@ type Props = {
 const scoreRange = (level: string): [number, number] => {
     switch (level) {
         case "Pre-A1":
-<<<<<<< HEAD
-            return [0, 0];
-        case "A1":
-            return [0, 1];
-        case "A2":
-            return [1, 2];
-        case "B1":
-            return [2, 3];
-        case "B2":
-            return [3, 4];
-        case "C1":
-            return [5, 6];
-=======
-            return [0, 0.5];
+             return [0, 0.5];
         case "A1":
             return [1, 1.5];
         case "A2":
@@ -43,7 +30,6 @@ const scoreRange = (level: string): [number, number] => {
             return [4, 4.5];
         case "C1":
             return [5, 5.5];
->>>>>>> 0e71bb8c5d56378ea277e242b6fc9e58bac7af31
         case "C2":
             return [6, 7];
         default:
