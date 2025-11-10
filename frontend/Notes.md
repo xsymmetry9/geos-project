@@ -30,7 +30,7 @@ Hence, English format is different from CJK.
 ### 1. Change layout for level check form
 (x) Add a select language at the top right with save, print and preview buttons
 (x) Add a button that changes from form view to preview
-() Add a save button at the top and remove the "submit button at the bottom"
+(x) Add a save button at the top and remove the "submit button at the bottom"
 (x) Add a extract and print button
 ### 2. Add a mobile version 
 (x) Add a burger button that opens and closes the menu action bar
