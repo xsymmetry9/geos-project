@@ -26,7 +26,7 @@
       "textbook": "textbook",
       "date": "date",
       "attendance": "attendance",
-      "total_lessons": "total lessons",
+      "total_lessons": "Total Lessons",
       "times": "times",
       "%_of_attendance": "% of attendance",
       "legends": {
