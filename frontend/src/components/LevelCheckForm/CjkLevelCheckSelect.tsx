@@ -19,6 +19,7 @@ type Props = {
 const scoreRange = (level: string): [number, number] => {
     switch (level) {
         case "Pre-A1":
+<<<<<<< HEAD
             return [0, 0];
         case "A1":
             return [0, 1];
@@ -30,6 +31,19 @@ const scoreRange = (level: string): [number, number] => {
             return [3, 4];
         case "C1":
             return [5, 6];
+=======
+            return [0, 0.5];
+        case "A1":
+            return [1, 1.5];
+        case "A2":
+            return [2, 2.5];
+        case "B1":
+            return [3, 3.5];
+        case "B2":
+            return [4, 4.5];
+        case "C1":
+            return [5, 5.5];
+>>>>>>> 0e71bb8c5d56378ea277e242b6fc9e58bac7af31
         case "C2":
             return [6, 7];
         default:
@@ -59,15 +73,15 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
 
     const text = levelCheckFormTranslation(inputData.language);
 
-    const currentBand = score !== undefined && score !== "" ? cjkScoreToBand(score) : level;
+    const currentBand = score !== undefined && score !== "" ? cjkScoreToBand(score) : level; // returns [min , max]
 
     const predefinedStrengths =
-        currentBand && levelCheckData[item]?.[currentBand]?.strength
+        levelCheckData[item]?.[currentBand]?.strength
             ? levelCheckData[item][currentBand].strength
             : [];
 
     const predefinedWeaknesses =
-        currentBand && levelCheckData[item]?.[currentBand]?.weakness
+        levelCheckData[item]?.[currentBand]?.weakness
             ? levelCheckData[item][currentBand].weakness
             : [];
 
@@ -249,7 +263,7 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                         {(() => {
                             const [min, max] = scoreRange(level);
                             const options = [];
-                            for (let i = Math.round(min * 2); i < Math.round(max * 2); i++) {
+                            for (let i = Math.round(min * 2); i <= Math.round(max * 2); i++) {
                                 const val = (i / 2).toFixed(1);
                                 options.push(
                                     <option key={val} value={val}>
