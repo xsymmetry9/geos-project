@@ -1,4 +1,6 @@
 import legend from "@/assets/other/legend.json";
+import cjkLegend from "@/assets/other/cjklegend.json";
+
 import { Language } from "@/utils/common";
 type Number = {
   min: number;
@@ -34,26 +36,35 @@ export const formatNum = ({ min, max }: Number): string => {
   return `${formatMin(min)} - ${formatMax(max)}`;
 };
 const Legend = ({ language }: { language: Language }) => {
+  const getLegend = () => {
+    if(language === "english") {
+      return legend;
+    } else {
+      return cjkLegend;
+    }
+  }
+
+  const arr = getLegend();
   return (
     <caption
       className={`border-t border-b border-slate-500 text-gray-800 ${textSize(language)} mb-3`}
     >
       <div className="grid grid-cols-10 items-center justify-center gap-5 border-r border-l border-slate-600 bg-orange-100 p-[2px]">
-        {legend[language].map((item, index) => (
+        {arr[language].map((item, index) => (
           <div key={index} className="">
             {formatNum(item.score)}
           </div>
         ))}
       </div>
       <div className="grid grid-cols-10 items-center justify-center gap-5 border-r border-l border-slate-600 bg-white p-1">
-        {legend[language].map((item, index) => (
+        {arr[language].map((item, index) => (
           <div key={index} className="">
             {item.name}
           </div>
         ))}
       </div>
       <div className="grid grid-cols-10 items-center justify-center gap-5 border-r border-l border-slate-600 bg-orange-300 p-[2px]">
-        {legend[language].map((item, index) => (
+        {arr[language].map((item, index) => (
           <div key={index} className="">
             {item.description}
           </div>
