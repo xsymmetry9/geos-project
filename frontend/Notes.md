@@ -31,9 +31,13 @@ Hence, English format is different from CJK.
 (x) Add a select language at the top right with save, print and preview buttons
 (x) Add a button that changes from form view to preview
 () Add a save button at the top and remove the "submit button at the bottom"
-() Add a extract and print button
+(x) Add a extract and print button
 ### 2. Add a mobile version 
 (x) Add a burger button that opens and closes the menu action bar
 () Change columns for strength and weakness.  If window is small, the strength and weakness should be in the same column
 ### 3. Add Icons for buttons
 (x) Add icon before buttons for print, save, download, and view
+
+## Future Changes
+() Change layout for preview
+() Add edit button - Goes back to edit page
