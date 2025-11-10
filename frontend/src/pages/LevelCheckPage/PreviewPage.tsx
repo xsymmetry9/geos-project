@@ -7,16 +7,17 @@ import {
   normalizeCjk
 } from "./shared";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import SaveControl from "@/components/SaveControl";
 import PrintControl from "@/components/PrintControl";
+import { Menu, Pencil } from "lucide-react";
 
 const PreviewPage = () => {
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<EnglishEntry | CjkEntry | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const promiseResolve = useRef<null | (() => void)>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,22 +98,67 @@ const PreviewPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="w-full bg-slate-50 grid grid-rows-[auto_1fr]">
+      {/* top navigation bar */}
+      <aside className="bg-white border-b sticky top-0 z-20">
+        <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
+          <div
+            className="flex flex-row items-center gap-2" id="nav-levelCheckForm">
+            <button type="button" aria-label="Open menu" className="mr-1 rounded-xl border px-3 py-1.5 shadow-sm md:hidden" onClick={() => setIsMenuOpen(true)}>
+              <Menu />
+            </button>
+            <Link className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"
+              to={`/levelCheck/edit/${data.id}`}>
+              <Pencil size="24" />
+              <span>Edit</span>
+            </Link>
+            <SaveControl
+              contentRef={componentRef}
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"
+              layout="landscape"
+              title="level-check" />
+            <PrintControl
+              contentRef={componentRef}
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape" />
+          </div>
+        </div>
+
+
+      </aside>
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setIsMenuOpen(false)}>
+            <div className="absolute top-0 right-0 h-full w-72 max-w-[85%] bg-white shadow-xl p-3 flex flex-col gap-3">
+              <div className="flex items-center justify-between border-b pb-2">
+                <h3 className="text-base font-semibold">Level Check</h3>
+                {/* close button - can be redesign */}
+                <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="rounded-md border px-2 py-1 text-sm">✕
+                </button>
+              </div>
+              <Link className="cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white" to={`/levelCheck/edit/${data.id}`}>
+                <Pencil />
+                <span>Edit</span></Link>
+              <SaveControl
+                contentRef={componentRef}
+                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                layout={"landscape"}
+                title={data.student_name} />
+              <PrintControl
+                contentRef={componentRef}
+                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                layout={"landscape"} />
+            </div>
+          </div>
+
+        </div>
+      )}
       {data && (
         <>
           <div className="print-component-landscape" ref={componentRef}>
             <PlotLevelCheck data={data} />
           </div>
           <div className="flex gap-6 justify-end items-center h-24">
-            <SaveControl
-              contentRef={componentRef}
-              className="btn-primary"
-              layout="landscape"
-              title="level-check" />
-            <PrintControl
-              contentRef={componentRef}
-              className="btn-primary"
-              layout="landscape" />
+
           </div>
         </>
       )}
