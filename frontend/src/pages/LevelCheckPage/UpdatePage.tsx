@@ -210,17 +210,34 @@ const EditPage = () => {
                 <button
                   onClick={() => setIsMenuOpen(false)}
                   aria-label="Close menu"
-                  className="rounded-md border px-2 py-1 text-sm">
-                  <X size={16} />
+                  className="rounded-md border px-2 py-1 text-sm">✕
                 </button>
               </div>
-              <button className="rounded-xl bg-dark-green px-3 py-2 text-white">
+              <button className="rounded-xl bg-dark-green px-3 py-2 text-white"
+                onClick={() => { toggleView(); setIsMenuOpen(false); }}>
                 {view === "form" ? "Switch to View" : "Back to form"}
               </button>
+              {view === "view" && (
+                <>
+                  <SaveControl
+                    contentRef={componentRef}
+                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                    layout={"landscape"}
+                    title={inputData.student_name} />
+                  <PrintControl
+                    contentRef={componentRef}
+                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                    layout={"landscape"} />
+                </>
+
+              )}
+
             </div>
+
           </div>
         </div>
-      )}
+      )
+      }
       {/* Content */}
       <div className="mx-auto w-full max-[1100px] px-4 py-6">
         {view === "form" ? (
@@ -228,8 +245,8 @@ const EditPage = () => {
             <LevelCheckForm inputData={inputData} setInputData={setInputData} />
           </section>
         ) : (
-          <section className="relative hidden min-[600px]:block">
-            <div className="sticky top-0 h-screen w-full overflow-auto p-4">
+          <section className={`relative ${view !== "view" ? "hidden" : "block"}`}>
+            <div className="max-w-md:overflow-x-scroll p-4">
               <div className="print-component-landscape" ref={componentRef}>
                 <PlotLevelCheck data={inputData} />
               </div>
@@ -239,7 +256,7 @@ const EditPage = () => {
 
 
       </div>
-    </div>
+    </div >
   );
 };
 
