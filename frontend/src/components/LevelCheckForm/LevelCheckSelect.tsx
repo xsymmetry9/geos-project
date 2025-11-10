@@ -279,7 +279,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
         </label>
       )}
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid md:grid-cols-2 gap-3">
         {isScoreValid && (
           <>
             {/* Strengths */}
