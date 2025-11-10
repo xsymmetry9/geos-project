@@ -149,7 +149,6 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </div>
         </section>
         <div className="flex w-full justify-center gap-3 pt-3">
-          <input type="submit" className="btn-primary" value="submit" />
           <Link to="/" className="btn-primary">
             Cancel
           </Link>
