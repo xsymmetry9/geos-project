@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <div className="relative min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <main className="min-h-0 min-w-0">
+      <main className="min-h-0 min-w-0 px-2">
         <Outlet />
       </main>
       <Footer />
