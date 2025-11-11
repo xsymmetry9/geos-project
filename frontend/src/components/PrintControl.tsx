@@ -7,8 +7,9 @@ type PrintControlProps = {
   contentRef: React.RefObject<HTMLDivElement>;
   className: string;
   layout: "portrait" | "landscape";
+  iconSize: number;
 };
-const PrintControl = ({ contentRef, className, layout }: PrintControlProps) => {
+const PrintControl = ({ contentRef, className, layout, iconSize }: PrintControlProps) => {
   const handlePrint = async () => {
     if (!contentRef.current) return;
 
@@ -43,8 +44,8 @@ const PrintControl = ({ contentRef, className, layout }: PrintControlProps) => {
     window.open(blobUrl, "_blank", "noopener,noreferrer");
   };
   return (
-    <button className={`flex gap-2 items-center justify-center ${className}`} onClick={handlePrint}>
-      <Printer size={24} />
+    <button className={`${className}`} onClick={handlePrint}>
+      <Printer size={iconSize} />
       <span>Print</span>
     </button>
   );

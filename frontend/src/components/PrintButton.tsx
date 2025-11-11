@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import { PrinterIcon } from "lucide-react";
 import { getStudentById } from "@/utils/functions";
 import { Language } from "@/utils/common";
 import { PrintContent } from "@/components/PrintStudentProgressReport";
-import {LevelCheckPreview} from "@/pages/LevelCheck";
+import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
+import PrintControl from "./PrintControl";
 import { Student } from "@/type/Student";
 
 type PrintButtonProps = {
@@ -16,7 +16,7 @@ type PrintButtonProps = {
 };
 
 const PrintButton: React.FC<PrintButtonProps> = ({
-  className = "",
+  className,
   docID,
   language,
   docType,
@@ -52,23 +52,23 @@ const PrintButton: React.FC<PrintButtonProps> = ({
     [graphReady]
   );
 
-  const handlePrint = useReactToPrint({
-    content: () => contentRef.current,
-    documentTitle: `${data?.name ?? "SPR"}-${docID}`,
-    onBeforeGetContent: async () => {
+  // const handlePrint = useReactToPrint({
+  //   content: () => contentRef.current,
+  //   documentTitle: `${data?.name ?? "SPR"}-${docID}`,
+  //   onBeforeGetContent: async () => {
       
-      await new Promise<void>((r) => requestAnimationFrame(() => r()));
+  //     await new Promise<void>((r) => requestAnimationFrame(() => r()));
 
-      await waitForGraphReady(5000);
+  //     await waitForGraphReady(5000);
 
-      await new Promise<void>((r) => queueMicrotask(r));
-    },
-    onAfterPrint() {
-      setSelectedId(null);
-      setGraphReady(false);
-      promiseResolveRef.current = null;
-    },
-  });
+  //     await new Promise<void>((r) => queueMicrotask(r));
+  //   },
+  //   onAfterPrint() {
+  //     setSelectedId(null);
+  //     setGraphReady(false);
+  //     promiseResolveRef.current = null;
+  //   },
+  // });
 
   const handleGraphReady = React.useCallback(() => {
     if (!graphReady) {
@@ -83,12 +83,12 @@ const PrintButton: React.FC<PrintButtonProps> = ({
   const Content = ({docType}) => {
     if(docType === "SPR"){
       return <PrintContent
-        parsedData={data}
+        parsedData={data }
         language={language}
         onGraphReady={handleGraphReady}
       />;
     } else if(docType === "levelCheckReport"){
-      return <LevelCheckPreview
+      return <PlotLevelCheck
         data={data}
         language={language} />;
     }  else {
@@ -97,20 +97,16 @@ const PrintButton: React.FC<PrintButtonProps> = ({
   };
   return (
     <>
-      <button
-        type="button"
-        className={`${className} ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
-        onClick={handlePrint}
-        disabled={disabled}
-      >
-        <PrinterIcon size={18} />
-        <span className="text-sm">Print</span>
-      </button>
+    <PrintControl 
+      contentRef={contentRef} 
+      className={`${className} ${disabled ? "cursor-not-allowed opacity-50": ""}`} 
+      layout= {docType ==="SPR" ? "portrait" : "landscape"}
+      iconSize={18}/>
 
-      <div ref={contentRef} className="print-sandbox">
+      <div ref={contentRef}>
         {data && (
-          <div className="">
-            <Content docType="SPR" />
+          <div className="print-component">
+            <Content docType= {docType} />
           </div>
         )}
       </div>
