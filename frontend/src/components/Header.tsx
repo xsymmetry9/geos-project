@@ -35,7 +35,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="bg-white px-4 pb-4 md:hidden">
+        <div className="bg-white px-4 pb-4 md:hidden" onClick={() => setMenuOpen(false)}>
           <Link
             to={"/"}
             className="block py-2 font-medium text-gray-700 transition duration-200 hover:text-blue-600"
