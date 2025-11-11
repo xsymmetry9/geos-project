@@ -10,7 +10,7 @@ import { CreateNewFormBtn, CloseBtn } from "@/components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
-import PrintButton from "@/components/PrintButton";
+// import PrintButton from "@/components/PrintButton";
 
 type PlotLevelCheckProps = {
   language: Language;
@@ -93,7 +93,7 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
                     <Search size={18} />
                     <span className="text-sm">View</span>
                   </Link>
-                  <PrintButton className={"flex items-center gap-2 p-2 hover:bg-slate-50"} docType="levelCheckReport" docID={item.id} language={language} setSelectedId={setSelectedId} />
+                  {/* <PrintButton className={"flex items-center gap-2 p-2 hover:bg-slate-50"} docType="levelCheckReport" docID={item.id} language={language} setSelectedId={setSelectedId} /> */}
                   <button
                     className="flex w-full items-center gap-2 p-2 text-left hover:bg-slate-50"
                     onClick={() =>
@@ -257,12 +257,12 @@ const Homepage = () => {
                       <Search size={18} />
                       <span className="text-sm">View</span>
                     </Link>
-                    <PrintButton
+                    {/* <PrintButton
                       className="flex w-full cursor-pointer items-center gap-2 p-2 text-left hover:bg-slate-50"
                       docID={item.id}
                       language={user?.language}
                       setSelectedId={setSelectedId}
-                    />
+                    /> */}
                     <button
                       className="flex w-full cursor-pointer items-center gap-2 p-2 text-left hover:bg-slate-50"
                       onClick={() =>
