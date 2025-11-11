@@ -15,10 +15,11 @@ interface FormProps {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSave: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 interface CommentProps {
-  setInputData: React.Dispatch<React.SetStateAction<LevelCheckEntry>>;
+  setInputData: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
   className: string;
   name: string;
   id: string;
@@ -48,7 +49,7 @@ const Comment: React.FC<CommentProps> = ({ className, name, setInputData, id, va
     </>
   );
 };
-const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, handleSubmit }) => {
+const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, handleSubmit, handleSave }) => {
   if (inputData === null) return <p>Loading...</p>;
   const text = levelCheckFormTranslation(inputData.language);
 
@@ -57,7 +58,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
       <div className="mt-6 flex flex-col items-center justify-center">
         <h1 className="capitalize py-3 text-2xl font-bold">{text.title}</h1>
       </div>
-      <form autoComplete="off" onSubmit={handleSubmit}>
+      <form autoComplete="off">
         <section className="px-3 py-6">
           <div className="p-1">
             <label htmlFor="student_name">
@@ -149,6 +150,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </div>
         </section>
         <div className="flex w-full justify-center gap-3 pt-3">
+          <button className="btn-primary" onClick = {handleSave}>Save</button>
           <Link to="/" className="btn-primary">
             Cancel
           </Link>
@@ -160,8 +162,9 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
 type LevelCheckFormProps = {
   inputData?: EnglishEntry | CjkEntry;
   setInputData?: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
+  handleSave: (e: React.FormEvent<HTMLFormElement>) => void;
 };
-const LevelCheckForm = ({ inputData, setInputData }: LevelCheckFormProps) => {
+const LevelCheckForm = ({ inputData, setInputData, handleSave}: LevelCheckFormProps) => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -207,26 +210,26 @@ const LevelCheckForm = ({ inputData, setInputData }: LevelCheckFormProps) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    if (error !== "") return;
-    if (inputData === undefined) return setError("Submit failed: inputData is undefined.");
+  //   if (error !== "") return;
+  //   if (inputData === undefined) return setError("Submit failed: inputData is undefined.");
 
-    const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
-    if (!getUser) return;
+  //   const getUser = JSON.parse(localStorage.getItem("GEOS_app") || "{}");
+  //   if (!getUser) return;
 
-    const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
+  //   const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
 
-    if (index !== -1) {
-      getUser.levelCheck[index] = inputData;
-    } else {
-      getUser.levelCheck.push(inputData);
-    }
+  //   if (index !== -1) {
+  //     getUser.levelCheck[index] = inputData;
+  //   } else {
+  //     getUser.levelCheck.push(inputData);
+  //   }
 
-    localStorage.setItem("GEOS_app", JSON.stringify(getUser));
-    navigate(`/levelCheck/preview/${inputData.id}`, { replace: true, state: { data: inputData } });
-  };
+  //   localStorage.setItem("GEOS_app", JSON.stringify(getUser));
+  //   navigate(`/levelCheck/preview/${inputData.id}`, { replace: true, state: { data: inputData } });
+  // };
 
   if (inputData === null || inputData === undefined) return;
 
@@ -237,7 +240,8 @@ const LevelCheckForm = ({ inputData, setInputData }: LevelCheckFormProps) => {
           inputData={inputData}
           setInputData={setInputData}
           handleChange={handleChange}
-          handleSubmit={handleSubmit}
+          // handleSubmit={handleSubmit}
+          handleSave = {handleSave}
         />
       )}
     </>
