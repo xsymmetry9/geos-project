@@ -200,7 +200,7 @@ const LevelCheckPage = () => {
               </div>
             </div>
           ) : (
-            <LevelCheckForm inputData={inputData} setInputData={setInputData} />
+            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave = {handleSave}/>
           )}
         </section>
 

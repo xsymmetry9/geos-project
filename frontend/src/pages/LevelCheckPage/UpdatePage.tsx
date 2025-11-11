@@ -242,7 +242,7 @@ const EditPage = () => {
       <div className="mx-auto w-full max-[1100px] px-4 py-6">
         {view === "form" ? (
           <section>
-            <LevelCheckForm inputData={inputData} setInputData={setInputData} />
+            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave={handleSave}/>
           </section>
         ) : (
           <section className={`relative ${view !== "view" ? "hidden" : "block"}`}>
