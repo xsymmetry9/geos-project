@@ -132,6 +132,7 @@ const LevelCheckPage = () => {
                   contentRef={componentRef}
                   className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
                   layout={"landscape"}
+                  iconSize={24}
                 />
               </>
             )}
@@ -180,7 +181,9 @@ const LevelCheckPage = () => {
                 <PrintControl
                   contentRef={componentRef}
                   className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
-                  layout={"landscape"} />
+                  layout={"landscape"}
+                  iconSize={24} />
+                  
               </>
             )}
 
