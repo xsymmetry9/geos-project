@@ -90,7 +90,7 @@ const PlotLevelCheck = ({ data, handleDisplayDelete }: PlotLevelCheckProps) => {
                     to={`/levelCheck/preview/${item.id}`}
                   >
                     <Search size={18} />
-                    <span className="text-sm">View</span>
+                    <span className="text-sm">Print Preview</span>
                   </Link>
                   <button
                     className="flex w-full items-center gap-2 p-2 text-left hover:bg-slate-50"
@@ -253,7 +253,7 @@ const Homepage = () => {
                       to={`/spr/view/${item.id}`}
                     >
                       <Search size={18} />
-                      <span className="text-sm">View</span>
+                      <span className="text-sm">Print Preview</span>
                     </Link>
                     <button
                       className="flex w-full cursor-pointer items-center gap-2 p-2 text-left hover:bg-slate-50"
