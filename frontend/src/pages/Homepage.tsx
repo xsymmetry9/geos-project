@@ -10,7 +10,6 @@ import { CreateNewFormBtn, CloseBtn } from "@/components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
-import PrintButton from "@/components/PrintButton";
 
 type PlotLevelCheckProps = {
   language: Language;
@@ -20,7 +19,7 @@ type PlotLevelCheckProps = {
 const formattedDate = (dateCreated: Date) => {
   return format(dateCreated, "MM/dd/yyyy");
 };
-const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckProps) => {
+const PlotLevelCheck = ({ data, handleDisplayDelete }: PlotLevelCheckProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const dropDownRef = useRef<HTMLDivElement | null>(null);
@@ -93,7 +92,6 @@ const PlotLevelCheck = ({ language, data, handleDisplayDelete }: PlotLevelCheckP
                     <Search size={18} />
                     <span className="text-sm">View</span>
                   </Link>
-                  <PrintButton className={"flex text-sm items-center gap-2 p-2 hover:bg-slate-50"} docType="levelCheckReport" docID={item.id} language={language} setSelectedId={setSelectedId} />
                   <button
                     className="flex w-full items-center gap-2 p-2 text-left hover:bg-slate-50"
                     onClick={() =>
@@ -257,14 +255,6 @@ const Homepage = () => {
                       <Search size={18} />
                       <span className="text-sm">View</span>
                     </Link>
-                    <PrintButton
-                      className= {"flex w-full text-sm cursor-pointer items-center gap-2 p-2 text-left hover:bg-slate-50"}
-                      docID={item.id}
-                      language ={user?.language}
-                      docType="SPR"
-                      setSelectedId={setSelectedId}
-                      iconSize={18}
-                    />
                     <button
                       className="flex w-full cursor-pointer items-center gap-2 p-2 text-left hover:bg-slate-50"
                       onClick={() =>
