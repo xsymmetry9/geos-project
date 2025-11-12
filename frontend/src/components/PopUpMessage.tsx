@@ -5,9 +5,10 @@ import { SquareX, CircleCheckBig } from "lucide-react";
 
 interface PopUpMessageProps {
   setDisplayPopupMessage: React.Dispatch<React.SetStateAction<boolean>>;
+  formId: string;
 }
 
-const PopUpMessage: React.FC<PopUpMessageProps> = ({ setDisplayPopupMessage }) => {
+const PopUpMessage: React.FC<PopUpMessageProps> = ({ formId, setDisplayPopupMessage }) => {
   const { user } = useUser();
   const language = user?.language;
   return (
@@ -20,8 +21,8 @@ const PopUpMessage: React.FC<PopUpMessageProps> = ({ setDisplayPopupMessage }) =
       <div className="flex h-full flex-col items-center justify-center gap-3">
         <CircleCheckBig size={48} className="text-green-600" />
         <p className="text-secondary text-center">Saved successfully!</p>
-        <Link className="btn-primary w-[300px]" to={"/home"}>
-          link to dashboard
+        <Link className="btn-primary w-[300px] capitalize" to={`/spr/view/${formId}`}>
+          view page
         </Link>
       </div>
     </div>

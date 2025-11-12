@@ -146,7 +146,7 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
   };
   return (
     <div className="relative mx-auto w-full max-w-[55rem] bg-white p-3">
-      {displayPopupMessage && <PopUpMessage setDisplayPopupMessage={setDisplayPopupMessage} />}
+      {displayPopupMessage && <PopUpMessage formId= {inputData.id} setDisplayPopupMessage={setDisplayPopupMessage} />}
       <Pagination page={page} language={language} setPage={setPage} />
       <div className="font-secondary static m-auto w-full max-w-lg">
         <form onSubmit={handleSubmit}>
