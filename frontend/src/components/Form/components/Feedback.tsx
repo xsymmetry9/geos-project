@@ -22,7 +22,7 @@ interface FeedbackProps {
 }
 
 const maxFeedbackLength = {
-  english: 425,
+  english: 450,
   chinese: 209,
   japanese: 240,
   korean: 300,
@@ -50,6 +50,19 @@ const Feedback: React.FC<FeedbackProps> = ({
     setCount(feedback.length); //includes spaces
   }, [feedback]);
 
+  useEffect(() => {
+    if (feedback.length > maxFeedbackLength[language]) {
+      setInputError((prevError) => ({ ...prevError, feedback: true }));
+      setWarning(`Too many characters (max ${maxFeedbackLength[language]})`);
+    } else if (feedback.trim() === "") {
+      setInputError((prevError) => ({ ...prevError, feedback: true }));
+      setWarning("Please fill up this section");
+    } else {
+      setInputError((prevError) => ({ ...prevError, feedback: false }));
+      setWarning("");
+    }
+  }, [feedback, language]);
+
   const handleInputData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
@@ -73,7 +86,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       <div className="grid grid-cols-1 py-6" id="feedback">
         <textarea
           className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6"
-          rows={5}
+          rows={8}
           name="feedback"
           id="feedback"
           value={feedback}
