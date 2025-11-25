@@ -23,7 +23,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ page, handler, language }) => {
-  const { nextPage, backPage, printPage } = getPageLabels(language);
+  const { nextPage, backPage } = getPageLabels(language);
   return (
     <>
       {page === 0 ? (
