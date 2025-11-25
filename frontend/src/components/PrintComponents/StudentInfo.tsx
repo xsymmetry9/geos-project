@@ -211,7 +211,7 @@ interface CommentProps {
 export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
   const fontStyleTitleComment = () => {
     if (language === "english") {
-      return "capitalize text-[14.6667px]";
+      return "capitalize text-sm/5";
     } else if (language === "chinese") {
       return "text-[14.6667px]";
     } else if (language === "japanese") {
@@ -222,7 +222,7 @@ export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
   };
   const fontStyleComment = () => {
     if (language === "english") {
-      return "text-[14.6667px]";
+      return "text-sm/5";
     } else if (language === "chinese") {
       return "text-[14.6667px]";
     } else if (language === "japanese") {
