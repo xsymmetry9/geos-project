@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
-import { Archive, Pencil, PrinterIcon, Plus, SquareX, MoreHorizontal, Search } from "lucide-react";
+import { Archive, Pencil, Plus, SquareX, MoreHorizontal, Search } from "lucide-react";
+import Navigation from "./Navigation";
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
-import ExportToExcel from "@/components/ExportToExcel";
-import ImportFromExcel from "@/components/ImportFromExcel";
-import { CreateNewFormBtn, CloseBtn } from "@/components/CustomizedButtons";
+import { CloseBtn } from "@/components/CustomizedButtons";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import { Language } from "@/utils/common";
 import { useUser } from "@/context/UserContext";
@@ -276,39 +275,14 @@ const Homepage = () => {
 
   return (
     <div className="pb-12">
+      <div className="p-b-3 mb-6 flex justify-center gap-3">
+        <Navigation handleControl={handleFormControl} userData={userData} setUserData={setUserData} />
+      </div>
       <h2 className="font-secondary mt-6 mb-6 text-center text-2xl font-semibold">
         {page === "spr" ? "Student's Progress Report" : "Level Checks"}
       </h2>
-      <div className="p-b-3 mb-6 flex justify-center gap-3">
-        <CreateNewFormBtn handleControl={handleFormControl} />
-        <ExportToExcel userData={userData} />
-        <ImportFromExcel userData={userData} setUserData={setUserData} />
-      </div>
 
-      <div className="mx-auto w-full max-w-[800px]">
-        <button
-          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${page === "spr"
-            ? "bg-stone-600 text-white"
-            : "bg-white text-black outline outline-stone-600"
-            }`}
-          onClick={toggleLevelCheckSPR}
-          name="spr"
-        >
-          SPR
-        </button>
-        <button
-          className={`font-secondary w-[150px] cursor-pointer p-2 text-center font-bold ${page === "levelCheck"
-            ? "bg-stone-600 text-white"
-            : "bg-white text-black outline outline-stone-600"
-            }`}
-          onClick={toggleLevelCheckSPR}
-          name="levelCheck"
-        >
-          Level Check
-        </button>
-      </div>
-
-      <div className="">
+      <div className="content">
         {page === "spr" ? (
           userData?.SPR.length ? (
             <PlotSPRTable />
