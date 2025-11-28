@@ -99,7 +99,7 @@ const parseSPREntry = (sheet: any) => {
   return students;
 };
 
-const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData }) => {
+const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData }) => {
   const { SPR, levelCheck } = userData;
 
   const mergedArrayFilterUniqueObjects = useCallback((arr1: any[], arr2: any[]) => {
@@ -169,9 +169,9 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <label htmlFor="file-upload" className="btn-primary flex items-center justify-center">
-        <Upload size={18} className="mr-2" /> Upload File
+    <>
+      <label htmlFor="file-upload" className="cursor-pointer flex items-center justify-center">
+        <Upload size={18} className="mr-2" /> Upload
         <input
           id="file-upload"
           className="hidden"
@@ -180,7 +180,7 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, setUserData
           onChange={handleFileUpload}
         />
       </label>
-    </div>
+    </>
   );
 };
 

@@ -140,9 +140,9 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
   };
   return (
     <>
-      <button className="btn-primary flex items-center justify-center gap-2" onClick={handleExport}>
+      <button className="cursor-pointer flex items-center justify-center gap-2" onClick={handleExport}>
         <DownloadIcon className="icon" size={18} />
-        <span className="visually-hidden">to Excel</span>
+        <span className="visually-hidden">Download</span>
       </button>
     </>
   );

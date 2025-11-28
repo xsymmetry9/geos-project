@@ -1,9 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import ImportFromExcel from '@/components/ImportFromExcel';
+import ExportToExcel from '@/components/ExportToExcel';
 
-const Navigation = () => {
+type NavigationProps = {
+    setPage: () => void;
+    setUserData: () => void;
+    userData: {};
+}
+const Navigation = ({ setPage, userData, setUserData }): NavigationProps => {
     const [dropDownSPR, setDropDownSPR] = useState<boolean>(false);
     const [dropDownLevelCheck, setDropDownLevelCheck] = useState<boolean>(false);
 
+    const toggleLevelCheckSPR = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const id = (e.currentTarget as HTMLButtonElement).id;
+        setPage(id as "view-spr" | "view-levelCheck");
+        setDropDownLevelCheck(false);
+        setDropDownSPR(false);
+    };
     // 1. Create a "ref" to track the navigation element
     const navRef = useRef<HTMLElement>(null);
 
@@ -55,8 +69,8 @@ const Navigation = () => {
                     </button>
 
                     <ul className={`${dropDownSPR ? "block" : "hidden"} absolute top-full left-0 mt-2 w-40 bg-white border rounded shadow-lg z-10`}>
-                        <li className="px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer">New Form</li>
-                        <li className="px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer">View Forms</li>
+                        <li className="text-left w-full px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer"><Link to="/spr/">New Form</Link></li>
+                        <li className="text-left w-full px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer"><button className="cursor-pointer" id="view-spr" onClick={toggleLevelCheckSPR}>View Forms</button></li>
                     </ul>
                 </li>
 
@@ -71,15 +85,15 @@ const Navigation = () => {
                     </button>
 
                     <ul className={`${dropDownLevelCheck ? "block" : "hidden"} absolute top-full left-0 mt-2 w-40 bg-white border rounded shadow-lg z-10`}>
-                        <li className="px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer">New Form</li>
-                        <li className="px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer">View Forms</li>
+                        <li className="text-left w-full px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer"><Link to="/levelCheck">New Form</Link></li>
+                        <li className="text-left w-full px-4 py-2 hover:text-dark-green hover:bg-green-50 cursor-pointer"><button className="cursor-pointer" id="view-levelCheck" onClick={toggleLevelCheckSPR}>View Forms</button></li>
                     </ul>
                 </li>
 
-                <li className="cursor-pointer flex items-center gap-1 p-4 hover:text-dark-green hover:bg-green-50 focus:outline-none">Download</li>
-                <li className="cursor-pointer flex items-center gap-1 p-4 hover:text-dark-green hover:bg-green-50 focus:outline-none">Upload</li>
-            </ul>
-        </nav>
+                <li className="cursor-pointer flex items-center gap-1 p-4 hover:text-dark-green hover:bg-green-50 focus:outline-none"><ExportToExcel userData={userData} /></li>
+                <li className="cursor-pointer flex items-center gap-1 p-4 hover:text-dark-green hover:bg-green-50 focus:outline-none"><ImportFromExcel userData={userData} setUserData={setUserData} /></li>
+            </ul >
+        </nav >
     );
 }
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import { Archive, Pencil, Plus, SquareX, MoreHorizontal, Search } from "lucide-react";
 import Navigation from "./Navigation";
@@ -111,7 +111,7 @@ const PlotLevelCheck = ({ data, handleDisplayDelete }: PlotLevelCheckProps) => {
 };
 
 const Homepage = () => {
-  const [page, setPage] = useState<"spr" | "levelCheck">("spr");
+  const [page, setPage] = useState<"view-spr" | "view-levelCheck">("view-spr");
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
@@ -120,7 +120,6 @@ const Homepage = () => {
     id: string | null;
     type: string;
   }>({ display: false, id: null, type: "" });
-  const { user } = useUser(); // Use usecontext
 
   useEffect(() => {
     const user = getDataFromLocal();
@@ -168,11 +167,6 @@ const Homepage = () => {
   };
 
   const closePage = () => setDeletePage({ display: false, id: null, type: "" });
-
-  const toggleLevelCheckSPR = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const name = (e.currentTarget as HTMLButtonElement).name;
-    setPage(name as "spr" | "levelCheck");
-  };
 
   if (loading) return <h1>Loading ...</h1>;
 
@@ -276,18 +270,18 @@ const Homepage = () => {
   return (
     <div className="pb-12">
       <div className="p-b-3 mb-6 flex justify-center gap-3">
-        <Navigation handleControl={handleFormControl} userData={userData} setUserData={setUserData} />
+        <Navigation userData={userData} setUserData={setUserData} setPage={setPage} />
       </div>
       <h2 className="font-secondary mt-6 mb-6 text-center text-2xl font-semibold">
-        {page === "spr" ? "Student's Progress Report" : "Level Checks"}
+        {page === "view-spr" ? "Student's Progress Report" : "Level Checks"}
       </h2>
 
       <div className="content">
-        {page === "spr" ? (
+        {page === "view-spr" ? (
           userData?.SPR.length ? (
             <PlotSPRTable />
           ) : (
-            <p className="mt-3 text-center text-gray-500">Click add SPR</p>
+            <p className="mt-3 text-center text-gray-500">Click here to create a SPR</p>
           )
         ) : userData?.levelCheck.length ? (
           <PlotLevelCheck
@@ -296,7 +290,7 @@ const Homepage = () => {
             handleDisplayDelete={handleDisplayDelete}
           />
         ) : (
-          <p className="mt-3 text-center text-gray-500">Click add Level Check</p>
+          <p className="mt-3 text-center text-gray-500">Click here to create a Level Check</p>
         )}
       </div>
 
