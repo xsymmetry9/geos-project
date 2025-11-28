@@ -447,10 +447,15 @@ const Homepage = () => {
               />
             </>
           ) : isSPRView ? (
-            <p className="mt-3 text-center text-gray-500">Click here to create a SPR</p>
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p className="mt-3 text-gray-500">Click here to create a SPR</p>
+              <Link className="btn-primary min-w-24" to="/spr">SPR</Link>
+            </div>
           ) : (
-            <p className="mt-3 text-center text-gray-500">Click here to create a Level Check</p>
-          )}
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p className="mt-3 text-gray-500">Click here to create a Level Check Form</p>
+              <Link className="btn-primary min-w-24" to="/levelCheck">Level Check Form</Link>
+            </div>)}
         </div>
       </div>
 
