@@ -1,5 +1,5 @@
 import { useUser } from "@/context/UserContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Language, Aspect } from "@/utils/common";
 import PlotTableLevelChecks from "@/components/PlotTableLevelChecks";
 
@@ -24,6 +24,23 @@ const languageOptions = ["english", "chinese", "japanese", "korean"] as Language
 
 const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
   const [menu, setMenu] = useState<"levels" | "spr">("levels");
+  const navRef = useRef<HTMLElement | null>(null);
+  const [openLanguage, setOpenLanguage] = useState<boolean>(false);
+  const [openView, setOpenView] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenLanguage(false);
+        setOpenView(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const currentViewLabel = menu === "levels" ? "Level Checks" : "SPR";
   // Max rows across all categories
   const maxLen = Math.max(0, ...categories.map((c) => levelInfo?.[c]?.length ?? 0));
 
@@ -36,24 +53,36 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
   return (
     <>
       <div className="bg-green-50">
-        <nav className="max-w-[1100px] w-full mx-auto px-2 flex items-center gap-4">
-          <div id="language-nav" className="flex bg-green-50 items-center justify-center my-4 gap-2">
-            <label htmlFor="lang" className="text-sm font-medium">
-              Language:
-            </label>
-            <select
-              id="lang"
-              className="rounded border px-2 py-1 capitalize"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as Language)}
-            >
-              {languageOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-          </div>
+        <nav className="max-w-[1100px] w-full mx-auto px-2 flex justify-center items-center gap-4">
+          <ul className="flex items-center gap-6">
+            <li className="relative">
+              <button type="button"
+                onClick={() => {
+                  setOpenLanguage((prev) => !prev);
+                  setOpenView(false);
+                }}
+                className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none">
+                <span>Language</span>
+                <span className="text-xs text-gray-400">▼</span>
+              </button>
+              {openLanguage && (
+                <div className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 ">
+                  <div className="py-1 text-sm">
+                    {languageOptions.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => {
+                          setLanguage(opt);
+                          setOpenLanguage(false);
+                        }}
+                        className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">{opt}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </li>
+          </ul>
           <div id="" className="my-2 flex items-center gap-2">
             <label htmlFor="menu-nav" className="text-sm font-medium">
               Menu:
@@ -66,11 +95,11 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
               }}
             >
               <option value="levels">Level Checks</option>
-              <option value="spr">Student Progress Reports</option>
+              <option value="spr">S</option>
             </select>
           </div>
-        </nav>
-      </div>
+        </nav >
+      </div >
 
       <div className="container mx-auto">
         {menu === "spr" && (
