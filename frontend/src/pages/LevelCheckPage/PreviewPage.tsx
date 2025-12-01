@@ -119,11 +119,10 @@ const PreviewPage = () => {
               title="level-check" />
             <PrintControl
               contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape" />
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape"
+              iconSize={24} />
           </div>
         </div>
-
-
       </aside>
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
@@ -153,14 +152,18 @@ const PreviewPage = () => {
         </div>
       )}
       {data && (
-        <>
-          <div className="print-component-landscape" ref={componentRef}>
+        <div className="w-full bg-gray-50 py-3 px-2 overflow-x-auto">
+          {/* Scroll container for small screens */}
+          <div
+            ref={componentRef}
+            className="print-component-landscape mx-auto min-w-[1026px]"
+          >
             <PlotLevelCheck data={data} />
           </div>
-          <div className="flex gap-6 justify-end items-center h-24">
 
-          </div>
-        </>
+          {/* spacer / future controls */}
+          <div className="flex gap-6 justify-end items-center h-24" />
+        </div>
       )}
     </div>
   );

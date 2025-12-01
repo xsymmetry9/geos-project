@@ -398,7 +398,7 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   );
 };
 type LevelCheckOverallProps = {
-  name: string;
+  name: "english" | "chinese" | "korean" | "japanese";
   item: string;
   data: string;
   handleChange?: (
@@ -406,7 +406,9 @@ type LevelCheckOverallProps = {
   ) => void;
 };
 export const LevelCheckOverall = ({ name, data, handleChange }: LevelCheckOverallProps) => {
+  const language = data.language;
   const arrOfLevels = levelInformation.english;
+  const arrOfCjkLevels = ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"]
 
   return (
     <div className="pb-3">
@@ -422,11 +424,23 @@ export const LevelCheckOverall = ({ name, data, handleChange }: LevelCheckOveral
           <option className="font-normal" value={""}>
             Select Level
           </option>
-          {arrOfLevels.map((lvl) => (
-            <option key={lvl.name} className="font-normal" value={lvl.name}>
-              {lvl.name}
-            </option>
-          ))}
+          {language == "english" ? (
+            <>
+              {arrOfLevels.map((lvl) => (
+                <option key={lvl.name} className="font-normal" value={lvl.name}>
+                  {lvl.name}
+                </option>
+              ))}
+            </>
+          ) : (
+            <>
+              {arrOfCjkLevels.map((lvl, idx) => (
+                <option key={idx} className="font-normal" value={lvl}>
+                  {lvl}
+                </option>
+              ))}
+            </>
+          )}
         </select>
       </label>
     </div>

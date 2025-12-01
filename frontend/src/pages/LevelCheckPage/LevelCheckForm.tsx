@@ -54,7 +54,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
   const text = levelCheckFormTranslation(inputData.language);
 
   return (
-    <div className="font-secondary mx-auto h-full w-full max-w-[50em] px-3 py-6">
+    <div className="font-secondary mx-auto h-full w-full max-w-[50em] py-6">
       <div className="mt-6 flex flex-col items-center justify-center">
         <h1 className="capitalize py-3 text-2xl font-bold">{text.title}</h1>
       </div>
@@ -150,7 +150,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </div>
         </section>
         <div className="flex w-full justify-center gap-3 pt-3">
-          <button className="btn-primary" onClick = {handleSave}>Save</button>
+          <button className="btn-primary" onClick={handleSave}>Save</button>
           <Link to="/" className="btn-primary">
             Cancel
           </Link>
@@ -164,7 +164,7 @@ type LevelCheckFormProps = {
   setInputData?: React.Dispatch<React.SetStateAction<EnglishEntry | CjkEntry>>;
   handleSave: (e: React.FormEvent<HTMLFormElement>) => void;
 };
-const LevelCheckForm = ({ inputData, setInputData, handleSave}: LevelCheckFormProps) => {
+const LevelCheckForm = ({ inputData, setInputData, handleSave }: LevelCheckFormProps) => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -241,7 +241,7 @@ const LevelCheckForm = ({ inputData, setInputData, handleSave}: LevelCheckFormPr
           setInputData={setInputData}
           handleChange={handleChange}
           // handleSubmit={handleSubmit}
-          handleSave = {handleSave}
+          handleSave={handleSave}
         />
       )}
     </>
