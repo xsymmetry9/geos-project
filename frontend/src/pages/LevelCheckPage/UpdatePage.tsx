@@ -166,8 +166,8 @@ const EditPage = () => {
 
   // ---------- render ----------
   return (
-    <div className="">
-      <aside className="bg-white border-b sticky top-0 z-20">
+    <div>
+      <aside className="bg-white shadow-sm sticky top-0 z-20">
         <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
           <div className="flex flex-row items-center gap-2" id="nav-levelCheckForm">
             <button
@@ -195,8 +195,8 @@ const EditPage = () => {
                 <PrintControl
                   contentRef={componentRef}
                   className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
-                  layout={"landscape"} 
-                  iconSize={24}/>
+                  layout={"landscape"}
+                  iconSize={24} />
               </>
             )}
           </div>
@@ -228,8 +228,8 @@ const EditPage = () => {
                   <PrintControl
                     contentRef={componentRef}
                     className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
-                    layout={"landscape"} 
-                    iconSize={24}/>
+                    layout={"landscape"}
+                    iconSize={24} />
                 </>
 
               )}
@@ -241,10 +241,10 @@ const EditPage = () => {
       )
       }
       {/* Content */}
-      <div className="mx-auto w-full max-[1100px] px-4 py-6">
+      <div className="mx-auto w-full max-[1100px] py-6">
         {view === "form" ? (
           <section>
-            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave={handleSave}/>
+            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave={handleSave} />
           </section>
         ) : (
           <section className={`relative ${view !== "view" ? "hidden" : "block"}`}>

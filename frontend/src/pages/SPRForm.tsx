@@ -13,7 +13,7 @@ const SPRForm = () => {
   const [inputData, setInputData] = useState<Student>(initialStudent); //Creates an new or edit form
   return (
     <>
-      <div className="font-secondary flex w-full justify-center p-2">
+      <div className="font-secondary flex w-full justify-center">
         <Link className="btn-primary flex justify-center gap-1" to={"/home"}>
           <House />
           Home

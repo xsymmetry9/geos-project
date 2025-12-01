@@ -183,7 +183,7 @@ const LevelCheckPage = () => {
                   className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
                   layout={"landscape"}
                   iconSize={24} />
-                  
+
               </>
             )}
 
@@ -192,7 +192,7 @@ const LevelCheckPage = () => {
       )}
 
       {/* Content */}
-      <div className="mx-auto w-full max-w-[1100px] px-4 py-6">
+      <div className="mx-auto w-full max-w-[1100px] py-6">
         {/* FORM VIEW */}
         <section id="levelCheckForm" className={`${view !== "form" ? "hidden" : "block"}`}>
           {language === "" ? (
@@ -203,7 +203,7 @@ const LevelCheckPage = () => {
               </div>
             </div>
           ) : (
-            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave = {handleSave}/>
+            <LevelCheckForm inputData={inputData} setInputData={setInputData} handleSave={handleSave} />
           )}
         </section>
 
