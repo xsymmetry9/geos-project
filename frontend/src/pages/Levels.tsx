@@ -35,109 +35,112 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
 
   return (
     <>
-      <div className="flex items-center gap-4">
-        <div id="language-nav" className="my-2 flex items-center gap-2">
-          <label htmlFor="lang" className="text-sm font-medium">
-            Language:
-          </label>
-          <select
-            id="lang"
-            className="rounded border px-2 py-1 capitalize"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value as Language)}
-          >
-            {languageOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div id="" className="my-2 flex items-center gap-2">
-          <label htmlFor="menu-nav" className="text-sm font-medium">
-            Menu:
-          </label>
-          <select
-            id="menu-nav"
-            className="rounded border px-2 py-1"
-            onChange={(e) => {
-              setMenu(e.target.value as "levels" | "spr");
-            }}
-          >
-            <option value="levels">Level Checks</option>
-            <option value="spr">Student Progress Reports</option>
-          </select>
-        </div>
+      <div className="bg-green-50">
+        <nav className="max-w-[1100px] w-full mx-auto px-2 flex items-center gap-4">
+          <div id="language-nav" className="flex bg-green-50 items-center justify-center my-4 gap-2">
+            <label htmlFor="lang" className="text-sm font-medium">
+              Language:
+            </label>
+            <select
+              id="lang"
+              className="rounded border px-2 py-1 capitalize"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as Language)}
+            >
+              {languageOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div id="" className="my-2 flex items-center gap-2">
+            <label htmlFor="menu-nav" className="text-sm font-medium">
+              Menu:
+            </label>
+            <select
+              id="menu-nav"
+              className="rounded border px-2 py-1"
+              onChange={(e) => {
+                setMenu(e.target.value as "levels" | "spr");
+              }}
+            >
+              <option value="levels">Level Checks</option>
+              <option value="spr">Student Progress Reports</option>
+            </select>
+          </div>
+        </nav>
       </div>
 
-      {menu === "spr" && (
-        <>
-          <table className="my-6 w-full p-0 text-sm shadow-sm" role="table">
-            <thead>
-              <tr>
-                {/* define header and data colors per column (Levels + categories) */}
-                {(() => {
-                  // single header color and two alternating data colors
-                  const headerClass = "bg-teal-700 text-white";
-                  const dataClasses = ["bg-teal-50", "bg-white"]; // alternate across columns
-
-                  return (
-                    <>
-                      <th className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}>Levels</th>
-                      {categories.map((cat, i) => {
-                        return (
-                          <th
-                            key={cat}
-                            className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}
-                          >
-                            {" "}
-                            {cat}{" "}
-                          </th>
-                        );
-                      })}
-                    </>
-                  );
-                })()}
-              </tr>
-            </thead>
-            <tbody>
-              {Array.from({ length: maxLen }).map((_, idx) => (
-                <tr key={levelLabels[idx] ?? idx}>
+      <div className="container mx-auto">
+        {menu === "spr" && (
+          <>
+            <table className="my-6 w-full px-2 text-sm shadow-sm p-2" role="table">
+              <thead>
+                <tr>
+                  {/* define header and data colors per column (Levels + categories) */}
                   {(() => {
-                    const dataClasses = ["bg-teal-50", "bg-white"]; // alternate
+                    // single header color and two alternating data colors
+                    const headerClass = "bg-teal-700 text-white";
 
                     return (
                       <>
-                        <td className={`p-3 text-center ${dataClasses[0]}`}>
-                          {levelLabels[idx] ?? idx + 1}
-                        </td>
+                        <th className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}>Levels</th>
                         {categories.map((cat, i) => {
-                          const cell = levelInfo?.[cat]?.[idx];
-                          const color = dataClasses[(i + 1) % dataClasses.length];
                           return (
-                            <td key={`${cat}-${idx}`} className={`p-3 align-top ${color}`}>
-                              {cell?.description ?? "—"}
-                            </td>
+                            <th
+                              key={cat}
+                              className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}
+                            >
+                              {" "}
+                              {cat}{" "}
+                            </th>
                           );
                         })}
                       </>
                     );
                   })()}
                 </tr>
-              ))}
-              {maxLen === 0 && (
-                <tr>
-                  <td className="p-3 text-center" colSpan={1 + categories.length}>
-                    No levels found for this language.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </>
-      )}
-      {menu === "levels" && <PlotTableLevelChecks language={language} />}
-      {/* color-coded columns, no borders for table */}
+              </thead>
+              <tbody>
+                {Array.from({ length: maxLen }).map((_, idx) => (
+                  <tr key={levelLabels[idx] ?? idx}>
+                    {(() => {
+                      const dataClasses = ["bg-teal-50", "bg-white"]; // alternate
+
+                      return (
+                        <>
+                          <td className={`p-3 text-center ${dataClasses[0]}`}>
+                            {levelLabels[idx] ?? idx + 1}
+                          </td>
+                          {categories.map((cat, i) => {
+                            const cell = levelInfo?.[cat]?.[idx];
+                            const color = dataClasses[(i + 1) % dataClasses.length];
+                            return (
+                              <td key={`${cat}-${idx}`} className={`p-3 align-top ${color}`}>
+                                {cell?.description ?? "—"}
+                              </td>
+                            );
+                          })}
+                        </>
+                      );
+                    })()}
+                  </tr>
+                ))}
+                {maxLen === 0 && (
+                  <tr>
+                    <td className="p-3 text-center" colSpan={1 + categories.length}>
+                      No levels found for this language.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </>
+        )}
+        {menu === "levels" && <PlotTableLevelChecks language={language} />}
+        {/* color-coded columns, no borders for table */}
+      </div>
     </>
   );
 };
