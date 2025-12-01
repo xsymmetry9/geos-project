@@ -9,7 +9,7 @@ type PrintControlProps = {
   layout: "portrait" | "landscape";
   iconSize: number;
 };
-const PrintControl = ({ contentRef, className, layout, iconSize }: PrintControlProps) => {
+const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintControlProps) => {
   const handlePrint = async () => {
     if (!contentRef.current) return;
 

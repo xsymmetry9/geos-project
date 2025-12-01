@@ -8,11 +8,12 @@ type SaveControlProps = {
   className: string;
   layout: "p" | "portrait" | "landscape" | "l";
   title: string;
+  iconSize: number
 };
 
 const formattedDate = format(new Date(), "MM-dd-yyyy");
 
-const SaveControl = ({ contentRef, className, layout, title }: SaveControlProps) => {
+const SaveControl = ({ contentRef, className, layout, title, iconSize = 24 }: SaveControlProps) => {
   const [isBundling, setIsBundling] = useState<boolean>(false);
 
   //   const handleGeneratePDF = async () => {
@@ -78,7 +79,7 @@ const SaveControl = ({ contentRef, className, layout, title }: SaveControlProps)
 
   return (
     <button className={`flex gap-2 justify-center items-center ${className}`} onClick={handleSaveControl} disabled={isBundling}>
-      <Download size={24} /><span>Extract</span>
+      <Download size={iconSize} /><span>Extract</span>
     </button>
   );
 };

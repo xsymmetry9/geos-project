@@ -119,7 +119,8 @@ const PreviewPage = () => {
               title="level-check" />
             <PrintControl
               contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape" />
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape"
+              iconSize={24} />
           </div>
         </div>
       </aside>
