@@ -25,7 +25,14 @@ const languageMap: Record<string, any> = {
   japanese: japaneseLevelCheck,
   korean: koreanLevelCheck,
 };
-
+const CJK_CATEGORIES = [
+  "speaking",
+  "listening",
+  "vocabulary",
+  "grammar",
+  "pronunciation",
+  "accuracy"
+]
 const AVAILABLE_CATEGORIES = [
   "speaking",
   "confidence",
@@ -95,17 +102,30 @@ const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          {AVAILABLE_CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
+          {language === "english" ? (
+            <>
+              {AVAILABLE_CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </>
+          ) : (
+            <>
+              {CJK_CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </>
+          )}
+
         </select>
       </div>
 
       <div className="mt-4 w-full overflow-auto">
         <table
-          className="mx-auto w-full max-w-[900px] border-r border-l border-slate-50"
+          className="mx-auto w-full border-r border-l border-slate-50"
           role="table"
         >
           <colgroup>
