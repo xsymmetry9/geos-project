@@ -24,20 +24,33 @@ const languageOptions = ["english", "chinese", "japanese", "korean"] as Language
 
 const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
   const [menu, setMenu] = useState<"levels" | "spr">("levels");
-  const navRef = useRef<HTMLElement | null>(null);
   const [openLanguage, setOpenLanguage] = useState<boolean>(false);
-  const [openView, setOpenView] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+
+  const handleLanguage = () => {
+    setOpenLanguage((prev) => !prev);
+    setOpenMenu(false);
+  }
+
+  const handleMenu = () => {
+    setOpenMenu((prev) => !prev);
+    setOpenLanguage(false);
+  }
+
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setOpenLanguage(false);
-        setOpenView(false);
+        setOpenMenu(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const currentViewLabel = menu === "levels" ? "Level Checks" : "SPR";
@@ -53,20 +66,17 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
   return (
     <>
       <div className="bg-green-50">
-        <nav className="max-w-[1100px] w-full mx-auto px-2 flex justify-center items-center gap-4">
+        <nav ref={navRef} className="max-w-[900px] w-full mx-auto p-4 flex items-center gap-6">
           <ul className="flex items-center gap-6">
             <li className="relative">
               <button type="button"
-                onClick={() => {
-                  setOpenLanguage((prev) => !prev);
-                  setOpenView(false);
-                }}
+                onClick={handleLanguage}
                 className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none">
-                <span>Language</span>
+                <span className="capitalize">{language}</span>
                 <span className="text-xs text-gray-400">▼</span>
               </button>
               {openLanguage && (
-                <div className="absolute right-0 z-20 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 ">
+                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-24 sm:right-4 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 ">
                   <div className="py-1 text-sm">
                     {languageOptions.map((opt) => (
                       <button
@@ -83,21 +93,35 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
               )}
             </li>
           </ul>
-          <div id="" className="my-2 flex items-center gap-2">
-            <label htmlFor="menu-nav" className="text-sm font-medium">
-              Menu:
-            </label>
-            <select
-              id="menu-nav"
-              className="rounded border px-2 py-1"
-              onChange={(e) => {
-                setMenu(e.target.value as "levels" | "spr");
-              }}
-            >
-              <option value="levels">Level Checks</option>
-              <option value="spr">S</option>
-            </select>
-          </div>
+          <ul className="flex items-center gap-6" id="menu-dropdown">
+            <li className="relative">
+              <button type="button"
+                onClick={handleMenu}
+                className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none">
+                <span className="capitalize">{menu}</span>
+                <span className="text-xs text-gray-400">▼</span>
+              </button>
+              {openMenu && (
+                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-16 sm:right-4 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5">
+                  <div className="py-1 text-sm">
+                    <button
+                      type="button"
+                      onClick={handleMenu}
+                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">SPR</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMenu("levels");
+                        setOpenLanguage(false);
+                        setOpenMenu(false);
+                      }}
+                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">Level Check</button>
+
+                  </div>
+                </div>
+              )}
+            </li>
+          </ul>
         </nav >
       </div >
 
