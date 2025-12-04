@@ -1,35 +1,33 @@
 {
     "form": {
-      
-            "title":"口頭試験ガイドライン",
-            "name": "生徒の名前",
-            "date": "日付",
-            "levelTitle": "レベル評価",
-            "category": {
-                "pronunciation": "発音",
-                "vocabulary": "語彙",
-                "listening": "リスニング",
-                "grammar": "文法",
-                "speaking": "スピーキング",
-                "accuracy": "正確さ"
-            },
-            "dropdownLevelInstruction": "選擇 CEFR 等級",
-            "instructionScore": "輸入評估等級",
-            "levelInstructionStrength": "長所を最大3つまで選択できます",
-            "levelInstructionWeakness": "短所を最大3つまで選択できます",
-            "addCustomStrength": "カスタムの長所を追加",
-            "addCustomWeakness": "カスタムの短所を追加",
-            "placeholderScore": "スコアを選択してください",
-            "finalNotes": "最終メモ",
-            "bookRecommendation": "書籍のおすすめ",
-            "overallLevel": "総合レベル",
-            "note": "メモ",
-      
+        "title": "新入受講生デモレッスン／レベルチェックガイドライン",
+        "name": "生徒の名前",
+        "date": "日付",
+        "levelTitle": "レベル評価",
+        "category": {
+            "pronunciation": "発音",
+            "vocabulary": "語彙",
+            "listening": "リスニング",
+            "grammar": "文法",
+            "speaking": "スピーキング",
+            "accuracy": "正確度"
+        },
+        "dropdownLevelInstruction": "選擇 CEFR 等級",
+        "instructionScore": "輸入評估等級",
+        "levelInstructionStrength": "長所を最大3つまで選択できます",
+        "levelInstructionWeakness": "短所を最大3つまで選択できます",
+        "addCustomStrength": "カスタムの長所を追加",
+        "addCustomWeakness": "カスタムの短所を追加",
+        "placeholderScore": "スコアを選択してください",
+        "finalNotes": "最終メモ",
+        "bookRecommendation": "書籍のおすすめ",
+        "overallLevel": "総合レベル",
+        "note": "メモ",
         "submit": "送信",
         "reset": "キャンセル"
     },
     "print": {
-        "title": "口頭試験ガイドライン",
+        "title": "新入受講生デモレッスン／レベルチェックガイドライン",
         "name": "名前",
         "date": "日付",
         "categoryTitle": "カテゴリー",
@@ -39,10 +37,10 @@
             "listening": "リスニング",
             "grammar": "文法",
             "speaking": "スピーキング",
-            "accuracy": "正確さ"
+            "accuracy": "正確度"
         },
         "strength": "強み",
-        "weakness": "弱み", 
+        "weakness": "弱み",
         "notes": "メモ",
         "level": "レベル",
         "bookSuggestion": "書籍の提案",
