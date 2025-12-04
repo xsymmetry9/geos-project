@@ -23,12 +23,6 @@ const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
     }
   };
 
-  const titles: Record<Language, string[]> = {
-    english: ["vocabulary", "grammar", "pronunciation", "listening", "conversation"],
-    chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
-    korean: ["어휘", "문법", "발음", "듣기", "대화"],
-    japanese: ["語彙", "文法", "発音", "聴解", "会話"],
-  };
   const titleLanguage: Record<Language, string[]> = {
     english: ["Initial", "Target", "Final"],
     chinese: ["初始", "目標", "結束"],
@@ -36,7 +30,7 @@ const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
     japanese: ["初期", "目標", "終了"],
   };
   return (
-    <div id="preview-section" className={`${fontStyle()}`}>
+    <div id="preview-section" className={`text-md ${fontStyle()}`}>
       <div className="p-3" id="class-information">
         <h2 className="bg-dark-green mb-6 p-1 text-center text-2xl text-white capitalize">
           {labelText[language].SPR["student_information"]}
@@ -80,10 +74,10 @@ const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
               const key = item as keyof Student["levels"];
               return (
                 <tr className="odd:bg-orange-50 even:bg-white" key={item}>
-                  <td className="px-2 py-1 text-sm capitalize">{titles[language][index]}</td>
-                  <td className="px-2 py-1 text-center text-sm">{levels[key].initial}</td>
-                  <td className="px-2 py-1 text-center text-sm">{levels[key].target}</td>
-                  <td className="px-2 py-1 text-center text-sm">{levels[key].final}</td>
+                  <td className="px-2 py-1 text-md capitalize">{labelText[language].SPR[item]}</td>
+                  <td className="px-2 py-1 text-center text-md">{levels[key].initial}</td>
+                  <td className="px-2 py-1 text-center text-md">{levels[key].target}</td>
+                  <td className="px-2 py-1 text-center text-md">{levels[key].final}</td>
                 </tr>
               );
             })}
@@ -96,7 +90,7 @@ const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
         >
           {labelText[language].SPR["student_feedback"]}
         </h2>
-        <div className="flex border-collapse border border-green-600 p-2">
+        <div className="flex border-collapse border border-green-600 p-2 min-h-[200px]">
           <p className="text-sm/6 wrap-anywhere">{feedback || "No comment"}</p>
         </div>
       </div>
