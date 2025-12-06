@@ -1,5 +1,6 @@
 {
   "english": {
+    "name": "english",
     "save": "save",
     "nextPage": "Next",
     "backPage": "Back",
@@ -60,9 +61,13 @@
       "average": "average",
       "comment": "comment",
       "signature": "signature"
+    },
+     "levelCheck": {
+      "title": "Level Check"
     }
   },
   "chinese": {
+    "name": "中文",
     "save": "儲存",
     "nextPage": "下一個",
     "backPage": "上一個",
@@ -123,9 +128,13 @@
       "average": "平均分",
       "comment": "評論",
       "signature": "簽名"
+    }, 
+    "levelCheck": {
+      "title": "Level Check"
     }
   },
   "korean": {
+    "name": "朝鲜语",
     "save": "save",
     "nextPage": "다음",
     "backPage": "이전",
@@ -186,9 +195,13 @@
       "average": "평균",
       "comment": "피드백",
       "signature": "서명"
+    },
+    "levelCheck": {
+      "title": "Level Check"
     }
   },
   "japanese": {
+    "name": "日语",
     "save": "保存",
     "nextPage": "次へ",
     "backPage": "前へ",
@@ -249,6 +262,9 @@
       "average": "平均",
       "comment": "コメント",
       "signature": "署名"
+    },
+     "levelCheck": {
+      "title": "Level Check"
     }
   }
 }

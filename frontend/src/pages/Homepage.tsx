@@ -14,6 +14,7 @@ import Navigation from "./Navigation";
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
+import labelText from "@/assets/other/labelText.json"
 
 // Helpers
 
@@ -419,10 +420,14 @@ const Homepage = () => {
       <div className="p-b-3 mb-6 flex justify-center gap-3">
         <Navigation userData={userData} setUserData={setUserData} setPage={setPage} />
       </div>
-      <h2 className="font-secondary mt-6 mb-6 text-center text-2xl font-semibold">
-        {isSPRView ? "Student's Progress Report" : "Level Checks"}
-      </h2>
+      <div className="mx-auto container pb-3">
+        <h2 className="font-secondary mt-6 text-center text-2xl font-semibold">
+        {isSPRView ? "SPR" : "Level Check"}
+        </h2>
+        <p className="text-sm color-slate-300 capitalize text-center italic">{labelText[userData.language].name} version</p>
 
+      </div>
+     
       <div className="content">
         <div className="mx-auto w-full max-w-[900px]">
           {totalItems ? (
