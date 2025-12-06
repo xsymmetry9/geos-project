@@ -134,7 +134,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
             <LevelCheckOverall
               name={text.overallLevel}
               item="overallLevel"
-              data={inputData.overallCEFR}
+              data={inputData}
               handleChange={handleChange}
             />
             <label htmlFor="feedback">
