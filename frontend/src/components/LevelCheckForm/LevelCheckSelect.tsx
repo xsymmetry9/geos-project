@@ -398,9 +398,9 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
   );
 };
 type LevelCheckOverallProps = {
-  name: "english" | "chinese" | "korean" | "japanese";
+  name: string;
   item: string;
-  data: string;
+  data: any;
   handleChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
@@ -408,7 +408,7 @@ type LevelCheckOverallProps = {
 export const LevelCheckOverall = ({ name, data, handleChange }: LevelCheckOverallProps) => {
   const language = data.language;
   const arrOfLevels = levelInformation.english;
-  const arrOfCjkLevels = ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"]
+  const arrOfCjkLevels = ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"];
 
   return (
     <div className="pb-3">
@@ -418,7 +418,7 @@ export const LevelCheckOverall = ({ name, data, handleChange }: LevelCheckOveral
           name="overallCEFR"
           id="overallCEFR"
           onChange={handleChange}
-          value={data}
+          value={data.overallCEFR}
           className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base font-normal text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
         >
           <option className="font-normal" value={""}>
