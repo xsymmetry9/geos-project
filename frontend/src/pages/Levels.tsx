@@ -106,8 +106,15 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                   <div className="py-1 text-sm">
                     <button
                       type="button"
-                      onClick={handleMenu}
-                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">SPR</button>
+                      onClick={() => {
+                        setMenu("spr")
+                        setOpenLanguage(false);
+                        setOpenMenu(false);
+                      }}
+                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
+                      >
+                      SPR
+                    </button>
                     <button
                       type="button"
                       onClick={() => {
