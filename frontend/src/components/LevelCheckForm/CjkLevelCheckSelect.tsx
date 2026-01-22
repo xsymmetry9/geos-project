@@ -33,7 +33,7 @@ const scoreRange = (level: string): [number, number] => {
         case "C2":
             return [6, 7];
         default:
-            return [0, 7];
+            return [0, .5];
     }
 };
 
