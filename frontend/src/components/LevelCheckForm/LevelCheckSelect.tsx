@@ -23,29 +23,50 @@ type Props = {
 const scoreRange = (level: string): [number, number] => {
   switch (level) {
     case "Pre-A1":
-      return [0, 2];
+      return [0, 1.9];
     case "A1":
-      return [2, 3];
+      return [2, 2.9];
     case "A1 - A2":
-      return [3, 4];
+      return [3, 3.9];
     case "A2":
-      return [4, 5];
+      return [4, 4.9];
     case "A2 - B1":
-      return [5, 6];
+      return [5, 5.9];
     case "B1":
-      return [6, 7];
+      return [6, 6.9];
     case "B1 - B2":
-      return [7, 8];
+      return [7, 7.9];
     case "B2":
-      return [8, 9];
+      return [8, 8.9];
     case "C1":
-      return [9, 9.5];
+      return [9, 9.4];
     case "C1+":
-      return [9.5, 10.5];
+      return [9.5, 10.4];
     default:
-      return [0, 1];
+      return [0, 1.9];
   }
 };
+
+const getScoreOptions = (level: string) => {
+  const [min, max] = scoreRange(level);
+  const options: JSX.Element[] = [];
+
+  const start = Math.round(min * 2);
+  const end = Math.floor(max * 2);
+
+  for (let i = start; i <= end; i++) {
+    const value = (i / 2).toFixed(1);
+
+    options.push(
+      <option key={value} value={value}>
+        {value}
+      </option>
+    );
+  }
+
+  return options;
+};
+
 
 const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
   if (score >= 0 && score <= 5) return "A1-A2";
@@ -64,9 +85,9 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const levelCheckData = useMemo(() => tLevelCheckData(inputData.language), [inputData.language]);
 
-  const [level, setLevel] = useState<"A1-A2" | "B1-B2" | "C1-C2" | "">("");
-  const [score, setScore] = useState<number | "">();
-  const [scoreError, setScoreError] = useState<string>("");
+const [level, setLevel] = useState<string>("");
+const [score, setScore] = useState<number | undefined>(undefined);
+    const [scoreError, setScoreError] = useState<string>("");
   const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
   const [selectedWeaknesses, setSelectedWeaknesses] = useState<string[]>([]);
   const [customStrengthInput, setCustomStrengthInput] = useState<string>("");
@@ -99,24 +120,25 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
 
   const isScoreValid = level && score !== undefined && scoreError === "";
 
-  const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLevel = e.target.value as "A1-A2" | "B1-B2" | "C1-C2" | "";
-    setLevel(newLevel);
-    setScore(undefined);
-    setScoreError("");
-    setSelectedStrengths([]);
-    setSelectedWeaknesses([]);
-    setInputData((prev) => ({
-      ...prev,
-      [item]: {
-        ...prev[item],
-        level_name: newLevel,
-        score: undefined,
-        strength: [],
-        weakness: [],
-      },
-    }));
-  };
+const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const newLevel = e.target.value;
+  setLevel(newLevel);
+  setScore(undefined);
+  setScoreError("");
+  setSelectedStrengths([]);
+  setSelectedWeaknesses([]);
+
+  setInputData((prev) => ({
+    ...prev,
+    [item]: {
+      ...prev[item],
+      level_name: newLevel,
+      score: undefined,
+      strength: [],
+      weakness: [],
+    },
+  }));
+};
 
   const handleScoreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const inputScore = e.target.value;
@@ -248,33 +270,16 @@ export const LevelCheckSelect = ({ item, inputData, setInputData }: Props) => {
             className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
             id={`${item}_score`}
           /> */}
-          <select
-            name="score"
-            value={score !== undefined && score !== "" ? score.toFixed(1) : ""}
-            id={`${item}_score`}
-            onChange={handleScoreChange}
-            className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-          >
-            <option
-              className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-              value={""}
-            >
-              {text.placeholderScore}
-            </option>
-            {(() => {
-              const [min, max] = scoreRange(level);
-              const options = [];
-              for (let i = Math.round(min * 2); i < Math.round(max * 2); i++) {
-                const val = (i / 2).toFixed(1);
-                options.push(
-                  <option key={val} value={val}>
-                    {val}
-                  </option>
-                );
-              }
-              return options;
-            })()}
-          </select>
+<select
+  name="score"
+  value={score !== undefined ? score.toFixed(1) : ""}
+  id={`${item}_score`}
+  onChange={handleScoreChange}
+  className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+>
+  <option value="">{text.placeholderScore}</option>
+  {getScoreOptions(level)}
+</select>
           {scoreError && <p className="text-sm text-red-600">{scoreError}</p>}
         </label>
       )}
