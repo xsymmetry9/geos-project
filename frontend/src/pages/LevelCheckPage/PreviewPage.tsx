@@ -1,170 +1,104 @@
 import { useEffect, useState, useRef } from "react";
 import { EnglishEntry, CjkEntry } from "@/type/LevelCheckForm";
-import {
-  isEnglishLang,
-  isCjkLang,
-  normalizeEnglish,
-  normalizeCjk
-} from "./shared";
+import { getLevelCheckById } from "./shared";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
 import { useParams, Link } from "react-router-dom";
 import SaveControl from "@/components/SaveControl";
 import PrintControl from "@/components/PrintControl";
-import { Menu, Pencil } from "lucide-react";
+import PrintPreviewToolbar, {
+  printToolbarMutedClass,
+  printToolbarActionClass,
+  printToolbarExtractClass,
+} from "@/components/PrintPreviewToolbar";
+import { List, Pencil } from "lucide-react";
+import { useUser } from "@/context/UserContext";
+import labelText from "@/assets/other/labelText.json";
+import { Language } from "@/utils/common";
+// After PrintControl so LC landscape rules override shared print.css
+import "@/styles/printLevelCheck.css";
 
 const PreviewPage = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useUser();
+  const language = (user?.language ?? "english") as Language;
+  const t = labelText[language];
+
   const [data, setData] = useState<EnglishEntry | CjkEntry | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
 
-    const load = () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const raw = localStorage.getItem("GEOS_app");
-        if (!raw) {
-          console.warn("[PreviewPage] GEOS_app missing in localStorage");
-          if (!cancelled) setData(null);
-          return;
-        }
-
-        const getUserData = JSON.parse(raw);
-        const arr = Array.isArray(getUserData?.levelCheck) ? getUserData.levelCheck : null;
-
-        if (!arr) {
-          console.log("[UpdatePage] levelCheck array missing");
-          if (!cancelled) setData(null);
-          return;
-        }
-
-        const targetId = (id ?? "").toString();
-        const result = arr.find((x: any) => String(x?.id) === targetId);
-
-        if (!result) {
-          console.warn("[UpdatePage] No record found for id:", targetId);
-          if (!cancelled) setData(null);
-          return;
-        }
-
-        let normalized: EnglishEntry | CjkEntry;
-        if (isEnglishLang(result.language)) {
-          normalized = normalizeEnglish(result);
-        } else if (isCjkLang(result.language)) {
-          normalized = normalizeCjk(result);
-        } else {
-          console.warn("[EditPage] Unknown language, defaulting to english:", result.language);
-          normalized = normalizeEnglish(result);
-        }
-
-        if (!cancelled) {
-          setData(normalized);
-          console.log("[Update Page] Loaded entry:", normalized);
-        }
-
-      } catch (e: any) {
-        console.error("[UpdatePage] Load error:", e);
-        if (!cancelled) setError(e?.message ?? "Unexpected error while loading data.");
-        if (!cancelled) setData(null);
-
-      } finally {
-        if (!cancelled) setLoading(false);
+    try {
+      const entry = getLevelCheckById(id);
+      if (!cancelled) {
+        setData(entry);
+        setError(null);
       }
-    };
+    } catch (e: any) {
+      if (!cancelled) {
+        setError(e?.message ?? "Unexpected error while loading data.");
+        setData(null);
+      }
+    } finally {
+      if (!cancelled) setLoading(false);
+    }
 
-    load();
     return () => {
       cancelled = true;
     };
   }, [id]);
 
   if (loading) {
-    return <p>Loading ...</p>;
+    return <div className="px-4 py-8 text-center text-muted">{t.loading}</div>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <div className="px-4 py-8 text-center text-red-600">{error}</div>;
   }
 
   if (!data) {
-    return <p>No data found for this record.</p>;
-
+    return <div className="px-4 py-8 text-center text-muted">No data found for this record.</div>;
   }
 
   return (
-    <div className="w-full bg-slate-50 grid grid-rows-[auto_1fr]">
-      {/* top navigation bar */}
-      <aside className="bg-white border-b sticky top-0 z-20">
-        <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
-          <div
-            className="flex flex-row items-center gap-2" id="nav-levelCheckForm">
-            <button type="button" aria-label="Open menu" className="mr-1 rounded-xl border px-3 py-1.5 shadow-sm md:hidden" onClick={() => setIsMenuOpen(true)}>
-              <Menu />
-            </button>
-            <Link className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"
-              to={`/levelCheck/edit/${data.id}`}>
-              <Pencil size="24" />
-              <span>Edit</span>
-            </Link>
-            <SaveControl
-              contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"
-              layout="landscape"
-              title="level-check" />
-            <PrintControl
-              contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5" layout="landscape"
-              iconSize={24} />
-          </div>
-        </div>
-      </aside>
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setIsMenuOpen(false)}>
-            <div className="absolute top-0 right-0 h-full w-72 max-w-[85%] bg-white shadow-xl p-3 flex flex-col gap-3">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="text-base font-semibold">Level Check</h3>
-                {/* close button - can be redesign */}
-                <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="rounded-md border px-2 py-1 text-sm">✕
-                </button>
-              </div>
-              <Link className="cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white" to={`/levelCheck/edit/${data.id}`}>
-                <Pencil />
-                <span>Edit</span></Link>
-              <SaveControl
-                contentRef={componentRef}
-                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
-                layout={"landscape"}
-                title={data.student_name} />
-              <PrintControl
-                contentRef={componentRef}
-                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
-                layout={"landscape"} />
-            </div>
-          </div>
+    <div className="min-h-full bg-teal-50">
+      <PrintPreviewToolbar maxWidthClass="max-w-[297mm]">
+        <Link className={printToolbarMutedClass} to="/home?view=levelCheck">
+          <List size={16} aria-hidden="true" />
+          <span>{t.view_level_checks}</span>
+        </Link>
+        <Link className={printToolbarMutedClass} to={`/levelCheck/edit/${data.id}`}>
+          <Pencil size={16} aria-hidden="true" />
+          <span>{t.edit}</span>
+        </Link>
+        <PrintControl
+          iconSize={16}
+          contentRef={componentRef}
+          className={printToolbarActionClass}
+          document="levelCheck"
+        />
+        <SaveControl
+          contentRef={componentRef}
+          className={printToolbarExtractClass}
+          document="levelCheck"
+          title={data.student_name || "level-check"}
+          iconSize={16}
+        />
+      </PrintPreviewToolbar>
 
+      <div className="w-full overflow-x-auto px-2 py-3">
+        <div
+          ref={componentRef}
+          className="print-component-landscape mx-auto min-w-[1026px]"
+        >
+          <PlotLevelCheck data={data} />
         </div>
-      )}
-      {data && (
-        <div className="w-full bg-gray-50 py-3 px-2 overflow-x-auto">
-          {/* Scroll container for small screens */}
-          <div
-            ref={componentRef}
-            className="print-component-landscape mx-auto min-w-[1026px]"
-          >
-            <PlotLevelCheck data={data} />
-          </div>
-
-          {/* spacer / future controls */}
-          <div className="flex gap-6 justify-end items-center h-24" />
-        </div>
-      )}
+        <div className="flex h-24 items-center justify-end gap-6" />
+      </div>
     </div>
   );
 };

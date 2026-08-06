@@ -535,6 +535,223 @@ body {
   color: white;
 }
 
+/* Level Check form layout (denser content than SPR) */
+.level-check-form-body {
+  max-width: 40rem;
+}
+
+.level-check-form-title {
+  margin: 0 0 0.25rem;
+  text-align: center;
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: var(--color-ink);
+}
+
+.level-check-form .form-field {
+  box-sizing: border-box;
+  min-height: 2.4rem;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  border-radius: 8px;
+}
+
+.level-check-form .form-field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #f7faf9;
+}
+
+.level-check-cancel {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.level-check-cancel:hover {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.level-check-category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.level-check-category-tab {
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.level-check-category-tab:hover {
+  border-color: #b7ccc7;
+  color: var(--color-brand);
+}
+
+.level-check-category-tab.is-filled:not(.is-active) {
+  border-color: #b7ccc7;
+  background: var(--color-brand-soft);
+  color: var(--color-brand-dark);
+}
+
+.level-check-category-tab.is-active {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: white;
+}
+
+.level-check-aspect {
+  gap: 0.75rem;
+  padding: 0.9rem;
+}
+
+.level-check-aspect-fields {
+  gap: 0.75rem;
+}
+
+.level-check-score-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.level-check-sw-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  padding-top: 0.15rem;
+  border-top: 1px solid var(--color-line);
+}
+
+@media (min-width: 640px) {
+  .level-check-sw-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.level-check-sw-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.level-check-add-row {
+  display: flex;
+  gap: 0.45rem;
+  align-items: stretch;
+}
+
+.level-check-add-btn {
+  box-sizing: border-box;
+  flex: 0 0 2.4rem;
+  width: 2.4rem;
+  min-height: 2.4rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: white;
+  color: var(--color-brand);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.level-check-add-btn:hover:not(:disabled) {
+  background: var(--color-brand-soft);
+  border-color: var(--color-brand);
+}
+
+.level-check-add-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.level-check-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-height: 11rem;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+
+.level-check-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.3rem 0.35rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.level-check-check-item:hover {
+  background: white;
+}
+
+.level-check-check-item input {
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.level-check-notes {
+  gap: 0.85rem;
+}
+
+.level-check-notes-textarea {
+  min-height: 8.5rem;
+}
+
+.level-check-preview {
+  gap: 1rem;
+}
+
+.level-check-preview-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  background: var(--color-surface);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.level-check-preview-note p {
+  margin: 0;
+}
+
 .print-component-primary {
   display: none;
 }

@@ -8,13 +8,23 @@ import labelText from "@/assets/other/labelText.json";
 type PrintControlProps = {
   contentRef: React.RefObject<HTMLDivElement>;
   className: string;
-  layout: "portrait" | "landscape";
-  iconSize: number;
+  /** SPR is always portrait; Level Check is always landscape */
+  document: "spr" | "levelCheck";
+  iconSize?: number;
 };
 
-const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintControlProps) => {
+const orientationFor = (document: PrintControlProps["document"]): "portrait" | "landscape" =>
+  document === "levelCheck" ? "landscape" : "portrait";
+
+const PrintControl = ({
+  contentRef,
+  className,
+  document: documentKind,
+  iconSize = 24,
+}: PrintControlProps) => {
   const { user } = useUser();
   const language = user?.language ?? "english";
+  const orientation = orientationFor(documentKind);
 
   const handlePrint = async () => {
     if (!contentRef.current) return;
@@ -28,7 +38,7 @@ const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintCon
 
     const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF({ orientation: `${layout}`, unit: "mm", format: "a4" });
+    const pdf = new jsPDF({ orientation, unit: "mm", format: "a4" });
     const pageW = pdf.internal.pageSize.getWidth();
     const pageH = pdf.internal.pageSize.getHeight();
 
@@ -44,11 +54,10 @@ const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintCon
     if ((pdf as any).autoPrint) pdf.autoPrint();
 
     const blob = pdf.output("blob");
-
     const blobUrl = URL.createObjectURL(blob);
-
     window.open(blobUrl, "_blank", "noopener,noreferrer");
   };
+
   return (
     <button type="button" className={`cursor-pointer ${className}`} onClick={handlePrint}>
       <Printer size={iconSize} />

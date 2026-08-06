@@ -205,72 +205,63 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
     };
 
     return (
-        <section className="mt-6 min-h-[400px]">
-            <label htmlFor={`${item}_level`}>
-                <span className="capitalize text-md font-bold">{text.category[item]}</span>
-                <select
-                    id={`${item}_level`}
-                    value={level}
-                    onChange={handleLevelChange}
-                    className="font-secondary mt-1 mb-3 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-                >
-                    <option value="">{text.dropdownLevelInstruction}</option>
-                    {arrOfLevels() !== null && arrOfLevels().map((lvl) => (
-                        <option key={lvl.name} value={lvl.name}>
-                            {`${lvl.name}: ${formatNum(lvl.score)} `}
-                        </option>
-                    ))}
-                </select>
-            </label>
-
-            {level && (
-                <label htmlFor={`${item}_score`}>
-                    <span className="text-md font-bold">{text.instructionScore}</span>
-                    {/* <input
-            type="number"
-            value={score ?? ""}
-            onChange={handleScoreChange}
-            className="form-input font-primary text-base text-black mt-1 block w-full px-0.5 border-0 border-b-2 border-gray-200 focus:outline-0 focus:ring-0 focus:border-[#09c5eb] hover:border-[#09c5eb]"
-            id={`${item}_score`}
-          /> */}
-                    <select
-                        name="score"
-                        value={score !== undefined && score !== "" ? score.toFixed(1) : ""}
-                        id={`${item}_score`}
-                        onChange={handleScoreChange}
-                        className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-                    >
-                        <option
-                            className="font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-                            value={""}
+        <div className="form-aspect level-check-aspect">
+            <h3 className="form-aspect-title">{text.category[item]}</h3>
+            <div className="form-aspect-fields level-check-aspect-fields">
+                <div className="level-check-score-row">
+                    <label className="form-label" htmlFor={`${item}_level`}>
+                        <span className="form-label-text">{text.dropdownLevelInstruction}</span>
+                        <select
+                            id={`${item}_level`}
+                            value={level}
+                            onChange={handleLevelChange}
+                            className="form-field"
                         >
-                            {text.placeholderScore}
-                        </option>
-                        {(() => {
-                            const [min, max] = scoreRange(level);
-                            const options = [];
-                            for (let i = Math.round(min * 2); i <= Math.round(max * 2); i++) {
-                                const val = (i / 2).toFixed(1);
-                                options.push(
-                                    <option key={val} value={val}>
-                                        {val}
+                            <option value="">{text.dropdownLevelInstruction}</option>
+                            {arrOfLevels() !== null &&
+                                arrOfLevels()!.map((lvl) => (
+                                    <option key={lvl.name} value={lvl.name}>
+                                        {`${lvl.name}: ${formatNum(lvl.score)} `}
                                     </option>
-                                );
-                            }
-                            return options;
-                        })()}
-                    </select>
-                    {scoreError && <p className="text-sm text-red-600">{scoreError}</p>}
-                </label>
-            )}
+                                ))}
+                        </select>
+                    </label>
 
-            <div className="grid md:grid-cols-2 gap-3">
+                    <label className="form-label" htmlFor={`${item}_score`}>
+                        <span className="form-label-text">{text.instructionScore}</span>
+                        <select
+                            name="score"
+                            value={score !== undefined && score !== "" ? score.toFixed(1) : ""}
+                            id={`${item}_score`}
+                            onChange={handleScoreChange}
+                            className="form-field"
+                            disabled={!level}
+                        >
+                            <option value="">{text.placeholderScore}</option>
+                            {level &&
+                                (() => {
+                                    const [min, max] = scoreRange(level);
+                                    const options = [];
+                                    for (let i = Math.round(min * 2); i <= Math.round(max * 2); i++) {
+                                        const val = (i / 2).toFixed(1);
+                                        options.push(
+                                            <option key={val} value={val}>
+                                                {val}
+                                            </option>
+                                        );
+                                    }
+                                    return options;
+                                })()}
+                        </select>
+                        {scoreError && <p className="form-error">{scoreError}</p>}
+                    </label>
+                </div>
+
                 {isScoreValid && (
-                    <>
-                        {/* Strengths */}
-                        <div className="mt-6">
-                            <p className="font-semibold">{`${text.levelInstructionStrength}`}</p>
-                            <div className="mt-2 flex gap-2">
+                    <div className="level-check-sw-grid">
+                        <div className="level-check-sw-col">
+                            <p className="form-label-text">{text.levelInstructionStrength}</p>
+                            <div className="level-check-add-row">
                                 <input
                                     type="text"
                                     placeholder={text.addCustomStrength}
@@ -287,7 +278,7 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                                                 predefinedStrengths
                                             ))
                                     }
-                                    className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+                                    className="form-field"
                                 />
                                 <button
                                     type="button"
@@ -300,31 +291,32 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                                             predefinedStrengths
                                         )
                                     }
-                                    className="btn-primary disabled:opacity-50"
+                                    className="level-check-add-btn"
                                     disabled={maxStrengthsReached || !customStrengthInput.trim()}
                                 >
                                     +
                                 </button>
                             </div>
-                            <div className="p-2">
+                            <div className="level-check-checklist">
                                 {allStrengths.map((str, idx) => (
-                                    <label key={idx} className="mt-1 flex items-center gap-2">
+                                    <label key={idx} className="level-check-check-item">
                                         <input
                                             type="checkbox"
                                             checked={selectedStrengths.includes(str)}
-                                            onChange={() => toggleSelection(str, selectedStrengths, setSelectedStrengths)}
+                                            onChange={() =>
+                                                toggleSelection(str, selectedStrengths, setSelectedStrengths)
+                                            }
                                             disabled={!selectedStrengths.includes(str) && maxStrengthsReached}
                                         />
-                                        {str}
+                                        <span>{str}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Weaknesses */}
-                        <div className="mt-6">
-                            <p className="font-semibold">{text.levelInstructionWeakness} </p>
-                            <div className="mt-2 flex gap-2">
+                        <div className="level-check-sw-col">
+                            <p className="form-label-text">{text.levelInstructionWeakness}</p>
+                            <div className="level-check-add-row">
                                 <input
                                     type="text"
                                     placeholder={text.addCustomWeakness}
@@ -341,7 +333,7 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                                                 predefinedWeaknesses
                                             ))
                                     }
-                                    className="form-input font-secondary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+                                    className="form-field"
                                 />
                                 <button
                                     type="button"
@@ -354,15 +346,15 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                                             predefinedWeaknesses
                                         )
                                     }
-                                    className="btn-primary disabled:opacity-50"
+                                    className="level-check-add-btn"
                                     disabled={maxWeaknessesReached || !customWeaknessInput.trim()}
                                 >
                                     +
                                 </button>
                             </div>
-                            <div className="p-2">
+                            <div className="level-check-checklist">
                                 {allWeaknesses.map((wk, idx) => (
-                                    <label key={idx} className="mt-1 flex items-center gap-2">
+                                    <label key={idx} className="level-check-check-item">
                                         <input
                                             type="checkbox"
                                             checked={selectedWeaknesses.includes(wk)}
@@ -371,15 +363,15 @@ export const CjkLevelCheckSelect = ({ item, inputData, setInputData }: Props) =>
                                             }
                                             disabled={!selectedWeaknesses.includes(wk) && maxWeaknessesReached}
                                         />
-                                        {wk}
+                                        <span>{wk}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
-        </section>
+        </div>
     );
 };
 type LevelCheckOverallProps = {

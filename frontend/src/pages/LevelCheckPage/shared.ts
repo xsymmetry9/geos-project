@@ -40,3 +40,23 @@ export const normalizeCjk = (r: any): CjkEntry => ({
   speaking: r?.speaking ?? emptySW,
   accuracy: r?.accuracy ?? emptySW,
 });
+
+export const normalizeLevelCheck = (r: any): EnglishEntry | CjkEntry => {
+  if (isCjkLang(r?.language)) return normalizeCjk(r);
+  return normalizeEnglish(r);
+};
+
+export const getLevelCheckById = (id: string | undefined): EnglishEntry | CjkEntry | null => {
+  const targetId = (id ?? "").toString();
+  if (!targetId) return null;
+
+  const raw = localStorage.getItem("GEOS_app");
+  if (!raw) return null;
+
+  const store = JSON.parse(raw);
+  const arr = Array.isArray(store?.levelCheck) ? store.levelCheck : null;
+  if (!arr) return null;
+
+  const result = arr.find((x: any) => String(x?.id) === targetId);
+  return result ? normalizeLevelCheck(result) : null;
+};

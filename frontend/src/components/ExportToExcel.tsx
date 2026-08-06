@@ -1,17 +1,13 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
-import { Student } from "@/type/Student";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
 import User from "@/type/User";
-
-type UserData = {
-  SPR: Student[];
-  levelCheck: LevelCheckEntry[];
-};
+import { getDataFromLocal } from "@/utils/functions";
 
 type ExportToExcelProps = {
   userData: User;
+  className?: string;
 };
 
 type CategoryKey =
@@ -102,10 +98,13 @@ const autoFitColumns = (worksheet: XLSX.WorkSheet, data: any[]) => {
   worksheet["!cols"] = objectMaxLength.map((w) => ({ wch: w + 2 })); // +2 for padding
 };
 
-const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
+const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData, className }) => {
   const handleExport = () => {
-    const haveSPR = userData.SPR.length > 0;
-    const haveLC = userData.levelCheck.length > 0;
+    const data = getDataFromLocal() ?? userData;
+    const spr = data.SPR ?? [];
+    const levelCheck = data.levelCheck ?? [];
+    const haveSPR = spr.length > 0;
+    const haveLC = levelCheck.length > 0;
 
     const workbook = XLSX.utils.book_new();
 
@@ -114,14 +113,14 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
       return;
     }
     if (haveSPR) {
-      const sprDataToExport = exportSPR(userData.SPR);
+      const sprDataToExport = exportSPR(spr);
       const studentProgressReportSheet = XLSX.utils.json_to_sheet(sprDataToExport);
       autoFitColumns(studentProgressReportSheet, sprDataToExport);
       XLSX.utils.book_append_sheet(workbook, studentProgressReportSheet, "spr");
     }
 
     if (haveLC) {
-      const levelCheckDataToExport = exportLevelCheck(userData.levelCheck);
+      const levelCheckDataToExport = exportLevelCheck(levelCheck);
       const levelCheckReportSheet = XLSX.utils.json_to_sheet(levelCheckDataToExport);
       autoFitColumns(levelCheckReportSheet, levelCheckDataToExport);
       XLSX.utils.book_append_sheet(workbook, levelCheckReportSheet, "Level Check");
@@ -130,21 +129,28 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData }) => {
       bookType: "xlsx",
       type: "array",
     });
-    const data = new Blob([excelBuffer], {
+    const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
     const stamp = new Date().toISOString().slice(0, 10);
 
-    saveAs(data, `backup data-${stamp}`);
+    saveAs(blob, `backup data-${stamp}`);
   };
   return (
-    <>
-      <button className="cursor-pointer flex items-center justify-center gap-2" onClick={handleExport}>
-        <DownloadIcon className="icon" size={18} />
-        <span className="visually-hidden">Download</span>
-      </button>
-    </>
+    <button
+      type="button"
+      className={
+        className ??
+        "flex cursor-pointer items-center justify-center gap-2"
+      }
+      onClick={handleExport}
+    >
+      <span className="inline-flex items-center gap-2">
+        <DownloadIcon size={16} />
+        Download
+      </span>
+    </button>
   );
 };
 

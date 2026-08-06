@@ -10,12 +10,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import Navigation from "./Navigation";
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
-import labelText from "@/assets/other/labelText.json"
-import { useUser } from "@/context/UserContext";
 
 // Helpers
 
@@ -260,7 +257,6 @@ const TableWithActions = ({
 // Main Homepage
 
 const Homepage = () => {
-  const { user } = useUser();
   const [searchParams] = useSearchParams();
   const viewParam = searchParams.get("view");
   const initialPage =
@@ -275,8 +271,6 @@ const Homepage = () => {
     id: string | null;
     type: string;
   }>({ display: false, id: null, type: "" });
-
-  const displayLanguage = user?.language ?? userData.language ?? "english";
 
   useEffect(() => {
     if (viewParam === "levelCheck") {
@@ -389,18 +383,11 @@ const Homepage = () => {
   const currentTableConfig = isSPRView ? sprConfig : levelCheckConfig;
 
   return (
-    <div className="px-4 pb-12">
-      <div className="mb-6 flex justify-center">
-        <Navigation userData={userData} setUserData={setUserData} setPage={setPage} />
-      </div>
-
-      <div className="mx-auto mb-6 max-w-[900px] text-center">
-        <h2 className="font-secondary text-2xl font-semibold text-ink">
+    <div className="px-4 pt-8 pb-12 md:pt-12 lg:pt-14">
+      <div className="mx-auto mb-8 max-w-[900px] text-center md:mb-10">
+        <h2 className="font-secondary text-2xl font-semibold tracking-tight text-ink md:text-3xl">
           {isSPRView ? "Student Progress Reports" : "Level Checks"}
         </h2>
-        <p className="mt-1 text-sm capitalize text-muted">
-          {labelText[displayLanguage].name} version
-        </p>
       </div>
 
       <div className="mx-auto w-full max-w-[900px]">

@@ -67,12 +67,12 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
 
     setInputError((prevError) => {
       switch (name) {
-      case "name":
-      case "textbook":
-      case "course":
-        return { ...prevError, [name]: value.trim() === "" };
-      default:
-        return prevError;
+        case "name":
+        case "textbook":
+        case "course":
+          return { ...prevError, [name]: value.trim() === "" };
+        default:
+          return prevError;
       }
     });
   };

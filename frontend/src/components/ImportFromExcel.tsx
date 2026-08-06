@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { read, utils } from "xlsx";
 import { Student, Levels } from "@/type/Student";
 import { LevelCheckEntry } from "@/type/LevelCheckForm";
-import { editDataFromLocal } from "@/utils/functions";
+import { editDataFromLocal, getDataFromLocal } from "@/utils/functions";
 import { Upload } from "lucide-react";
 import User from "@/type/User";
 
@@ -16,7 +16,7 @@ type Category =
 
 type ImportFromExcelProps = {
   userData: User;
-  setUserData: React.Dispatch<React.SetStateAction<User>>;
+  className?: string;
 };
 
 const ParseLevelCheckEntry = (sheet: any) => {
@@ -99,9 +99,7 @@ const parseSPREntry = (sheet: any) => {
   return students;
 };
 
-const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData }) => {
-  const { SPR, levelCheck } = userData;
-
+const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, className }) => {
   const mergedArrayFilterUniqueObjects = useCallback((arr1: any[], arr2: any[]) => {
     const mergedArray = [...arr1, ...arr2];
     const uniqueObjects = new Map<string, any>();
@@ -119,49 +117,36 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData }) => {
     const reader = new FileReader();
 
     reader.readAsArrayBuffer(file);
-    console.log("Reads the file: ", reader);
 
     reader.onload = (event) => {
       try {
         const arrayBuffer = event.target?.result;
 
-        console.log("Checks if arrayBuffer works: ", arrayBuffer);
-
         if (!arrayBuffer || !(arrayBuffer instanceof ArrayBuffer)) return;
 
         const data = new Uint8Array(arrayBuffer);
-        console.log("Creates a new data array: ", data);
         const workbook = read(data, { type: "array" });
-        console.log("Creates a workbook and read the data", workbook);
-
         const sheetNames = workbook.SheetNames;
-        console.log(sheetNames);
-        // workbook.SheetNames.forEach((item) => arrOfSheetNames.push(item));
 
-        const updatedUser = userData;
+        const current = getDataFromLocal() ?? userData;
+        const updatedUser = Object.assign(new User(), current);
+        const SPR = updatedUser.SPR ?? [];
+        const levelCheck = updatedUser.levelCheck ?? [];
+
         sheetNames.forEach((sheetName) => {
           if (sheetName === "Teacher's data" || sheetName === "spr") {
             const worksheet = workbook.Sheets[sheetName];
-            console.log("SPR sheet: ", worksheet);
             const parsedData = parseSPREntry(worksheet);
-            console.log("SPR parsed:", parsedData);
-
-            const result = mergedArrayFilterUniqueObjects(parsedData, SPR);
-            console.log("Filtered: ", result);
-            updatedUser.SPR = result;
+            updatedUser.SPR = mergedArrayFilterUniqueObjects(parsedData, SPR);
           } else if (sheetName === "Level Check") {
             const worksheet = workbook.Sheets[sheetName];
             const parsedData = ParseLevelCheckEntry(worksheet);
-
-            const result = mergedArrayFilterUniqueObjects(parsedData, levelCheck);
-            updatedUser.levelCheck = result;
-          } else {
-            return;
+            updatedUser.levelCheck = mergedArrayFilterUniqueObjects(parsedData, levelCheck);
           }
         });
 
-        editDataFromLocal(updatedUser); // Updates localstorage
-        window.location.reload(); // reloads the page
+        editDataFromLocal(updatedUser);
+        window.location.reload();
       } catch (err: any) {
         alert(err.message || "An error occurred during file upload");
       }
@@ -169,18 +154,25 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData }) => {
   };
 
   return (
-    <>
-      <label htmlFor="file-upload" className="cursor-pointer flex items-center justify-center">
-        <Upload size={18} className="mr-2" /> Upload
-        <input
-          id="file-upload"
-          className="hidden"
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={handleFileUpload}
-        />
-      </label>
-    </>
+    <label
+      htmlFor="file-upload"
+      className={
+        className ??
+        "flex cursor-pointer items-center justify-center"
+      }
+    >
+      <span className="inline-flex items-center gap-2">
+        <Upload size={16} />
+        Upload
+      </span>
+      <input
+        id="file-upload"
+        className="hidden"
+        type="file"
+        accept=".xlsx, .xls"
+        onChange={handleFileUpload}
+      />
+    </label>
   );
 };
 
