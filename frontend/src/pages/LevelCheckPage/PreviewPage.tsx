@@ -4,6 +4,7 @@ import { getLevelCheckById } from "./shared";
 import PlotLevelCheck from "@/components/LevelCheckForm/PlotLevelCheck";
 import { useParams, Link } from "react-router-dom";
 import SaveControl from "@/components/SaveControl";
+import CloudSaveControl from "@/components/CloudSaveControl";
 import PrintControl from "@/components/PrintControl";
 import PrintPreviewToolbar, {
   printToolbarMutedClass,
@@ -14,6 +15,7 @@ import { List, Pencil } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import labelText from "@/assets/other/labelText.json";
 import { Language } from "@/utils/common";
+import { buildDocumentFileName } from "@/utils/buildSprFileName";
 // After PrintControl so LC landscape rules override shared print.css
 import "@/styles/printLevelCheck.css";
 
@@ -64,6 +66,12 @@ const PreviewPage = () => {
     return <div className="px-4 py-8 text-center text-muted">No data found for this record.</div>;
   }
 
+  const fileTitle = buildDocumentFileName(
+    user?.name ?? "Guest",
+    data.student_name ?? "",
+    "levelCheck"
+  );
+
   return (
     <div className="min-h-full bg-teal-50">
       <PrintPreviewToolbar maxWidthClass="max-w-[297mm]">
@@ -85,7 +93,14 @@ const PreviewPage = () => {
           contentRef={componentRef}
           className={printToolbarExtractClass}
           document="levelCheck"
-          title={data.student_name || "level-check"}
+          title={fileTitle}
+          iconSize={16}
+        />
+        <CloudSaveControl
+          contentRef={componentRef}
+          className={printToolbarExtractClass}
+          document="levelCheck"
+          title={fileTitle}
           iconSize={16}
         />
       </PrintPreviewToolbar>
