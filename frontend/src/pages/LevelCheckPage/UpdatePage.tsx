@@ -26,7 +26,11 @@ const EditPage = () => {
     const index = getUser.levelCheck.findIndex((item: any) => item.id === inputData.id);
 
     if (index !== -1) {
-      getUser.levelCheck[index] = inputData;
+      const existing = getUser.levelCheck[index];
+      getUser.levelCheck[index] = {
+        ...inputData,
+        cloudUrl: (inputData as any).cloudUrl || existing.cloudUrl || "",
+      };
     } else {
       getUser.levelCheck.push(inputData);
     }

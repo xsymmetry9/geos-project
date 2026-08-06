@@ -16,6 +16,7 @@ export const normalizeEnglish = (r: any): EnglishEntry => ({
   feedback: r?.feedback ?? "",
   bookRecommendation: r?.bookRecommendation ?? "",
   overallCEFR: r?.overallCEFR ?? "",
+  cloudUrl: r?.cloudUrl ?? "",
   speaking: r?.speaking ?? emptySW,
   confidence: r?.confidence ?? emptySW,
   grammar: r?.grammar ?? emptySW,
@@ -32,6 +33,7 @@ export const normalizeCjk = (r: any): CjkEntry => ({
   feedback: r?.feedback ?? "",
   bookRecommendation: r?.bookRecommendation ?? "",
   overallCEFR: r?.overallCEFR ?? "",
+  cloudUrl: r?.cloudUrl ?? "",
   // Order: pronunciation, vocabulary, listening, grammar, speaking, accuracy
   pronunciation: r?.pronunciation ?? emptySW,
   vocabulary: r?.vocabulary ?? emptySW,

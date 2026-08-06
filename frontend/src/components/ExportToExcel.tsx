@@ -52,6 +52,7 @@ const exportSPR = (spr: any) => {
     Conversation_target: item.levels.conversation.target,
     Conversation_final: item.levels.conversation.final,
     Feedback: item.feedback,
+    CloudUrl: item.cloudUrl || "",
   }));
 
   return data;
@@ -69,6 +70,7 @@ const exportLevelCheck = (levelCheck: LevelCheckEntry[]) => {
       dateCreated: entry.dateCreated,
       bookRecommendation: entry.bookRecommendation,
       overallCEFR: entry.overallCEFR,
+      cloudUrl: entry.cloudUrl || "",
     } as Record<string, string | number>;
 
     CATEGORY_KEYS.forEach((k) => {

@@ -31,6 +31,7 @@ const ParseLevelCheckEntry = (sheet: any) => {
     entry.feedback = row.feedback;
     entry.overallCEFR = row.overallCEFR;
     entry.dateCreated = row.dateCreated;
+    entry.cloudUrl = row.cloudUrl || "";
 
     const categories: Category[] = [
       "confidence",
@@ -67,6 +68,7 @@ const parseSPREntry = (sheet: any) => {
     student.attendance = Number(row.Attendance || 0);
     student.totalLessons = Number(row.TotalLessons || 0);
     student.feedback = row.Feedback || "No feedback";
+    student.cloudUrl = row.CloudUrl || "";
     student.levels = {
       vocabulary: new Levels(
         String(row.Vocabulary_initial),

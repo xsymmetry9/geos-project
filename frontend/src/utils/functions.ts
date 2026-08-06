@@ -46,6 +46,34 @@ export function editDataFromLocal(data: User) {
   }
 }
 
+const STORAGE_KEY_BY_DOCUMENT = {
+  spr: "SPR",
+  levelCheck: "levelCheck",
+} as const;
+
+/** Persist a Cloudinary URL onto an SPR or level-check record in localStorage. */
+export function saveCloudUrlToRecord(
+  documentKind: "spr" | "levelCheck",
+  recordId: string,
+  cloudUrl: string
+): boolean {
+  const raw = localStorage.getItem(appName);
+  if (!raw) return false;
+
+  const parsed = JSON.parse(raw);
+  const key = STORAGE_KEY_BY_DOCUMENT[documentKind];
+  const list = Array.isArray(parsed[key]) ? parsed[key] : null;
+  if (!list) return false;
+
+  const index = list.findIndex((item: { id?: string }) => String(item?.id) === String(recordId));
+  if (index === -1) return false;
+
+  list[index] = { ...list[index], cloudUrl };
+  parsed[key] = list;
+  localStorage.setItem(appName, JSON.stringify(parsed));
+  return true;
+}
+
 //Delete data from the local storage
 export function deleteStudentById(obj) {
   const { id, type } = obj;

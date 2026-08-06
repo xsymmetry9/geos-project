@@ -101,6 +101,7 @@ const PreviewPage = () => {
           className={printToolbarExtractClass}
           document="levelCheck"
           title={fileTitle}
+          recordId={data.id}
           iconSize={16}
         />
       </PrintPreviewToolbar>

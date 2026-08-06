@@ -19,6 +19,8 @@ class Student {
   attendance: number;
   totalLessons: number;
   feedback: string;
+  /** Cloudinary secure_url after Save to Cloud; empty until uploaded */
+  cloudUrl: string;
   levels: {
     vocabulary: Levels;
     pronunciation: Levels;
@@ -36,6 +38,7 @@ class Student {
     this.attendance = 0;
     this.totalLessons = 0;
     this.feedback = "";
+    this.cloudUrl = "";
     this.levels = {
       vocabulary: new Levels(),
       pronunciation: new Levels(),

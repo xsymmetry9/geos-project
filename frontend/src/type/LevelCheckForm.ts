@@ -22,6 +22,7 @@ class LevelCheckEntry {
   feedback: string;
   bookRecommendation: string;
   overallCEFR: string;
+  cloudUrl: string;
   speaking: StrengthAndWeakness;
   confidence: StrengthAndWeakness;
   grammar: StrengthAndWeakness;
@@ -37,6 +38,7 @@ class LevelCheckEntry {
     this.bookRecommendation = "";
     this.overallCEFR = "";
     this.language = "";
+    this.cloudUrl = "";
     this.speaking = new StrengthAndWeakness();
     this.confidence = new StrengthAndWeakness();
     this.grammar = new StrengthAndWeakness();
@@ -54,6 +56,7 @@ class EntryForm {
   feedback: string;
   bookRecommendation: string;
   overallCEFR: string;
+  cloudUrl: string;
   constructor(id = uuidv4()) {
     this.id = id;
     this.dateCreated = new Date();
@@ -62,6 +65,7 @@ class EntryForm {
     this.bookRecommendation = "";
     this.overallCEFR = "";
     this.language = "";
+    this.cloudUrl = "";
   }
 }
 

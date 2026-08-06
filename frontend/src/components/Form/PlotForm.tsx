@@ -146,7 +146,11 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
       if (existingStudentIndex === -1) {
         savedData.SPR.push(inputData);
       } else {
-        savedData.SPR[existingStudentIndex] = inputData;
+        const existing = savedData.SPR[existingStudentIndex];
+        savedData.SPR[existingStudentIndex] = {
+          ...inputData,
+          cloudUrl: inputData.cloudUrl || existing.cloudUrl || "",
+        };
       }
       editDataFromLocal(savedData);
     } catch (err) {

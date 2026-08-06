@@ -163,14 +163,16 @@ const TableWithActions = ({
     <div className="overflow-hidden rounded-xl border border-line">
       <table className="w-full">
         <colgroup>
-          <col style={{ width: "33.3333%" }} />
-          <col style={{ width: "33.3333%" }} />
-          <col style={{ width: "33.3333%" }} />
+          <col style={{ width: "22%" }} />
+          <col style={{ width: "28%" }} />
+          <col style={{ width: "28%" }} />
+          <col style={{ width: "22%" }} />
         </colgroup>
         <thead>
           <tr className={`${headerBgClass} font-semibold text-white`}>
             <th className="p-3 text-center text-sm tracking-wide uppercase">Date</th>
             <th className="p-3 text-center text-sm tracking-wide uppercase">{nameHeader}</th>
+            <th className="p-3 text-center text-sm tracking-wide uppercase">Link</th>
             <th className="w-[80px] p-3 text-center text-sm tracking-wide uppercase">Actions</th>
           </tr>
         </thead>
@@ -183,10 +185,13 @@ const TableWithActions = ({
                 <tr key={`empty-${index}`} className="border-b border-line bg-white">
                   <td className="h-[44px] p-3 text-center text-sm">&nbsp;</td>
                   <td className="h-[44px] p-3 text-sm font-medium">&nbsp;</td>
+                  <td className="h-[44px] p-3 text-center text-sm">&nbsp;</td>
                   <td className="h-[44px] p-3 text-center">&nbsp;</td>
                 </tr>
               );
             }
+
+            const cloudUrl = typeof item.cloudUrl === "string" ? item.cloudUrl.trim() : "";
 
             return (
               <tr
@@ -202,6 +207,20 @@ const TableWithActions = ({
                   }`}
                 >
                   {item[nameKey]}
+                </td>
+                <td className="h-[44px] p-3 text-center text-sm">
+                  {cloudUrl ? (
+                    <a
+                      href={cloudUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-brand underline-offset-2 hover:underline"
+                    >
+                      click here
+                    </a>
+                  ) : (
+                    <span className="text-muted">&nbsp;</span>
+                  )}
                 </td>
                 <td className="relative h-[44px] p-3 text-center">
                   <div className="inline-block">

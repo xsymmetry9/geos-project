@@ -66,6 +66,7 @@ const PrintPage = () => {
             className={printToolbarExtractClass}
             document="spr"
             title={fileTitle}
+            recordId={parsedData.id}
             iconSize={16}
           />
         )}
