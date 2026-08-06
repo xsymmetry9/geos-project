@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CloudUpload } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import labelText from "@/assets/other/labelText.json";
+import CloudLinkDialog from "@/components/CloudLinkDialog";
 import { buildDocumentPdf } from "@/utils/buildDocumentPdf";
 import { uploadPdfToCloudinary, type DocumentKind } from "@/utils/cloudinaryUpload";
 import { saveCloudUrlToRecord } from "@/utils/functions";
@@ -28,6 +29,7 @@ const CloudSaveControl = ({
   onUploaded,
 }: CloudSaveControlProps) => {
   const [isUploading, setIsUploading] = useState(false);
+  const [cloudUrl, setCloudUrl] = useState<string | null>(null);
   const { user } = useUser();
   const language = user?.language ?? "english";
   const t = labelText[language];
@@ -49,8 +51,8 @@ const CloudSaveControl = ({
         throw new Error("Upload succeeded but failed to save the link locally.");
       }
 
+      setCloudUrl(uploaded.secure_url);
       onUploaded?.(uploaded.secure_url);
-      console.log("Uploaded to Cloudinary:", uploaded.secure_url);
     } catch (error) {
       console.error(error);
     } finally {
@@ -59,15 +61,21 @@ const CloudSaveControl = ({
   };
 
   return (
-    <button
-      type="button"
-      className={`inline-flex cursor-pointer items-center justify-center gap-2 ${className}`}
-      onClick={handleCloudSave}
-      disabled={isUploading}
-    >
-      <CloudUpload size={iconSize} />
-      <span>{isUploading ? t.saving_to_cloud : t.save_to_cloud}</span>
-    </button>
+    <>
+      <button
+        type="button"
+        className={`inline-flex cursor-pointer items-center justify-center gap-2 ${className}`}
+        onClick={handleCloudSave}
+        disabled={isUploading}
+      >
+        <CloudUpload size={iconSize} />
+        <span>{isUploading ? t.saving_to_cloud : t.save_to_cloud}</span>
+      </button>
+
+      {cloudUrl && (
+        <CloudLinkDialog cloudUrl={cloudUrl} onClose={() => setCloudUrl(null)} />
+      )}
+    </>
   );
 };
 

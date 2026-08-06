@@ -8,7 +8,7 @@ function AuthRedirect() {
 
   if (!user?.language) return <Navigate to="/language" replace />;
 
-  return <Navigate to="/home" />;
+  return <Navigate to="/home" replace />;
 }
 
 export default AuthRedirect;
