@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import labelText from "../../../assets/other/labelText.json";
 
 interface InputData {
@@ -6,6 +7,7 @@ interface InputData {
   textbook: string;
   attendance: number;
   totalLessons: number;
+  dateCreated: Date | string;
 }
 
 interface InputError {
@@ -30,11 +32,12 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({
   handleInputData,
   language,
 }) => {
-  const { name, course, textbook, attendance, totalLessons } = inputData;
+  const { name, course, textbook, attendance, totalLessons, dateCreated } = inputData;
 
   //translation
   const { input_name, input_course, input_textbook, input_attendance, input_totallessons } =
     labelText[language].form;
+  const dateLabel = labelText[language].SPR.date;
 
   return (
     <div className="pb-[3rem]" id="personal-information">
@@ -53,6 +56,17 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({
               onChange={handleInputData}
             />
             {inputError.name && <p className="text-sm text-red-600">Missing text</p>}
+          </label>
+          <label className="block" htmlFor="dateCreated">
+            <span className="text-gray-700 capitalize">{dateLabel}</span>
+            <input
+              type="date"
+              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              name="dateCreated"
+              id="dateCreated"
+              value={format(new Date(dateCreated), "yyyy-MM-dd")}
+              onChange={handleInputData}
+            />
           </label>
           <label className="block" htmlFor="course">
             <span className="text-gray-700 capitalize">{input_course}</span>

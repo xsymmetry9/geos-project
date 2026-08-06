@@ -57,7 +57,8 @@ const SaveControl = ({ contentRef, className, layout, title, iconSize = 24 }: Sa
         backgroundColor: "#ffffff",
       });
 
-      const imgData = canvas.toDataURL("image/png");
+      // JPEG keeps print clarity close to PNG while cutting file size a lot
+      const imgData = canvas.toDataURL("image/jpeg", 0.92);
 
       const pdf = new jsPDF(`${layout}`, "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -68,7 +69,7 @@ const SaveControl = ({ contentRef, className, layout, title, iconSize = 24 }: Sa
       const imgRatio = imgProps.width / imgProps.height;
       const height = pdfWidth / imgRatio;
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, height);
+      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, height);
       pdf.save(`${title}-${formattedDate}.pdf`);
     } catch (error) {
       console.log(error);

@@ -61,12 +61,14 @@ interface AttendanceInfoProps {
   attendance: number;
   totalLessons: number;
   language: Language;
+  dateCreated?: Date | string;
 }
 
 export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
   attendance,
   totalLessons,
   language,
+  dateCreated,
 }) => {
   const fontStyle = () => {
     if (language === "english") {
@@ -79,12 +81,13 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
       return "text-sm/5";
     }
   };
+  const reportDate = new Date(dateCreated ?? new Date());
   return (
     <div id="student-info" className="mr-[3rem] justify-self-end">
       <p className={`capitalize ${fontStyle()}`}>
         {language !== "chinese"
-          ? `${text("date", language)}: ${format(new Date(), "MM/dd/yyyy")}`
-          : `${text("date", language)}: ${format(new Date(), "yyyy年M月d日")}`}
+          ? `${text("date", language)}: ${format(reportDate, "MM/dd/yyyy")}`
+          : `${text("date", language)}: ${format(reportDate, "yyyy年M月d日")}`}
       </p>
       <p className={`capitalize ${fontStyle()}`}>
         {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : "NA"}

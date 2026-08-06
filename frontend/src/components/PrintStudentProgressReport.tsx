@@ -44,7 +44,8 @@ export const PrintContent: React.FC<PrintContentProps> = ({
   language,
   onGraphReady,
 }) => {
-  const { name, textbook, course, attendance, totalLessons, feedback, levels } = parsedData;
+  const { name, textbook, course, attendance, totalLessons, feedback, levels, dateCreated } =
+    parsedData;
 
   const transformedData = processData(levels);
 
@@ -74,7 +75,12 @@ export const PrintContent: React.FC<PrintContentProps> = ({
       </div>
       <div className="student-information">
         <StudentInfo name={name} textbook={textbook} course={course} language={language} />
-        <AttendanceInfo attendance={attendance} totalLessons={totalLessons} language={language} />
+        <AttendanceInfo
+          attendance={attendance}
+          totalLessons={totalLessons}
+          language={language}
+          dateCreated={dateCreated}
+        />
       </div>
       <Table levels={levels} language={language} />
       <div className="mt-[14px] grid grid-cols-2 gap-[12px]">

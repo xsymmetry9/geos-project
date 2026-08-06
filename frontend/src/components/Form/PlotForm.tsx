@@ -39,6 +39,14 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
   ): void => {
     const { name, value } = e.target;
 
+    if (name === "dateCreated") {
+      setInputData((prev) => ({
+        ...prev,
+        dateCreated: new Date(value),
+      }));
+      return;
+    }
+
     // Update input data (convert numbers where necessary)
     const numericFields = ["attendance", "totalLessons"];
     const newValue = numericFields.includes(name) ? Number(value) : value;

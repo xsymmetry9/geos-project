@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import labelText from "@/assets/other/labelText.json";
 import { Student } from "@/type/Student";
 
@@ -9,7 +10,8 @@ interface PreviewProps {
 }
 
 const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
-  const { name, textbook, course, attendance, totalLessons, levels, feedback } = inputData;
+  const { name, textbook, course, attendance, totalLessons, levels, feedback, dateCreated } =
+    inputData;
 
   const fontStyle = () => {
     if (language === "english") {
@@ -38,6 +40,10 @@ const Preview: React.FC<PreviewProps> = ({ inputData, language }) => {
         <p className="text-size-sm">
           <strong className="capitalize">{labelText[language].form["input_name"]}:</strong>{" "}
           {name.length != 0 ? name : "No name"}
+        </p>
+        <p className="text-size-sm">
+          <strong className="capitalize">{labelText[language].SPR["date"]}:</strong>{" "}
+          {format(new Date(dateCreated), "MM/dd/yyyy")}
         </p>
         <p className="text-size-sm">
           <strong className="capitalize">{labelText[language].form["input_textbook"]}:</strong>{" "}
