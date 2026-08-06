@@ -96,9 +96,9 @@ const LevelCheckPage = () => {
   };
 
   return (
-    <div className="w-full bg-slate-50 grid grid-rows-[auto_1fr]">
+    <div className="w-full grid grid-rows-[auto_1fr]">
       {/* Top navigation bar */}
-      <aside className="bg-white border-b sticky top-0 z-20">
+      <aside className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur-md">
         <div className="w-full max-w-[1100px] p-2 mx-auto flex justify-between items-center">
           {/* Left: actions */}
           <div className="flex flex-row items-center gap-2" id="nav-levelCheckForm">
@@ -107,17 +107,17 @@ const LevelCheckPage = () => {
               type="button"
               aria-label="Open menu"
               onClick={() => setIsMenuOpen(true)}
-              className="mr-1 rounded-xl border px-3 py-1.5 text-sm shadow-sm md:hidden"
+              className="mr-1 rounded-xl border border-line px-3 py-1.5 text-sm shadow-sm md:hidden"
             >
               ☰
             </button>
 
-            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-blue-600 px-3 py-1.5 text-slate-50" onClick={toggleView}>
+            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-brand px-3 py-1.5 text-white hover:bg-brand-dark" onClick={toggleView}>
               <Eye /><span>{view === "view" ? "View" : "Form"}</span></button>
             <button
               type="button"
               onClick={handleSave}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50">
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5">
               <Save /><span>Save</span>
             </button>
 
@@ -125,12 +125,12 @@ const LevelCheckPage = () => {
               <>
                 <SaveControl
                   contentRef={componentRef}
-                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"}
                   layout={"landscape"}
                   title={inputData.student_name} />
                 <PrintControl
                   contentRef={componentRef}
-                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"}
                   layout={"landscape"}
                   iconSize={24}
                 />
@@ -143,7 +143,7 @@ const LevelCheckPage = () => {
           {/* Right Action */}
           <DropdownLanguage
             id={"language"}
-            className={"md:block hidden w-[200px] text-sm border-2 border-slate-600 rounded p-1"}
+            className={"md:block hidden w-[200px] text-sm border border-line rounded-lg p-1.5 bg-white"}
             value={language}
             handleChange={handleLanguageChange} />
         </div>
@@ -165,7 +165,7 @@ const LevelCheckPage = () => {
                 ✕
               </button>
             </div>
-            <button onClick={() => { toggleView(); setIsMenuOpen(false); }} className="rounded-xl bg-dark-green px-3 py-2 text-white">
+            <button onClick={() => { toggleView(); setIsMenuOpen(false); }} className="rounded-xl bg-brand px-3 py-2 text-white">
               {view === "form" ? "Switch to View" : "Back to Form"}
             </button>
             <button onClick={() => { handleSave(); setIsMenuOpen(false); }} className="rounded-xl border px-3 py-2">
@@ -175,12 +175,12 @@ const LevelCheckPage = () => {
               <>
                 <SaveControl
                   contentRef={componentRef}
-                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                   layout={"landscape"}
                   title={inputData.student_name} />
                 <PrintControl
                   contentRef={componentRef}
-                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                  className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                   layout={"landscape"}
                   iconSize={24} />
 

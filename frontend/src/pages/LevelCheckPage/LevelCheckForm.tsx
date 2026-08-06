@@ -54,17 +54,17 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
   const text = levelCheckFormTranslation(inputData.language);
 
   return (
-    <div className="font-secondary mx-auto h-full w-full max-w-[50em] py-6">
-      <div className="mt-6 flex flex-col items-center justify-center">
-        <h1 className="capitalize py-3 text-2xl font-bold">{text.title}</h1>
+    <div className="font-secondary panel mx-auto h-full w-full max-w-[50em] px-4 py-6 sm:px-6">
+      <div className="mt-2 flex flex-col items-center justify-center">
+        <h1 className="capitalize py-3 text-2xl font-bold text-ink">{text.title}</h1>
       </div>
       <form autoComplete="off">
-        <section className="px-3 py-6">
+        <section className="px-1 py-4">
           <div className="p-1">
             <label htmlFor="student_name">
-              <span className="capitalize text-md font-bold">{text.name}:</span>
+              <span className="capitalize text-md font-semibold text-muted">{text.name}:</span>
               <input
-                className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+                className="form-field"
                 name="student_name"
                 id="input-student_name"
                 onChange={handleChange}
@@ -75,10 +75,10 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </div>
           <div className="p-1">
             <label htmlFor="dateCreated">
-              <span className="capitalize text-md font-bold">{text.date}:</span>
+              <span className="capitalize text-md font-semibold text-muted">{text.date}:</span>
               <input
                 type="date"
-                className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+                className="form-field"
                 name="dateCreated"
                 id="input-dateCreated"
                 value={format(inputData.dateCreated, "yyyy-MM-dd")}
@@ -87,10 +87,8 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
             </label>
           </div>
         </section>
-        <section className="px-3 py-6">
-          <h2 className="capitalize w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
-            {text.levelTitle}
-          </h2>
+        <section className="px-1 py-4">
+          <h2 className="form-section-title text-lg">{text.levelTitle}</h2>
           {inputData.language === "english" ? (
             <>
               {Object.keys(text.category).map((item) => (
@@ -115,12 +113,10 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           )
           }
         </section>
-        <section className="px-3 py-6" id="input-feedback">
-          <h2 className="capitalize w-full bg-orange-500 py-2 text-center text-lg font-bold text-white">
-            {text.finalNotes}
-          </h2>
+        <section className="px-1 py-4" id="input-feedback">
+          <h2 className="form-section-title text-lg">{text.finalNotes}</h2>
           <div className="mt-6">
-            <label className="capitalize text-md font-bold" htmlFor="bookRecommendation">
+            <label className="capitalize text-md font-semibold text-muted" htmlFor="bookRecommendation">
               {text.bookRecommendation}:
               <input
                 type="text"
@@ -128,7 +124,7 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
                 id="bookRecommendation"
                 value={inputData.bookRecommendation}
                 onChange={handleChange}
-                className="form-input font-primary mt-1 mb-2 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base font-normal text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+                className="form-field mb-2 font-normal"
               />
             </label>
             <LevelCheckOverall
@@ -138,9 +134,9 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
               handleChange={handleChange}
             />
             <label htmlFor="feedback">
-              <span className="capitalize text-md font-bold">{text.note}:</span>
+              <span className="capitalize text-md font-semibold text-muted">{text.note}:</span>
               <Comment
-                className="mt-1 block h-[200px] w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6"
+                className="mt-1 block h-[200px] w-full rounded-xl bg-white px-3 py-2 text-base text-ink outline-2 outline-line placeholder:text-muted focus:outline-2 focus:-outline-offset-2 focus:outline-active sm:text-sm/6"
                 name="feedback"
                 setInputData={setInputData}
                 id="input-feedback"
@@ -150,8 +146,8 @@ const Form: React.FC<FormProps> = ({ inputData, setInputData, handleChange, hand
           </div>
         </section>
         <div className="flex w-full justify-center gap-3 pt-3">
-          <button className="btn-primary" onClick={handleSave}>Save</button>
-          <Link to="/" className="btn-primary">
+          <button className="btn-primary" onClick={handleSave} type="button">Save</button>
+          <Link to="/" className="btn-secondary">
             Cancel
           </Link>
         </div>

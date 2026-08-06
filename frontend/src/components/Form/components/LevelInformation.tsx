@@ -1,13 +1,15 @@
 import LanguageAspect from "./LanguageAspect";
 import labelText from "../../../assets/other/labelText.json";
 import { Student } from "@/type/Student";
-import { SetStateAction, Dispatch, ChangeEvent } from "react";
+import { SetStateAction, Dispatch } from "react";
 
 type Language = keyof typeof labelText;
 type AspectName = keyof Student["levels"];
+
 interface InputError {
   [key: string]: boolean;
 }
+
 interface LevelInformationProps {
   inputData: Pick<Student, "levels">;
   inputError: InputError;
@@ -15,6 +17,7 @@ interface LevelInformationProps {
   handleLevelInputData: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
   language: Language;
 }
+
 const LevelInformation: React.FC<LevelInformationProps> = ({
   inputData,
   inputError,
@@ -28,34 +31,20 @@ const LevelInformation: React.FC<LevelInformationProps> = ({
     "listening",
     "conversation",
   ];
-  const titles: Record<Language, string[]> = {
-    english: englishAspects,
-    chinese: ["詞彙", "文法", "發音", "聽力", "會話"],
-    korean: ["어휘", "문법", "발음", "듣기", "대화"],
-    japanese: ["語彙", "文法", "発音", "聴解", "会話"],
-  };
 
   return (
-    <>
-      {/* <LevelTabs titles={titles[language.toLowerCase()]} handlerPage = {handlerPage} currentPage = {page}/> */}
-      <div className="pb-[3rem]">
-        <h2 className="bg-[#00646c] p-2 text-center text-xl font-bold text-white capitalize">
-          {labelText[language].SPR["student_level"]}
-        </h2>
-        {englishAspects.map((aspectName) => {
-          return (
-            <LanguageAspect
-              key={aspectName}
-              aspectName={aspectName}
-              inputData={inputData}
-              inputError={inputError}
-              handleLevelInput={handleLevelInputData}
-              language={language}
-            />
-          );
-        })}
-      </div>
-    </>
+    <section className="form-section">
+      {englishAspects.map((aspectName) => (
+        <LanguageAspect
+          key={aspectName}
+          aspectName={aspectName}
+          inputData={inputData}
+          inputError={inputError}
+          handleLevelInput={handleLevelInputData}
+          language={language}
+        />
+      ))}
+    </section>
   );
 };
 

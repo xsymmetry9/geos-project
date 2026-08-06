@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useUser } from "@/context/UserContext";
 import { SquareX, CircleCheckBig } from "lucide-react";
+import { useUser } from "@/context/UserContext";
+import labelText from "@/assets/other/labelText.json";
 
 interface PopUpMessageProps {
   setDisplayPopupMessage: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,22 +11,44 @@ interface PopUpMessageProps {
 
 const PopUpMessage: React.FC<PopUpMessageProps> = ({ formId, setDisplayPopupMessage }) => {
   const { user } = useUser();
-  const language = user?.language;
+  const language = user?.language ?? "english";
+  const t = labelText[language];
+
   return (
-    <div className="outline-dark-green absolute top-0 top-1/2 left-1/2 z-1 h-[350px] w-full max-w-[400px] -translate-x-1/2 -translate-y-1/2 transform rounded bg-white outline-2">
-      <div className="bg-dark-green mt-0 flex w-full justify-end py-2">
-        <button className="cursor-pointer" onClick={() => setDisplayPopupMessage(false)}>
-          <SquareX className="text-white" />
-        </button>
-      </div>
-      <div className="flex h-full flex-col items-center justify-center gap-3">
-        <CircleCheckBig size={48} className="text-green-600" />
-        <p className="text-secondary text-center">Saved successfully!</p>
-        <Link className="btn-primary w-[300px] capitalize" to={`/spr/view/${formId}`}>
-          view page
-        </Link>
+    <div className="fixed inset-0 z-50">
+      <div
+        className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]"
+        onClick={() => setDisplayPopupMessage(false)}
+      />
+      <div className="panel absolute top-1/2 left-1/2 z-10 w-[min(100%-2rem,24rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden">
+        <div className="flex w-full items-center justify-between bg-brand px-3 py-2">
+          <p className="text-sm font-semibold text-white">{t.saved}</p>
+          <button
+            type="button"
+            className="cursor-pointer rounded p-1 hover:bg-white/10"
+            onClick={() => setDisplayPopupMessage(false)}
+            aria-label="Close"
+          >
+            <SquareX className="text-white" size={20} />
+          </button>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-4 px-6 py-8">
+          <CircleCheckBig size={48} className="text-brand" />
+          <p className="text-center text-ink">{t.saved_success}</p>
+          <Link className="btn-primary w-full" to={`/spr/view/${formId}`}>
+            {t.view_page}
+          </Link>
+          <button
+            type="button"
+            className="btn-secondary w-full"
+            onClick={() => setDisplayPopupMessage(false)}
+          >
+            {t.keep_editing}
+          </button>
+        </div>
       </div>
     </div>
   );
 };
+
 export default PopUpMessage;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Save } from "lucide-react";
 import PersonalInformation from "@/components/Form/components/PersonalInformation";
 import Feedback from "@/components/Form/components/Feedback";
 import LevelInformation from "@/components/Form/components/LevelInformation";
@@ -47,11 +48,22 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
       return;
     }
 
-    // Update input data (convert numbers where necessary)
-    const numericFields = ["attendance", "totalLessons"];
-    const newValue = numericFields.includes(name) ? Number(value) : value;
+    if (name === "attendance" || name === "totalLessons") {
+      const digits = value.replace(/\D/g, "");
+      const nextValue = digits === "" ? 0 : Number(digits);
+      const attendance = name === "attendance" ? nextValue : inputData.attendance;
+      const totalLessons = name === "totalLessons" ? nextValue : inputData.totalLessons;
 
-    setInputData((prev) => ({ ...prev, [name]: newValue }));
+      setInputData((prev) => ({ ...prev, [name]: nextValue }));
+      setInputError((prevError) => ({
+        ...prevError,
+        attendance: attendance <= 0,
+        totalLessons: totalLessons <= 0 || totalLessons < attendance,
+      }));
+      return;
+    }
+
+    setInputData((prev) => ({ ...prev, [name]: value }));
 
     setInputError((prevError) => {
       switch (name) {
@@ -59,15 +71,6 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
       case "textbook":
       case "course":
         return { ...prevError, [name]: value.trim() === "" };
-      case "attendance":
-        const att = Number(value);
-        return { ...prevError, attendance: isNaN(att) || att <= 0 };
-      case "totalLessons":
-        const total = Number(value);
-        return {
-          ...prevError,
-          totalLessons: isNaN(total) || total <= 0 || total < Number(inputData.attendance),
-        };
       default:
         return prevError;
       }
@@ -153,19 +156,26 @@ const PlotForm: React.FC<PlotFormProps> = ({ inputData, setInputData }) => {
     setDisplayPopupMessage(true);
   };
   return (
-    <div className="relative mx-auto w-full max-w-[55rem] bg-white p-3">
-      {displayPopupMessage && <PopUpMessage formId= {inputData.id} setDisplayPopupMessage={setDisplayPopupMessage} />}
-      <Pagination page={page} language={language} setPage={setPage} />
-      <div className="font-secondary static m-auto w-full max-w-lg">
-        <form onSubmit={handleSubmit}>
-          {arrOfPages[page]}
-          <div className="flex justify-center gap-2" id="buttons">
-            <Button page={page} handler={changePage} language={language} />
-            {page == 3 && (
-              <input className="btn btn-primary" type="submit" value={labelText[language].save} />
-            )}
-          </div>
-        </form>
+    <div className="relative w-full">
+      {displayPopupMessage && (
+        <PopUpMessage formId={inputData.id} setDisplayPopupMessage={setDisplayPopupMessage} />
+      )}
+      <div className="panel p-4 sm:p-6">
+        <Pagination page={page} language={language} setPage={setPage} />
+        <div className="mx-auto mt-6 w-full max-w-lg">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {arrOfPages[page]}
+            <div className="form-actions" id="buttons">
+              <Button page={page} handler={changePage} language={language} />
+              {page == 3 && (
+                <button className="form-nav-btn form-nav-btn-save" type="submit">
+                  <Save size={16} aria-hidden="true" />
+                  <span>{labelText[language].save}</span>
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

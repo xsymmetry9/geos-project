@@ -90,18 +90,18 @@ export const AttendanceInfo: React.FC<AttendanceInfoProps> = ({
           : `${text("date", language)}: ${format(reportDate, "yyyy年M月d日")}`}
       </p>
       <p className={`capitalize ${fontStyle()}`}>
-        {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : "NA"}
+        {text("attendance", language)}: {attendance != 0 ? `${attendance} ` : labelText[language].na}
         <span className="lowercase">{attendance != 0 && text("times", language)}</span>
       </p>
       <p className={`capitalize ${fontStyle()}`}>
         {text("total_lessons", language)}:{" "}
-        {totalLessons != 0 ? `${totalLessons} ${text("times", language)}` : "NA"}
+        {totalLessons != 0 ? `${totalLessons} ${text("times", language)}` : labelText[language].na}
       </p>
       <p className={`capitalize ${fontStyle()}`}>
         {text("%_of_attendance", language)}:{" "}
         {attendance !== "" && totalLessons !== ""
           ? `${Math.round((attendance / totalLessons) * 100)}%`
-          : "NA"}
+          : labelText[language].na}
       </p>
     </div>
   );

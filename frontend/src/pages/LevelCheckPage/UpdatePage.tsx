@@ -177,10 +177,10 @@ const EditPage = () => {
               className="mr-1 rounded-xl border px-3 py-1.5 text-sm shadow-sm md:hidden">
               <Menu />
             </button>
-            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-blue-600 px-3 py-1.5 text-slate-50" onClick={toggleView}>
+            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-brand px-3 py-1.5 text-white hover:bg-brand-dark" onClick={toggleView}>
               <Eye /><span>{view === "view" ? "View" : "Form"}</span>
             </button>
-            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"
+            <button className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"
               onClick={handleSave}>
               <Save />
               <span>Save</span>
@@ -189,12 +189,12 @@ const EditPage = () => {
               <>
                 <SaveControl
                   contentRef={componentRef}
-                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"}
                   layout={"landscape"}
                   title={inputData.student_name} />
                 <PrintControl
                   contentRef={componentRef}
-                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"}
+                  className={"cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"}
                   layout={"landscape"}
                   iconSize={24} />
               </>
@@ -214,7 +214,7 @@ const EditPage = () => {
                   className="rounded-md border px-2 py-1 text-sm">✕
                 </button>
               </div>
-              <button className="rounded-xl bg-dark-green px-3 py-2 text-white"
+              <button className="rounded-xl bg-brand px-3 py-2 text-white"
                 onClick={() => { toggleView(); setIsMenuOpen(false); }}>
                 {view === "form" ? "Switch to View" : "Back to form"}
               </button>
@@ -222,12 +222,12 @@ const EditPage = () => {
                 <>
                   <SaveControl
                     contentRef={componentRef}
-                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                     layout={"landscape"}
                     title={inputData.student_name} />
                   <PrintControl
                     contentRef={componentRef}
-                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                    className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                     layout={"landscape"}
                     iconSize={24} />
                 </>

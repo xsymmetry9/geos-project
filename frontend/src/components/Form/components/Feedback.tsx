@@ -1,6 +1,5 @@
 import labelText from "@/assets/other/labelText.json";
 import { Student } from "@/type/Student";
-import { set } from "date-fns";
 import { useEffect, useState } from "react";
 
 type Language = keyof typeof labelText;
@@ -38,30 +37,27 @@ const Feedback: React.FC<FeedbackProps> = ({
   const { feedback } = inputData;
   const [warning, setWarning] = useState<string>("");
   const [count, setCount] = useState<number>(0);
+  const form = labelText[language].form;
+  const maxLength = maxFeedbackLength[language];
 
-  const placeholderContent = {
-    english: "Your comment",
-    korean: "댓글이 여기에 작성됩니다",
-    japanese: "コメントがここに入ります",
-    chinese: "評論在此處輸入",
-  };
+  const tooLongMessage = form.feedback_too_long.replace("{max}", String(maxLength));
 
   useEffect(() => {
-    setCount(feedback.length); //includes spaces
+    setCount(feedback.length);
   }, [feedback]);
 
   useEffect(() => {
-    if (feedback.length > maxFeedbackLength[language]) {
+    if (feedback.length > maxLength) {
       setInputError((prevError) => ({ ...prevError, feedback: true }));
-      setWarning(`Too many characters (max ${maxFeedbackLength[language]})`);
+      setWarning(tooLongMessage);
     } else if (feedback.trim() === "") {
       setInputError((prevError) => ({ ...prevError, feedback: true }));
-      setWarning("Please fill up this section");
+      setWarning(form.feedback_required);
     } else {
       setInputError((prevError) => ({ ...prevError, feedback: false }));
       setWarning("");
     }
-  }, [feedback, language]);
+  }, [feedback, language, setInputError, maxLength, tooLongMessage, form.feedback_required]);
 
   const handleInputData = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -69,38 +65,40 @@ const Feedback: React.FC<FeedbackProps> = ({
 
     if (value.trim() === "") {
       setInputError((prevError) => ({ ...prevError, feedback: true }));
-      setWarning("Please fill up this section");
-    } else if (value.length >= maxFeedbackLength[language]) {
-      setInputError((prevError) => ({ ...prevError, feedback: true }));
-      setWarning(`Too many characters (max ${maxFeedbackLength[language]})`);
+      setWarning(form.feedback_required);
+      return;
     }
+
+    if (value.length > maxLength) {
+      setInputError((prevError) => ({ ...prevError, feedback: true }));
+      setWarning(tooLongMessage);
+      return;
+    }
+
     setInputError((prevError) => ({ ...prevError, feedback: false }));
     setWarning("");
   };
 
   return (
-    <>
-      <h2 className="font-secondary bg-[#00646c] p-2 text-center text-xl font-bold text-white capitalize">
-        {labelText[language].SPR["student_feedback"]}
-      </h2>
-      <div className="grid grid-cols-1 py-6" id="feedback">
+    <section className="form-section" id="feedback">
+      <div className="form-aspect">
         <textarea
-          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-2 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#09c5eb] sm:text-sm/6"
+          className="form-textarea"
           rows={8}
           name="feedback"
           id="feedback"
           value={feedback}
           onChange={handleInputData}
-          placeholder={placeholderContent[language]}
-        ></textarea>
-        <div className="mt-1 flex items-center justify-between">
-          <div>{inputError.feedback && <p className="text-sm text-red-600">{warning}</p>}</div>
-          <p className="text-right text-sm text-gray-500">
-            {count}/{maxFeedbackLength[language]}
+          placeholder={form.feedback_placeholder}
+        />
+        <div className="form-meta">
+          <div>{inputError.feedback && <p className="form-error">{warning}</p>}</div>
+          <p className="form-meta-count">
+            {count}/{maxLength}
           </p>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

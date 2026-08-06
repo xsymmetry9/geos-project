@@ -65,18 +65,18 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
 
   return (
     <>
-      <div className="bg-green-50">
+      <div className="border-b border-line bg-brand-soft/50">
         <nav ref={navRef} className="max-w-[900px] w-full mx-auto p-4 flex items-center gap-6">
           <ul className="flex items-center gap-6">
             <li className="relative">
               <button type="button"
                 onClick={handleLanguage}
-                className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none">
+                className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-ink hover:bg-white hover:text-brand focus:outline-none">
                 <span className="capitalize">{language}</span>
-                <span className="text-xs text-gray-400">▼</span>
+                <span className="text-xs text-muted">▼</span>
               </button>
               {openLanguage && (
-                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-24 sm:right-4 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 ">
+                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-0 origin-top-left rounded-xl border border-line bg-white shadow-lg">
                   <div className="py-1 text-sm">
                     {languageOptions.map((opt) => (
                       <button
@@ -86,7 +86,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                           setLanguage(opt);
                           setOpenLanguage(false);
                         }}
-                        className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">{opt}</button>
+                        className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none">{opt}</button>
                     ))}
                   </div>
                 </div>
@@ -97,12 +97,12 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
             <li className="relative">
               <button type="button"
                 onClick={handleMenu}
-                className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none">
+                className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-ink hover:bg-white hover:text-brand focus:outline-none">
                 <span className="capitalize">{menu}</span>
-                <span className="text-xs text-gray-400">▼</span>
+                <span className="text-xs text-muted">▼</span>
               </button>
               {openMenu && (
-                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-16 sm:right-4 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5">
+                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-0 origin-top-left rounded-xl border border-line bg-white shadow-lg">
                   <div className="py-1 text-sm">
                     <button
                       type="button"
@@ -111,7 +111,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                         setOpenLanguage(false);
                         setOpenMenu(false);
                       }}
-                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
+                      className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none"
                       >
                       SPR
                     </button>
@@ -122,7 +122,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                         setOpenLanguage(false);
                         setOpenMenu(false);
                       }}
-                      className="block w-full px-4 py-2 text-left capitalize text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none">Level Check</button>
+                      className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none">Level Check</button>
 
                   </div>
                 </div>
@@ -141,7 +141,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                   {/* define header and data colors per column (Levels + categories) */}
                   {(() => {
                     // single header color and two alternating data colors
-                    const headerClass = "bg-teal-700 text-white";
+                    const headerClass = "bg-brand text-white";
 
                     return (
                       <>
@@ -166,7 +166,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                 {Array.from({ length: maxLen }).map((_, idx) => (
                   <tr key={levelLabels[idx] ?? idx}>
                     {(() => {
-                      const dataClasses = ["bg-teal-50", "bg-white"]; // alternate
+                      const dataClasses = ["bg-brand-soft", "bg-white"]; // alternate
 
                       return (
                         <>

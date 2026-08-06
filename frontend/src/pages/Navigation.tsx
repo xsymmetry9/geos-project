@@ -1,132 +1,124 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import ImportFromExcel from "@/components/ImportFromExcel";
 import ExportToExcel from "@/components/ExportToExcel";
 
 type NavigationProps = {
-    setPage: (page: "view-spr" | "view-levelCheck") => void;
-    setUserData: (value: any) => void;
-    userData: any;
+  setPage: (page: "view-spr" | "view-levelCheck") => void;
+  setUserData: (value: any) => void;
+  userData: any;
 };
 
 const Navigation = ({ setPage, userData, setUserData }: NavigationProps) => {
-    const [dropDownSPR, setDropDownSPR] = useState<boolean>(false);
-    const [dropDownLevelCheck, setDropDownLevelCheck] = useState<boolean>(false);
+  const [dropDownSPR, setDropDownSPR] = useState<boolean>(false);
+  const [dropDownLevelCheck, setDropDownLevelCheck] = useState<boolean>(false);
 
-    const navRef = useRef<HTMLElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
 
-    const handleChangePage = (id: "view-spr" | "view-levelCheck") => {
-        setPage(id);
+  const handleChangePage = (id: "view-spr" | "view-levelCheck") => {
+    setPage(id);
+    setDropDownSPR(false);
+    setDropDownLevelCheck(false);
+  };
+
+  const toggleSPR = () => {
+    setDropDownSPR((prev) => !prev);
+    setDropDownLevelCheck(false);
+  };
+
+  const toggleLevelCheck = () => {
+    setDropDownLevelCheck((prev) => !prev);
+    setDropDownSPR(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setDropDownSPR(false);
         setDropDownLevelCheck(false);
+      }
     };
 
-    const toggleSPR = () => {
-        setDropDownSPR((prev) => !prev);
-        setDropDownLevelCheck(false);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
 
-    const toggleLevelCheck = () => {
-        setDropDownLevelCheck((prev) => !prev);
-        setDropDownSPR(false);
-    };
+  const menuItemClass =
+    "block w-full px-4 py-2 text-left text-ink hover:bg-brand-soft hover:text-brand focus:bg-brand-soft focus:text-brand focus:outline-none";
 
-    // Click outside to close dropdowns
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (navRef.current && !navRef.current.contains(event.target as Node)) {
-                setDropDownSPR(false);
-                setDropDownLevelCheck(false);
-            }
-        };
+  return (
+    <nav ref={navRef} className="panel w-full max-w-[900px] overflow-visible">
+      <ul className="flex flex-wrap items-center justify-center gap-1 px-2 py-2 text-sm font-medium sm:gap-2">
+        <li className="relative">
+          <button
+            type="button"
+            onClick={toggleSPR}
+            className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-ink transition hover:bg-brand-soft hover:text-brand focus:outline-none"
+          >
+            <span>SPR</span>
+            <ChevronDown size={14} className="text-muted" />
+          </button>
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+          {dropDownSPR && (
+            <div className="absolute left-0 z-20 mt-1 w-44 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
+              <Link to="/spr" className={menuItemClass}>
+                New Form
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleChangePage("view-spr")}
+                className={menuItemClass}
+              >
+                View Forms
+              </button>
+            </div>
+          )}
+        </li>
 
-    return (
-        <nav ref={navRef} className="w-full border-b bg-white">
-            <ul className="flex items-center justify-center gap-6 px-4 py-2 text-sm font-medium text-gray-700">
-                {/* SPR Dropdown */}
-                <li className="relative">
-                    <button
-                        type="button"
-                        onClick={toggleSPR}
-                        className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none"
-                    >
-                        <span>SPR</span>
-                        <span className="text-xs text-gray-400">▼</span>
-                    </button>
+        <li className="relative">
+          <button
+            type="button"
+            onClick={toggleLevelCheck}
+            className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-ink transition hover:bg-brand-soft hover:text-brand focus:outline-none"
+          >
+            <span>Level Check</span>
+            <ChevronDown size={14} className="text-muted" />
+          </button>
 
-                    {dropDownSPR && (
-                        <div className="absolute left-0 z-20 mt-2 w-44 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black/5">
-                            <div className="py-1 text-sm">
-                                <Link
-                                    to="/spr"
-                                    className="block w-full px-4 py-2 text-left text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
-                                >
-                                    New Form
-                                </Link>
-                                <button
-                                    type="button"
-                                    onClick={() => handleChangePage("view-spr")}
-                                    className="block w-full px-4 py-2 text-left text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
-                                >
-                                    View Forms
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </li>
+          {dropDownLevelCheck && (
+            <div className="absolute left-0 z-20 mt-1 w-48 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
+              <Link to="/levelCheck" className={menuItemClass}>
+                New Form
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleChangePage("view-levelCheck")}
+                className={menuItemClass}
+              >
+                View Forms
+              </button>
+            </div>
+          )}
+        </li>
 
-                {/* Level Check Dropdown */}
-                <li className="relative">
-                    <button
-                        type="button"
-                        onClick={toggleLevelCheck}
-                        className="inline-flex items-center gap-1 text-gray-800 hover:text-emerald-700 focus:outline-none"
-                    >
-                        <span>Level Check</span>
-                        <span className="text-xs text-gray-400">▼</span>
-                    </button>
+        <li className="mx-1 hidden h-6 w-px bg-line sm:block" aria-hidden="true" />
 
-                    {dropDownLevelCheck && (
-                        <div className="absolute left-0 z-20 mt-2 w-48 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black/5">
-                            <div className="py-1 text-sm">
-                                <Link
-                                    to="/levelCheck"
-                                    className="block w-full px-4 py-2 text-left text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
-                                >
-                                    New Form
-                                </Link>
-                                <button
-                                    type="button"
-                                    onClick={() => handleChangePage("view-levelCheck")}
-                                    className="block w-full px-4 py-2 text-left text-gray-700 hover:bg-green-50 hover:text-emerald-800 focus:bg-green-50 focus:text-emerald-800 focus:outline-none"
-                                >
-                                    View Forms
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </li>
-
-                {/* Export / Import (kept simple, not button-styled) */}
-                <li>
-                    <div className="inline-flex items-center text-gray-800 hover:text-emerald-700">
-                        <ExportToExcel userData={userData} />
-                    </div>
-                </li>
-                <li>
-                    <div className="inline-flex items-center text-gray-800 hover:text-emerald-700">
-                        <ImportFromExcel userData={userData} setUserData={setUserData} />
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    );
+        <li>
+          <div className="inline-flex items-center rounded-lg px-3 py-2 text-ink transition hover:bg-brand-soft hover:text-brand">
+            <ExportToExcel userData={userData} />
+          </div>
+        </li>
+        <li>
+          <div className="inline-flex items-center rounded-lg px-3 py-2 text-ink transition hover:bg-brand-soft hover:text-brand">
+            <ImportFromExcel userData={userData} setUserData={setUserData} />
+          </div>
+        </li>
+      </ul>
+    </nav>
+  );
 };
 
 export default Navigation;

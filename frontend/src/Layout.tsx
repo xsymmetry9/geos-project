@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 const Layout = () => {
   return (
-    <div className="relative min-h-screen grid grid-rows-[auto_1fr_auto]">
+    <div className="app-shell relative min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header />
       <main className="min-h-0 min-w-0">
         <Outlet />

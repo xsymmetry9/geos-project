@@ -26,6 +26,7 @@ interface PersonalInformationProps {
   handleInputData: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   language: Language;
 }
+
 const PersonalInformation: React.FC<PersonalInformationProps> = ({
   inputData,
   inputError,
@@ -33,123 +34,108 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({
   language,
 }) => {
   const { name, course, textbook, attendance, totalLessons, dateCreated } = inputData;
-
-  //translation
-  const { input_name, input_course, input_textbook, input_attendance, input_totallessons } =
-    labelText[language].form;
+  const form = labelText[language].form;
   const dateLabel = labelText[language].SPR.date;
 
   return (
-    <div className="pb-[3rem]" id="personal-information">
-      <h2 className="bg-[#00646c] p-2 text-center text-xl font-bold text-white capitalize">
-        {labelText[language].SPR["student_information"]}
-      </h2>
-      <div className="m-auto mt-8">
-        <div className="grid grid-cols-1 gap-6">
-          <label className="block" htmlFor="name">
-            <span className="text-gray-700 capitalize">{input_name}</span>
+    <section className="form-section" id="personal-information">
+      <div className="form-aspect">
+        <div className="form-fields">
+          <label className="form-label" htmlFor="name">
+            <span className="form-label-text">{form.input_name}</span>
             <input
               type="text"
-              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              className="form-field"
               name="name"
+              id="name"
               value={name}
               onChange={handleInputData}
             />
-            {inputError.name && <p className="text-sm text-red-600">Missing text</p>}
+            {inputError.name && <p className="form-error">{form.missing_text}</p>}
           </label>
-          <label className="block" htmlFor="dateCreated">
-            <span className="text-gray-700 capitalize">{dateLabel}</span>
+
+          <label className="form-label" htmlFor="dateCreated">
+            <span className="form-label-text">{dateLabel}</span>
             <input
               type="date"
-              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              className="form-field"
               name="dateCreated"
               id="dateCreated"
               value={format(new Date(dateCreated), "yyyy-MM-dd")}
               onChange={handleInputData}
             />
           </label>
-          <label className="block" htmlFor="course">
-            <span className="text-gray-700 capitalize">{input_course}</span>
+
+          <label className="form-label" htmlFor="course">
+            <span className="form-label-text">{form.input_course}</span>
             <select
-              className="font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              className="form-field"
               id="course"
               name="course"
               value={course}
               onChange={handleInputData}
             >
-              <option className="font-secondary text-base text-inherit" value="">
-                Select course
-              </option>
-              <option className="font-secondary text-base text-inherit" value="ONLINE">
-                ONLINE
-              </option>
-              <option className="font-secondary text-base text-inherit" value="PL">
-                PL
-              </option>
-              <option className="font-secondary text-base text-inherit" value="2PL">
-                2PL
-              </option>
-              <option className="font-secondary text-base text-inherit" value="FLEX">
-                FLEX
-              </option>
-              <option className="font-secondary text-base text-inherit" value="SGL">
-                SGL
-              </option>
-              <option className="font-secondary text-base text-inherit" value="GL">
-                GL
-              </option>
-              <option className="font-secondary text-base text-inherit" value="Company">
-                Company
-              </option>
+              <option value="">{form.select_course}</option>
+              <option value="ONLINE">ONLINE</option>
+              <option value="PL">PL</option>
+              <option value="2PL">2PL</option>
+              <option value="FLEX">FLEX</option>
+              <option value="SGL">SGL</option>
+              <option value="GL">GL</option>
+              <option value="Company">Company</option>
             </select>
-            {inputError.course && <p className="text-sm text-red-600">Missing course</p>}
+            {inputError.course && <p className="form-error">{form.missing_course}</p>}
           </label>
-          <label className="block" htmlFor="textbook">
-            <span className="text-gray-700 capitalize">{input_textbook}</span>
+
+          <label className="form-label" htmlFor="textbook">
+            <span className="form-label-text">{form.input_textbook}</span>
             <input
-              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
+              className="form-field"
               type="text"
               name="textbook"
+              id="textbook"
               value={textbook}
               onChange={handleInputData}
             />
-            {inputError.textbook && <p className="text-sm text-red-600">Missing textbook</p>}
+            {inputError.textbook && <p className="form-error">{form.missing_textbook}</p>}
           </label>
-          <label className="block" htmlFor="attendance">
-            <span className="text-gray-700 capitalize">{input_attendance}</span>
+
+          <label className="form-label" htmlFor="attendance">
+            <span className="form-label-text">{form.input_attendance}</span>
             <input
-              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-              type="number"
+              className="form-field"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               name="attendance"
               id="attendance"
-              value={attendance}
-              min={0}
+              value={attendance === 0 ? "" : attendance}
+              placeholder="0"
+              onFocus={(e) => e.target.select()}
               onChange={handleInputData}
             />
-            {inputError.attendance && (
-              <p className="text-sm text-red-600">Needs to be greater than 0 and a whole number</p>
-            )}
+            {inputError.attendance && <p className="form-error">{form.attendance_error}</p>}
           </label>
-          <label className="block" htmlFor="totalLessons">
-            <span className="text-gray-700 capitalize">{input_totallessons}</span>
+
+          <label className="form-label" htmlFor="totalLessons">
+            <span className="form-label-text">{form.input_totallessons}</span>
             <input
-              className="form-input font-primary mt-1 block w-full border-0 border-b-2 border-gray-200 px-0.5 text-base text-black hover:border-[#09c5eb] focus:border-[#09c5eb] focus:ring-0 focus:outline-0"
-              type="number"
+              className="form-field"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               name="totalLessons"
               id="totalLessons"
-              min={0}
-              value={totalLessons}
+              value={totalLessons === 0 ? "" : totalLessons}
+              placeholder="0"
+              onFocus={(e) => e.target.select()}
               onChange={handleInputData}
             />
-            {inputError.totalLessons && (
-              <p className="text-sm text-red-600">
-                Needs to be greater than 0 and greater than attended lessons
-              </p>
-            )}
+            {inputError.totalLessons && <p className="form-error">{form.total_lessons_error}</p>}
           </label>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

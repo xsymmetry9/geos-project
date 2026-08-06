@@ -69,7 +69,7 @@ export const PrintContent: React.FC<PrintContentProps> = ({
     <div className={`${fontLanguage()}`}>
       <div className="title-container">
         <div className="container">
-          <img width={120} height={60} src={"/logo.jpg"} alt={"Company Logo"} />
+          <img width={120} height={60} src={"/logo.jpg"} alt={labelText[language].company_logo} />
           <TitleSPR language={language} />
         </div>
       </div>

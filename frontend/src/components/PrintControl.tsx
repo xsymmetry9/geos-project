@@ -2,6 +2,8 @@ import { Printer } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import "@/styles/print.css";
+import { useUser } from "@/context/UserContext";
+import labelText from "@/assets/other/labelText.json";
 
 type PrintControlProps = {
   contentRef: React.RefObject<HTMLDivElement>;
@@ -9,7 +11,11 @@ type PrintControlProps = {
   layout: "portrait" | "landscape";
   iconSize: number;
 };
+
 const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintControlProps) => {
+  const { user } = useUser();
+  const language = user?.language ?? "english";
+
   const handlePrint = async () => {
     if (!contentRef.current) return;
 
@@ -44,9 +50,9 @@ const PrintControl = ({ contentRef, className, layout, iconSize = 24 }: PrintCon
     window.open(blobUrl, "_blank", "noopener,noreferrer");
   };
   return (
-    <button className={`${className}`} onClick={handlePrint}>
+    <button type="button" className={`cursor-pointer ${className}`} onClick={handlePrint}>
       <Printer size={iconSize} />
-      <span>Print</span>
+      <span>{labelText[language].printPage}</span>
     </button>
   );
 };

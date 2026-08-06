@@ -107,19 +107,19 @@ const PreviewPage = () => {
             <button type="button" aria-label="Open menu" className="mr-1 rounded-xl border px-3 py-1.5 shadow-sm md:hidden" onClick={() => setIsMenuOpen(true)}>
               <Menu />
             </button>
-            <Link className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"
+            <Link className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"
               to={`/levelCheck/edit/${data.id}`}>
               <Pencil size="24" />
               <span>Edit</span>
             </Link>
             <SaveControl
               contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50"
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5"
               layout="landscape"
               title="level-check" />
             <PrintControl
               contentRef={componentRef}
-              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-dark-green hover:bg-dark-green px-3 py-1.5 hover:text-slate-50" layout="landscape"
+              className="cursor-pointer md:flex md:gap-2 md:items-center text-sm hidden rounded-xl bg-white border border-brand text-brand hover:bg-brand hover:text-white px-3 py-1.5" layout="landscape"
               iconSize={24} />
           </div>
         </div>
@@ -134,17 +134,17 @@ const PreviewPage = () => {
                 <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" className="rounded-md border px-2 py-1 text-sm">✕
                 </button>
               </div>
-              <Link className="cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white" to={`/levelCheck/edit/${data.id}`}>
+              <Link className="cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white" to={`/levelCheck/edit/${data.id}`}>
                 <Pencil />
                 <span>Edit</span></Link>
               <SaveControl
                 contentRef={componentRef}
-                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                 layout={"landscape"}
                 title={data.student_name} />
               <PrintControl
                 contentRef={componentRef}
-                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-dark-green hover:text-white"}
+                className={"cursor-pointer flex items-center justify-center gap-2 rounded-xl border px-3 py-2 hover:bg-brand hover:text-white"}
                 layout={"landscape"} />
             </div>
           </div>

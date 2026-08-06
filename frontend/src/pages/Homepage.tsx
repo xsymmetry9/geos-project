@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import {
@@ -15,6 +15,7 @@ import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
 import labelText from "@/assets/other/labelText.json"
+import { useUser } from "@/context/UserContext";
 
 // Helpers
 
@@ -30,9 +31,6 @@ const MIN_ROWS = 5; // minimum visible rows in the table
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  start: number;
-  end: number;
-  total: number;
   onPageChange: (page: number) => void;
 };
 
@@ -55,111 +53,67 @@ const getPageNumbers = (totalPages: number, currentPage: number): (number | stri
 const Pagination = ({
   currentPage,
   totalPages,
-  start,
-  end,
-  total,
   onPageChange,
 }: PaginationProps) => {
-  if (total === 0) return null;
-
   const pageNumbers = getPageNumbers(totalPages, currentPage);
-
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
   return (
-    <div className="mt-4 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-      {/* Mobile: Previous / Next only */}
-      <div className="flex flex-1 justify-between sm:hidden">
+    <div className="mt-4 flex items-center justify-center border-t border-line bg-white px-4 py-3">
+      <nav aria-label="Pagination" className="isolate inline-flex -space-x-px overflow-hidden rounded-lg">
         <button
           type="button"
           onClick={() => canGoPrev && onPageChange(currentPage - 1)}
           disabled={!canGoPrev}
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative inline-flex items-center px-2 py-2 text-muted ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Previous
+          <span className="sr-only">Previous</span>
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
+
+        {pageNumbers.map((p, idx) => {
+          if (p === "...") {
+            return (
+              <span
+                key={`ellipsis-${idx}`}
+                className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-muted ring-1 ring-line"
+              >
+                ...
+              </span>
+            );
+          }
+
+          const pageNumber = p as number;
+          const isCurrent = pageNumber === currentPage;
+
+          return (
+            <button
+              key={pageNumber}
+              type="button"
+              onClick={() => onPageChange(pageNumber)}
+              aria-current={isCurrent ? "page" : undefined}
+              className={
+                isCurrent
+                  ? "relative z-10 inline-flex items-center bg-brand px-4 py-2 text-sm font-semibold text-white focus:z-20"
+                  : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-ink ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none"
+              }
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
+
         <button
           type="button"
           onClick={() => canGoNext && onPageChange(currentPage + 1)}
           disabled={!canGoNext}
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative inline-flex items-center px-2 py-2 text-muted ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Next
+          <span className="sr-only">Next</span>
+          <ChevronRight className="h-5 w-5" aria-hidden="true" />
         </button>
-      </div>
-
-      {/* Desktop: full pagination */}
-      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">{start}</span> to{" "}
-            <span className="font-medium">{end}</span> of{" "}
-            <span className="font-medium">{total}</span> results
-          </p>
-        </div>
-        <div>
-          <nav
-            aria-label="Pagination"
-            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-          >
-            {/* Previous button */}
-            <button
-              type="button"
-              onClick={() => canGoPrev && onPageChange(currentPage - 1)}
-              disabled={!canGoPrev}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <span className="sr-only">Previous</span>
-              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-            </button>
-
-            {/* Page buttons */}
-            {pageNumbers.map((p, idx) => {
-              if (p === "...") {
-                return (
-                  <span
-                    key={`ellipsis-${idx}`}
-                    className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-gray-300"
-                  >
-                    ...
-                  </span>
-                );
-              }
-
-              const pageNumber = p as number;
-              const isCurrent = pageNumber === currentPage;
-
-              return (
-                <button
-                  key={pageNumber}
-                  type="button"
-                  onClick={() => onPageChange(pageNumber)}
-                  aria-current={isCurrent ? "page" : undefined}
-                  className={
-                    isCurrent
-                      ? "relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-none"
-                  }
-                >
-                  {pageNumber}
-                </button>
-              );
-            })}
-
-            {/* Next button */}
-            <button
-              type="button"
-              onClick={() => canGoNext && onPageChange(currentPage + 1)}
-              disabled={!canGoNext}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              <span className="sr-only">Next</span>
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </nav>
-        </div>
-      </div>
+      </nav>
     </div>
   );
 };
@@ -209,104 +163,109 @@ const TableWithActions = ({
   const rowsToRender = Math.max(items.length, MIN_ROWS);
 
   return (
-    <table className="w-full">
-      <colgroup>
-        <col style={{ width: "33.3333%" }} />
-        <col style={{ width: "33.3333%" }} />
-        <col style={{ width: "33.3333%" }} />
-      </colgroup>
-      <thead>
-        <tr className={`${headerBgClass} font-semibold text-white`}>
-          <th className="p-3 text-center text-sm tracking-wide uppercase">Date</th>
-          <th className="p-3 text-center text-sm tracking-wide uppercase">{nameHeader}</th>
-          <th className="w-[80px] p-3 text-center text-sm tracking-wide uppercase">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Array.from({ length: rowsToRender }).map((_, index) => {
-          const item = items[index];
+    <div className="overflow-hidden rounded-xl border border-line">
+      <table className="w-full">
+        <colgroup>
+          <col style={{ width: "33.3333%" }} />
+          <col style={{ width: "33.3333%" }} />
+          <col style={{ width: "33.3333%" }} />
+        </colgroup>
+        <thead>
+          <tr className={`${headerBgClass} font-semibold text-white`}>
+            <th className="p-3 text-center text-sm tracking-wide uppercase">Date</th>
+            <th className="p-3 text-center text-sm tracking-wide uppercase">{nameHeader}</th>
+            <th className="w-[80px] p-3 text-center text-sm tracking-wide uppercase">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: rowsToRender }).map((_, index) => {
+            const item = items[index];
 
-          if (!item) {
-            // Empty row to pad the height
+            if (!item) {
+              return (
+                <tr key={`empty-${index}`} className="border-b border-line bg-white">
+                  <td className="h-[44px] p-3 text-center text-sm">&nbsp;</td>
+                  <td className="h-[44px] p-3 text-sm font-medium">&nbsp;</td>
+                  <td className="h-[44px] p-3 text-center">&nbsp;</td>
+                </tr>
+              );
+            }
+
             return (
               <tr
-                key={`empty-${index}`}
-                className="border-b border-gray-200 bg-white"
+                key={`${item.id}-${index}`}
+                className="border-b border-line transition-colors duration-150 odd:bg-white even:bg-brand-soft/40 hover:bg-brand-soft"
               >
-                <td className="h-[40px] p-3 text-center text-sm">&nbsp;</td>
-                <td className="h-[40px] p-3 text-sm font-medium">&nbsp;</td>
-                <td className="h-[40px] p-3 text-center">&nbsp;</td>
-              </tr>
-            );
-          }
-
-          return (
-            <tr
-              key={`${item.id}-${index}`}
-              className="border-b border-gray-200 transition-colors duration-150 odd:bg-white even:bg-slate-50 hover:bg-slate-100"
-            >
-              <td className="h-[40px] p-3 text-center text-sm">
-                {formattedDate(item.dateCreated)}
-              </td>
-              <td
-                className={`h-[40px] p-3 text-sm font-medium ${nameCellClass ?? "pl-6 text-center"
+                <td className="h-[44px] p-3 text-center text-sm text-muted">
+                  {formattedDate(item.dateCreated)}
+                </td>
+                <td
+                  className={`h-[44px] p-3 text-sm font-medium text-ink ${
+                    nameCellClass ?? "pl-6 text-center"
                   }`}
-              >
-                {item[nameKey]}
-              </td>
-              <td className="relative h-[36px] p-3 text-center">
-                <div className="inline-block">
-                  <button
-                    onClick={() => toggleOption(item.id)}
-                    aria-expanded={selectedId === item.id}
-                    aria-label="toggle menu"
-                    type="button"
-                    className="cursor-pointer rounded-full border border-transparent bg-white p-1 text-slate-600 hover:border-gray-200 hover:bg-slate-100 focus:ring-2 focus:ring-teal-300 focus:outline-none"
-                  >
-                    <MoreHorizontal size={16} strokeWidth={2} />
-                  </button>
-                </div>
-                {selectedId === item.id && (
-                  <div
-                    ref={dropDownRef}
-                    className="absolute top-10 right-0 z-40 mt-2 flex w-[160px] flex-col rounded border border-gray-200 bg-white p-1 shadow-lg"
-                  >
-                    <Link
-                      className="flex items-center gap-2 p-2 hover:bg-slate-50"
-                      to={editPath(item.id)}
-                    >
-                      <Pencil size={18} />
-                      <span className="text-sm">Edit</span>
-                    </Link>
-                    <Link
-                      className="flex items-center gap-2 p-2 hover:bg-slate-50"
-                      to={previewPath(item.id)}
-                    >
-                      <Search size={18} />
-                      <span className="text-sm">Print Preview</span>
-                    </Link>
+                >
+                  {item[nameKey]}
+                </td>
+                <td className="relative h-[44px] p-3 text-center">
+                  <div className="inline-block">
                     <button
-                      className="flex w-full items-center gap-2 p-2 text-left hover:bg-slate-50"
-                      onClick={() => onDelete(item.id)}
+                      onClick={() => toggleOption(item.id)}
+                      aria-expanded={selectedId === item.id}
+                      aria-label="toggle menu"
+                      type="button"
+                      className="cursor-pointer rounded-full border border-transparent bg-white p-1.5 text-muted hover:border-line hover:bg-brand-soft hover:text-brand focus:ring-2 focus:ring-brand/30 focus:outline-none"
                     >
-                      <Archive size={18} />
-                      <span className="text-sm">Delete</span>
+                      <MoreHorizontal size={16} strokeWidth={2} />
                     </button>
                   </div>
-                )}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                  {selectedId === item.id && (
+                    <div
+                      ref={dropDownRef}
+                      className="absolute top-10 right-0 z-40 mt-1 flex w-[170px] flex-col rounded-xl border border-line bg-white p-1 shadow-lg"
+                    >
+                      <Link
+                        className="flex items-center gap-2 rounded-lg p-2 text-ink hover:bg-brand-soft"
+                        to={editPath(item.id)}
+                      >
+                        <Pencil size={16} />
+                        <span className="text-sm">Edit</span>
+                      </Link>
+                      <Link
+                        className="flex items-center gap-2 rounded-lg p-2 text-ink hover:bg-brand-soft"
+                        to={previewPath(item.id)}
+                      >
+                        <Search size={16} />
+                        <span className="text-sm">Print Preview</span>
+                      </Link>
+                      <button
+                        className="flex w-full items-center gap-2 rounded-lg p-2 text-left text-red-600 hover:bg-red-50"
+                        onClick={() => onDelete(item.id)}
+                        type="button"
+                      >
+                        <Archive size={16} />
+                        <span className="text-sm">Delete</span>
+                      </button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 // Main Homepage
 
 const Homepage = () => {
-  const [page, setPage] = useState<"view-spr" | "view-levelCheck">("view-spr");
+  const { user } = useUser();
+  const [searchParams] = useSearchParams();
+  const viewParam = searchParams.get("view");
+  const initialPage =
+    viewParam === "levelCheck" ? "view-levelCheck" : "view-spr";
+  const [page, setPage] = useState<"view-spr" | "view-levelCheck">(initialPage);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
@@ -316,6 +275,16 @@ const Homepage = () => {
     id: string | null;
     type: string;
   }>({ display: false, id: null, type: "" });
+
+  const displayLanguage = user?.language ?? userData.language ?? "english";
+
+  useEffect(() => {
+    if (viewParam === "levelCheck") {
+      setPage("view-levelCheck");
+    } else if (viewParam === "spr") {
+      setPage("view-spr");
+    }
+  }, [viewParam]);
 
   useEffect(() => {
     const user = getDataFromLocal();
@@ -370,7 +339,13 @@ const Homepage = () => {
 
   const closePage = () => setDeletePage({ display: false, id: null, type: "" });
 
-  if (loading) return <h1>Loading ...</h1>;
+  if (loading) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <p className="text-muted">Loading…</p>
+      </div>
+    );
+  }
 
   const isSPRView = page === "view-spr";
   const allItems = isSPRView ? userData?.SPR ?? [] : userData?.levelCheck ?? [];
@@ -384,8 +359,6 @@ const Homepage = () => {
   const endIndexExclusive = totalItems === 0 ? 0 : Math.min(startIndex + pageSize, totalItems);
 
   const pageItems = allItems.slice(startIndex, endIndexExclusive);
-  const startDisplay = totalItems === 0 ? 0 : startIndex + 1;
-  const endDisplay = endIndexExclusive;
 
   const handlePageChange = (nextPage: number) => {
     if (nextPage < 1 || nextPage > totalPages) return;
@@ -394,8 +367,8 @@ const Homepage = () => {
 
   // Dynamic table config for SPR vs LevelCheck
   const sprConfig = {
-    headerBgClass: "bg-dark-green",
-    nameHeader: "name",
+    headerBgClass: "bg-brand",
+    nameHeader: "Name",
     nameKey: "name" as const,
     nameCellClass: "pl-6 text-center",
     editPath: (id: string) => `/spr/edit/${id}`,
@@ -404,8 +377,8 @@ const Homepage = () => {
   };
 
   const levelCheckConfig = {
-    headerBgClass: "bg-teal-700",
-    nameHeader: "NAME",
+    headerBgClass: "bg-brand",
+    nameHeader: "Name",
     nameKey: "student_name" as const,
     nameCellClass: "pl-6 text-left",
     editPath: (id: string) => `/levelCheck/edit/${id}`,
@@ -416,22 +389,24 @@ const Homepage = () => {
   const currentTableConfig = isSPRView ? sprConfig : levelCheckConfig;
 
   return (
-    <div className="pb-12">
-      <div className="p-b-3 mb-6 flex justify-center gap-3">
+    <div className="px-4 pb-12">
+      <div className="mb-6 flex justify-center">
         <Navigation userData={userData} setUserData={setUserData} setPage={setPage} />
       </div>
-      <div className="mx-auto container pb-3">
-        <h2 className="font-secondary mt-6 text-center text-2xl font-semibold">
-        {isSPRView ? "SPR" : "Level Check"}
-        </h2>
-        <p className="text-sm color-slate-300 capitalize text-center italic">{labelText[userData.language].name} version</p>
 
+      <div className="mx-auto mb-6 max-w-[900px] text-center">
+        <h2 className="font-secondary text-2xl font-semibold text-ink">
+          {isSPRView ? "Student Progress Reports" : "Level Checks"}
+        </h2>
+        <p className="mt-1 text-sm capitalize text-muted">
+          {labelText[displayLanguage].name} version
+        </p>
       </div>
-     
-      <div className="content">
-        <div className="mx-auto w-full max-w-[900px]">
+
+      <div className="mx-auto w-full max-w-[900px]">
+        <div className="panel overflow-hidden p-0 sm:p-0">
           {totalItems ? (
-            <>
+            <div className="p-3 sm:p-4">
               <TableWithActions
                 items={pageItems}
                 headerBgClass={currentTableConfig.headerBgClass}
@@ -445,61 +420,56 @@ const Homepage = () => {
               <Pagination
                 currentPage={safePage}
                 totalPages={totalPages}
-                start={startDisplay}
-                end={endDisplay}
-                total={totalItems}
                 onPageChange={handlePageChange}
               />
-            </>
-          ) : isSPRView ? (
-            <div className="flex flex-col gap-2 justify-center items-center">
-              <p className="mt-3 text-gray-500">Click here to create a SPR</p>
-              <Link className="btn-primary min-w-24" to="/spr">SPR</Link>
             </div>
           ) : (
-            <div className="flex flex-col gap-2 justify-center items-center">
-              <p className="mt-3 text-gray-500">Click here to create a Level Check Form</p>
-              <Link className="btn-primary min-w-24" to="/levelCheck">Level Check Form</Link>
-            </div>)}
+            <div className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">
+              <div className="rounded-full bg-brand-soft px-4 py-2 text-sm font-medium text-brand">
+                No records yet
+              </div>
+              <p className="max-w-sm text-muted">
+                {isSPRView
+                  ? "Create your first Student Progress Report to get started."
+                  : "Create your first Level Check form to get started."}
+              </p>
+              <Link className="btn-primary min-w-40" to={isSPRView ? "/spr" : "/levelCheck"}>
+                {isSPRView ? "Create SPR" : "Create Level Check"}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
       {addFormNav && (
-        <div className="absolute top-1/2 left-1/2 grid h-[300px] w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 grid-rows-[40px_1fr] rounded-lg bg-white shadow-lg">
-          <div className="relative h-8 w-full bg-gray-100">
-            <CloseBtn handleControl={handleFormControl} />
-          </div>
-          <div className="flex flex-col items-center justify-center gap-3">
-            <Link
-              className="flex h-12 w-[250px] cursor-pointer items-center gap-2 rounded bg-teal-700 p-2 text-white hover:bg-teal-500"
-              to={"/spr"}
-            >
-              <Plus size={18} />
-              <span>SPR Form</span>
-            </Link>
-            <Link
-              className="flex h-12 w-[250px] items-center gap-2 rounded bg-teal-700 p-2 text-white hover:bg-teal-500"
-              to={"/levelCheck/create"}
-            >
-              <Plus size={18} />
-              <span>Level Check Form</span>
-            </Link>
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-ink/40" onClick={handleFormControl} />
+          <div className="panel absolute top-1/2 left-1/2 grid h-[280px] w-full max-w-[420px] -translate-x-1/2 -translate-y-1/2 grid-rows-[40px_1fr] overflow-hidden">
+            <div className="relative flex h-10 w-full items-center justify-end bg-brand-soft px-2">
+              <CloseBtn handleControl={handleFormControl} />
+            </div>
+            <div className="flex flex-col items-center justify-center gap-3 px-6">
+              <Link className="btn-primary flex h-12 w-full max-w-[250px] items-center justify-center gap-2" to="/spr">
+                <Plus size={18} />
+                <span>SPR Form</span>
+              </Link>
+              <Link
+                className="btn-primary flex h-12 w-full max-w-[250px] items-center justify-center gap-2"
+                to="/levelCheck/create"
+              >
+                <Plus size={18} />
+                <span>Level Check Form</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Delete confirmation dialog styled like Tailwind example */}
       {deletePage.display && (
         <div className="fixed inset-0 z-50">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-gray-500/75 transition-opacity"
-            onClick={closePage}
-          ></div>
-
-          {/* Dialog panel */}
+          <div className="fixed inset-0 bg-ink/40 transition-opacity" onClick={closePage} />
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div className="panel relative w-full overflow-hidden text-left sm:my-8 sm:max-w-lg">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
@@ -519,25 +489,22 @@ const Homepage = () => {
                     </svg>
                   </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-base font-semibold text-gray-900">
+                    <h3 className="text-base font-semibold text-ink">
                       Are you sure you want to delete this?
                     </h3>
+                    <p className="mt-1 text-sm text-muted">This action cannot be undone.</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="bg-brand-soft/60 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="button"
                   onClick={handleDelete}
-                  className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  className="inline-flex w-full justify-center rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                 >
                   Delete
                 </button>
-                <button
-                  type="button"
-                  onClick={closePage}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                >
+                <button type="button" onClick={closePage} className="btn-secondary mt-3 w-full sm:mt-0 sm:w-auto">
                   Cancel
                 </button>
               </div>
