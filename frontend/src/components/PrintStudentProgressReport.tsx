@@ -83,8 +83,8 @@ export const PrintContent: React.FC<PrintContentProps> = ({
         />
       </div>
       <Table levels={levels} language={language} />
-      <div className="mt-[14px] grid grid-cols-2 gap-[12px]">
-        <div className="gap- grid grid-cols-1">
+      <div className="mt-3 grid grid-cols-2 gap-[12px]">
+        <div className="flex flex-col gap-1">
           <Graph userData={transformedData} language={language} onReady={onGraphReady} />
           <Comment comment={feedback} language={language} />
           <Signature language={language} />

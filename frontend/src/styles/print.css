@@ -126,8 +126,12 @@
 }
 
 .graph-container {
-  width: 359px;
+  position: relative;
+  width: 100%;
+  max-width: 359px;
   height: auto;
+  aspect-ratio: 1 / 0.82;
+  margin: 0 auto;
 }
 
 .print-component {
@@ -204,7 +208,7 @@
 
 .title-container {
   width: 100%;
-  padding-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 .title-container>.container {
@@ -212,23 +216,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .student-information {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .personalInformation {
   font-size: 20px;
-}
-
-/* Graph Section */
-.graph-container {
-  position: relative;
-  aspect-ratio: 1/1;
 }
 
 .print-list::before {

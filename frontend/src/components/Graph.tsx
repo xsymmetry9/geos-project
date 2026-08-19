@@ -35,7 +35,14 @@ interface GraphProps {
   language: Language;
   onReady?: () => void;
 }
+
 const text = (phrase: SPRStringKey, language: Language) => labelText[language]["SPR"][phrase];
+
+const legendItems = [
+  { key: "initial" as const, border: "#155E95", fill: "lightblue" },
+  { key: "final" as const, border: "#5B913B", fill: "lightgreen" },
+  { key: "target" as const, border: "#BE3144", fill: "rgb(238, 112, 112)" },
+];
 
 const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
   const readyOnce = React.useRef(false);
@@ -66,23 +73,17 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
     responsive: true,
     maintainAspectRatio: false,
     animation: false,
-    plugins: {
-      layout: {
-        padding: 0,
+    layout: {
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
       },
+    },
+    plugins: {
       legend: {
-        position: "bottom" as const,
-        align: "center" as const,
-        title: {
-          position: "center" as const,
-        },
-        labels: {
-          usePointStyle: true,
-          pointStyle: "circle" as const,
-          font: { size: 13 },
-          color: "black",
-          padding: 24,
-        },
+        display: false,
       },
       elements: {
         line: {
@@ -108,8 +109,9 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
         },
         pointLabels: {
           color: "rgb(0,0,0)",
+          padding: 2,
           font: {
-            size: 12,
+            size: 11,
           },
         },
       },
@@ -176,11 +178,23 @@ const Graph: React.FC<GraphProps> = ({ userData, language, onReady }) => {
   };
 
   return (
-    <>
+    <div className="w-full">
       <div className="graph-container">
         <Radar data={graphData} options={options} plugins={[readyPlugin]} />
       </div>
-    </>
+      <div className="mt-0 flex flex-wrap items-center justify-center gap-x-4 gap-y-0.5 text-[12px] leading-tight text-black">
+        {legendItems.map((item) => (
+          <div key={item.key} className="inline-flex items-center gap-1.5">
+            <span
+              className="inline-block h-2.5 w-2.5 shrink-0 rounded-full border"
+              style={{ backgroundColor: item.fill, borderColor: item.border }}
+              aria-hidden="true"
+            />
+            <span>{text(item.key, language)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

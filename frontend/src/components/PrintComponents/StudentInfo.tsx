@@ -235,13 +235,13 @@ export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
     }
   };
   return (
-    <div id="feedback" className="h-[240px] border border-slate-700">
+    <div id="feedback" className="h-[280px] border border-slate-700">
       <div className="h-[24px] bg-[rgba(0,161,174,.7)]">
         <p className={`ml-2 font-bold text-slate-800 ${fontStyleTitleComment()}`}>
           {text("comment", language)}
         </p>
       </div>
-      <div className="h-[210px] overflow-hidden px-2 py-1">
+      <div className="h-[250px] overflow-hidden px-2 py-1">
         <p className={`${fontStyleComment()}`}>{comment}</p>
       </div>
     </div>
@@ -250,9 +250,9 @@ export const Comment: React.FC<CommentProps> = ({ comment, language }) => {
 
 export const Signature: React.FC<{ language: Language }> = ({ language }) => {
   return (
-    <div className="signature-section mt-3">
-      <p className="text-xs/6 capitalize">{text("signature", language)}</p>
-      <div className="h-6 w-full border-b-1 border-slate-700" id="line"></div>
+    <div className="signature-section mt-2">
+      <p className="text-xs leading-tight capitalize">{text("signature", language)}</p>
+      <div className="h-3 w-full border-b border-slate-700" id="line"></div>
     </div>
   );
 };
