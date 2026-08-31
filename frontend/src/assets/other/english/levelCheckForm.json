@@ -12,7 +12,7 @@
                 "pronunciation": "pronunciation",
                 "listening": "listening"  
             },
-            "dropdownLevelInstruction": "Choose a CEFR level",
+            "dropdownLevelInstruction": "Choose a level",
             "instructionScore": "Enter assessment level",
             "placeholderScore": "Choose a score",
             "levelInstructionStrength": "Select up to 3 strengths",
@@ -21,7 +21,7 @@
             "addCustomWeakness": "Add a custom weakness",
             "finalNotes": "final notes",
             "bookRecommendation": "book recommendation",
-            "overallLevel": "overall level",
+            "overallLevel": "Overall level",
             "note": "note",
       
         "submit": "submit",
@@ -45,7 +45,6 @@
         "notes": "notes",
         "level": "level",
         "bookSuggestion": "book suggestion",
-        "score": "score",
-        "CEFR": "CEFR"
+        "score": "score"
     }
 }

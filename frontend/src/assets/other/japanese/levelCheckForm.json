@@ -12,7 +12,7 @@
             "speaking": "スピーキング",
             "accuracy": "正確度"
         },
-        "dropdownLevelInstruction": "選擇 CEFR 等級",
+        "dropdownLevelInstruction": "レベルを選択してください",
         "instructionScore": "輸入評估等級",
         "levelInstructionStrength": "長所を最大3つまで選択できます",
         "levelInstructionWeakness": "短所を最大3つまで選択できます",
@@ -44,7 +44,6 @@
         "notes": "メモ",
         "level": "レベル",
         "bookSuggestion": "書籍の提案",
-        "score": "スコア",
-        "CEFR": "CEFR"
+        "score": "スコア"
     }
 }

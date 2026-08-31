@@ -12,7 +12,7 @@
             "speaking": "말하기",
             "accuracy": "정확도"
         },
-        "dropdownLevelInstruction": "CEFR 레벨을 선택하세요",
+        "dropdownLevelInstruction": "레벨을 선택하세요",
         "instructionScore": "평가 레벨을 입력하세요",
         "levelInstructionStrength": "강점을 최대 3개까지 선택할 수 있습니다",
         "levelInstructionWeakness": "약점을 최대 3개까지 선택할 수 있습니다",
@@ -21,7 +21,7 @@
         "placeholderScore": "점수를 선택하세요",
         "finalNotes": "최종 노트",
         "bookRecommendation": "도서 추천",
-        "overallLevel": "전체 레벨",
+        "overallLevel": "종합 레벨",
         "note": "노트",
         "submit": "제출",
         "reset": "취소"
@@ -44,7 +44,6 @@
         "notes": "노트",
         "level": "레벨",
         "bookSuggestion": "도서 제안",
-        "score": "점수",
-        "CEFR": "CEFR"
+        "score": "점수"
     }
 }

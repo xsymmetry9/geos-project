@@ -37,7 +37,7 @@ const PlotLevelCheck: React.FC<PlotProps> = ({ data }) => {
                 <td className="capitalize border-r border-b border-slate-600">{text.strength}</td>
                 <td className="capitalize border-r border-b border-slate-600">{text.weakness}</td>
                 <td className="capitalize border-r border-b border-slate-600 bg-orange-300 text-black">{text.score}</td>
-                <td className="uppercase border-b border-slate-600 bg-orange-300 text-black">CEFR</td>
+                <td className="capitalize border-b border-slate-600 bg-orange-300 text-black">{text.level}</td>
               </tr>
             </thead>
             <tbody className="text-[13px]">

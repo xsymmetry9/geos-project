@@ -8,7 +8,7 @@ import {
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
-import RecordsTable from "@/components/RecordsTable";
+import RecordsTable, { SortDir, SortKey } from "@/components/RecordsTable";
 
 const TABLE_HEADER_HEIGHT = 44;
 const ROW_TARGET_HEIGHT = 52;
@@ -125,6 +125,8 @@ const Homepage = () => {
   const [page, setPage] = useState<"view-spr" | "view-levelCheck">(initialPage);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [sortKey, setSortKey] = useState<SortKey>("date");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
@@ -149,13 +151,35 @@ const Homepage = () => {
     setLoading(false);
   }, []);
 
-  // Reset pagination when switching between SPR / LevelCheck or when data changes
+  // Reset pagination when switching views or when data changes
   useEffect(() => {
     setCurrentPage(1);
   }, [page, userData]);
 
+  // Default sort when switching SPR / Level Check
+  useEffect(() => {
+    setSortKey("date");
+    setSortDir("desc");
+  }, [page]);
+
   const isSPRView = page === "view-spr";
-  const allItems = isSPRView ? userData?.SPR ?? [] : userData?.levelCheck ?? [];
+  const nameField = isSPRView ? "name" : "student_name";
+  const rawItems = isSPRView ? userData?.SPR ?? [] : userData?.levelCheck ?? [];
+
+  const allItems = [...rawItems].sort((a, b) => {
+    if (sortKey === "date") {
+      const aTime = new Date(a.dateCreated).getTime();
+      const bTime = new Date(b.dateCreated).getTime();
+      const diff = aTime - bTime;
+      return sortDir === "asc" ? diff : -diff;
+    }
+
+    const aName = String((a as any)[nameField] ?? "").trim().toLocaleLowerCase();
+    const bName = String((b as any)[nameField] ?? "").trim().toLocaleLowerCase();
+    const cmp = aName.localeCompare(bName, undefined, { sensitivity: "base" });
+    return sortDir === "asc" ? cmp : -cmp;
+  });
+
   const totalItems = allItems.length;
 
   // Fit as many rows as the available viewport height allows
@@ -246,6 +270,16 @@ const Homepage = () => {
     setCurrentPage(nextPage);
   };
 
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir(key === "date" ? "desc" : "asc");
+    }
+    setCurrentPage(1);
+  };
+
   // Dynamic table config for SPR vs LevelCheck
   const sprConfig = {
     headerBgClass: "bg-brand",
@@ -289,6 +323,9 @@ const Homepage = () => {
                   editPath={currentTableConfig.editPath}
                   previewPath={currentTableConfig.previewPath}
                   onDelete={currentTableConfig.onDelete}
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onSort={handleSort}
                 />
               </div>
               <Pagination

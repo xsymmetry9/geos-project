@@ -12,7 +12,7 @@
             "speaking": "口說",
             "accuracy": "正確度"
         },
-        "dropdownLevelInstruction": "選擇 CEFR 等級",
+        "dropdownLevelInstruction": "請選擇程度",
         "levelInstructionStrength": "可選最多 3 項優點",
         "levelInstructionWeakness": "可選最多 3 項弱點",
         "instructionScore": "輸入評估等級",
@@ -21,7 +21,7 @@
         "addCustomWeakness": "新增自訂弱點",
         "finalNotes": "最終備註",
         "bookRecommendation": "書籍推薦",
-        "overallLevel": "整體等級",
+        "overallLevel": "整體程度",
         "note": "備註",
         "submit": "提交",
         "reset": "取消"
@@ -42,9 +42,8 @@
         "strength": "優點",
         "weakness": "缺點",
         "notes": "備註",
-        "level": "等級",
+        "level": "程度",
         "bookSuggestion": "書籍建議",
-        "score": "分數",
-        "CEFR": "CEFR"
+        "score": "分數"
     }
 }
