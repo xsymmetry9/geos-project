@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "types": ["vite/client", "node"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -11,9 +11,8 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": false,
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "noEmit": true
   },

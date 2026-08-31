@@ -1,29 +1,20 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { format } from "date-fns";
 import {
-  Archive,
-  Pencil,
   Plus,
-  MoreHorizontal,
-  Search,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
+import RecordsTable from "@/components/RecordsTable";
 
-// Helpers
-
-const formattedDate = (dateCreated: string | Date) => {
-  return format(new Date(dateCreated), "MM/dd/yyyy");
-};
-
-// Pagination constants / types
-
-const ITEMS_PER_PAGE = 5;
-const MIN_ROWS = 5; // minimum visible rows in the table
+const TABLE_HEADER_HEIGHT = 44;
+const ROW_TARGET_HEIGHT = 52;
+const MIN_PAGE_SIZE = 3;
+const MAX_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 5;
 
 type PaginationProps = {
   currentPage: number;
@@ -31,72 +22,81 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
-const getPageNumbers = (totalPages: number, currentPage: number): (number | string)[] => {
-  if (totalPages <= 7) {
+const getPageNumbers = (totalPages: number, currentPage: number): (number | "…")[] => {
+  if (totalPages <= 5) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
   if (currentPage <= 3) {
-    return [1, 2, 3, "...", totalPages - 1, totalPages];
+    return [1, 2, 3, "…", totalPages];
   }
 
   if (currentPage >= totalPages - 2) {
-    return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
+    return [1, "…", totalPages - 2, totalPages - 1, totalPages];
   }
 
-  return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+  return [1, "…", currentPage - 1, currentPage, currentPage + 1, "…", totalPages];
 };
+
+const pageBtnBase =
+  "inline-flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30";
 
 const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
 }: PaginationProps) => {
+  if (totalPages <= 1) return null;
+
   const pageNumbers = getPageNumbers(totalPages, currentPage);
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
   return (
-    <div className="mt-4 flex items-center justify-center border-t border-line bg-white px-4 py-3">
-      <nav aria-label="Pagination" className="isolate inline-flex -space-x-px overflow-hidden rounded-lg">
+    <div className="mt-4 flex shrink-0 justify-center">
+      <nav
+        aria-label="Pagination"
+        className="inline-flex items-center gap-1 rounded-full bg-brand-soft/60 p-1.5"
+      >
         <button
           type="button"
           onClick={() => canGoPrev && onPageChange(currentPage - 1)}
           disabled={!canGoPrev}
-          className="relative inline-flex items-center px-2 py-2 text-muted ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Previous page"
+          className={`${pageBtnBase} text-ink hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent`}
         >
-          <span className="sr-only">Previous</span>
-          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
         </button>
 
         {pageNumbers.map((p, idx) => {
-          if (p === "...") {
+          if (p === "…") {
             return (
               <span
                 key={`ellipsis-${idx}`}
-                className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-muted ring-1 ring-line"
+                className="inline-flex h-9 w-7 items-center justify-center text-sm text-muted"
+                aria-hidden="true"
               >
-                ...
+                …
               </span>
             );
           }
 
-          const pageNumber = p as number;
-          const isCurrent = pageNumber === currentPage;
+          const isCurrent = p === currentPage;
 
           return (
             <button
-              key={pageNumber}
+              key={p}
               type="button"
-              onClick={() => onPageChange(pageNumber)}
+              onClick={() => onPageChange(p)}
+              aria-label={`Page ${p}`}
               aria-current={isCurrent ? "page" : undefined}
               className={
                 isCurrent
-                  ? "relative z-10 inline-flex items-center bg-brand px-4 py-2 text-sm font-semibold text-white focus:z-20"
-                  : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-ink ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none"
+                  ? `${pageBtnBase} bg-brand text-white shadow-sm`
+                  : `${pageBtnBase} text-ink hover:bg-white`
               }
             >
-              {pageNumber}
+              {p}
             </button>
           );
         })}
@@ -105,170 +105,12 @@ const Pagination = ({
           type="button"
           onClick={() => canGoNext && onPageChange(currentPage + 1)}
           disabled={!canGoNext}
-          className="relative inline-flex items-center px-2 py-2 text-muted ring-1 ring-line hover:bg-brand-soft focus:z-20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Next page"
+          className={`${pageBtnBase} text-ink hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent`}
         >
-          <span className="sr-only">Next</span>
-          <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </nav>
-    </div>
-  );
-};
-
-// Reusable table component
-
-type TableWithActionsProps = {
-  items: any[];
-  headerBgClass: string; // e.g. "bg-dark-green" or "bg-teal-700"
-  nameHeader: string; // header text for the name column
-  nameKey: "name" | "student_name";
-  nameCellClass?: string;
-  editPath: (id: string) => string;
-  previewPath: (id: string) => string;
-  onDelete: (id: string) => void;
-};
-
-const TableWithActions = ({
-  items,
-  headerBgClass,
-  nameHeader,
-  nameKey,
-  nameCellClass,
-  editPath,
-  previewPath,
-  onDelete,
-}: TableWithActionsProps) => {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const dropDownRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleOption = (id: string) => {
-    setSelectedId((prev) => (prev === id ? null : id));
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
-        setSelectedId(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const rowsToRender = Math.max(items.length, MIN_ROWS);
-
-  return (
-    <div className="overflow-hidden rounded-xl border border-line">
-      <table className="w-full">
-        <colgroup>
-          <col style={{ width: "22%" }} />
-          <col style={{ width: "28%" }} />
-          <col style={{ width: "28%" }} />
-          <col style={{ width: "22%" }} />
-        </colgroup>
-        <thead>
-          <tr className={`${headerBgClass} font-semibold text-white`}>
-            <th className="p-3 text-center text-sm tracking-wide uppercase">Date</th>
-            <th className="p-3 text-center text-sm tracking-wide uppercase">{nameHeader}</th>
-            <th className="p-3 text-center text-sm tracking-wide uppercase">Link</th>
-            <th className="w-[80px] p-3 text-center text-sm tracking-wide uppercase">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: rowsToRender }).map((_, index) => {
-            const item = items[index];
-
-            if (!item) {
-              return (
-                <tr key={`empty-${index}`} className="border-b border-line bg-white">
-                  <td className="h-[44px] p-3 text-center text-sm">&nbsp;</td>
-                  <td className="h-[44px] p-3 text-sm font-medium">&nbsp;</td>
-                  <td className="h-[44px] p-3 text-center text-sm">&nbsp;</td>
-                  <td className="h-[44px] p-3 text-center">&nbsp;</td>
-                </tr>
-              );
-            }
-
-            const cloudUrl = typeof item.cloudUrl === "string" ? item.cloudUrl.trim() : "";
-
-            return (
-              <tr
-                key={`${item.id}-${index}`}
-                className="border-b border-line transition-colors duration-150 odd:bg-white even:bg-brand-soft/40 hover:bg-brand-soft"
-              >
-                <td className="h-[44px] p-3 text-center text-sm text-muted">
-                  {formattedDate(item.dateCreated)}
-                </td>
-                <td
-                  className={`h-[44px] p-3 text-sm font-medium text-ink ${
-                    nameCellClass ?? "pl-6 text-center"
-                  }`}
-                >
-                  {item[nameKey]}
-                </td>
-                <td className="h-[44px] p-3 text-center text-sm">
-                  {cloudUrl ? (
-                    <a
-                      href={cloudUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-brand underline-offset-2 hover:underline"
-                    >
-                      click here
-                    </a>
-                  ) : (
-                    <span className="text-muted">&nbsp;</span>
-                  )}
-                </td>
-                <td className="relative h-[44px] p-3 text-center">
-                  <div className="inline-block">
-                    <button
-                      onClick={() => toggleOption(item.id)}
-                      aria-expanded={selectedId === item.id}
-                      aria-label="toggle menu"
-                      type="button"
-                      className="cursor-pointer rounded-full border border-transparent bg-white p-1.5 text-muted hover:border-line hover:bg-brand-soft hover:text-brand focus:ring-2 focus:ring-brand/30 focus:outline-none"
-                    >
-                      <MoreHorizontal size={16} strokeWidth={2} />
-                    </button>
-                  </div>
-                  {selectedId === item.id && (
-                    <div
-                      ref={dropDownRef}
-                      className="absolute top-10 right-0 z-40 mt-1 flex w-[170px] flex-col rounded-xl border border-line bg-white p-1 shadow-lg"
-                    >
-                      <Link
-                        className="flex items-center gap-2 rounded-lg p-2 text-ink hover:bg-brand-soft"
-                        to={editPath(item.id)}
-                      >
-                        <Pencil size={16} />
-                        <span className="text-sm">Edit</span>
-                      </Link>
-                      <Link
-                        className="flex items-center gap-2 rounded-lg p-2 text-ink hover:bg-brand-soft"
-                        to={previewPath(item.id)}
-                      >
-                        <Search size={16} />
-                        <span className="text-sm">Print Preview</span>
-                      </Link>
-                      <button
-                        className="flex w-full items-center gap-2 rounded-lg p-2 text-left text-red-600 hover:bg-red-50"
-                        onClick={() => onDelete(item.id)}
-                        type="button"
-                      >
-                        <Archive size={16} />
-                        <span className="text-sm">Delete</span>
-                      </button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
     </div>
   );
 };
@@ -282,6 +124,7 @@ const Homepage = () => {
     viewParam === "levelCheck" ? "view-levelCheck" : "view-spr";
   const [page, setPage] = useState<"view-spr" | "view-levelCheck">(initialPage);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<User>(new User());
   const [addFormNav, setAddFormNav] = useState<boolean>(false);
@@ -290,6 +133,7 @@ const Homepage = () => {
     id: string | null;
     type: string;
   }>({ display: false, id: null, type: "" });
+  const tableAreaRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (viewParam === "levelCheck") {
@@ -309,6 +153,35 @@ const Homepage = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [page, userData]);
+
+  const isSPRView = page === "view-spr";
+  const allItems = isSPRView ? userData?.SPR ?? [] : userData?.levelCheck ?? [];
+  const totalItems = allItems.length;
+
+  // Fit as many rows as the available viewport height allows
+  useEffect(() => {
+    if (loading || totalItems === 0) return;
+
+    const el = tableAreaRef.current;
+    if (!el) return;
+
+    const updatePageSize = () => {
+      const available = el.clientHeight - TABLE_HEADER_HEIGHT;
+      const rows = Math.floor(available / ROW_TARGET_HEIGHT);
+      const next = Math.max(MIN_PAGE_SIZE, Math.min(MAX_PAGE_SIZE, rows || MIN_PAGE_SIZE));
+      setPageSize((prev) => (prev === next ? prev : next));
+    };
+
+    updatePageSize();
+    const observer = new ResizeObserver(updatePageSize);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loading, totalItems, page]);
+
+  useEffect(() => {
+    const totalPagesForSize = Math.max(1, Math.ceil(Math.max(totalItems, 1) / pageSize));
+    setCurrentPage((prev) => Math.min(prev, totalPagesForSize));
+  }, [pageSize, totalItems]);
 
   const handleFormControl = () => setAddFormNav((prev) => !prev);
 
@@ -354,17 +227,12 @@ const Homepage = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
+      <div className="flex min-h-0 flex-1 items-center justify-center">
         <p className="text-muted">Loading…</p>
       </div>
     );
   }
 
-  const isSPRView = page === "view-spr";
-  const allItems = isSPRView ? userData?.SPR ?? [] : userData?.levelCheck ?? [];
-  const totalItems = allItems.length;
-
-  const pageSize = ITEMS_PER_PAGE;
   const totalPages = Math.max(1, Math.ceil(Math.max(totalItems, 1) / pageSize));
 
   const safePage = Math.min(currentPage, totalPages);
@@ -383,7 +251,6 @@ const Homepage = () => {
     headerBgClass: "bg-brand",
     nameHeader: "Name",
     nameKey: "name" as const,
-    nameCellClass: "pl-6 text-center",
     editPath: (id: string) => `/spr/edit/${id}`,
     previewPath: (id: string) => `/spr/view/${id}`,
     onDelete: (id: string) => handleDisplayDelete({ display: true, id, type: "SPR" }),
@@ -393,7 +260,6 @@ const Homepage = () => {
     headerBgClass: "bg-brand",
     nameHeader: "Name",
     nameKey: "student_name" as const,
-    nameCellClass: "pl-6 text-left",
     editPath: (id: string) => `/levelCheck/edit/${id}`,
     previewPath: (id: string) => `/levelCheck/preview/${id}`,
     onDelete: (id: string) => handleDisplayDelete({ display: true, id, type: "levelCheck" }),
@@ -402,35 +268,37 @@ const Homepage = () => {
   const currentTableConfig = isSPRView ? sprConfig : levelCheckConfig;
 
   return (
-    <div className="px-4 pt-8 pb-12 md:pt-12 lg:pt-14">
-      <div className="mx-auto mb-8 max-w-[900px] text-center md:mb-10">
+    <div className="flex min-h-0 flex-1 flex-col px-4 py-6 md:py-8">
+      <div className="mx-auto mb-4 w-full max-w-[900px] shrink-0 text-center md:mb-6">
         <h2 className="font-secondary text-2xl font-semibold tracking-tight text-ink md:text-3xl">
           {isSPRView ? "Student Progress Reports" : "Level Checks"}
         </h2>
       </div>
 
-      <div className="mx-auto w-full max-w-[900px]">
-        <div className="panel overflow-hidden p-0 sm:p-0">
+      <div className="mx-auto flex w-full max-w-[900px] min-h-0 flex-1 flex-col">
+        <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden p-3 sm:p-4">
           {totalItems ? (
-            <div className="p-3 sm:p-4">
-              <TableWithActions
-                items={pageItems}
-                headerBgClass={currentTableConfig.headerBgClass}
-                nameHeader={currentTableConfig.nameHeader}
-                nameKey={currentTableConfig.nameKey}
-                nameCellClass={currentTableConfig.nameCellClass}
-                editPath={currentTableConfig.editPath}
-                previewPath={currentTableConfig.previewPath}
-                onDelete={currentTableConfig.onDelete}
-              />
+            <>
+              <div ref={tableAreaRef} className="min-h-0 flex-1">
+                <RecordsTable
+                  items={pageItems}
+                  rowSlots={pageSize}
+                  headerBgClass={currentTableConfig.headerBgClass}
+                  nameHeader={currentTableConfig.nameHeader}
+                  nameKey={currentTableConfig.nameKey}
+                  editPath={currentTableConfig.editPath}
+                  previewPath={currentTableConfig.previewPath}
+                  onDelete={currentTableConfig.onDelete}
+                />
+              </div>
               <Pagination
                 currentPage={safePage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
               />
-            </div>
+            </>
           ) : (
-            <div className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">
+            <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-16 text-center">
               <div className="rounded-full bg-brand-soft px-4 py-2 text-sm font-medium text-brand">
                 No records yet
               </div>

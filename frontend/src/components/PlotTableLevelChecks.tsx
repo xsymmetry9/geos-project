@@ -1,15 +1,16 @@
-import React, { useMemo, useState, FC } from "react";
+import { useMemo, useState, FC, useEffect } from "react";
 import chineseLevelCheck from "@/assets/other/chinese/levelCheck.json";
 import englishLevelCheck from "@/assets/other/english/levelCheck.json";
 import japaneseLevelCheck from "@/assets/other/japanese/levelCheck.json";
 import koreanLevelCheck from "@/assets/other/korean/levelCheck.json";
+import LevelsFilterSelect from "@/components/LevelsFilterSelect";
 
 type LangKey = "english" | "chinese" | "japanese" | "korean";
 
 type LevelEntry = {
   strength?: string[];
   weakness?: string[];
-  weaknesses?: string[]; // some files use this key
+  weaknesses?: string[];
   [k: string]: any;
 };
 
@@ -25,14 +26,16 @@ const languageMap: Record<string, any> = {
   japanese: japaneseLevelCheck,
   korean: koreanLevelCheck,
 };
+
 const CJK_CATEGORIES = [
   "speaking",
   "listening",
   "vocabulary",
   "grammar",
   "pronunciation",
-  "accuracy"
-]
+  "accuracy",
+];
+
 const AVAILABLE_CATEGORIES = [
   "speaking",
   "confidence",
@@ -43,41 +46,74 @@ const AVAILABLE_CATEGORIES = [
   "pronunciation",
 ];
 
+const BulletList = ({ items }: { items: string[] }) => {
+  if (items.length === 0) {
+    return <span className="text-muted">—</span>;
+  }
+
+  return (
+    <ul className="list-disc space-y-1 pl-5 text-sm text-muted">
+      {items.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ul>
+  );
+};
+
 const BandRow: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
   const strengths = entry?.strength ?? [];
   const weaknesses = entry?.weakness ?? entry?.weaknesses ?? [];
 
   return (
-    <tr className="border-b border-gray-200 transition-colors duration-150 odd:bg-white even:bg-teal-50 hover:bg-slate-100">
-      <td className="h-[40px] p-3 text-center text-sm font-medium">{band}</td>
-      <td className="h-[40px] max-w-[320px] p-3 text-left align-top break-words">
-        {strengths.length > 0 ? (
-          <ul className="list-disc pl-5">
-            {strengths.map((s: string, i: number) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-        ) : (
-          <span className="text-gray-500">—</span>
-        )}
+    <tr className="border-b border-line transition-colors duration-150 odd:bg-white even:bg-brand-soft/40 hover:bg-brand-soft">
+      <td className="p-3 text-center align-middle text-sm font-semibold text-ink">{band}</td>
+      <td className="max-w-[320px] p-3 text-left align-top break-words">
+        <BulletList items={strengths} />
       </td>
-      <td className="h-[40px] max-w-[320px] p-3 text-left align-top break-words">
-        {weaknesses.length > 0 ? (
-          <ul className="list-disc pl-5">
-            {weaknesses.map((w: string, i: number) => (
-              <li key={i}>{w}</li>
-            ))}
-          </ul>
-        ) : (
-          <span className="text-gray-500">—</span>
-        )}
+      <td className="max-w-[320px] p-3 text-left align-top break-words">
+        <BulletList items={weaknesses} />
       </td>
     </tr>
   );
 };
 
+const BandCard: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
+  const strengths = entry?.strength ?? [];
+  const weaknesses = entry?.weakness ?? entry?.weaknesses ?? [];
+
+  return (
+    <article className="rounded-xl border border-line bg-white p-4">
+      <div className="mb-3 inline-flex rounded-full bg-brand px-3 py-1 text-sm font-semibold text-white">
+        {band}
+      </div>
+      <div className="space-y-3">
+        <section>
+          <h4 className="mb-1.5 text-xs font-semibold tracking-wide text-brand uppercase">
+            Strength
+          </h4>
+          <BulletList items={strengths} />
+        </section>
+        <section>
+          <h4 className="mb-1.5 text-xs font-semibold tracking-wide text-brand uppercase">
+            Weakness
+          </h4>
+          <BulletList items={weaknesses} />
+        </section>
+      </div>
+    </article>
+  );
+};
+
 const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
-  const [category, setCategory] = useState<string>("vocabulary");
+  const categories = language === "english" ? AVAILABLE_CATEGORIES : CJK_CATEGORIES;
+  const [category, setCategory] = useState<string>(categories[0] ?? "vocabulary");
+
+  useEffect(() => {
+    const nextCategories = language === "english" ? AVAILABLE_CATEGORIES : CJK_CATEGORIES;
+    if (!nextCategories.includes(category)) {
+      setCategory(nextCategories[0] ?? "vocabulary");
+    }
+  }, [language, category]);
 
   const data = useMemo(() => {
     return (languageMap[language as string] ?? englishLevelCheck) as Record<string, any>;
@@ -89,76 +125,57 @@ const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
   );
   const bands = useMemo(() => Object.keys(categoryData), [categoryData]);
 
+  const categoryOptions = categories.map((c) => ({ value: c, label: c }));
+
   return (
-    <div className="mx-auto w-full max-w-4xl p-4">
-      <div className="flex items-center gap-4">
-        <label htmlFor="category_nav" className="text-sm font-medium">
-          Category:
-        </label>
+    <div className="flex w-full flex-col gap-4">
+      <LevelsFilterSelect
+        id="category_nav"
+        label="Category"
+        value={category}
+        options={categoryOptions}
+        onChange={setCategory}
+        capitalizeOptions
+        className="w-full md:max-w-xs"
+      />
 
-        <select
-          id="category_nav"
-          className="rounded border px-2 py-1 capitalize"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {language === "english" ? (
-            <>
-              {AVAILABLE_CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </>
-          ) : (
-            <>
-              {CJK_CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </>
-          )}
+      {bands.length === 0 ? (
+        <p className="rounded-xl border border-line bg-white p-8 text-center text-muted">
+          No data for category "{category}".
+        </p>
+      ) : (
+        <>
+          <div className="flex flex-col gap-3 md:hidden">
+            {bands.map((band) => (
+              <BandCard key={band} band={band} entry={categoryData[band] ?? {}} />
+            ))}
+          </div>
 
-        </select>
-      </div>
-
-      <div className="mt-4 w-full overflow-auto">
-        <table
-          className="mx-auto w-full border-r border-l border-slate-50"
-          role="table"
-        >
-          <colgroup>
-            <col style={{ width: "100px" }} />
-            <col style={{ width: "50%" }} />
-            <col style={{ width: "50%" }} />
-          </colgroup>
-
-          <thead>
-            <tr className="bg-dark-green font-semibold text-white">
-              <th className="p-3 text-center text-sm tracking-wide uppercase">Level</th>
-              <th className="p-3 text-center text-sm tracking-wide uppercase">Strength</th>
-              <th className="w-[120px] p-3 text-center text-sm tracking-wide uppercase">
-                Weakness
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bands.length === 0 ? (
-              <tr>
-                <td colSpan={3} className="p-3 text-gray-500">
-                  No data for category "{category}".
-                </td>
-              </tr>
-            ) : (
-              bands.map((band) => (
-                <BandRow key={band} band={band} entry={categoryData[band] ?? {}} />
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+          <div className="hidden overflow-hidden rounded-xl border border-line md:block">
+            <div className="overflow-x-auto">
+              <table className="w-full" role="table">
+                <colgroup>
+                  <col style={{ width: "110px" }} />
+                  <col style={{ width: "45%" }} />
+                  <col style={{ width: "45%" }} />
+                </colgroup>
+                <thead>
+                  <tr className="bg-brand font-semibold text-white">
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">Level</th>
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">Strength</th>
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">Weakness</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bands.map((band) => (
+                    <BandRow key={band} band={band} entry={categoryData[band] ?? {}} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

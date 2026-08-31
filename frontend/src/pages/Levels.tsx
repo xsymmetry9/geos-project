@@ -1,10 +1,12 @@
 import { useUser } from "@/context/UserContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Language, Aspect } from "@/utils/common";
 import PlotTableLevelChecks from "@/components/PlotTableLevelChecks";
+import LevelsFilterSelect from "@/components/LevelsFilterSelect";
 
 type LevelItem = { level: string; description: string };
 type LevelInfo = Partial<Record<Aspect, LevelItem[]>>;
+type ViewMode = "levelCheck" | "spr";
 
 type PlotLevelProps = {
   levelInfo: LevelInfo;
@@ -20,194 +22,224 @@ const categories: Aspect[] = [
   "pronunciation",
 ];
 
-const languageOptions = ["english", "chinese", "japanese", "korean"] as Language[];
+const languageOptions = [
+  { value: "english", label: "English" },
+  { value: "chinese", label: "Chinese" },
+  { value: "japanese", label: "Japanese" },
+  { value: "korean", label: "Korean" },
+];
+
+const aspectOptions = categories.map((cat) => ({
+  value: cat,
+  label: cat,
+}));
+
+const SprMobileCards = ({
+  levelInfo,
+  levelLabels,
+  maxLen,
+}: {
+  levelInfo: LevelInfo;
+  levelLabels: string[];
+  maxLen: number;
+}) => {
+  const [aspect, setAspect] = useState<Aspect>(categories[0]);
+  const items = levelInfo?.[aspect] ?? [];
+
+  return (
+    <div className="flex flex-col gap-4 md:hidden">
+      <LevelsFilterSelect
+        id="spr_aspect_mobile"
+        label="Aspect"
+        value={aspect}
+        options={aspectOptions}
+        onChange={(value) => setAspect(value as Aspect)}
+        capitalizeOptions
+      />
+
+      {maxLen === 0 ? (
+        <p className="rounded-xl border border-line bg-white p-8 text-center text-muted">
+          No levels found for this language.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: maxLen }).map((_, idx) => {
+            const label = levelLabels[idx] ?? `${idx + 1}`;
+            const description = items[idx]?.description ?? "—";
+
+            return (
+              <article
+                key={`${aspect}-${label}`}
+                className="rounded-xl border border-line bg-white p-4"
+              >
+                <div className="mb-2 inline-flex rounded-full bg-brand px-3 py-1 text-sm font-semibold text-white">
+                  {label}
+                </div>
+                <p className="text-sm leading-relaxed text-muted">{description}</p>
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SprDesktopTable = ({
+  levelInfo,
+  levelLabels,
+  maxLen,
+}: {
+  levelInfo: LevelInfo;
+  levelLabels: string[];
+  maxLen: number;
+}) => (
+  <div className="hidden overflow-hidden rounded-xl border border-line md:block">
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[720px] table-fixed text-sm" role="table">
+        <thead>
+          <tr className="bg-brand font-semibold text-white">
+            <th className="sticky top-0 z-10 p-3 text-center text-xs tracking-wide uppercase">
+              Levels
+            </th>
+            {categories.map((cat) => (
+              <th
+                key={cat}
+                className="sticky top-0 z-10 p-3 text-center text-xs tracking-wide uppercase"
+              >
+                {cat}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: maxLen }).map((_, idx) => (
+            <tr
+              key={levelLabels[idx] ?? idx}
+              className="border-b border-line odd:bg-white even:bg-brand-soft/40"
+            >
+              <td className="p-3 text-center align-middle font-medium text-ink">
+                {levelLabels[idx] ?? idx + 1}
+              </td>
+              {categories.map((cat) => {
+                const cell = levelInfo?.[cat]?.[idx];
+                return (
+                  <td key={`${cat}-${idx}`} className="p-3 align-top text-muted">
+                    {cell?.description ?? "—"}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+          {maxLen === 0 && (
+            <tr>
+              <td className="p-8 text-center text-muted" colSpan={1 + categories.length}>
+                No levels found for this language.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
 
 const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
-  const [menu, setMenu] = useState<"levels" | "spr">("levels");
-  const [openLanguage, setOpenLanguage] = useState<boolean>(false);
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [view, setView] = useState<ViewMode>("levelCheck");
 
-  const handleLanguage = () => {
-    setOpenLanguage((prev) => !prev);
-    setOpenMenu(false);
-  }
-
-  const handleMenu = () => {
-    setOpenMenu((prev) => !prev);
-    setOpenLanguage(false);
-  }
-
-  const navRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
-        setOpenLanguage(false);
-        setOpenMenu(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const currentViewLabel = menu === "levels" ? "Level Checks" : "SPR";
-  // Max rows across all categories
   const maxLen = Math.max(0, ...categories.map((c) => levelInfo?.[c]?.length ?? 0));
-
-  // Pick the first category that actually has data to label the "Levels" column
   const firstWithData = categories.find((c) => (levelInfo?.[c]?.length ?? 0) > 0);
   const levelLabels: string[] =
     (firstWithData && levelInfo[firstWithData]?.map((x) => x.level)) ??
     Array.from({ length: maxLen }, (_, i) => `${i + 1}`);
 
   return (
-    <>
-      <div className="border-b border-line bg-brand-soft/50">
-        <nav ref={navRef} className="max-w-[900px] w-full mx-auto p-4 flex items-center gap-6">
-          <ul className="flex items-center gap-6">
-            <li className="relative">
-              <button type="button"
-                onClick={handleLanguage}
-                className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-ink hover:bg-white hover:text-brand focus:outline-none">
-                <span className="capitalize">{language}</span>
-                <span className="text-xs text-muted">▼</span>
-              </button>
-              {openLanguage && (
-                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-0 origin-top-left rounded-xl border border-line bg-white shadow-lg">
-                  <div className="py-1 text-sm">
-                    {languageOptions.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => {
-                          setLanguage(opt);
-                          setOpenLanguage(false);
-                        }}
-                        className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none">{opt}</button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </li>
-          </ul>
-          <ul className="flex items-center gap-6" id="menu-dropdown">
-            <li className="relative">
-              <button type="button"
-                onClick={handleMenu}
-                className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-ink hover:bg-white hover:text-brand focus:outline-none">
-                <span className="capitalize">{menu}</span>
-                <span className="text-xs text-muted">▼</span>
-              </button>
-              {openMenu && (
-                <div className="absolute mt-2 z-20 w-40 max-w-[calc(100vw-1rem)] left-0 origin-top-left rounded-xl border border-line bg-white shadow-lg">
-                  <div className="py-1 text-sm">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenu("spr")
-                        setOpenLanguage(false);
-                        setOpenMenu(false);
-                      }}
-                      className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none"
-                      >
-                      SPR
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenu("levels");
-                        setOpenLanguage(false);
-                        setOpenMenu(false);
-                      }}
-                      className="block w-full px-4 py-2 text-left capitalize text-ink hover:bg-brand-soft hover:text-brand focus:outline-none">Level Check</button>
-
-                  </div>
-                </div>
-              )}
-            </li>
-          </ul>
-        </nav >
-      </div >
-
-      <div className="container mx-auto">
-        {menu === "spr" && (
-          <>
-            <table className="my-6 w-full px-2 text-sm shadow-sm p-2" role="table">
-              <thead>
-                <tr>
-                  {/* define header and data colors per column (Levels + categories) */}
-                  {(() => {
-                    // single header color and two alternating data colors
-                    const headerClass = "bg-brand text-white";
-
-                    return (
-                      <>
-                        <th className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}>Levels</th>
-                        {categories.map((cat, i) => {
-                          return (
-                            <th
-                              key={cat}
-                              className={`sticky top-0 z-10 p-3 uppercase ${headerClass}`}
-                            >
-                              {" "}
-                              {cat}{" "}
-                            </th>
-                          );
-                        })}
-                      </>
-                    );
-                  })()}
-                </tr>
-              </thead>
-              <tbody>
-                {Array.from({ length: maxLen }).map((_, idx) => (
-                  <tr key={levelLabels[idx] ?? idx}>
-                    {(() => {
-                      const dataClasses = ["bg-brand-soft", "bg-white"]; // alternate
-
-                      return (
-                        <>
-                          <td className={`p-3 text-center ${dataClasses[0]}`}>
-                            {levelLabels[idx] ?? idx + 1}
-                          </td>
-                          {categories.map((cat, i) => {
-                            const cell = levelInfo?.[cat]?.[idx];
-                            const color = dataClasses[(i + 1) % dataClasses.length];
-                            return (
-                              <td key={`${cat}-${idx}`} className={`p-3 align-top ${color}`}>
-                                {cell?.description ?? "—"}
-                              </td>
-                            );
-                          })}
-                        </>
-                      );
-                    })()}
-                  </tr>
-                ))}
-                {maxLen === 0 && (
-                  <tr>
-                    <td className="p-3 text-center" colSpan={1 + categories.length}>
-                      No levels found for this language.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </>
-        )}
-        {menu === "levels" && <PlotTableLevelChecks language={language} />}
-        {/* color-coded columns, no borders for table */}
+    <div className="flex min-h-0 flex-1 flex-col px-4 py-6 md:py-8">
+      <div className="mx-auto mb-4 w-full max-w-[1100px] shrink-0 text-center md:mb-6">
+        <h2 className="font-secondary text-2xl font-semibold tracking-tight text-ink md:text-3xl">
+          Level Reference
+        </h2>
+        <p className="mt-2 text-sm text-muted">
+          Browse SPR and Level Check descriptors by language
+        </p>
       </div>
-    </>
+
+      <div className="mx-auto flex w-full max-w-[1100px] min-h-0 flex-1 flex-col">
+        <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden">
+          <div className="sticky top-0 z-20 flex shrink-0 flex-col gap-3 border-b border-line bg-brand-soft/40 px-4 py-3 sm:flex-row sm:items-end sm:justify-between sm:px-5">
+            <div className="w-full sm:w-auto">
+              <span className="mb-1.5 block text-sm font-medium text-muted">View</span>
+              <div
+                className="flex w-full rounded-xl border border-line bg-white p-1 sm:w-auto"
+                role="tablist"
+                aria-label="Reference type"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={view === "levelCheck"}
+                  onClick={() => setView("levelCheck")}
+                  className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors sm:flex-none ${
+                    view === "levelCheck"
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-muted hover:text-brand"
+                  }`}
+                >
+                  Level Check
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={view === "spr"}
+                  onClick={() => setView("spr")}
+                  className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors sm:flex-none ${
+                    view === "spr"
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-muted hover:text-brand"
+                  }`}
+                >
+                  SPR
+                </button>
+              </div>
+            </div>
+
+            <LevelsFilterSelect
+              id="levels_language"
+              label="Language"
+              value={language}
+              options={languageOptions}
+              onChange={(value) => setLanguage(value as Language)}
+              className="w-full sm:w-44"
+            />
+          </div>
+
+          <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
+            {view === "spr" ? (
+              <>
+                <SprMobileCards
+                  levelInfo={levelInfo}
+                  levelLabels={levelLabels}
+                  maxLen={maxLen}
+                />
+                <SprDesktopTable
+                  levelInfo={levelInfo}
+                  levelLabels={levelLabels}
+                  maxLen={maxLen}
+                />
+              </>
+            ) : (
+              <PlotTableLevelChecks language={language} />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 const Levels = () => {
   const { user } = useUser();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [language, setLanguage] = useState<Language>((user?.language as Language) || "english");
   const [levelInfo, setLevelInfo] = useState<LevelInfo | null>(null);
@@ -230,7 +262,7 @@ const Levels = () => {
 
         const byLang: LevelInfo = data?.[language] ?? data?.english ?? {};
         if (!cancelled) setLevelInfo(byLang);
-      } catch (e) {
+      } catch {
         if (!cancelled) setError("Error loading the file.");
       } finally {
         if (!cancelled) setLoading(false);
@@ -243,9 +275,29 @@ const Levels = () => {
     };
   }, [language]);
 
-  if (loading) return <p>Loading …</p>;
-  if (error) return <p>{error}</p>;
-  if (!levelInfo) return <p>No data available.</p>;
+  if (loading) {
+    return (
+      <div className="flex min-h-0 flex-1 items-center justify-center">
+        <p className="text-muted">Loading…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-0 flex-1 items-center justify-center px-4">
+        <p className="text-red-600">{error}</p>
+      </div>
+    );
+  }
+
+  if (!levelInfo) {
+    return (
+      <div className="flex min-h-0 flex-1 items-center justify-center">
+        <p className="text-muted">No data available.</p>
+      </div>
+    );
+  }
 
   return <PlotLevel levelInfo={levelInfo} language={language} setLanguage={setLanguage} />;
 };

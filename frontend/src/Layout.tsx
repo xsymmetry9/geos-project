@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <div className="app-shell relative min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <main className="min-h-0 min-w-0">
+      <main className="flex min-h-0 min-w-0 flex-col">
         <Outlet />
       </main>
       <Footer />
