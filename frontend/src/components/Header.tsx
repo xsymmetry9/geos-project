@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import geosImg from "/logo.jpg";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { ArrowRightLeft, ChevronDown, Menu, X } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import { Language } from "@/utils/common";
 import User from "@/type/User";
@@ -181,12 +181,20 @@ const Header = () => {
               <ChevronDown size={14} className="text-muted" />
             </button>
             {openMenu === "options" && (
-              <div className="absolute left-0 z-20 mt-1 w-44 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
+              <div className="absolute left-0 z-20 mt-1 w-52 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
                 <ExportToExcel userData={userData} className={menuItemClass} />
                 <ImportFromExcel
                   userData={userData}
                   className={`${menuItemClass} cursor-pointer`}
                 />
+                <Link
+                  to="/migration-to-system"
+                  className={`${menuItemClass} inline-flex items-center gap-2`}
+                  onClick={closeAll}
+                >
+                  <ArrowRightLeft size={16} />
+                  Move to new GEOS
+                </Link>
               </div>
             )}
           </div>
@@ -316,6 +324,14 @@ const Header = () => {
                     userData={userData}
                     className={`${menuItemClass} cursor-pointer`}
                   />
+                  <Link
+                    to="/migration-to-system"
+                    className={`${menuItemClass} inline-flex items-center gap-2`}
+                    onClick={closeAll}
+                  >
+                    <ArrowRightLeft size={16} />
+                    Move to new GEOS
+                  </Link>
                 </AccordionSection>
 
                 <AccordionSection

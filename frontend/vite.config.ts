@@ -15,7 +15,8 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    // geos-client uses 3000; teacher portal uses 8000
+    port: 5173,
     open: true,
   },
 });

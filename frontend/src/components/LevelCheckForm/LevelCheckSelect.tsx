@@ -23,27 +23,21 @@ type Props = {
 const scoreRange = (level: string): [number, number] => {
   switch (level) {
     case "Pre-A1":
-      return [0, 1.9];
+      return [0, 1];
     case "A1":
-      return [2, 2.9];
-    case "A1 - A2":
-      return [3, 3.9];
+      return [1, 3];
     case "A2":
-      return [4, 4.9];
-    case "A2 - B1":
-      return [5, 5.9];
+      return [3, 5];
     case "B1":
-      return [6, 6.9];
-    case "B1 - B2":
-      return [7, 7.9];
+      return [5, 7];
     case "B2":
-      return [8, 8.9];
+      return [7, 9];
     case "C1":
-      return [9, 9.4];
-    case "C1+":
-      return [9.5, 10.4];
+      return [9, 10];
+    case "C2":
+      return [10, 10];
     default:
-      return [0, 1.9];
+      return [0, 1];
   }
 };
 
@@ -68,16 +62,10 @@ const getScoreOptions = (level: string) => {
 };
 
 
+/** Phrase catalogs key by band, not CEFR label (Pre-A1…C2). */
 const mapScoreToBand = (score: number): "A1-A2" | "B1-B2" | "C1-C2" => {
-  if (score >= 0 && score <= 5) return "A1-A2";
-  if (score > 5 && score < 9) return "B1-B2";
-  return "C1-C2";
-};
-
-const cjkScoreToBand = (score: number): "0" | "A1-A2" | "B1-B2" | "C1-C2" => {
-  if (score >= 0 && score < 1) return "0";
-  if (score >= 1 && score < 3) return "A1-A2";
-  if (score >= 3 && score < 5) return "B1-B2";
+  if (score <= 5) return "A1-A2";
+  if (score < 9) return "B1-B2";
   return "C1-C2";
 };
 
