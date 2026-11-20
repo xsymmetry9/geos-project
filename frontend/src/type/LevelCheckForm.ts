@@ -48,6 +48,9 @@ class LevelCheckEntry {
   }
 }
 
+/** Campus for GEOS System 2.0 migration (CH / TM). Optional until Move wizard. */
+export type LevelCheckCampus = "CH" | "TM";
+
 class EntryForm {
   id: string;
   language: string;
@@ -57,6 +60,8 @@ class EntryForm {
   bookRecommendation: string;
   overallCEFR: string;
   cloudUrl: string;
+  /** Set in Move-to-GEOS wizard; not shown on the create form. */
+  campus?: LevelCheckCampus;
   constructor(id = uuidv4()) {
     this.id = id;
     this.dateCreated = new Date();

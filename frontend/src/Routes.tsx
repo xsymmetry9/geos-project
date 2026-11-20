@@ -1,10 +1,9 @@
 import Language from "@/pages/Language";
 import Layout from "@/Layout";
 import SPRForm from "@/pages/SPRForm";
-import Homepage from "@/pages/Homepage";
 import MigrationToSystem from "@/pages/MigrationToSystem";
 import PrintPage from "@/components/PrintSPR";
-import AuthRedirect from "@/components/AuthRedirect";
+import AuthRedirect, { LegacyHomeRedirect } from "@/components/AuthRedirect";
 import Levels from "@/pages/Levels";
 import CreateLevelCheckForm from "./pages/LevelCheckPage/CreateLevelCheckForm";
 import UpdatePage from "./pages/LevelCheckPage/UpdatePage";
@@ -17,7 +16,7 @@ const routes = [
     children: [
       { index: true, element: <AuthRedirect /> },
       { path: "language", element: <Language /> },
-      { path: "home", element: <Homepage /> },
+      { path: "home", element: <LegacyHomeRedirect /> },
       { path: "migration-to-system", element: <MigrationToSystem /> },
     ],
   },

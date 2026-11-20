@@ -75,7 +75,7 @@ const PreviewPage = () => {
   return (
     <div className="min-h-full bg-teal-50">
       <PrintPreviewToolbar maxWidthClass="max-w-[297mm]">
-        <Link className={printToolbarMutedClass} to="/home?view=levelCheck">
+        <Link className={printToolbarMutedClass} to="/?view=levelCheck">
           <List size={16} aria-hidden="true" />
           <span>{t.view_level_checks}</span>
         </Link>

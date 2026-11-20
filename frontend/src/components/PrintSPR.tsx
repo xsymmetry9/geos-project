@@ -43,7 +43,7 @@ const PrintPage = () => {
   return (
     <>
       <PrintPreviewToolbar maxWidthClass="max-w-[210mm]">
-        <Link className={printToolbarMutedClass} to="/home?view=spr">
+        <Link className={printToolbarMutedClass} to="/?view=spr">
           <List size={16} aria-hidden="true" />
           <span>{t.dashboard}</span>
         </Link>

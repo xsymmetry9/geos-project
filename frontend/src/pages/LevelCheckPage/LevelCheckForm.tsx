@@ -152,7 +152,7 @@ const LevelCheckForm = ({ inputData, setInputData, handleSave }: LevelCheckFormP
               </button>
             </div>
             <div className="flex justify-center">
-              <Link to="/home?view=levelCheck" className="level-check-cancel">
+              <Link to="/?view=levelCheck" className="level-check-cancel">
                 {text.reset}
               </Link>
             </div>

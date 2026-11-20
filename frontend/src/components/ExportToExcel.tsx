@@ -8,6 +8,7 @@ import { getDataFromLocal } from "@/utils/functions";
 type ExportToExcelProps = {
   userData: User;
   className?: string;
+  label?: string;
 };
 
 type CategoryKey =
@@ -100,7 +101,11 @@ const autoFitColumns = (worksheet: XLSX.WorkSheet, data: any[]) => {
   worksheet["!cols"] = objectMaxLength.map((w) => ({ wch: w + 2 })); // +2 for padding
 };
 
-const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData, className }) => {
+const ExportToExcel: React.FC<ExportToExcelProps> = ({
+  userData,
+  className,
+  label = "Download",
+}) => {
   const handleExport = () => {
     const data = getDataFromLocal() ?? userData;
     const spr = data.SPR ?? [];
@@ -150,7 +155,7 @@ const ExportToExcel: React.FC<ExportToExcelProps> = ({ userData, className }) =>
     >
       <span className="inline-flex items-center gap-2">
         <DownloadIcon size={16} />
-        Download
+        {label}
       </span>
     </button>
   );

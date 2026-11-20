@@ -19,7 +19,7 @@ const SPRForm = () => {
       <div className="mx-auto flex min-h-[50vh] w-full max-w-[55rem] flex-col items-center justify-center gap-4 px-4 py-10 text-center">
         <p className="text-lg font-semibold text-ink">SPR not found</p>
         <p className="text-sm text-muted">This form may have been deleted.</p>
-        <Link className="btn-primary" to="/home?view=spr">
+        <Link className="btn-primary" to="/?view=spr">
           View SPR forms
         </Link>
       </div>

@@ -5,6 +5,7 @@ import geosImg from "/logo.jpg";
 import { ArrowRightLeft, ChevronDown, Menu, X } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import { Language } from "@/utils/common";
+import labelText from "@/assets/other/labelText.json";
 import User from "@/type/User";
 import ExportToExcel from "@/components/ExportToExcel";
 import ImportFromExcel from "@/components/ImportFromExcel";
@@ -62,6 +63,7 @@ const Header = () => {
   const { user, setLanguage } = useUser();
   const navRef = useRef<HTMLElement | null>(null);
   const currentLanguage = user?.language ?? "english";
+  const menuText = labelText[currentLanguage];
   const userData = user ?? new User();
 
   useEffect(() => {
@@ -130,7 +132,7 @@ const Header = () => {
                   New Form
                 </Link>
                 <Link
-                  to="/home?view=spr"
+                  to="/?view=spr"
                   className={menuItemClass}
                   onClick={closeAll}
                 >
@@ -156,7 +158,7 @@ const Header = () => {
                   New Form
                 </Link>
                 <Link
-                  to="/home?view=levelCheck"
+                  to="/?view=levelCheck"
                   className={menuItemClass}
                   onClick={closeAll}
                 >
@@ -177,15 +179,20 @@ const Header = () => {
               className={navButtonClass}
               aria-expanded={openMenu === "options"}
             >
-              <span>Options</span>
+              <span>{menuText.options}</span>
               <ChevronDown size={14} className="text-muted" />
             </button>
             {openMenu === "options" && (
               <div className="absolute left-0 z-20 mt-1 w-52 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
-                <ExportToExcel userData={userData} className={menuItemClass} />
+                <ExportToExcel
+                  userData={userData}
+                  className={menuItemClass}
+                  label={menuText.download}
+                />
                 <ImportFromExcel
                   userData={userData}
                   className={`${menuItemClass} cursor-pointer`}
+                  label={menuText.upload}
                 />
                 <Link
                   to="/migration-to-system"
@@ -193,7 +200,7 @@ const Header = () => {
                   onClick={closeAll}
                 >
                   <ArrowRightLeft size={16} />
-                  Move to new GEOS
+                  {menuText.move_to_new_geos}
                 </Link>
               </div>
             )}
@@ -282,7 +289,7 @@ const Header = () => {
                   <Link to="/spr" className={menuItemClass} onClick={closeAll}>
                     New Form
                   </Link>
-                  <Link to="/home?view=spr" className={menuItemClass} onClick={closeAll}>
+                  <Link to="/?view=spr" className={menuItemClass} onClick={closeAll}>
                     View Forms
                   </Link>
                 </AccordionSection>
@@ -297,7 +304,7 @@ const Header = () => {
                     New Form
                   </Link>
                   <Link
-                    to="/home?view=levelCheck"
+                    to="/?view=levelCheck"
                     className={menuItemClass}
                     onClick={closeAll}
                   >
@@ -315,14 +322,19 @@ const Header = () => {
 
                 <AccordionSection
                   id="options"
-                  label="Options"
+                  label={menuText.options}
                   openMenu={openMenu}
                   onToggle={toggleMenu}
                 >
-                  <ExportToExcel userData={userData} className={menuItemClass} />
+                  <ExportToExcel
+                    userData={userData}
+                    className={menuItemClass}
+                    label={menuText.download}
+                  />
                   <ImportFromExcel
                     userData={userData}
                     className={`${menuItemClass} cursor-pointer`}
+                    label={menuText.upload}
                   />
                   <Link
                     to="/migration-to-system"
@@ -330,7 +342,7 @@ const Header = () => {
                     onClick={closeAll}
                   >
                     <ArrowRightLeft size={16} />
-                    Move to new GEOS
+                    {menuText.move_to_new_geos}
                   </Link>
                 </AccordionSection>
 

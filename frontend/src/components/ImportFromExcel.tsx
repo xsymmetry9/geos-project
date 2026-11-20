@@ -17,6 +17,7 @@ type Category =
 type ImportFromExcelProps = {
   userData: User;
   className?: string;
+  label?: string;
 };
 
 const ParseLevelCheckEntry = (sheet: any) => {
@@ -101,7 +102,11 @@ const parseSPREntry = (sheet: any) => {
   return students;
 };
 
-const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, className }) => {
+const ImportFromExcel: React.FC<ImportFromExcelProps> = ({
+  userData,
+  className,
+  label = "Upload",
+}) => {
   const mergedArrayFilterUniqueObjects = useCallback((arr1: any[], arr2: any[]) => {
     const mergedArray = [...arr1, ...arr2];
     const uniqueObjects = new Map<string, any>();
@@ -165,7 +170,7 @@ const ImportFromExcel: React.FC<ImportFromExcelProps> = ({ userData, className }
     >
       <span className="inline-flex items-center gap-2">
         <Upload size={16} />
-        Upload
+        {label}
       </span>
       <input
         id="file-upload"

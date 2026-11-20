@@ -16,7 +16,7 @@ const LanguagePage = () => {
 
   const handleLanguageSelect = (language: Language) => {
     setLanguage(language);
-    navigate("/home");
+    navigate("/");
   };
 
   return (
