@@ -335,6 +335,18 @@ const MigrationToSystem = () => {
             ? t.step_login
             : t.step_done;
 
+  // Nothing saved in this browser: show only a short note, not the wizard.
+  if (totalLocal === 0 && step !== "done") {
+    return (
+      <div className="flex flex-1 items-center justify-center px-4 py-10">
+        <div className="panel w-full max-w-md px-6 py-10 text-center">
+          <p className="font-secondary text-lg font-semibold text-ink">{t.no_local}</p>
+          <p className="mt-2 text-sm text-muted">{t.no_local_help}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-6 sm:py-10">
       <div className="flex items-center gap-2">
@@ -358,12 +370,6 @@ const MigrationToSystem = () => {
         </div>
 
         <div className="space-y-4 px-4 py-5 sm:px-6">
-          {totalLocal === 0 && step !== "done" ? (
-            <p className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-muted">
-              {t.no_local}
-            </p>
-          ) : null}
-
           {step === "campus" && lcRows.length > 0 ? (
             <div className="space-y-4">
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-ink">
