@@ -9,6 +9,8 @@ import User from "@/type/User";
 import { getDataFromLocal } from "@/utils/functions";
 import { CloseBtn } from "@/components/CustomizedButtons";
 import RecordsTable, { SortDir, SortKey } from "@/components/RecordsTable";
+import { useUser } from "@/context/UserContext";
+import labelText from "@/assets/other/labelText.json";
 
 const TABLE_HEADER_HEIGHT = 44;
 const ROW_TARGET_HEIGHT = 52;
@@ -118,6 +120,8 @@ const Pagination = ({
 // Main Homepage
 
 const Homepage = () => {
+  const { user } = useUser();
+  const pageText = labelText[user?.language ?? "english"].homepage;
   const [searchParams] = useSearchParams();
   const viewParam = searchParams.get("view");
   const initialPage =
@@ -305,7 +309,7 @@ const Homepage = () => {
     <div className="flex min-h-0 flex-1 flex-col px-4 py-6 md:py-8">
       <div className="mx-auto mb-4 w-full max-w-[900px] shrink-0 text-center md:mb-6">
         <h2 className="font-secondary text-2xl font-semibold tracking-tight text-ink md:text-3xl">
-          {isSPRView ? "Student Progress Reports" : "Level Checks"}
+          {isSPRView ? pageText.spr_title : pageText.level_check_title}
         </h2>
       </div>
 
@@ -337,15 +341,13 @@ const Homepage = () => {
           ) : (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-16 text-center">
               <div className="rounded-full bg-brand-soft px-4 py-2 text-sm font-medium text-brand">
-                No records yet
+                {pageText.empty}
               </div>
               <p className="max-w-sm text-muted">
-                {isSPRView
-                  ? "Create your first Student Progress Report to get started."
-                  : "Create your first Level Check form to get started."}
+                {isSPRView ? pageText.empty_spr_hint : pageText.empty_level_check_hint}
               </p>
               <Link className="btn-primary min-w-40" to={isSPRView ? "/spr" : "/levelCheck"}>
-                {isSPRView ? "Create SPR" : "Create Level Check"}
+                {isSPRView ? pageText.create_spr : pageText.create_level_check}
               </Link>
             </div>
           )}
