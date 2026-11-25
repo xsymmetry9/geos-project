@@ -168,7 +168,7 @@ const Header = () => {
             )}
           </div>
 
-          <Link className="nav-link" to="/levels" onClick={closeAll}>
+          <Link className={navButtonClass} to="/levels" onClick={closeAll}>
             Levels
           </Link>
 
