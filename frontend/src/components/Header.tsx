@@ -10,11 +10,12 @@ import User from "@/type/User";
 import ExportToExcel from "@/components/ExportToExcel";
 import ImportFromExcel from "@/components/ImportFromExcel";
 
+// Each language is named in its own language, whatever the current one is.
 const languages: { id: Language; label: string }[] = [
   { id: "english", label: "English" },
-  { id: "chinese", label: "Chinese" },
-  { id: "korean", label: "Korean" },
-  { id: "japanese", label: "Japanese" },
+  { id: "chinese", label: "中文" },
+  { id: "korean", label: "한국어" },
+  { id: "japanese", label: "日本語" },
 ];
 
 type OpenMenu = "spr" | "levelCheck" | "options" | "language" | null;
@@ -129,14 +130,14 @@ const Header = () => {
             {openMenu === "spr" && (
               <div className="absolute left-0 z-20 mt-1 w-44 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
                 <Link to="/spr" className={menuItemClass} onClick={closeAll}>
-                  New Form
+                  {menuText.new_form}
                 </Link>
                 <Link
                   to="/?view=spr"
                   className={menuItemClass}
                   onClick={closeAll}
                 >
-                  View Forms
+                  {menuText.view_forms}
                 </Link>
               </div>
             )}
@@ -155,21 +156,21 @@ const Header = () => {
             {openMenu === "levelCheck" && (
               <div className="absolute left-0 z-20 mt-1 w-48 origin-top-left rounded-xl border border-line bg-white py-1 shadow-lg">
                 <Link to="/levelCheck" className={menuItemClass} onClick={closeAll}>
-                  New Form
+                  {menuText.new_form}
                 </Link>
                 <Link
                   to="/?view=levelCheck"
                   className={menuItemClass}
                   onClick={closeAll}
                 >
-                  View Forms
+                  {menuText.view_forms}
                 </Link>
               </div>
             )}
           </div>
 
           <Link className={navButtonClass} to="/levels" onClick={closeAll}>
-            Levels
+            {menuText.level_info}
           </Link>
 
           <div className="relative">
@@ -214,7 +215,9 @@ const Header = () => {
               aria-expanded={openMenu === "language"}
               aria-haspopup="listbox"
             >
-              <span className="capitalize">{currentLanguage}</span>
+              <span>
+                {languages.find((lang) => lang.id === currentLanguage)?.label}
+              </span>
               <ChevronDown size={14} className="text-muted" />
             </button>
             {openMenu === "language" && (
@@ -287,10 +290,10 @@ const Header = () => {
                   onToggle={toggleMenu}
                 >
                   <Link to="/spr" className={menuItemClass} onClick={closeAll}>
-                    New Form
+                    {menuText.new_form}
                   </Link>
                   <Link to="/?view=spr" className={menuItemClass} onClick={closeAll}>
-                    View Forms
+                    {menuText.view_forms}
                   </Link>
                 </AccordionSection>
 
@@ -301,14 +304,14 @@ const Header = () => {
                   onToggle={toggleMenu}
                 >
                   <Link to="/levelCheck" className={menuItemClass} onClick={closeAll}>
-                    New Form
+                    {menuText.new_form}
                   </Link>
                   <Link
                     to="/?view=levelCheck"
                     className={menuItemClass}
                     onClick={closeAll}
                   >
-                    View Forms
+                    {menuText.view_forms}
                   </Link>
                 </AccordionSection>
 
@@ -317,7 +320,7 @@ const Header = () => {
                   onClick={closeAll}
                   className="flex min-h-11 items-center px-4 py-3 text-sm font-medium text-ink transition hover:bg-brand-soft hover:text-brand"
                 >
-                  Levels
+                  {menuText.level_info}
                 </Link>
 
                 <AccordionSection
