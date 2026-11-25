@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { Language, Aspect } from "@/utils/common";
 import PlotTableLevelChecks from "@/components/PlotTableLevelChecks";
 import LevelsFilterSelect from "@/components/LevelsFilterSelect";
+import labelText from "@/assets/other/labelText.json";
 
 type LevelItem = { level: string; description: string };
 type LevelInfo = Partial<Record<Aspect, LevelItem[]>>;
 type ViewMode = "levelCheck" | "spr";
+type LevelsText = (typeof labelText)["english"]["levels"];
 
 type PlotLevelProps = {
+  text: LevelsText;
   levelInfo: LevelInfo;
   language: Language;
   setLanguage: (lang: Language) => void;
@@ -22,35 +25,37 @@ const categories: Aspect[] = [
   "pronunciation",
 ];
 
+// Each language is named in its own language, as in the header.
 const languageOptions = [
   { value: "english", label: "English" },
-  { value: "chinese", label: "Chinese" },
-  { value: "japanese", label: "Japanese" },
-  { value: "korean", label: "Korean" },
+  { value: "chinese", label: "中文" },
+  { value: "japanese", label: "日本語" },
+  { value: "korean", label: "한국어" },
 ];
 
-const aspectOptions = categories.map((cat) => ({
-  value: cat,
-  label: cat,
-}));
-
 const SprMobileCards = ({
+  text,
   levelInfo,
   levelLabels,
   maxLen,
 }: {
+  text: LevelsText;
   levelInfo: LevelInfo;
   levelLabels: string[];
   maxLen: number;
 }) => {
   const [aspect, setAspect] = useState<Aspect>(categories[0]);
   const items = levelInfo?.[aspect] ?? [];
+  const aspectOptions = categories.map((cat) => ({
+    value: cat,
+    label: text.categories[cat],
+  }));
 
   return (
     <div className="flex flex-col gap-4 md:hidden">
       <LevelsFilterSelect
         id="spr_aspect_mobile"
-        label="Aspect"
+        label={text.aspect}
         value={aspect}
         options={aspectOptions}
         onChange={(value) => setAspect(value as Aspect)}
@@ -59,7 +64,7 @@ const SprMobileCards = ({
 
       {maxLen === 0 ? (
         <p className="rounded-xl border border-line bg-white p-8 text-center text-muted">
-          No levels found for this language.
+          {text.no_levels}
         </p>
       ) : (
         <div className="flex flex-col gap-3">
@@ -86,10 +91,12 @@ const SprMobileCards = ({
 };
 
 const SprDesktopTable = ({
+  text,
   levelInfo,
   levelLabels,
   maxLen,
 }: {
+  text: LevelsText;
   levelInfo: LevelInfo;
   levelLabels: string[];
   maxLen: number;
@@ -100,14 +107,14 @@ const SprDesktopTable = ({
         <thead>
           <tr className="bg-brand font-semibold text-white">
             <th className="sticky top-0 z-10 p-3 text-center text-xs tracking-wide uppercase">
-              Levels
+              {text.levels_header}
             </th>
             {categories.map((cat) => (
               <th
                 key={cat}
                 className="sticky top-0 z-10 p-3 text-center text-xs tracking-wide uppercase"
               >
-                {cat}
+                {text.categories[cat]}
               </th>
             ))}
           </tr>
@@ -134,7 +141,7 @@ const SprDesktopTable = ({
           {maxLen === 0 && (
             <tr>
               <td className="p-8 text-center text-muted" colSpan={1 + categories.length}>
-                No levels found for this language.
+                {text.no_levels}
               </td>
             </tr>
           )}
@@ -144,7 +151,7 @@ const SprDesktopTable = ({
   </div>
 );
 
-const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
+const PlotLevel = ({ text, levelInfo, language, setLanguage }: PlotLevelProps) => {
   const [view, setView] = useState<ViewMode>("levelCheck");
 
   const maxLen = Math.max(0, ...categories.map((c) => levelInfo?.[c]?.length ?? 0));
@@ -157,22 +164,20 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
     <div className="flex min-h-0 flex-1 flex-col px-4 py-6 md:py-8">
       <div className="mx-auto mb-4 w-full max-w-[1100px] shrink-0 text-center md:mb-6">
         <h2 className="font-secondary text-2xl font-semibold tracking-tight text-ink md:text-3xl">
-          Level Reference
+          {text.title}
         </h2>
-        <p className="mt-2 text-sm text-muted">
-          Browse SPR and Level Check descriptors by language
-        </p>
+        <p className="mt-2 text-sm text-muted">{text.description}</p>
       </div>
 
       <div className="mx-auto flex w-full max-w-[1100px] min-h-0 flex-1 flex-col">
         <div className="panel flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="sticky top-0 z-20 flex shrink-0 flex-col gap-3 border-b border-line bg-brand-soft/40 px-4 py-3 sm:flex-row sm:items-end sm:justify-between sm:px-5">
             <div className="w-full sm:w-auto">
-              <span className="mb-1.5 block text-sm font-medium text-muted">View</span>
+              <span className="mb-1.5 block text-sm font-medium text-muted">{text.view}</span>
               <div
                 className="flex w-full rounded-xl border border-line bg-white p-1 sm:w-auto"
                 role="tablist"
-                aria-label="Reference type"
+                aria-label={text.reference_type}
               >
                 <button
                   type="button"
@@ -185,7 +190,7 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                       : "text-muted hover:text-brand"
                   }`}
                 >
-                  Level Check
+                  {text.level_check}
                 </button>
                 <button
                   type="button"
@@ -198,14 +203,14 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
                       : "text-muted hover:text-brand"
                   }`}
                 >
-                  SPR
+                  {text.spr}
                 </button>
               </div>
             </div>
 
             <LevelsFilterSelect
               id="levels_language"
-              label="Language"
+              label={text.language}
               value={language}
               options={languageOptions}
               onChange={(value) => setLanguage(value as Language)}
@@ -217,11 +222,13 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
             {view === "spr" ? (
               <>
                 <SprMobileCards
+                  text={text}
                   levelInfo={levelInfo}
                   levelLabels={levelLabels}
                   maxLen={maxLen}
                 />
                 <SprDesktopTable
+                  text={text}
                   levelInfo={levelInfo}
                   levelLabels={levelLabels}
                   maxLen={maxLen}
@@ -239,8 +246,10 @@ const PlotLevel = ({ levelInfo, language, setLanguage }: PlotLevelProps) => {
 
 const Levels = () => {
   const { user } = useUser();
+  const uiText = labelText[user?.language ?? "english"];
+  const text = uiText.levels;
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<"" | "invalid_data" | "load_error">("");
   const [language, setLanguage] = useState<Language>((user?.language as Language) || "english");
   const [levelInfo, setLevelInfo] = useState<LevelInfo | null>(null);
 
@@ -256,14 +265,14 @@ const Levels = () => {
         const data: any = (module as any).default ?? module;
 
         if (!data || typeof data !== "object") {
-          if (!cancelled) setError("Invalid level information data.");
+          if (!cancelled) setError("invalid_data");
           return;
         }
 
         const byLang: LevelInfo = data?.[language] ?? data?.english ?? {};
         if (!cancelled) setLevelInfo(byLang);
       } catch {
-        if (!cancelled) setError("Error loading the file.");
+        if (!cancelled) setError("load_error");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -278,7 +287,7 @@ const Levels = () => {
   if (loading) {
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center">
-        <p className="text-muted">Loading…</p>
+        <p className="text-muted">{uiText.loading}</p>
       </div>
     );
   }
@@ -286,7 +295,7 @@ const Levels = () => {
   if (error) {
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center px-4">
-        <p className="text-red-600">{error}</p>
+        <p className="text-red-600">{text[error]}</p>
       </div>
     );
   }
@@ -294,12 +303,12 @@ const Levels = () => {
   if (!levelInfo) {
     return (
       <div className="flex min-h-0 flex-1 items-center justify-center">
-        <p className="text-muted">No data available.</p>
+        <p className="text-muted">{text.no_data}</p>
       </div>
     );
   }
 
-  return <PlotLevel levelInfo={levelInfo} language={language} setLanguage={setLanguage} />;
+  return <PlotLevel text={text} levelInfo={levelInfo} language={language} setLanguage={setLanguage} />;
 };
 
 export default Levels;

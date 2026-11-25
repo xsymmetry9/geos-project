@@ -4,6 +4,8 @@ import englishLevelCheck from "@/assets/other/english/levelCheck.json";
 import japaneseLevelCheck from "@/assets/other/japanese/levelCheck.json";
 import koreanLevelCheck from "@/assets/other/korean/levelCheck.json";
 import LevelsFilterSelect from "@/components/LevelsFilterSelect";
+import labelText from "@/assets/other/labelText.json";
+import { useUser } from "@/context/UserContext";
 
 type LangKey = "english" | "chinese" | "japanese" | "korean";
 
@@ -15,6 +17,7 @@ type LevelEntry = {
 };
 
 type CategoryData = Record<string, LevelEntry>;
+type LevelsText = (typeof labelText)["english"]["levels"];
 
 type Props = {
   language?: LangKey | string;
@@ -77,7 +80,11 @@ const BandRow: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
   );
 };
 
-const BandCard: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
+const BandCard: FC<{ band: string; entry: LevelEntry; text: LevelsText }> = ({
+  band,
+  entry,
+  text,
+}) => {
   const strengths = entry?.strength ?? [];
   const weaknesses = entry?.weakness ?? entry?.weaknesses ?? [];
 
@@ -89,13 +96,13 @@ const BandCard: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
       <div className="space-y-3">
         <section>
           <h4 className="mb-1.5 text-xs font-semibold tracking-wide text-brand uppercase">
-            Strength
+            {text.strength}
           </h4>
           <BulletList items={strengths} />
         </section>
         <section>
           <h4 className="mb-1.5 text-xs font-semibold tracking-wide text-brand uppercase">
-            Weakness
+            {text.weakness}
           </h4>
           <BulletList items={weaknesses} />
         </section>
@@ -105,6 +112,9 @@ const BandCard: FC<{ band: string; entry: LevelEntry }> = ({ band, entry }) => {
 };
 
 const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
+  // `language` picks the descriptors; the page text follows the app language.
+  const { user } = useUser();
+  const text = labelText[user?.language ?? "english"].levels;
   const categories = language === "english" ? AVAILABLE_CATEGORIES : CJK_CATEGORIES;
   const [category, setCategory] = useState<string>(categories[0] ?? "vocabulary");
 
@@ -125,13 +135,16 @@ const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
   );
   const bands = useMemo(() => Object.keys(categoryData), [categoryData]);
 
-  const categoryOptions = categories.map((c) => ({ value: c, label: c }));
+  const categoryOptions = categories.map((c) => ({
+    value: c,
+    label: text.categories[c as keyof LevelsText["categories"]] ?? c,
+  }));
 
   return (
     <div className="flex w-full flex-col gap-4">
       <LevelsFilterSelect
         id="category_nav"
-        label="Category"
+        label={text.category}
         value={category}
         options={categoryOptions}
         onChange={setCategory}
@@ -141,13 +154,16 @@ const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
 
       {bands.length === 0 ? (
         <p className="rounded-xl border border-line bg-white p-8 text-center text-muted">
-          No data for category "{category}".
+          {text.no_category_data.replace(
+            "{category}",
+            text.categories[category as keyof LevelsText["categories"]] ?? category
+          )}
         </p>
       ) : (
         <>
           <div className="flex flex-col gap-3 md:hidden">
             {bands.map((band) => (
-              <BandCard key={band} band={band} entry={categoryData[band] ?? {}} />
+              <BandCard key={band} band={band} entry={categoryData[band] ?? {}} text={text} />
             ))}
           </div>
 
@@ -161,9 +177,9 @@ const PlotTableLevelChecks: FC<Props> = ({ language = "english" }) => {
                 </colgroup>
                 <thead>
                   <tr className="bg-brand font-semibold text-white">
-                    <th className="p-3 text-center text-sm tracking-wide uppercase">Level</th>
-                    <th className="p-3 text-center text-sm tracking-wide uppercase">Strength</th>
-                    <th className="p-3 text-center text-sm tracking-wide uppercase">Weakness</th>
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">{text.level}</th>
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">{text.strength}</th>
+                    <th className="p-3 text-center text-sm tracking-wide uppercase">{text.weakness}</th>
                   </tr>
                 </thead>
                 <tbody>
