@@ -48,8 +48,11 @@ class LevelCheckEntry {
   }
 }
 
-/** Campus for GEOS System 2.0 migration (CH / TM). Optional until Move wizard. */
-export type LevelCheckCampus = "CH" | "TM";
+/**
+ * Campus for GEOS System 2.0 migration (CH / TM). Optional until Move wizard.
+ * UNKNOWN means the teacher chose "Not sure"; it moves with no campus.
+ */
+export type LevelCheckCampus = "CH" | "TM" | "UNKNOWN";
 
 class EntryForm {
   id: string;
