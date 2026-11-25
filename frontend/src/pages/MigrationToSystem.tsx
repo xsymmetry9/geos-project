@@ -25,11 +25,15 @@ import {
   type MigrationDocKind,
   type SprMigrationRow,
 } from "@/utils/migrationReadiness";
+import labelText from "@/assets/other/labelText.json";
+
+type MigrationText = (typeof labelText)["english"]["migration"];
+
+/** Fills {name} placeholders in a translated string. */
+const fill = (template: string, values: Record<string, string | number>) =>
+  template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`));
 
 type WizardStep = "campus" | "validate" | "review" | "login" | "done";
-
-const DUPLICATE_MESSAGE =
-  "It already exists in the db. Please check teacher's portal to verify if SPR or Level Checks already exist in the system.";
 
 const CAMPUS_OPTIONS: MigrationCampus[] = ["CH", "TM"];
 
@@ -69,6 +73,9 @@ const persistUser = (next: User, setUser: (u: User | null) => void) => {
 
 const MigrationToSystem = () => {
   const { user, setUser } = useUser();
+  const t: MigrationText = labelText[user?.language ?? "english"].migration;
+  const fieldLabel = (field: string) =>
+    field === "name" ? t.field_name : field === "overall level" ? t.field_overall : field;
   const userData = user ?? new User();
 
   const [step, setStep] = useState<WizardStep>("campus");
@@ -188,7 +195,7 @@ const MigrationToSystem = () => {
     }
     if (sameCampusAnswer === "yes") {
       if (!bulkCampus) {
-        setError("Choose CH or TM for all Level Checks.");
+        setError(t.err_choose_all);
         return;
       }
       applyCampusToAll(bulkCampus);
@@ -198,14 +205,14 @@ const MigrationToSystem = () => {
     if (sameCampusAnswer === "no") {
       const missing = lcRows.filter((row) => !parseCampus(rowCampus[row.id] ?? row.campus));
       if (missing.length) {
-        setError("Choose CH or TM for every Level Check.");
+        setError(t.err_choose_each);
         return;
       }
       applyCampusToRows(rowCampus);
       setStep("validate");
       return;
     }
-    setError("Choose Yes or No.");
+    setError(t.err_yes_no);
   };
 
   const activeIncomplete = unresolved[0] ?? null;
@@ -264,7 +271,7 @@ const MigrationToSystem = () => {
 
   const handleValidateContinue = () => {
     if (unresolved.length) {
-      setError("Finish each incomplete report (add fields or skip) before continuing.");
+      setError(t.err_unresolved);
       return;
     }
     setError(null);
@@ -293,14 +300,14 @@ const MigrationToSystem = () => {
           campus: parseCampus(row.campus) ?? undefined,
         }));
       if (!payloadUser.SPR.length && !payloadUser.levelCheck.length) {
-        throw new Error("No reports left to move. Go back and include at least one.");
+        throw new Error(t.err_none_left);
       }
       const data = await legacyImport(login.token, payloadUser);
       setResult(data);
       setPassword("");
       setStep("done");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't move reports to GEOS");
+      setError(err instanceof Error ? err.message : t.err_move_failed);
     } finally {
       setPending(false);
     }
@@ -319,14 +326,14 @@ const MigrationToSystem = () => {
 
   const stepLabel =
     step === "campus"
-      ? "1 · Campus"
+      ? t.step_campus
       : step === "validate"
-        ? "2 · Check fields"
+        ? t.step_validate
         : step === "review"
-          ? "3 · Review"
+          ? t.step_review
           : step === "login"
-            ? "4 · Sign in"
-            : "Done";
+            ? t.step_login
+            : t.step_done;
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-6 sm:py-10">
@@ -336,14 +343,14 @@ const MigrationToSystem = () => {
           className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-muted transition hover:bg-brand-soft hover:text-brand"
         >
           <ArrowLeft size={16} />
-          Back
+          {t.back}
         </Link>
       </div>
 
       <div className="panel overflow-hidden">
         <div className="bg-brand px-4 py-3">
           <h1 className="font-secondary text-base font-semibold text-white">
-            Move SPR and Level Check to Teacher&apos;s Portal
+            {t.title}
           </h1>
           {step !== "done" ? (
             <p className="mt-1 text-xs text-white/80">{stepLabel}</p>
@@ -353,20 +360,18 @@ const MigrationToSystem = () => {
         <div className="space-y-4 px-4 py-5 sm:px-6">
           {totalLocal === 0 && step !== "done" ? (
             <p className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-muted">
-              No local reports found in this browser.
+              {t.no_local}
             </p>
           ) : null}
 
           {step === "campus" && lcRows.length > 0 ? (
             <div className="space-y-4">
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-ink">
-                <p className="font-medium">Are all Level Checks for one campus?</p>
-                <p className="mt-1 text-muted">
-                  GEOS System 2.0 needs CH or TM on each Level Check. SPRs do not use campus.
-                </p>
+                <p className="font-medium">{t.campus_question}</p>
+                <p className="mt-1 text-muted">{t.campus_help}</p>
               </div>
 
-              <div className="flex gap-1.5" role="group" aria-label="Same campus for all">
+              <div className="flex gap-1.5" role="group" aria-label={t.same_campus_aria}>
                 <button
                   type="button"
                   className={chipClass(sameCampusAnswer === "yes")}
@@ -376,7 +381,7 @@ const MigrationToSystem = () => {
                     setError(null);
                   }}
                 >
-                  Yes
+                  {t.yes}
                 </button>
                 <button
                   type="button"
@@ -387,13 +392,13 @@ const MigrationToSystem = () => {
                     setError(null);
                   }}
                 >
-                  No
+                  {t.no}
                 </button>
               </div>
 
               {sameCampusAnswer === "yes" ? (
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-ink">Choose campus for all</p>
+                  <p className="text-sm font-medium text-ink">{t.choose_campus_all}</p>
                   <div className="flex gap-1.5">
                     {CAMPUS_OPTIONS.map((campus) => (
                       <button
@@ -419,7 +424,7 @@ const MigrationToSystem = () => {
                     >
                       <div className="min-w-0">
                         <p className="truncate text-sm font-medium text-ink">
-                          {row.student_name || "Untitled"}
+                          {row.student_name || t.untitled}
                         </p>
                         <p className="text-xs text-muted">
                           {formatMigrationDate(row.dateCreated)} · {row.language || "—"}
@@ -456,7 +461,7 @@ const MigrationToSystem = () => {
               ) : null}
 
               <button type="button" className="btn-primary w-full" onClick={handleCampusContinue}>
-                Continue
+                {t.continue}
               </button>
             </div>
           ) : null}
@@ -464,40 +469,45 @@ const MigrationToSystem = () => {
           {step === "validate" ? (
             <div className="space-y-4">
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-ink">
-                <p className="font-medium">Check required fields</p>
-                <p className="mt-1 text-muted">
-                  Only name (SPR) and name + overall level (Level Check) are required.
-                  Strengths, weaknesses, and skill levels can stay empty.
-                </p>
+                <p className="font-medium">{t.check_title}</p>
+                <p className="mt-1 text-muted">{t.check_help}</p>
                 <p className="mt-2 text-sm font-medium tabular-nums">
-                  Ready {resolvedCount}/{candidates.length} ({readinessPct}%)
+                  {fill(t.ready, {
+                    done: resolvedCount,
+                    total: candidates.length,
+                    pct: readinessPct,
+                  })}
                 </p>
               </div>
 
               {!activeIncomplete ? (
                 <p className="text-sm text-muted">
-                  All included reports have the required fields (or were skipped).
+                  {t.all_ready}
                 </p>
               ) : (
                 <div className="space-y-3 rounded-xl border border-line p-3">
                   {activeSpr ? (
                     <>
                       <p className="text-sm font-medium text-ink">
-                        SPR · {formatMigrationDate(activeSpr.dateCreated)}
+                        {t.spr} · {formatMigrationDate(activeSpr.dateCreated)}
                       </p>
                       <p className="text-sm text-muted">
-                        Missing: {missingSprFields(activeSpr).join(", ")}
+                        {fill(t.missing, {
+                          fields: missingSprFields(activeSpr).map(fieldLabel).join(", "),
+                        })}
                       </p>
                     </>
                   ) : null}
                   {activeLc ? (
                     <>
                       <p className="text-sm font-medium text-ink">
-                        Level Check · {formatMigrationDate(activeLc.dateCreated)} ·{" "}
+                        {t.level_check} · {formatMigrationDate(activeLc.dateCreated)} ·{" "}
                         {activeLc.language}
                       </p>
                       <p className="text-sm text-muted">
-                        Missing: {missingLevelCheckFields(activeLc).join(", ")}
+                        {fill(t.missing, {
+                          fields: missingLevelCheckFields(activeLc).map(fieldLabel).join(", "),
+                        })}
                       </p>
                     </>
                   ) : null}
@@ -508,7 +518,7 @@ const MigrationToSystem = () => {
                     : null) ? (
                     <div className="space-y-3">
                       <label className="block space-y-1.5 text-sm">
-                        <span className="font-medium text-ink">Name</span>
+                        <span className="font-medium text-ink">{t.name}</span>
                         <input
                           value={draftName}
                           onChange={(e) => setDraftName(e.target.value)}
@@ -518,35 +528,35 @@ const MigrationToSystem = () => {
                       </label>
                       {activeLc ? (
                         <label className="block space-y-1.5 text-sm">
-                          <span className="font-medium text-ink">Overall level</span>
+                          <span className="font-medium text-ink">{t.overall_level}</span>
                           <input
                             value={draftOverall}
                             onChange={(e) => setDraftOverall(e.target.value)}
-                            placeholder="e.g. A2 or Pre-A1"
+                            placeholder={t.overall_placeholder}
                             className="w-full rounded-lg border border-line bg-white px-3 py-2.5 text-base text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
                           />
                         </label>
                       ) : null}
                       <div className="flex gap-2">
                         <button type="button" className="btn-primary flex-1" onClick={saveEdit}>
-                          Save
+                          {t.save}
                         </button>
                         <button
                           type="button"
                           className="btn-secondary flex-1"
                           onClick={() => setEditingKey(null)}
                         >
-                          Cancel
+                          {t.cancel}
                         </button>
                       </div>
                     </div>
                   ) : (
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <button type="button" className="btn-primary flex-1" onClick={beginEdit}>
-                        Add missing fields
+                        {t.add_missing}
                       </button>
                       <button type="button" className="btn-secondary flex-1" onClick={skipCurrent}>
-                        Skip (exclude from this Move)
+                        {t.skip}
                       </button>
                     </div>
                   )}
@@ -555,7 +565,7 @@ const MigrationToSystem = () => {
 
               {excludedKeys.size ? (
                 <p className="text-xs text-muted">
-                  Excluded from this Move: {excludedKeys.size}
+                  {fill(t.excluded_count, { count: excludedKeys.size })}
                 </p>
               ) : null}
 
@@ -575,7 +585,7 @@ const MigrationToSystem = () => {
                       setStep("campus");
                     }}
                   >
-                    Back
+                    {t.back}
                   </button>
                 ) : null}
                 <button
@@ -584,7 +594,7 @@ const MigrationToSystem = () => {
                   onClick={handleValidateContinue}
                   disabled={Boolean(unresolved.length)}
                 >
-                  Continue
+                  {t.continue}
                 </button>
               </div>
             </div>
@@ -593,18 +603,16 @@ const MigrationToSystem = () => {
           {step === "review" ? (
             <div className="space-y-4">
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-ink">
-                <p className="font-medium">
-                  These documents will be moved to GEOS System 2.0
-                </p>
+                <p className="font-medium">{t.review_title}</p>
                 <p className="mt-1 text-muted">
-                  {includedSpr.length} SPR · {includedLc.length} Level Check
-                  {excludedKeys.size ? ` · ${excludedKeys.size} excluded` : ""}
+                  {fill(t.review_counts, { spr: includedSpr.length, lc: includedLc.length })}
+                  {excludedKeys.size ? fill(t.review_excluded, { count: excludedKeys.size }) : ""}
                 </p>
               </div>
 
               {includedSpr.length ? (
                 <div className="space-y-1.5">
-                  <p className="text-sm font-semibold text-ink">SPR</p>
+                  <p className="text-sm font-semibold text-ink">{t.spr}</p>
                   <ul className="max-h-40 list-disc space-y-1 overflow-y-auto pl-5 text-sm text-muted">
                     {includedSpr.map((row) => (
                       <li key={row.id}>
@@ -617,7 +625,7 @@ const MigrationToSystem = () => {
 
               {includedLc.length ? (
                 <div className="space-y-1.5">
-                  <p className="text-sm font-semibold text-ink">Level Check</p>
+                  <p className="text-sm font-semibold text-ink">{t.level_check}</p>
                   <ul className="max-h-40 list-disc space-y-1 overflow-y-auto pl-5 text-sm text-muted">
                     {includedLc.map((row) => (
                       <li key={row.id}>
@@ -630,7 +638,7 @@ const MigrationToSystem = () => {
               ) : null}
 
               {!includedSpr.length && !includedLc.length ? (
-                <p className="text-sm text-muted">Nothing left to move.</p>
+                <p className="text-sm text-muted">{t.nothing_left}</p>
               ) : null}
 
               <div className="flex gap-2">
@@ -639,7 +647,7 @@ const MigrationToSystem = () => {
                   className="btn-secondary flex-1"
                   onClick={() => setStep("validate")}
                 >
-                  Back
+                  {t.back}
                 </button>
                 <button
                   type="button"
@@ -647,7 +655,7 @@ const MigrationToSystem = () => {
                   disabled={!includedSpr.length && !includedLc.length}
                   onClick={() => setStep("login")}
                 >
-                  Continue
+                  {t.continue}
                 </button>
               </div>
             </div>
@@ -656,13 +664,13 @@ const MigrationToSystem = () => {
           {step === "login" ? (
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5 text-sm text-ink">
-                <p>Number of SPR: {includedSpr.length}</p>
-                <p className="mt-1">Number of Level Checks: {includedLc.length}</p>
-                <p className="mt-2 text-muted">Sign in with your GEOS teacher account.</p>
+                <p>{fill(t.spr_count, { count: includedSpr.length })}</p>
+                <p className="mt-1">{fill(t.lc_count, { count: includedLc.length })}</p>
+                <p className="mt-2 text-muted">{t.sign_in_help}</p>
               </div>
 
               <label className="block space-y-1.5 text-sm">
-                <span className="font-medium text-ink">Email</span>
+                <span className="font-medium text-ink">{t.email}</span>
                 <input
                   type="email"
                   autoComplete="username"
@@ -677,7 +685,7 @@ const MigrationToSystem = () => {
               </label>
 
               <label className="block space-y-1.5 text-sm">
-                <span className="font-medium text-ink">Password</span>
+                <span className="font-medium text-ink">{t.password}</span>
                 <input
                   type="password"
                   autoComplete="current-password"
@@ -702,7 +710,7 @@ const MigrationToSystem = () => {
                   disabled={pending}
                   onClick={() => setStep("review")}
                 >
-                  Back
+                  {t.back}
                 </button>
                 <button
                   type="submit"
@@ -712,10 +720,10 @@ const MigrationToSystem = () => {
                   {pending ? (
                     <span className="inline-flex items-center justify-center gap-2">
                       <Loader2 size={16} className="animate-spin" />
-                      Moving…
+                      {t.moving}
                     </span>
                   ) : (
-                    "Submit"
+                    t.submit
                   )}
                 </button>
               </div>
@@ -726,27 +734,29 @@ const MigrationToSystem = () => {
             <div className="space-y-4">
               <div className="rounded-xl border border-line bg-brand-soft/50 px-3 py-2.5">
                 <p className="text-sm font-medium text-ink">
-                  Moved {importedCount} report{importedCount === 1 ? "" : "s"}
+                  {fill(importedCount === 1 ? t.moved_one : t.moved_many, {
+                    count: importedCount,
+                  })}
                 </p>
                 <p className="mt-1 text-sm text-muted">
-                  {result.spr.imported} SPR · {result.level_check.imported} Level Check
+                  {fill(t.review_counts, {
+                    spr: result.spr.imported,
+                    lc: result.level_check.imported,
+                  })}
                 </p>
               </div>
 
               {alreadyExists.length ? (
                 <div className="space-y-2 rounded-xl border border-amber-200 bg-amber-50/80 p-3">
-                  <p className="text-sm text-ink">{DUPLICATE_MESSAGE}</p>
-                  <SkipList title="Already in GEOS" rows={alreadyExists} />
+                  <p className="text-sm text-ink">{t.duplicate}</p>
+                  <SkipList title={t.already_in_geos} rows={alreadyExists} />
                 </div>
               ) : null}
 
               {addManually.length ? (
                 <div className="space-y-2 rounded-xl border border-line p-3">
-                  <p className="text-sm text-ink">
-                    These need to be added manually in the teacher portal (empty name or
-                    invalid date).
-                  </p>
-                  <SkipList title="Add manually" rows={addManually} />
+                  <p className="text-sm text-ink">{t.add_manually_help}</p>
+                  <SkipList title={t.add_manually} rows={addManually} />
                 </div>
               ) : null}
 
@@ -757,7 +767,7 @@ const MigrationToSystem = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Open SPRs in teacher portal
+                  {t.open_sprs}
                 </a>
                 <a
                   className="btn-secondary w-full text-center"
@@ -765,10 +775,10 @@ const MigrationToSystem = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Open Level Checks
+                  {t.open_lcs}
                 </a>
                 <Link to="/?view=spr" className="btn-secondary w-full text-center">
-                  Back to forms
+                  {t.back_to_forms}
                 </Link>
               </div>
             </div>
