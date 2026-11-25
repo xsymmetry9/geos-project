@@ -2,6 +2,9 @@ import type User from "@/type/User";
 
 export type MigrationCampus = "CH" | "TM";
 
+/** A campus answer on the Move page: CH, TM, or "Not sure" (moves with no campus). */
+export type CampusChoice = MigrationCampus | "UNKNOWN";
+
 export type MigrationDocKind = "spr" | "levelCheck";
 
 export type MigrationDocRef = {
@@ -83,6 +86,12 @@ export const missingLevelCheckFields = (row: LevelCheckMigrationRow) => {
 export const parseCampus = (value: unknown): MigrationCampus | null => {
   const raw = asText(value).toUpperCase();
   return raw === "CH" || raw === "TM" ? raw : null;
+};
+
+/** CH, TM, or UNKNOWN once the teacher has answered; null while unanswered. */
+export const parseCampusChoice = (value: unknown): CampusChoice | null => {
+  const raw = asText(value).toUpperCase();
+  return raw === "CH" || raw === "TM" || raw === "UNKNOWN" ? raw : null;
 };
 
 export const allLevelChecksHaveCampus = (rows: LevelCheckMigrationRow[]) =>

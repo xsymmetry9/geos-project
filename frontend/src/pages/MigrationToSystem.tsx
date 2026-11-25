@@ -20,8 +20,10 @@ import {
   missingLevelCheckFields,
   missingSprFields,
   parseCampus,
-  type LevelCheckMigrationRow,
+  parseCampusChoice,
+  type CampusChoice,
   type MigrationCampus,
+  type LevelCheckMigrationRow,
   type MigrationDocKind,
   type SprMigrationRow,
 } from "@/utils/migrationReadiness";
@@ -74,12 +76,14 @@ const persistUser = (next: User, setUser: (u: User | null) => void) => {
 const MigrationToSystem = () => {
   const { user, setUser } = useUser();
   const t: MigrationText = labelText[user?.language ?? "english"].migration;
+  const campusLabel = (campus: CampusChoice | null) =>
+    campus === "UNKNOWN" ? t.not_sure : (campus ?? "—");
   const fieldLabel = (field: string) =>
     field === "name" ? t.field_name : field === "overall level" ? t.field_overall : field;
   const userData = user ?? new User();
 
   const [step, setStep] = useState<WizardStep>("campus");
-  const [sameCampusAnswer, setSameCampusAnswer] = useState<"yes" | "no" | null>(null);
+  const [sameCampusAnswer, setSameCampusAnswer] = useState<"yes" | "no" | "unsure" | null>(null);
   const [bulkCampus, setBulkCampus] = useState<MigrationCampus | null>(null);
   const [rowCampus, setRowCampus] = useState<Record<string, MigrationCampus>>({});
   const [excludedKeys, setExcludedKeys] = useState<Set<string>>(() => new Set());
@@ -161,20 +165,20 @@ const MigrationToSystem = () => {
       lcRows.filter(
         (row) =>
           isLevelCheckReady(row) &&
-          parseCampus(row.campus) != null &&
+          parseCampusChoice(row.campus) != null &&
           !excludedKeys.has(migrationDocKey({ kind: "levelCheck", id: row.id }))
       ),
     [lcRows, excludedKeys]
   );
 
-  const applyCampusToAll = (campus: MigrationCampus) => {
+  const applyCampusToAll = (campus: CampusChoice) => {
     const next = Object.assign(new User(), getDataFromLocal());
     next.levelCheck = (Array.isArray(next.levelCheck) ? next.levelCheck : []).map((row) => ({
       ...row,
       campus,
     }));
     persistUser(next, setUser);
-    setBulkCampus(campus);
+    if (campus !== "UNKNOWN") setBulkCampus(campus);
   };
 
   const applyCampusToRows = (map: Record<string, MigrationCampus>) => {
@@ -203,12 +207,20 @@ const MigrationToSystem = () => {
       return;
     }
     if (sameCampusAnswer === "no") {
-      const missing = lcRows.filter((row) => !parseCampus(rowCampus[row.id] ?? row.campus));
+      const missing = lcRows.filter(
+        (row) => !parseCampus(rowCampus[row.id] ?? row.campus)
+      );
       if (missing.length) {
         setError(t.err_choose_each);
         return;
       }
       applyCampusToRows(rowCampus);
+      setStep("validate");
+      return;
+    }
+    if (sameCampusAnswer === "unsure") {
+      // Every Level Check moves with the campus left blank.
+      applyCampusToAll("UNKNOWN");
       setStep("validate");
       return;
     }
@@ -399,6 +411,17 @@ const MigrationToSystem = () => {
                   }}
                 >
                   {t.no}
+                </button>
+                <button
+                  type="button"
+                  className={chipClass(sameCampusAnswer === "unsure")}
+                  aria-pressed={sameCampusAnswer === "unsure"}
+                  onClick={() => {
+                    setSameCampusAnswer("unsure");
+                    setError(null);
+                  }}
+                >
+                  {t.not_sure}
                 </button>
               </div>
 
@@ -636,7 +659,7 @@ const MigrationToSystem = () => {
                     {includedLc.map((row) => (
                       <li key={row.id}>
                         {row.student_name} · {formatMigrationDate(row.dateCreated)} ·{" "}
-                        {parseCampus(row.campus) ?? "—"}
+                        {campusLabel(parseCampusChoice(row.campus))}
                       </li>
                     ))}
                   </ul>
